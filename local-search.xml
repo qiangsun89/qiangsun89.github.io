@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>Linux使用find统计代码行数</title>
+    <link href="/2023/02/17/Linux%E4%BD%BF%E7%94%A8find%E7%BB%9F%E8%AE%A1%E4%BB%A3%E7%A0%81%E8%A1%8C%E6%95%B0/"/>
+    <url>/2023/02/17/Linux%E4%BD%BF%E7%94%A8find%E7%BB%9F%E8%AE%A1%E4%BB%A3%E7%A0%81%E8%A1%8C%E6%95%B0/</url>
+    
+    <content type="html"><![CDATA[<p>Linux一行代码统计项目代码行数</p><figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sqf"><span class="hljs-built_in">find</span> . -<span class="hljs-built_in">name</span> <span class="hljs-string">&quot;*.cpp&quot;</span> -<span class="hljs-built_in">or</span> -<span class="hljs-built_in">name</span> <span class="hljs-string">&quot;*.cc&quot;</span> -<span class="hljs-built_in">or</span> -<span class="hljs-built_in">name</span> <span class="hljs-string">&quot;*.h&quot;</span> -<span class="hljs-built_in">or</span> -<span class="hljs-built_in">name</span> <span class="hljs-string">&quot;*.hpp&quot;</span> |xargs cat|wc -l<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>Linux</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>ubuntu18.04中ROS版本为melodic环境安装cartographer</title>
     <link href="/2023/02/17/ubuntu18-04%E4%B8%ADROS%E7%89%88%E6%9C%AC%E4%B8%BAmelodic%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85cartographer/"/>
     <url>/2023/02/17/ubuntu18-04%E4%B8%ADROS%E7%89%88%E6%9C%AC%E4%B8%BAmelodic%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85cartographer/</url>
