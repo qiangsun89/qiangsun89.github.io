@@ -4,9 +4,9 @@
   
   
   <entry>
-    <title>rosdec安装</title>
-    <link href="/2023/02/17/rosdec%E5%AE%89%E8%A3%85/"/>
-    <url>/2023/02/17/rosdec%E5%AE%89%E8%A3%85/</url>
+    <title>rosdepc安装</title>
+    <link href="/2023/02/17/rosdepc%E5%AE%89%E8%A3%85/"/>
+    <url>/2023/02/17/rosdepc%E5%AE%89%E8%A3%85/</url>
     
     <content type="html"><![CDATA[<p>rosdep更新失败，使用rosdepc，原文在这<a href="https://www.guyuehome.com/35408">https://www.guyuehome.com/35408</a></p><h1 id="安装使用"><a href="#安装使用" class="headerlink" title="安装使用"></a>安装使用</h1><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cmake">sudo pip <span class="hljs-keyword">install</span> rosdepc<br>sudo apt-get <span class="hljs-keyword">install</span> python-pip <br>sudo pip <span class="hljs-keyword">install</span> rosdepc<br>sudo rosdepc init<br>rosdepc update<br></code></pre></td></tr></table></figure>]]></content>
     
