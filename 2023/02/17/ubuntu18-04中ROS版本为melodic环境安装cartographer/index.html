@@ -26,7 +26,7 @@
 <meta property="og:image" content="https://qiangsun89.github.io/2023/02/17/ubuntu18-04%E4%B8%ADROS%E7%89%88%E6%9C%AC%E4%B8%BAmelodic%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85cartographer/ceres_solver_download.png">
 <meta property="og:image" content="https://qiangsun89.github.io/2023/02/17/ubuntu18-04%E4%B8%ADROS%E7%89%88%E6%9C%AC%E4%B8%BAmelodic%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85cartographer/museum.png">
 <meta property="article:published_time" content="2023-02-17T05:14:25.000Z">
-<meta property="article:modified_time" content="2023-02-17T06:06:08.015Z">
+<meta property="article:modified_time" content="2023-02-17T07:24:33.597Z">
 <meta property="article:author" content="Qiang Sun">
 <meta property="article:tag" content="转载">
 <meta name="twitter:card" content="summary_large_image">
@@ -318,6 +318,8 @@
 <figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gradle">wget -P ~<span class="hljs-regexp">/Downloads https:/</span><span class="hljs-regexp">/storage.googleapis.com/</span>cartographer-<span class="hljs-keyword">public</span>-data<span class="hljs-regexp">/bags/</span>backpack_2d/cartographer_paper_deutsches_museum.bag<br></code></pre></td></tr></table></figure>
 <h1 id="8-运行"><a href="#8-运行" class="headerlink" title="8.运行"></a>8.运行</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> ~/catkin_google_ws<br><span class="hljs-built_in">source</span> install_isolated/setup.sh<br>roslaunch cartographer_ros demo_backpack_2d.launch bag_filename:=<span class="hljs-variable">$&#123;HOME&#125;</span>/Downloads/cartographer_paper_deutsches_museum.bag<br></code></pre></td></tr></table></figure>
 <h1 id="9-结果"><a href="#9-结果" class="headerlink" title="9.结果"></a>9.结果</h1><img src="/2023/02/17/ubuntu18-04%E4%B8%ADROS%E7%89%88%E6%9C%AC%E4%B8%BAmelodic%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85cartographer/museum.png" srcset="/img/loading.gif" lazyload class="" title="运行结果">
+
+<h1 id="10-Cartographer-ROS-Documentation"><a href="#10-Cartographer-ROS-Documentation" class="headerlink" title="10.Cartographer ROS Documentation"></a>10.Cartographer ROS Documentation</h1><iframe src='/vvd_js/pdfjs/web/viewer.html?file=<google-cartographer-ros.pdf>' style='width:100%;height:100%'></iframe>
 
 
 
