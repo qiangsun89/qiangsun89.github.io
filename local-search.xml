@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>线速度与角速度之间的关系</title>
+    <link href="/2023/02/18/%E7%BA%BF%E9%80%9F%E5%BA%A6%E4%B8%8E%E8%A7%92%E9%80%9F%E5%BA%A6%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB/"/>
+    <url>/2023/02/18/%E7%BA%BF%E9%80%9F%E5%BA%A6%E4%B8%8E%E8%A7%92%E9%80%9F%E5%BA%A6%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB/</url>
+    
+    <content type="html"><![CDATA[<h1 id="高中物理知识：线速度与角速度之间的关系"><a href="#高中物理知识：线速度与角速度之间的关系" class="headerlink" title="高中物理知识：线速度与角速度之间的关系"></a>高中物理知识：线速度与角速度之间的关系</h1><h2 id="1-线速度"><a href="#1-线速度" class="headerlink" title="1.线速度"></a>1.线速度</h2><img src="/2023/02/18/%E7%BA%BF%E9%80%9F%E5%BA%A6%E4%B8%8E%E8%A7%92%E9%80%9F%E5%BA%A6%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB/velocity.png" class="" title="线速度">  <p>物理意义：描述质点圆周运动快慢的物理量。<br>定义：质点做圆周运动通过的弧长$\Delta S$和所用时间$\Delta t$的比值叫做线速度的大小。<br>公式：$v=\frac{\Delta S}{\Delta t}$<br>单位：$m/s$<br>方向：质点在圆周某点的线速度方向沿圆周上该点的切线方向。</p><h2 id="2-角速度"><a href="#2-角速度" class="headerlink" title="2.角速度"></a>2.角速度</h2><img src="/2023/02/18/%E7%BA%BF%E9%80%9F%E5%BA%A6%E4%B8%8E%E8%A7%92%E9%80%9F%E5%BA%A6%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB/angular.png" class="" title="角速度">  <p>物理意义：描述质点绕圆心转动快慢的物理量。<br>定义：质点所在半径转过的角度$\Delta \theta$和所用时间$\Delta t$的比值叫做角速度。<br>公式：$\omega = \frac{\Delta \theta}{\Delta t}$<br>单位：弧度/秒 $rad/s$</p><h2 id="3-关系证明"><a href="#3-关系证明" class="headerlink" title="3.关系证明"></a>3.关系证明</h2><img src="/2023/02/18/%E7%BA%BF%E9%80%9F%E5%BA%A6%E4%B8%8E%E8%A7%92%E9%80%9F%E5%BA%A6%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB/prove.png" class="" title="证明">  <p>在$\Delta t$内通过的弧长为$\Delta S$，半径转过的角度为$\Delta \theta$<br>由$\Delta S=r\Delta \theta$<br>得到$v=\frac{\Delta S}{\Delta t}=\frac{r\Delta \theta}{\Delta t}=\omega r$<br>写成微分形式$\frac{d\theta}{dt}=\frac{v}{r}$</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>机器人运动控制</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Linux使用find统计代码行数</title>
     <link href="/2023/02/17/Linux%E4%BD%BF%E7%94%A8find%E7%BB%9F%E8%AE%A1%E4%BB%A3%E7%A0%81%E8%A1%8C%E6%95%B0/"/>
     <url>/2023/02/17/Linux%E4%BD%BF%E7%94%A8find%E7%BB%9F%E8%AE%A1%E4%BB%A3%E7%A0%81%E8%A1%8C%E6%95%B0/</url>

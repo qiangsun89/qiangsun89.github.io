@@ -16,25 +16,26 @@
   <meta name="author" content="Qiang Sun">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1.安装环境本文是在ubuntu18.04下重新安装了melodic，然后成功安装并运行了cartographer 2.依赖安装按照cartographer的官网提供的依赖安装 12345678910111213141516171819# Install the required libraries that are available as debs.sudo apt-get updatesud">
+    <meta name="description" content="高中物理知识：线速度与角速度之间的关系1.线速度   物理意义：描述质点圆周运动快慢的物理量。定义：质点做圆周运动通过的弧长$\Delta S$和所用时间$\Delta t$的比值叫做线速度的大小。公式：$v&#x3D;\frac{\Delta S}{\Delta t}$单位：$m&#x2F;s$方向：质点在圆周某点的线速度方向沿圆周上该点的切线方向。 2.角速度   物理意义：描述质点绕圆心转动快慢的物理量。定义：">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ubuntu18.04中ROS版本为melodic环境安装cartographer">
-<meta property="og:url" content="https://qiangsun89.github.io/2023/02/17/ubuntu18-04%E4%B8%ADROS%E7%89%88%E6%9C%AC%E4%B8%BAmelodic%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85cartographer/index.html">
+<meta property="og:title" content="线速度与角速度之间的关系">
+<meta property="og:url" content="https://qiangsun89.github.io/2023/02/18/%E7%BA%BF%E9%80%9F%E5%BA%A6%E4%B8%8E%E8%A7%92%E9%80%9F%E5%BA%A6%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB/index.html">
 <meta property="og:site_name" content="小强的学习笔记">
-<meta property="og:description" content="1.安装环境本文是在ubuntu18.04下重新安装了melodic，然后成功安装并运行了cartographer 2.依赖安装按照cartographer的官网提供的依赖安装 12345678910111213141516171819# Install the required libraries that are available as debs.sudo apt-get updatesud">
+<meta property="og:description" content="高中物理知识：线速度与角速度之间的关系1.线速度   物理意义：描述质点圆周运动快慢的物理量。定义：质点做圆周运动通过的弧长$\Delta S$和所用时间$\Delta t$的比值叫做线速度的大小。公式：$v&#x3D;\frac{\Delta S}{\Delta t}$单位：$m&#x2F;s$方向：质点在圆周某点的线速度方向沿圆周上该点的切线方向。 2.角速度   物理意义：描述质点绕圆心转动快慢的物理量。定义：">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://qiangsun89.github.io/2023/02/17/ubuntu18-04%E4%B8%ADROS%E7%89%88%E6%9C%AC%E4%B8%BAmelodic%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85cartographer/ceres_solver_download.png">
-<meta property="og:image" content="https://qiangsun89.github.io/2023/02/17/ubuntu18-04%E4%B8%ADROS%E7%89%88%E6%9C%AC%E4%B8%BAmelodic%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85cartographer/museum.png">
-<meta property="article:published_time" content="2023-02-17T05:14:25.000Z">
-<meta property="article:modified_time" content="2023-02-17T13:07:21.764Z">
+<meta property="og:image" content="https://qiangsun89.github.io/2023/02/18/%E7%BA%BF%E9%80%9F%E5%BA%A6%E4%B8%8E%E8%A7%92%E9%80%9F%E5%BA%A6%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB/velocity.png">
+<meta property="og:image" content="https://qiangsun89.github.io/2023/02/18/%E7%BA%BF%E9%80%9F%E5%BA%A6%E4%B8%8E%E8%A7%92%E9%80%9F%E5%BA%A6%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB/angular.png">
+<meta property="og:image" content="https://qiangsun89.github.io/2023/02/18/%E7%BA%BF%E9%80%9F%E5%BA%A6%E4%B8%8E%E8%A7%92%E9%80%9F%E5%BA%A6%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB/prove.png">
+<meta property="article:published_time" content="2023-02-18T15:16:44.000Z">
+<meta property="article:modified_time" content="2023-02-18T16:11:34.574Z">
 <meta property="article:author" content="Qiang Sun">
-<meta property="article:tag" content="转载">
+<meta property="article:tag" content="原创">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://qiangsun89.github.io/2023/02/17/ubuntu18-04%E4%B8%ADROS%E7%89%88%E6%9C%AC%E4%B8%BAmelodic%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85cartographer/ceres_solver_download.png">
+<meta name="twitter:image" content="https://qiangsun89.github.io/2023/02/18/%E7%BA%BF%E9%80%9F%E5%BA%A6%E4%B8%8E%E8%A7%92%E9%80%9F%E5%BA%A6%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB/velocity.png">
   
   
   
-  <title>ubuntu18.04中ROS版本为melodic环境安装cartographer - 小强的学习笔记</title>
+  <title>线速度与角速度之间的关系 - 小强的学习笔记</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -217,7 +218,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="ubuntu18.04中ROS版本为melodic环境安装cartographer"></span>
+            <span id="subtitle" data-typed-text="线速度与角速度之间的关系"></span>
           
         </div>
 
@@ -228,8 +229,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-02-17 13:14" pubdate>
-          2023年2月17日 下午
+        <time datetime="2023-02-18 23:16" pubdate>
+          2023年2月18日 晚上
         </time>
       </span>
     
@@ -240,7 +241,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.6k 字
+          475 字
         
       </span>
     
@@ -251,7 +252,7 @@
         
         
         
-          22 分钟
+          4 分钟
         
       </span>
     
@@ -297,40 +298,17 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">ubuntu18.04中ROS版本为melodic环境安装cartographer</h1>
+            <h1 style="display: none">线速度与角速度之间的关系</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="1-安装环境"><a href="#1-安装环境" class="headerlink" title="1.安装环境"></a>1.安装环境</h1><p>本文是在ubuntu18.04下重新安装了melodic，然后成功安装并运行了cartographer</p>
-<h1 id="2-依赖安装"><a href="#2-依赖安装" class="headerlink" title="2.依赖安装"></a>2.依赖安装</h1><p>按照cartographer的官网提供的<a target="_blank" rel="noopener" href="https://google-cartographer.readthedocs.io/en/latest/">依赖安装</a></p>
-<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs livescript"><span class="hljs-comment"># Install the required libraries that are available as debs.</span><br>sudo apt-get update<br>sudo apt-get install -y <span class="hljs-string">\</span><br>    clang <span class="hljs-string">\</span><br>    cmake <span class="hljs-string">\</span><br>    g++ <span class="hljs-string">\</span><br>    git <span class="hljs-string">\</span><br>    google-mock <span class="hljs-string">\</span><br>    libboost-all-dev <span class="hljs-string">\</span><br>    libcairo2-dev <span class="hljs-string">\</span><br>    libcurl4-openssl-dev <span class="hljs-string">\</span><br>    libeigen3-dev <span class="hljs-string">\</span><br>    libgflags-dev <span class="hljs-string">\</span><br>    libgoogle-glog-dev <span class="hljs-string">\</span><br>    liblua5.<span class="hljs-number">2</span>-dev <span class="hljs-string">\</span><br>    libsuitesparse-dev <span class="hljs-string">\</span><br>    lsb-release <span class="hljs-string">\</span><br>    ninja-build <span class="hljs-string">\</span><br>    stow<br></code></pre></td></tr></table></figure>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-comment"># Install Ceres Solver and Protocol Buffers support if available.</span><br><span class="hljs-comment"># No need to build it ourselves.</span><br><span class="hljs-keyword">if</span> [[ <span class="hljs-string">&quot;<span class="hljs-variable">$(lsb_release -sc)</span>&quot;</span> = <span class="hljs-string">&quot;focal&quot;</span> || <span class="hljs-string">&quot;<span class="hljs-variable">$(lsb_release -sc)</span>&quot;</span> = <span class="hljs-string">&quot;buster&quot;</span> ]]<br>then<br>  sudo apt-<span class="hljs-built_in">get</span> install -y python3-sphinx libgmock-dev libceres-dev protobuf-compiler<br><span class="hljs-keyword">else</span><br>  sudo apt-<span class="hljs-built_in">get</span> install -y python-sphinx<br>  <span class="hljs-keyword">if</span> [[ <span class="hljs-string">&quot;<span class="hljs-variable">$(lsb_release -sc)</span>&quot;</span> = <span class="hljs-string">&quot;bionic&quot;</span> ]]<br>  then<br>    sudo apt-<span class="hljs-built_in">get</span> install -y libceres-dev<br>  fi<br>fi<br></code></pre></td></tr></table></figure>
-<h1 id="3-安装abseil-cpp"><a href="#3-安装abseil-cpp" class="headerlink" title="3.安装abseil-cpp"></a>3.安装abseil-cpp</h1><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs awk">git clone https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/abseil/</span>abseil-cpp.git<br>cd abseil-cpp<br>git checkout d902eb869bcfacc1bad14933ed9af4bed006d481<br>mkdir build<br>cd build<br>cmake -G Ninja \<br>  -DCMAKE_BUILD_TYPE=Release \<br>  -DCMAKE_POSITION_INDEPENDENT_CODE=ON \<br>  -DCMAKE_INSTALL_PREFIX=<span class="hljs-regexp">/usr/</span>local<span class="hljs-regexp">/stow/</span>absl \<br>  ..<br>ninja<br>sudo ninja install<br>cd <span class="hljs-regexp">/usr/</span>local/stow<br>sudo stow absl<br></code></pre></td></tr></table></figure>
-<h1 id="4-安装ceres-solver"><a href="#4-安装ceres-solver" class="headerlink" title="4.安装ceres-solver"></a>4.安装ceres-solver</h1><p>在ceres-solver<a target="_blank" rel="noopener" href="https://ceres-solver.googlesource.com/ceres-solver">官网</a>下载1.13.0版本</p>
-<img src="/2023/02/17/ubuntu18-04%E4%B8%ADROS%E7%89%88%E6%9C%AC%E4%B8%BAmelodic%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85cartographer/ceres_solver_download.png" srcset="/img/loading.gif" lazyload class="" title="ceres-solver下载地址">
-<p>解压ceres-solver，然后执行以下命令</p>
-<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs stata"><span class="hljs-keyword">cd</span> ceres-solver<br><span class="hljs-keyword">mkdir</span> build<br><span class="hljs-keyword">cd</span> build<br>cmake .. -<span class="hljs-keyword">G</span> Ninja -DCXX11=<span class="hljs-keyword">ON</span><br>ninja<br>CTEST_OUTPUT_ON_FAILURE=1 ninja <span class="hljs-keyword">test</span><br>sudo ninja install<br></code></pre></td></tr></table></figure>
-<p>这里之所以和官网安装方式不一样是因为，作者在执行git clone <a target="_blank" rel="noopener" href="https://ceres-solver.googlesource.com/ceres-solver">https://ceres-solver.googlesource.com/ceres-solver</a> 这个安装命令时一直不成功，可能是网络原因</p>
-<h1 id="5-安装protobuf"><a href="#5-安装protobuf" class="headerlink" title="5.安装protobuf"></a>5.安装protobuf</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash">VERSION=<span class="hljs-string">&quot;v3.4.1&quot;</span><br><span class="hljs-comment"># Build and install proto3.</span><br>git <span class="hljs-built_in">clone</span> https://github.com/google/protobuf.git<br><span class="hljs-built_in">cd</span> protobuf<br>git checkout tags/<span class="hljs-variable">$&#123;VERSION&#125;</span><br><span class="hljs-built_in">mkdir</span> build<br><span class="hljs-built_in">cd</span> build<br>cmake -G Ninja \<br>  -DCMAKE_POSITION_INDEPENDENT_CODE=ON \<br>  -DCMAKE_BUILD_TYPE=Release \<br>  -Dprotobuf_BUILD_TESTS=OFF \<br>  ../cmake<br>ninja<br>sudo ninja install<br></code></pre></td></tr></table></figure>
-<h1 id="6-安装cartographer"><a href="#6-安装cartographer" class="headerlink" title="6.安装cartographer"></a>6.安装cartographer</h1><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs vim">ROS_DISTRO=<span class="hljs-string">&quot;melodic&quot;</span><br>sudo apt-<span class="hljs-built_in">get</span> <span class="hljs-keyword">update</span><br>sudo apt-<span class="hljs-built_in">get</span> install -<span class="hljs-keyword">y</span> <span class="hljs-keyword">python</span>-wstool <span class="hljs-keyword">python</span>-rosdep ninja-build stow<br><span class="hljs-built_in">mkdir</span> catkin_google_ws<br><span class="hljs-keyword">cd</span> catkin_google_ws<br>wstool init src<br>wstool merge -t src https://ghproxy.<span class="hljs-keyword">com</span>/https://raw.githubusercontent.<span class="hljs-keyword">com</span>/cartographer-project/cartographer_ros/master/cartographer_ros.rosinstall<br>wstool <span class="hljs-keyword">update</span> -t src<br>src/cartographer/scripts/install_abseil.<span class="hljs-keyword">sh</span><br>sudo apt-<span class="hljs-built_in">get</span> <span class="hljs-built_in">remove</span> ros-$&#123;ROS_DISTRO&#125;-abseil-cpp<br>catkin_make_isolated --install --use-ninja<br></code></pre></td></tr></table></figure>
-<h1 id="7-测试demo"><a href="#7-测试demo" class="headerlink" title="7.测试demo"></a>7.测试demo</h1><p>下载官方数据</p>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gradle">wget -P ~<span class="hljs-regexp">/Downloads https:/</span><span class="hljs-regexp">/storage.googleapis.com/</span>cartographer-<span class="hljs-keyword">public</span>-data<span class="hljs-regexp">/bags/</span>backpack_2d/cartographer_paper_deutsches_museum.bag<br></code></pre></td></tr></table></figure>
-<h1 id="8-运行"><a href="#8-运行" class="headerlink" title="8.运行"></a>8.运行</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> ~/catkin_google_ws<br><span class="hljs-built_in">source</span> install_isolated/setup.sh<br>roslaunch cartographer_ros demo_backpack_2d.launch bag_filename:=<span class="hljs-variable">$&#123;HOME&#125;</span>/Downloads/cartographer_paper_deutsches_museum.bag<br></code></pre></td></tr></table></figure>
-<h1 id="9-结果"><a href="#9-结果" class="headerlink" title="9.结果"></a>9.结果</h1><img src="/2023/02/17/ubuntu18-04%E4%B8%ADROS%E7%89%88%E6%9C%AC%E4%B8%BAmelodic%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85cartographer/museum.png" srcset="/img/loading.gif" lazyload class="" title="运行结果">
-
-<h1 id="10-Cartographer-ROS-Documentation"><a href="#10-Cartographer-ROS-Documentation" class="headerlink" title="10.Cartographer ROS Documentation"></a>10.Cartographer ROS Documentation</h1>
-
-	<div class="row">
-    <embed src="google-cartographer-ros.pdf" width="100%" height="550" type="application/pdf">
-	</div>
-
-
-
-
-
-
-
+                <h1 id="高中物理知识：线速度与角速度之间的关系"><a href="#高中物理知识：线速度与角速度之间的关系" class="headerlink" title="高中物理知识：线速度与角速度之间的关系"></a>高中物理知识：线速度与角速度之间的关系</h1><h2 id="1-线速度"><a href="#1-线速度" class="headerlink" title="1.线速度"></a>1.线速度</h2><img src="/2023/02/18/%E7%BA%BF%E9%80%9F%E5%BA%A6%E4%B8%8E%E8%A7%92%E9%80%9F%E5%BA%A6%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB/velocity.png" srcset="/img/loading.gif" lazyload class="" title="线速度">  
+<p>物理意义：描述质点圆周运动快慢的物理量。<br>定义：质点做圆周运动通过的弧长$\Delta S$和所用时间$\Delta t$的比值叫做线速度的大小。<br>公式：$v=\frac{\Delta S}{\Delta t}$<br>单位：$m/s$<br>方向：质点在圆周某点的线速度方向沿圆周上该点的切线方向。</p>
+<h2 id="2-角速度"><a href="#2-角速度" class="headerlink" title="2.角速度"></a>2.角速度</h2><img src="/2023/02/18/%E7%BA%BF%E9%80%9F%E5%BA%A6%E4%B8%8E%E8%A7%92%E9%80%9F%E5%BA%A6%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB/angular.png" srcset="/img/loading.gif" lazyload class="" title="角速度">  
+<p>物理意义：描述质点绕圆心转动快慢的物理量。<br>定义：质点所在半径转过的角度$\Delta \theta$和所用时间$\Delta t$的比值叫做角速度。<br>公式：$\omega = \frac{\Delta \theta}{\Delta t}$<br>单位：弧度/秒 $rad/s$</p>
+<h2 id="3-关系证明"><a href="#3-关系证明" class="headerlink" title="3.关系证明"></a>3.关系证明</h2><img src="/2023/02/18/%E7%BA%BF%E9%80%9F%E5%BA%A6%E4%B8%8E%E8%A7%92%E9%80%9F%E5%BA%A6%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB/prove.png" srcset="/img/loading.gif" lazyload class="" title="证明">  
+<p>在$\Delta t$内通过的弧长为$\Delta S$，半径转过的角度为$\Delta \theta$<br>由$\Delta S=r\Delta \theta$<br>得到$v=\frac{\Delta S}{\Delta t}=\frac{r\Delta \theta}{\Delta t}=\omega r$<br>写成微分形式$\frac{d\theta}{dt}=\frac{v}{r}$</p>
 
                 
               </div>
@@ -349,7 +327,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/slam/" class="category-chain-item">slam</a>
+  <a href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA%E8%BF%90%E5%8A%A8%E6%8E%A7%E5%88%B6/" class="category-chain-item">机器人运动控制</a>
   
   
 
@@ -364,7 +342,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E8%BD%AC%E8%BD%BD/">#转载</a>
+        <a href="/tags/%E5%8E%9F%E5%88%9B/">#原创</a>
       
     </div>
   
@@ -376,8 +354,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>ubuntu18.04中ROS版本为melodic环境安装cartographer</div>
-      <div>https://qiangsun89.github.io/2023/02/17/ubuntu18-04中ROS版本为melodic环境安装cartographer/</div>
+      <div>线速度与角速度之间的关系</div>
+      <div>https://qiangsun89.github.io/2023/02/18/线速度与角速度之间的关系/</div>
     </div>
     <div class="license-meta">
       
@@ -389,7 +367,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年2月17日</div>
+          <div>2023年2月18日</div>
         </div>
       
       
@@ -421,18 +399,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/02/17/Linux%E4%BD%BF%E7%94%A8find%E7%BB%9F%E8%AE%A1%E4%BB%A3%E7%A0%81%E8%A1%8C%E6%95%B0/" title="Linux使用find统计代码行数">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Linux使用find统计代码行数</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/02/17/rosdepc%E5%AE%89%E8%A3%85/" title="rosdepc安装">
-                        <span class="hidden-mobile">rosdepc安装</span>
+                      <a href="/2023/02/17/Linux%E4%BD%BF%E7%94%A8find%E7%BB%9F%E8%AE%A1%E4%BB%A3%E7%A0%81%E8%A1%8C%E6%95%B0/" title="Linux使用find统计代码行数">
+                        <span class="hidden-mobile">Linux使用find统计代码行数</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
