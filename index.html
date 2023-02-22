@@ -243,6 +243,67 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2023/02/22/opencv%E5%BD%A2%E6%80%81%E5%AD%A6%E5%A4%84%E7%90%86morphologyEx/" target="_self">
+          opencv形态学处理morphologyEx
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/02/22/opencv%E5%BD%A2%E6%80%81%E5%AD%A6%E5%A4%84%E7%90%86morphologyEx/" target="_self">
+        <div>
+          1234int morph_elem = 0;cv::Mat element = cv::getStructuringElement( morph_elem, cv::Size( 3, 3 ), cv::Point( -1, -1 ) );cv::Mat dst;cv::morphologyEx( src, dst, 3, element );
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-02-22 13:06" pubdate>
+              2023-02-22
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/opencv/" class="category-chain-item">opencv</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%8E%9F%E5%88%9B/">#原创</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2023/02/22/c-%E4%B8%ADfillPoly%E5%87%BD%E6%95%B0%E4%BD%BF%E7%94%A8/" target="_self">
           c++中fillPoly函数使用
         </a>
@@ -251,7 +312,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2023/02/22/c-%E4%B8%ADfillPoly%E5%87%BD%E6%95%B0%E4%BD%BF%E7%94%A8/" target="_self">
         <div>
-          fillPoly函数需要二维嵌套std::vector
+          fillPoly函数需要二维嵌套std::vector&lt;std::vector&lt;cv::Point&gt;&gt;ppts;否则无法正常使用。若使用std::vector&lt;cv::Point&gt; pts会导致程序中断，但不会在编译器中报错。123456cv::Mat image = cv::Mat::ones(512, 512, CV_8UC3)std::vector&lt;
         </div>
       </a>
 
@@ -786,67 +847,6 @@
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/02/14/%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0/" target="_self">
-          测试文章
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/02/14/%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0/" target="_self">
-        <div>
-          这是一篇测试文章
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-02-14 09:19" pubdate>
-              2023-02-14
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Java/" class="category-chain-item">Java</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E5%8E%9F%E5%88%9B/">#原创</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
@@ -999,5 +999,21 @@
   <noscript>
     <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
   </noscript>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
