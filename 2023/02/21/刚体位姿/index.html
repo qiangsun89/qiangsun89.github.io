@@ -16,22 +16,24 @@
   <meta name="author" content="Qiang Sun">
   <meta name="keywords" content="">
   
-    <meta name="description" content="测试文章这是一篇测试公式是否渲染的文章   \frac{V}{r}&#x3D;\omega">
+    <meta name="description" content="引言&amp;emsp;刚体在三维笛卡尔空间的运动包括平移和旋转，平移用三个笛卡尔坐标，旋转用三个角坐标，因此，刚体运动需要六个坐标。机器人运动学研究的就是在空间中不断地去控制机器人的位置和方向，为了确定机器人的位置和方向，需要建立一个固定的参考坐标系，称为固定坐标系或世界坐标系。另外，在移动的机器人上需建立一个移动坐标系或局部坐标系来描述机器人的位姿。&amp;emsp;按照参考坐标系来看，刚体的位置和方向有六">
 <meta property="og:type" content="article">
-<meta property="og:title" content="test">
-<meta property="og:url" content="https://qiangsun89.github.io/2023/02/19/test/index.html">
+<meta property="og:title" content="刚体位姿">
+<meta property="og:url" content="https://qiangsun89.github.io/2023/02/21/%E5%88%9A%E4%BD%93%E4%BD%8D%E5%A7%BF/index.html">
 <meta property="og:site_name" content="小强的学习笔记">
-<meta property="og:description" content="测试文章这是一篇测试公式是否渲染的文章   \frac{V}{r}&#x3D;\omega">
+<meta property="og:description" content="引言&amp;emsp;刚体在三维笛卡尔空间的运动包括平移和旋转，平移用三个笛卡尔坐标，旋转用三个角坐标，因此，刚体运动需要六个坐标。机器人运动学研究的就是在空间中不断地去控制机器人的位置和方向，为了确定机器人的位置和方向，需要建立一个固定的参考坐标系，称为固定坐标系或世界坐标系。另外，在移动的机器人上需建立一个移动坐标系或局部坐标系来描述机器人的位姿。&amp;emsp;按照参考坐标系来看，刚体的位置和方向有六">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-02-19T14:41:14.000Z">
-<meta property="article:modified_time" content="2023-02-19T14:48:34.660Z">
+<meta property="og:image" content="https://qiangsun89.github.io/2023/02/21/%E5%88%9A%E4%BD%93%E4%BD%8D%E5%A7%BF/spatial_description.png">
+<meta property="article:published_time" content="2023-02-21T09:29:33.000Z">
+<meta property="article:modified_time" content="2023-02-22T01:01:03.042Z">
 <meta property="article:author" content="Qiang Sun">
 <meta property="article:tag" content="原创">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://qiangsun89.github.io/2023/02/21/%E5%88%9A%E4%BD%93%E4%BD%8D%E5%A7%BF/spatial_description.png">
   
   
   
-  <title>test - 小强的学习笔记</title>
+  <title>刚体位姿 - 小强的学习笔记</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -214,7 +216,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="test"></span>
+            <span id="subtitle" data-typed-text="刚体位姿"></span>
           
         </div>
 
@@ -225,8 +227,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-02-19 22:41" pubdate>
-          2023年2月19日 晚上
+        <time datetime="2023-02-21 17:29" pubdate>
+          2023年2月21日 下午
         </time>
       </span>
     
@@ -237,7 +239,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          37 字
+          3.3k 字
         
       </span>
     
@@ -248,7 +250,7 @@
         
         
         
-          1 分钟
+          28 分钟
         
       </span>
     
@@ -294,13 +296,36 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">test</h1>
+            <h1 style="display: none">刚体位姿</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="测试文章"><a href="#测试文章" class="headerlink" title="测试文章"></a>测试文章</h1><p>这是一篇测试公式是否渲染的文章  </p>
-<script type="math/tex; mode=display">\frac{V}{r}=\omega</script>
+                <h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><p>&emsp;刚体在三维笛卡尔空间的运动包括平移和旋转，平移用三个笛卡尔坐标，旋转用三个角坐标，因此，刚体运动需要六个坐标。机器人运动学研究的就是在空间中不断地去控制机器人的位置和方向，为了确定机器人的位置和方向，需要建立一个固定的参考坐标系，称为固定坐标系或世界坐标系。另外，在移动的机器人上需建立一个移动坐标系或局部坐标系来描述机器人的位姿。<br>&emsp;按照参考坐标系来看，刚体的位置和方向有六个独立的参数，如下图所示<br><img src="/2023/02/21/%E5%88%9A%E4%BD%93%E4%BD%8D%E5%A7%BF/spatial_description.png" srcset="/img/loading.gif" lazyload class="" title="图1.坐标系示意图"><br>定义$X-Y-Z$坐标系为固定坐标系，机器人在运动过程中建立的运动坐标系为$U-V-W$，很明显，如果确定了运动坐标系相对于固定坐标系的位姿，那么刚体的位姿也就知道了。刚体位姿可以通过刚体上任意一点的位姿来确定，例如原点$O$或刚体上任一点$P$。</p>
+<h1 id="位置描述"><a href="#位置描述" class="headerlink" title="位置描述"></a>位置描述</h1><p>&emsp;运动中的刚体上任何一点$P$相对于固定坐标系的位置可以用一个三维笛卡尔向量<strong><em>P</em></strong>，如上图所示，定义点$P$在固定坐标系$F$中的坐标或向量<strong><em>P</em></strong>在固定坐标系$F$的分量为$p_x,p_y,p_z$为</p>
+<script type="math/tex; mode=display">\left[ \mathbf{P}\right]_F=\left[
+                    \begin{matrix}
+                    p_x\\
+                    p_y \\
+                    p_z
+                    \end{matrix}
+                    \right]
+                    \tag{1}</script><p>这里的下表$F$表示向量<strong><em>P</em></strong>参考的固定坐标系。<br>&emsp;下表$x,y,z$分别表示向量<strong><em>P</em></strong>沿固定坐标系$X,Y,Z$三个方向的分量。<br>&emsp;向量<strong><em>P</em></strong>可以表达为：</p>
+<script type="math/tex; mode=display">\mathbf{P}=p_x\mathbf{x}+p_y\mathbf{y}+p_z\mathbf{z} \tag{2}</script><p>这里$\mathbf{x},\mathbf{y},\mathbf{z}$分别表示沿固定坐标系$F$的$X,Y,Z$方向的单位向量，如上图所示。在固定坐标系$F$下分别写为：</p>
+<script type="math/tex; mode=display">\left[ \mathbf{x} \right]_F\equiv\left[ \begin{matrix}1\\0\\0\end{matrix}\right],
+\left[ \mathbf{y} \right]_F\equiv\left[ \begin{matrix}0\\1\\0\end{matrix}\right],
+and \left[ \mathbf{z} \right]_F\equiv\left[ \begin{matrix}0\\0\\1\end{matrix}\right]\tag{3}</script><p><strong>注意</strong>：如果向量<strong><em>P</em></strong>参考的固定坐标系是不同于坐标系$F$的，那么，向量<strong><em>P</em></strong>的分量将会不同于参考固定坐标系$F$的分量，尽管向量<strong><em>P</em></strong>没变，因此，无论参考坐标系如何改变，向量<strong><em>P</em></strong>是不会变的，这就是所谓的坐标无关的表达方式，也可以说是与参考系是独立的。  </p>
+<h1 id="方向描述"><a href="#方向描述" class="headerlink" title="方向描述"></a>方向描述</h1><p>&emsp;根据参考坐标系，刚体的方向可以有不同的描述方式，例如：<br>1.Direction cosine representation<br>2.Fixed-axes rotations<br>3.Euler-angles representation<br>4.Single- and double-axes rotations<br>5.Euler parameters, and others<br><strong>注意</strong>：每种描述方式都有其局限，下面具体介绍</p>
+<h2 id="1-Direction-Cosine-Representation"><a href="#1-Direction-Cosine-Representation" class="headerlink" title="1.Direction Cosine Representation"></a>1.Direction Cosine Representation</h2><p>&emsp;为了描述刚体的方向或旋转，考虑相对于固定坐标系$F$运动的移动坐标系$M$，如图1所示。另$\mathbf{u}、\mathbf{v}、\mathbf{w}$分别表示沿运动坐标系$M$方向$U、V、W$的单位向量，由于每个单位向量$\mathbf{u}、\mathbf{v}、\mathbf{w}$表示点在坐标系$M$下距原点单位距离处的位置，因此，可以用它们各自沿固定坐标系$X、Y、Z$方向的分量来表达：</p>
+<script type="math/tex; mode=display">\mathbf{u}=u_x\mathbf{x}+u_y\mathbf{y}+u_z\mathbf{z}\tag{4}</script><script type="math/tex; mode=display">\mathbf{v}=v_x\mathbf{x}+v_y\mathbf{y}+v_z\mathbf{z}\tag{5}</script><script type="math/tex; mode=display">\mathbf{w}=w_x\mathbf{x}+w_y\mathbf{y}+w_z\mathbf{z}\tag{6}</script><p>这里$u_x、u_y、u_z$分别表示单位向量$\mathbf{u}$沿$X、Y、Z$方向的分量，相似的，$v_x、v_y、v_z$和$w_x、w_y、w_z$分别表示单位向量$\mathbf{v}$和$\mathbf{w}$的分量。现在，如图1所示刚体上的一点$P$在运动坐标系下的表达为：</p>
+<script type="math/tex; mode=display">\mathbf{P}=p_u\mathbf{u}+p_v\mathbf{v}+p_w\mathbf{w}\tag{7}</script><p>这里$p_u,p_v,p_w$分别是向量<strong><em>P</em></strong>沿运动坐标系$M$的坐标轴$U、V、W$的分量，把公式（4）-（6）带入公式（7）得到：</p>
+<script type="math/tex; mode=display">\mathbf{P}=(p_uu_x+p_vv_x+p_ww_x)\mathbf{x}+(p_uu_y+p_vv_y+p_ww_y)\mathbf{y}+(p_uu_z+p_vv_z+p_ww_z)\mathbf{z}\tag{8}</script><p>对比公式（7）和（8）得到：</p>
+<script type="math/tex; mode=display">p_x = p_uu_x+p_vv_x+p_ww_x\tag{9}</script><script type="math/tex; mode=display">p_y = p_uu_y+p_vv_y+p_ww_y\tag{10}</script><script type="math/tex; mode=display">p_z = p_uu_z+p_vv_z+p_ww_z\tag{11}</script><p>写成矩阵形式：</p>
+<script type="math/tex; mode=display">\left[ \mathbf{p}\right]_F=\mathbf{Q}\left[ \mathbf{p}\right]_M\tag{12}</script><p>这里$\left[ \mathbf{p}\right]_F$和$\left[ \mathbf{p}\right]_M$分别表示三维向量<strong><em>P</em></strong>在坐标系$F$和$M$的分量，$\mathbf{Q}$是一个$3\times3$的旋转矩阵表示向量<strong><em>P</em></strong>从坐标系$M$到坐标系$F$的转换。它们的具体形式为：</p>
+<script type="math/tex; mode=display">\left[ \mathbf{p} \right]_F\equiv\left[ \begin{matrix}p_x\\p_y\\p_z\end{matrix}\right],
+\left[ \mathbf{p} \right]_M\equiv\left[ \begin{matrix}p_u\\p_v\\p_w\end{matrix}\right],
+and \left[ \mathbf{Q} \right]\equiv\left[ \begin{matrix}u_x&v_x& w_x\\u_y&v_y& w_y\\u_z&v_z& w_z\end{matrix}\right]=\left[ \begin{matrix}\mathbf{u}^T\mathbf{x}&\mathbf{v}^T\mathbf{x}& \mathbf{w}^T\mathbf{x}\\\mathbf{u}^T\mathbf{y}&\mathbf{v}^T\mathbf{y}& \mathbf{w}^T\mathbf{y}\\\mathbf{u}^T\mathbf{z}&\mathbf{v}^T\mathbf{z}& \mathbf{w}^T\mathbf{z}\end{matrix}\right]\tag{13}</script><p>注意矩阵$\mathbf{Q}$的每一列都是正交的，它们是单位向量$\mathbf{u},\mathbf{v},\mathbf{w}$在坐标系$F$下的分量，而且必须满足如下的六个正交条件：</p>
+<script type="math/tex; mode=display">\mathbf{u}^T\mathbf{u}=\mathbf{v}^T\mathbf{v}=\mathbf{w}^T\mathbf{w}=1,and\mathbf{u}^T\mathbf{v}(\equiv\mathbf{v}^T\mathbf{u})=\mathbf{u}^T\mathbf{w}(\equiv\mathbf{w}^T\mathbf{u})=\mathbf{v}^T\mathbf{w}(\equiv\mathbf{w}^T\mathbf{v})=0\tag{14}</script>
                 
               </div>
             
@@ -318,7 +343,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Java/" class="category-chain-item">Java</a>
+  <a href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA%E8%BF%90%E5%8A%A8%E6%8E%A7%E5%88%B6/" class="category-chain-item">机器人运动控制</a>
   
   
 
@@ -345,8 +370,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>test</div>
-      <div>https://qiangsun89.github.io/2023/02/19/test/</div>
+      <div>刚体位姿</div>
+      <div>https://qiangsun89.github.io/2023/02/21/刚体位姿/</div>
     </div>
     <div class="license-meta">
       
@@ -358,7 +383,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年2月19日</div>
+          <div>2023年2月21日</div>
         </div>
       
       
@@ -390,9 +415,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/02/21/%E5%88%9A%E4%BD%93%E4%BD%8D%E5%A7%BF/" title="刚体位姿">
+                      <a href="/2023/02/22/c-%E4%B8%ADfillPoly%E5%87%BD%E6%95%B0%E4%BD%BF%E7%94%A8/" title="c++中fillPoly函数使用">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">刚体位姿</span>
+                        <span class="hidden-mobile">c++中fillPoly函数使用</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -400,8 +425,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/02/19/%E5%B7%AE%E9%80%9F%E5%BA%95%E7%9B%98%E6%9C%BA%E5%99%A8%E4%BA%BA%E8%BF%90%E5%8A%A8%E5%88%86%E6%9E%90/" title="差速底盘机器人运动分析">
-                        <span class="hidden-mobile">差速底盘机器人运动分析</span>
+                      <a href="/2023/02/19/test/" title="test">
+                        <span class="hidden-mobile">test</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
