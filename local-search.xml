@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>ROS-melodic升级gazebo11</title>
+    <link href="/2023/03/03/ROS-melodic%E5%8D%87%E7%BA%A7gazebo11/"/>
+    <url>/2023/03/03/ROS-melodic%E5%8D%87%E7%BA%A7gazebo11/</url>
+    
+    <content type="html"><![CDATA[<h1 id="卸载Gazebo9"><a href="#卸载Gazebo9" class="headerlink" title="卸载Gazebo9"></a>卸载Gazebo9</h1><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs routeros">sudo apt-<span class="hljs-built_in">get</span> <span class="hljs-built_in">remove</span> ros-melodic-gazebo*<br>sudo apt-<span class="hljs-built_in">get</span> <span class="hljs-built_in">remove</span> libgazebo*<br>sudo apt-<span class="hljs-built_in">get</span> <span class="hljs-built_in">remove</span> gazebo*<br></code></pre></td></tr></table></figure><h1 id="安装Gazebo11"><a href="#安装Gazebo11" class="headerlink" title="安装Gazebo11"></a>安装Gazebo11</h1><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey">sudo sh -c &#x27;echo <span class="hljs-string">&quot;deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main&quot;</span> &gt; /etc/apt/sources.list.d/gazebo-stable.list&#x27;<br></code></pre></td></tr></table></figure><figure class="highlight sas"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sas">wget https://packages.osrfoundation.org/gazebo.<span class="hljs-keyword">key</span> -O - | sudo apt-<span class="hljs-keyword">key</span> <span class="hljs-keyword">add</span> -<br></code></pre></td></tr></table></figure><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs routeros">sudo apt-<span class="hljs-built_in">get</span> update<br>sudo apt-<span class="hljs-built_in">get</span> install gazebo11<br>sudo apt-<span class="hljs-built_in">get</span> install libgazebo11-dev<br>sudo apt-<span class="hljs-built_in">get</span> install ros-melodic-gazebo11-ros-pkgs<br></code></pre></td></tr></table></figure><h1 id="测试是否安装成功"><a href="#测试是否安装成功" class="headerlink" title="测试是否安装成功"></a>测试是否安装成功</h1><p>终端输入<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">gazebo</span><br></code></pre></td></tr></table></figure></p><h1 id="如果出现如下错误解决方法"><a href="#如果出现如下错误解决方法" class="headerlink" title="如果出现如下错误解决方法"></a>如果出现如下错误解决方法</h1><p>出错：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">VMware: vmw_ioctl_command <span class="hljs-built_in">error</span> Invalid argument<br></code></pre></td></tr></table></figure><br>解决方法：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;export SVGA_VGPU10=0&quot;</span> &gt;&gt; ~/.bashrc<br></code></pre></td></tr></table></figure></p><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://blog.csdn.net/qq_44732054/article/details/123430259?spm=1001.2014.3001.5501">ROS-Melodic升级Gazebo11</a><br><a href="https://blog.csdn.net/qq_40660130/article/details/124342844">VMware: vmw_ioctl_command error Invalid argument解决办法</a></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>slam</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>转载</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>opencv形态学处理morphologyEx</title>
     <link href="/2023/02/22/opencv%E5%BD%A2%E6%80%81%E5%AD%A6%E5%A4%84%E7%90%86morphologyEx/"/>
     <url>/2023/02/22/opencv%E5%BD%A2%E6%80%81%E5%AD%A6%E5%A4%84%E7%90%86morphologyEx/</url>
