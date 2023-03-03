@@ -16,22 +16,22 @@
   <meta name="author" content="Qiang Sun">
   <meta name="keywords" content="">
   
-    <meta name="description" content="卸载Gazebo9123sudo apt-get remove ros-melodic-gazebo*sudo apt-get remove libgazebo*sudo apt-get remove gazebo* 安装Gazebo111sudo sh -c &amp;#x27;echo &quot;deb http:&#x2F;&#x2F;packages.osrfoundation.org&#x2F;gazebo&#x2F;ubuntu-">
+    <meta name="description" content="问题描述在运行某些程序的功能包的时候，gazebo启动的时候会一直卡在”Preparing your world”，然后就一直不动了，这是由于gazebo在下载某些模型导致的，多等上一会，或者执行下面的命令手动把模型下全，如果还是不能打开那说明要下载的模型不在这个列表里面，知道这个模型是什么可以去手动下载，如果不知道的话就只有多等一会看能不能下完打开了。 解决办法123cd ~&#x2F;.gazebo&#x2F;g">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ROS-melodic升级gazebo11">
-<meta property="og:url" content="https://qiangsun89.github.io/2023/03/03/ROS-melodic%E5%8D%87%E7%BA%A7gazebo11/index.html">
+<meta property="og:title" content="gazebo打不开一直卡在Preparing your world">
+<meta property="og:url" content="https://qiangsun89.github.io/2023/03/03/gazebo%E6%89%93%E4%B8%8D%E5%BC%80%E4%B8%80%E7%9B%B4%E5%8D%A1%E5%9C%A8Preparing-your-world/index.html">
 <meta property="og:site_name" content="小强的学习笔记">
-<meta property="og:description" content="卸载Gazebo9123sudo apt-get remove ros-melodic-gazebo*sudo apt-get remove libgazebo*sudo apt-get remove gazebo* 安装Gazebo111sudo sh -c &amp;#x27;echo &quot;deb http:&#x2F;&#x2F;packages.osrfoundation.org&#x2F;gazebo&#x2F;ubuntu-">
+<meta property="og:description" content="问题描述在运行某些程序的功能包的时候，gazebo启动的时候会一直卡在”Preparing your world”，然后就一直不动了，这是由于gazebo在下载某些模型导致的，多等上一会，或者执行下面的命令手动把模型下全，如果还是不能打开那说明要下载的模型不在这个列表里面，知道这个模型是什么可以去手动下载，如果不知道的话就只有多等一会看能不能下完打开了。 解决办法123cd ~&#x2F;.gazebo&#x2F;g">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-03-03T01:19:31.000Z">
-<meta property="article:modified_time" content="2023-03-03T01:30:46.469Z">
+<meta property="article:published_time" content="2023-03-03T06:57:15.000Z">
+<meta property="article:modified_time" content="2023-03-03T06:59:24.436Z">
 <meta property="article:author" content="Qiang Sun">
 <meta property="article:tag" content="转载">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>ROS-melodic升级gazebo11 - 小强的学习笔记</title>
+  <title>gazebo打不开一直卡在Preparing your world - 小强的学习笔记</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -214,7 +214,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="ROS-melodic升级gazebo11"></span>
+            <span id="subtitle" data-typed-text="gazebo打不开一直卡在Preparing your world"></span>
           
         </div>
 
@@ -225,8 +225,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-03-03 09:19" pubdate>
-          2023年3月3日 上午
+        <time datetime="2023-03-03 14:57" pubdate>
+          2023年3月3日 下午
         </time>
       </span>
     
@@ -237,7 +237,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          673 字
+          250 字
         
       </span>
     
@@ -248,7 +248,7 @@
         
         
         
-          6 分钟
+          3 分钟
         
       </span>
     
@@ -294,19 +294,13 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">ROS-melodic升级gazebo11</h1>
+            <h1 style="display: none">gazebo打不开一直卡在Preparing your world</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="卸载Gazebo9"><a href="#卸载Gazebo9" class="headerlink" title="卸载Gazebo9"></a>卸载Gazebo9</h1><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs routeros">sudo apt-<span class="hljs-built_in">get</span> <span class="hljs-built_in">remove</span> ros-melodic-gazebo*<br>sudo apt-<span class="hljs-built_in">get</span> <span class="hljs-built_in">remove</span> libgazebo*<br>sudo apt-<span class="hljs-built_in">get</span> <span class="hljs-built_in">remove</span> gazebo*<br></code></pre></td></tr></table></figure>
-<h1 id="安装Gazebo11"><a href="#安装Gazebo11" class="headerlink" title="安装Gazebo11"></a>安装Gazebo11</h1><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey">sudo sh -c &#x27;echo <span class="hljs-string">&quot;deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main&quot;</span> &gt; /etc/apt/sources.list.d/gazebo-stable.list&#x27;<br></code></pre></td></tr></table></figure>
-<figure class="highlight sas"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sas">wget https://packages.osrfoundation.org/gazebo.<span class="hljs-keyword">key</span> -O - | sudo apt-<span class="hljs-keyword">key</span> <span class="hljs-keyword">add</span> -<br></code></pre></td></tr></table></figure>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs routeros">sudo apt-<span class="hljs-built_in">get</span> update<br>sudo apt-<span class="hljs-built_in">get</span> install gazebo11<br>sudo apt-<span class="hljs-built_in">get</span> install libgazebo11-dev<br>sudo apt-<span class="hljs-built_in">get</span> install ros-melodic-gazebo11-ros-pkgs<br></code></pre></td></tr></table></figure>
-<h1 id="测试是否安装成功"><a href="#测试是否安装成功" class="headerlink" title="测试是否安装成功"></a>测试是否安装成功</h1><p>终端输入<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">gazebo</span><br></code></pre></td></tr></table></figure></p>
-<h1 id="如果出现如下错误解决方法"><a href="#如果出现如下错误解决方法" class="headerlink" title="如果出现如下错误解决方法"></a>如果出现如下错误解决方法</h1><p>出错：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">VMware: vmw_ioctl_command <span class="hljs-built_in">error</span> Invalid argument<br></code></pre></td></tr></table></figure><br>解决方法：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;export SVGA_VGPU10=0&quot;</span> &gt;&gt; ~/.bashrc<br></code></pre></td></tr></table></figure></p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_44732054/article/details/123430259?spm=1001.2014.3001.5501">ROS-Melodic升级Gazebo11</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_40660130/article/details/124342844">VMware: vmw_ioctl_command error Invalid argument解决办法</a></p>
-
+                <h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><p>在运行某些程序的功能包的时候，gazebo启动的时候会一直卡在”Preparing your world”，然后就一直不动了，这是由于gazebo在下载某些模型导致的，多等上一会，或者执行下面的命令手动把模型下全，如果还是不能打开那说明要下载的模型不在这个列表里面，知道这个模型是什么可以去手动下载，如果不知道的话就只有多等一会看能不能下完打开了。</p>
+<h1 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h1><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk">cd ~<span class="hljs-regexp">/.gazebo/</span><br>git clone https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/osrf/g</span>azebo_models.git models<br><br></code></pre></td></tr></table></figure>
                 
               </div>
             
@@ -351,8 +345,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>ROS-melodic升级gazebo11</div>
-      <div>https://qiangsun89.github.io/2023/03/03/ROS-melodic升级gazebo11/</div>
+      <div>gazebo打不开一直卡在Preparing your world</div>
+      <div>https://qiangsun89.github.io/2023/03/03/gazebo打不开一直卡在Preparing-your-world/</div>
     </div>
     <div class="license-meta">
       
@@ -396,18 +390,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/03/03/world/" title="world">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">world</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/02/22/opencv%E5%BD%A2%E6%80%81%E5%AD%A6%E5%A4%84%E7%90%86morphologyEx/" title="opencv形态学处理morphologyEx">
-                        <span class="hidden-mobile">opencv形态学处理morphologyEx</span>
+                      <a href="/2023/03/03/world/" title="world">
+                        <span class="hidden-mobile">world</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

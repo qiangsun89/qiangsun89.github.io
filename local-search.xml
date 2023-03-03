@@ -4,6 +4,44 @@
   
   
   <entry>
+    <title>gazebo打不开一直卡在Preparing your world</title>
+    <link href="/2023/03/03/gazebo%E6%89%93%E4%B8%8D%E5%BC%80%E4%B8%80%E7%9B%B4%E5%8D%A1%E5%9C%A8Preparing-your-world/"/>
+    <url>/2023/03/03/gazebo%E6%89%93%E4%B8%8D%E5%BC%80%E4%B8%80%E7%9B%B4%E5%8D%A1%E5%9C%A8Preparing-your-world/</url>
+    
+    <content type="html"><![CDATA[<h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><p>在运行某些程序的功能包的时候，gazebo启动的时候会一直卡在”Preparing your world”，然后就一直不动了，这是由于gazebo在下载某些模型导致的，多等上一会，或者执行下面的命令手动把模型下全，如果还是不能打开那说明要下载的模型不在这个列表里面，知道这个模型是什么可以去手动下载，如果不知道的话就只有多等一会看能不能下完打开了。</p><h1 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h1><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk">cd ~<span class="hljs-regexp">/.gazebo/</span><br>git clone https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/osrf/g</span>azebo_models.git models<br><br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>slam</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>转载</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>world</title>
+    <link href="/2023/03/03/world/"/>
+    <url>/2023/03/03/world/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>ROS-melodic升级gazebo11</title>
     <link href="/2023/03/03/ROS-melodic%E5%8D%87%E7%BA%A7gazebo11/"/>
     <url>/2023/03/03/ROS-melodic%E5%8D%87%E7%BA%A7gazebo11/</url>
