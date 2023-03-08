@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>Why does my robot navigate too close to walls and/or cuts corners?</title>
+    <link href="/2023/03/08/Why-does-my-robot-navigate-too-close-to-walls-and-or-cuts-corners/"/>
+    <url>/2023/03/08/Why-does-my-robot-navigate-too-close-to-walls-and-or-cuts-corners/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Question-Why-does-my-robot-navigate-too-close-to-walls-and-or-cuts-corners"><a href="#Question-Why-does-my-robot-navigate-too-close-to-walls-and-or-cuts-corners" class="headerlink" title="Question: Why does my robot navigate too close to walls and/or cuts corners?"></a>Question: Why does my robot navigate too close to walls and/or cuts corners?</h1><p><strong>Short Answer:</strong> Define/Increase the inflation radius in your costmap configuration.<br><strong>Long Answer:</strong> At first glance, parameter min_obstacle_dist could be increased, but this could lead to an undesired navigation behavior in small hallways or doors (see Gaps in the trajectory). The local planner “follows” a moving virtual goal on the global plan. Therefore locations of intermediate global plan position of the global plan significantly influence the spatial behavior of the local plan. By defining an inflation radius the global planner prefers plans with minimum cost and hence plans with a higher separation from walls. Note, the teb_local_planner itself does not take the inflation radius into account. The resulting motion is time-optimal w.r.t. the virtual goal. If you wish to stick much more to following the global path, refer to Global path following. If your robot hits walls, you should really increase min_obstacle_dist or setup an appropriate footprint (refer to this tutorial).</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>ROS QA</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>转载</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>gazebo打不开一直卡在Preparing your world</title>
     <link href="/2023/03/03/gazebo%E6%89%93%E4%B8%8D%E5%BC%80%E4%B8%80%E7%9B%B4%E5%8D%A1%E5%9C%A8Preparing-your-world/"/>
     <url>/2023/03/03/gazebo%E6%89%93%E4%B8%8D%E5%BC%80%E4%B8%80%E7%9B%B4%E5%8D%A1%E5%9C%A8Preparing-your-world/</url>

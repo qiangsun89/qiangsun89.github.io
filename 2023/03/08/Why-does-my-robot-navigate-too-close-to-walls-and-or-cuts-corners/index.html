@@ -16,22 +16,22 @@
   <meta name="author" content="Qiang Sun">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1234int morph_elem &#x3D; 0;cv::Mat element &#x3D; cv::getStructuringElement( morph_elem, cv::Size( 3, 3 ), cv::Point( -1, -1 ) );cv::Mat dst;cv::morphologyEx( src, dst, 3, element );">
+    <meta name="description" content="Question: Why does my robot navigate too close to walls and&#x2F;or cuts corners?Short Answer: Define&#x2F;Increase the inflation radius in your costmap configuration.Long Answer: At first glance, parameter min">
 <meta property="og:type" content="article">
-<meta property="og:title" content="opencv形态学处理morphologyEx">
-<meta property="og:url" content="https://qiangsun89.github.io/2023/02/22/opencv%E5%BD%A2%E6%80%81%E5%AD%A6%E5%A4%84%E7%90%86morphologyEx/index.html">
+<meta property="og:title" content="Why does my robot navigate too close to walls and&#x2F;or cuts corners?">
+<meta property="og:url" content="https://qiangsun89.github.io/2023/03/08/Why-does-my-robot-navigate-too-close-to-walls-and-or-cuts-corners/index.html">
 <meta property="og:site_name" content="小强的学习笔记">
-<meta property="og:description" content="1234int morph_elem &#x3D; 0;cv::Mat element &#x3D; cv::getStructuringElement( morph_elem, cv::Size( 3, 3 ), cv::Point( -1, -1 ) );cv::Mat dst;cv::morphologyEx( src, dst, 3, element );">
+<meta property="og:description" content="Question: Why does my robot navigate too close to walls and&#x2F;or cuts corners?Short Answer: Define&#x2F;Increase the inflation radius in your costmap configuration.Long Answer: At first glance, parameter min">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-02-22T05:06:44.000Z">
-<meta property="article:modified_time" content="2023-02-22T05:09:21.741Z">
+<meta property="article:published_time" content="2023-03-08T02:27:30.000Z">
+<meta property="article:modified_time" content="2023-03-08T02:31:24.739Z">
 <meta property="article:author" content="Qiang Sun">
-<meta property="article:tag" content="原创">
+<meta property="article:tag" content="转载">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>opencv形态学处理morphologyEx - 小强的学习笔记</title>
+  <title>Why does my robot navigate too close to walls and/or cuts corners? - 小强的学习笔记</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -214,7 +214,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="opencv形态学处理morphologyEx"></span>
+            <span id="subtitle" data-typed-text="Why does my robot navigate too close to walls and/or cuts corners?"></span>
           
         </div>
 
@@ -225,8 +225,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-02-22 13:06" pubdate>
-          2023年2月22日 下午
+        <time datetime="2023-03-08 10:27" pubdate>
+          2023年3月8日 上午
         </time>
       </span>
     
@@ -237,7 +237,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          151 字
+          903 字
         
       </span>
     
@@ -248,7 +248,7 @@
         
         
         
-          2 分钟
+          8 分钟
         
       </span>
     
@@ -294,12 +294,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">opencv形态学处理morphologyEx</h1>
+            <h1 style="display: none">Why does my robot navigate too close to walls and/or cuts corners?</h1>
             
             
               <div class="markdown-body">
                 
-                <figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-built_in">int</span> morph_elem = <span class="hljs-number">0</span>;<br>cv::Mat element = cv::get<span class="hljs-constructor">StructuringElement( <span class="hljs-params">morph_elem</span>, <span class="hljs-params">cv</span>::Size( 3, 3 )</span>, cv::<span class="hljs-constructor">Point( -1, -1 )</span> );<br>cv::Mat dst;<br>cv::morphology<span class="hljs-constructor">Ex( <span class="hljs-params">src</span>, <span class="hljs-params">dst</span>, 3, <span class="hljs-params">element</span> )</span>;<br></code></pre></td></tr></table></figure>
+                <h1 id="Question-Why-does-my-robot-navigate-too-close-to-walls-and-or-cuts-corners"><a href="#Question-Why-does-my-robot-navigate-too-close-to-walls-and-or-cuts-corners" class="headerlink" title="Question: Why does my robot navigate too close to walls and/or cuts corners?"></a>Question: Why does my robot navigate too close to walls and/or cuts corners?</h1><p><strong>Short Answer:</strong> Define/Increase the inflation radius in your costmap configuration.<br><strong>Long Answer:</strong> At first glance, parameter min_obstacle_dist could be increased, but this could lead to an undesired navigation behavior in small hallways or doors (see Gaps in the trajectory). The local planner “follows” a moving virtual goal on the global plan. Therefore locations of intermediate global plan position of the global plan significantly influence the spatial behavior of the local plan. By defining an inflation radius the global planner prefers plans with minimum cost and hence plans with a higher separation from walls. Note, the teb_local_planner itself does not take the inflation radius into account. The resulting motion is time-optimal w.r.t. the virtual goal. If you wish to stick much more to following the global path, refer to Global path following. If your robot hits walls, you should really increase min_obstacle_dist or setup an appropriate footprint (refer to this tutorial).</p>
 
                 
               </div>
@@ -318,7 +318,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/opencv/" class="category-chain-item">opencv</a>
+  <a href="/categories/ROS-QA/" class="category-chain-item">ROS QA</a>
   
   
 
@@ -333,7 +333,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E5%8E%9F%E5%88%9B/">#原创</a>
+        <a href="/tags/%E8%BD%AC%E8%BD%BD/">#转载</a>
       
     </div>
   
@@ -345,8 +345,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>opencv形态学处理morphologyEx</div>
-      <div>https://qiangsun89.github.io/2023/02/22/opencv形态学处理morphologyEx/</div>
+      <div>Why does my robot navigate too close to walls and/or cuts corners?</div>
+      <div>https://qiangsun89.github.io/2023/03/08/Why-does-my-robot-navigate-too-close-to-walls-and-or-cuts-corners/</div>
     </div>
     <div class="license-meta">
       
@@ -358,7 +358,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年2月22日</div>
+          <div>2023年3月8日</div>
         </div>
       
       
@@ -390,18 +390,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/03/03/ROS-melodic%E5%8D%87%E7%BA%A7gazebo11/" title="ROS-melodic升级gazebo11">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">ROS-melodic升级gazebo11</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/02/22/c-%E4%B8%ADfillPoly%E5%87%BD%E6%95%B0%E4%BD%BF%E7%94%A8/" title="c++中fillPoly函数使用">
-                        <span class="hidden-mobile">c++中fillPoly函数使用</span>
+                      <a href="/2023/03/03/gazebo%E6%89%93%E4%B8%8D%E5%BC%80%E4%B8%80%E7%9B%B4%E5%8D%A1%E5%9C%A8Preparing-your-world/" title="gazebo打不开一直卡在Preparing your world">
+                        <span class="hidden-mobile">gazebo打不开一直卡在Preparing your world</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
