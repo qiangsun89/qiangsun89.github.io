@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>How to read a research paper</title>
+    <link href="/2023/03/14/How-to-read-a-research-paper/"/>
+    <url>/2023/03/14/How-to-read-a-research-paper/</url>
+    
+    <content type="html"><![CDATA[<h1 id="How-to-read-a-research-paper"><a href="#How-to-read-a-research-paper" class="headerlink" title="How to read a research paper"></a>How to read a research paper</h1><p>Research papers are a peculiar kind of document; for the uninitiated, it will take some getting usedto. There are two types of research papers that we may read:</p><ul><li>conference papers — shorter papers (typically 6–8 pages in robotics) generally subject to peer review, written and presented in conjunction with a conference meeting.</li><li>journal papers — longer and more complete papers, subject to a more thorough peer review, and published in an (archival) journal<br>We will be reading several journal and conference papers from the robotics literature this semester. Some of the main journals and conferences in robotics are:</li><li>IEEE Transactions on Robotics and Automation</li><li>International Journal of Robotics Research</li><li>Autonomous Robots</li><li>IEEE Conference on Robotics and Automation (ICRA)</li><li>IEEE/RSJ Conference on Robots and Systems (IROS)<br>The Rensselaer library has all these journals and conference proceedings. They are available   online through the library. The library also has hardcopy up until the past few years.<br>&emsp;To search for research papers on a topic, try the INSPEC database (available through the library<br>website under Engineering databases) or try one of the following:<br><a href="http://citeseer.ist.psu.edu/">http://citeseer.ist.psu.edu/</a><br><a href="http://scholar.google.com/">http://scholar.google.com/</a><br>Many researchers (at least in the U.S.) put their papers online on their web page. Sometimes this is a better version than what you can find through the official online sources because conference proceedings often have scanned/reduced quality figures and images. However the published version is definitive<h1 id="Questions-to-ask-while-reading-a-research-paper"><a href="#Questions-to-ask-while-reading-a-research-paper" class="headerlink" title="Questions to ask while reading a research paper"></a>Questions to ask while reading a research paper</h1>It is important that you learn to read research papers critically, so here are some questions to ask yourself as you read:</li><li>What problem(s) are they solving? Why are these problems important?</li><li>What did they really do? (as opposed to what the authors say or imply they did)</li><li>What is the contribution of the work? (i.e. what is interesting or new to the field?)</li><li>What methods are they using?</li><li>Would you have solved the problem differently?</li><li>Do all the pieces of their work fit together logically?</li><li>What were the results? Did they do what they set out to do?<h1 id="Tips-on-reading-research-papers"><a href="#Tips-on-reading-research-papers" class="headerlink" title="Tips on reading research papers"></a>Tips on reading research papers</h1></li><li>You need not read a research paper sequentially from beginning to end. Here’s one possible<br>sequence:<br>– Read the title. (What is the paper about?)<br>– Read the abstract. (Should give you a concise overview of the paper.)<br>– Read the introduction. (Look for motivations, relation to other work, and a more detailed<br>overview.)<br>– Look at the structure of the paper. (What do the remaining sections address? How do<br>they fit together?)<br>– (Read the previous/related work section. (How does this work relate? What is new or<br>different about this work?))<br>– Read the conclusions. (What were their results?)<br>– Read the body of the paper. You may want to skip over all the equations the first time<br>through  </li><li>The references won’t mean much to you if you’re not familiar with the literature. Sometimes<br>important parts of the work may be contained in the references, particularly in conference<br>papers since space is limited.<br>The references are very important when you are researching a topic — they point you to<br>related research as well as the research upon which the current paper builds upon.</li><li>Sooner or later, you will come across something that you don’t understand. What can you<br>do? You should try to figure out what it is and how it is being used (even though you still<br>don’t understand it). For further reading, see the references!</li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>academic</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Building Modular ROS Packages</title>
     <link href="/2023/03/10/Building-Modular-ROS-Packages/"/>
     <url>/2023/03/10/Building-Modular-ROS-Packages/</url>
