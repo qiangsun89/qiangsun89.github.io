@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>The matrix cookbook</title>
+    <link href="/2023/03/17/The-matrix-cookbook/"/>
+    <url>/2023/03/17/The-matrix-cookbook/</url>
+    
+    <content type="html"><![CDATA[<h1 id="The-matrix-cookbook"><a href="#The-matrix-cookbook" class="headerlink" title="The matrix cookbook"></a>The matrix cookbook</h1><div class="row">    <embed src="The-Matrix-Cookbook.pdf" width="100%" height="550" type="application/pdf"></div>]]></content>
+    
+    
+    <categories>
+      
+      <category>mathematics</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>cartographer仿真建图</title>
     <link href="/2023/03/16/cartographer%E4%BB%BF%E7%9C%9F%E5%BB%BA%E5%9B%BE/"/>
     <url>/2023/03/16/cartographer%E4%BB%BF%E7%9C%9F%E5%BB%BA%E5%9B%BE/</url>
@@ -125,6 +150,56 @@
     <tags>
       
       <tag>转载</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>ROS-melodic在catkin build时报错catkin: command not found</title>
+    <link href="/2023/03/04/ROS-melodic%E5%9C%A8catkin-build%E6%97%B6%E6%8A%A5%E9%94%99catkin-command-not-found/"/>
+    <url>/2023/03/04/ROS-melodic%E5%9C%A8catkin-build%E6%97%B6%E6%8A%A5%E9%94%99catkin-command-not-found/</url>
+    
+    <content type="html"><![CDATA[<h1 id="ROS-melodic在catkin-build时报错catkin-command-not-found"><a href="#ROS-melodic在catkin-build时报错catkin-command-not-found" class="headerlink" title="ROS-melodic在catkin build时报错catkin: command not found"></a>ROS-melodic在catkin build时报错catkin: command not found</h1><p>解决方法<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">sudo apt-<span class="hljs-built_in">get</span> install ros-melodic-catkin python-catkin-tools<br></code></pre></td></tr></table></figure></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>slam</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>解决ubuntu在apt-get install时出错Could not get lock /var/lib/dpkg/lock-frontend</title>
+    <link href="/2023/03/03/%E8%A7%A3%E5%86%B3ubuntu%E5%9C%A8apt-get-install%E6%97%B6%E5%87%BA%E9%94%99Could-not-get-lock-var-lib-dpkg-lock-frontend/"/>
+    <url>/2023/03/03/%E8%A7%A3%E5%86%B3ubuntu%E5%9C%A8apt-get-install%E6%97%B6%E5%87%BA%E9%94%99Could-not-get-lock-var-lib-dpkg-lock-frontend/</url>
+    
+    <content type="html"><![CDATA[<p>sudo apt-get install 时会报错<br><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">E: Could <span class="hljs-keyword">not</span> <span class="hljs-keyword">get</span> <span class="hljs-keyword">lock</span> /var/lib/dpkg/<span class="hljs-keyword">lock</span>-frontend - <span class="hljs-keyword">open</span> (<span class="hljs-number">11</span>: Resource temporarily unavailable)<br>E: Unable <span class="hljs-keyword">to</span> acquire the dpkg frontend <span class="hljs-keyword">lock</span> (/var/lib/dpkg/<span class="hljs-keyword">lock</span>-frontend), <span class="hljs-keyword">is</span> another process <span class="hljs-keyword">using</span> it?<br></code></pre></td></tr></table></figure><br>解决方法:依次执行如下命令<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">sudo rm <span class="hljs-regexp">/var/</span>lib<span class="hljs-regexp">/apt/</span>lists/lock<br></code></pre></td></tr></table></figure><br><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">sudo rm <span class="hljs-regexp">/var/</span>cache<span class="hljs-regexp">/apt/</span>archives/lock<br></code></pre></td></tr></table></figure><br><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">sudo rm <span class="hljs-regexp">/var/</span>lib<span class="hljs-regexp">/dpkg/</span>lock*<br></code></pre></td></tr></table></figure></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Linux</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
       
     </tags>
     
