@@ -20,7 +20,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="Ubuntu下安装Octave">
 <meta property="og:url" content="https://qiangsun89.github.io/2023/03/15/Ubuntu%E4%B8%8B%E5%AE%89%E8%A3%85Octave/index.html">
-<meta property="og:site_name" content="小强的学习笔记">
+<meta property="og:site_name" content="知识的搬运工">
 <meta property="og:description" content="Ubuntu下安装OctaveGNU Octave是一种采用高级编程语言的主要用于数值分析的软件。Octave有助于以数值方式解决线性和非线性问题，并使用与MATLAB兼容的语言进行其他数值实验。它也可以作为面向批处理的语言使用。因为它是GNU计划的一部分，所以它是GNU通用公共许可证条款下的自由软件。 打开终端第一步,添加源1sudo apt-add-repository ppa:octave&#x2F;">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-03-15T02:59:37.000Z">
@@ -31,7 +31,7 @@
   
   
   
-  <title>Ubuntu下安装Octave - 小强的学习笔记</title>
+  <title>Ubuntu下安装Octave - 知识的搬运工</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -728,5 +728,21 @@
   <noscript>
     <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
   </noscript>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
