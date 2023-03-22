@@ -24,7 +24,7 @@
 <meta property="og:description" content="基于ROS navigation 进行机器人脱困方案设计如果机器人被困在障碍物中无法移动，基于ROS navigation进行脱困的算法设计可以考虑以下步骤：1、感知环境并构建地图：机器人需要使用传感器（例如激光雷达或摄像头）来感知周围环境，并利用ROS中的SLAM算法构建地图。地图可以用来定位机器人的位置以及规划路径。   2、确定困境：机器人需要确定自己被困的情况，例如是否被墙壁、家具或其他障">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-03-22T06:23:18.000Z">
-<meta property="article:modified_time" content="2023-03-22T06:26:29.834Z">
+<meta property="article:modified_time" content="2023-03-22T09:47:09.997Z">
 <meta property="article:author" content="Qiang Sun">
 <meta property="article:tag" content="原创">
 <meta name="twitter:card" content="summary_large_image">
@@ -237,7 +237,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          643 字
+          1.9k 字
         
       </span>
     
@@ -248,7 +248,7 @@
         
         
         
-          6 分钟
+          16 分钟
         
       </span>
     
@@ -305,6 +305,11 @@
 <p>4、控制机器人运动：机器人需要使用ROS中的运动控制库来控制机器人的运动，将其移动到规划好的脱困路径上。控制库可以将路径信息转换为机器人的运动指令，例如速度和转向角度。  </p>
 <p>5、监控机器人状态：机器人需要监控自身的状态，例如位置和速度，以便在需要时进行调整。<br>6、处理异常情况：如果机器人在脱困过程中出现异常情况（例如机械故障或无法行驶），则需要使用ROS中的异常处理机制，例如自适应控制和错误恢复，来处理这些情况。  </p>
 <p>总之，基于ROS navigation进行机器人脱困算法设计需要充分考虑机器人的感知、决策和控制能力，以及可能出现的异常情况。通过合理的算法设计和运动控制，可以让机器人成功地脱离障碍物并回到安全区域。</p>
+<p>以下是一些关于ROS Navigation中recovery_behavior的相关英文论文：<br>1.”Recovery Behaviors for Navigation Robots in Dynamic Environments,” by Jinyong Jeong, Jonghun Park, Jangmyung Lee, and Hyun Myung. This paper proposes a set of recovery behaviors for navigation robots in dynamic environments, including obstacle avoidance and path planning.</p>
+<p>2.”Robustness of Recovery Behaviors for Mobile Robots,” by Chen Wang and Hadas Kress-Gazit. This paper presents a framework for analyzing the robustness of recovery behaviors for mobile robots in complex environments.</p>
+<p>3.”A Hierarchical Approach to Recovery Behaviors in Mobile Robot Navigation,” by Neil Dantam, Dave Coleman, and Sachin Chitta. This paper describes a hierarchical approach to recovery behaviors in mobile robot navigation, which allows the robot to recover from various types of failures and disturbances.</p>
+<p>4.”Recovery Behaviors for Autonomous Mobile Robots,” by Stefano Carpin, Nicola Tomatis, and Alberto Broggi. This paper presents a set of recovery behaviors for autonomous mobile robots, including obstacle avoidance, replanning, and exploration.</p>
+<p>5.”Recovery Behaviors for Mobile Robots in Unknown Environments,” by Jaeheung Park, Minwoo Lee, and Seungbin Moon. This paper proposes a set of recovery behaviors for mobile robots in unknown environments, including localization, path planning, and obstacle avoidance.<br>这些论文都提供了有关ROS Navigation中recovery_behavior的相关研究和应用的信息。</p>
 
                 
               </div>
