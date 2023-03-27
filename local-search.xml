@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>ROS中使用rqt报错Command &#39;rqt&#39; not found</title>
+    <link href="/2023/03/27/ROS%E4%B8%AD%E4%BD%BF%E7%94%A8rqt%E6%8A%A5%E9%94%99Command-rqt-not-found/"/>
+    <url>/2023/03/27/ROS%E4%B8%AD%E4%BD%BF%E7%94%A8rqt%E6%8A%A5%E9%94%99Command-rqt-not-found/</url>
+    
+    <content type="html"><![CDATA[<p>ROS在使用rqt命令时突然报错Command ‘rqt’ not found，可能是因为不小心卸载掉了rqt，重装可解决<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs routeros">sudo apt-<span class="hljs-built_in">get</span> install ros-kinetic-rqt  <br>sudo apt-<span class="hljs-built_in">get</span> install ros-kinetic-rqt-graph  <br>sudo apt-<span class="hljs-built_in">get</span> install ros-kinetic-rqt-common-plugins  <br></code></pre></td></tr></table></figure></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>slam</category>
+      
+      <category>ROS</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>机器人脱困方案简述</title>
     <link href="/2023/03/22/%E6%9C%BA%E5%99%A8%E4%BA%BA%E8%84%B1%E5%9B%B0%E6%96%B9%E6%A1%88%E7%AE%80%E8%BF%B0/"/>
     <url>/2023/03/22/%E6%9C%BA%E5%99%A8%E4%BA%BA%E8%84%B1%E5%9B%B0%E6%96%B9%E6%A1%88%E7%AE%80%E8%BF%B0/</url>
