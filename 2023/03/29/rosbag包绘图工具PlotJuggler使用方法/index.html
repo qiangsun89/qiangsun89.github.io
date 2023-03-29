@@ -24,7 +24,7 @@
 <meta property="og:description" content="rosbag包绘图工具PlotJuggler使用方法安装：ubuntu版本为melodic，如果是其他版本作相应替换1sudo apt-get install ros-melodic-plotjugglerros插件安装1sudo apt-get install ros-melodic-plotjuggler-msgs ros-melodic-plotjuggler-ros使用：1roscore1">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-03-29T10:42:34.000Z">
-<meta property="article:modified_time" content="2023-03-29T10:46:23.522Z">
+<meta property="article:modified_time" content="2023-03-29T11:31:12.909Z">
 <meta property="article:author" content="Qiang Sun">
 <meta property="article:tag" content="转载">
 <meta name="twitter:card" content="summary_large_image">
@@ -237,7 +237,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          221 字
+          358 字
         
       </span>
     
@@ -248,7 +248,7 @@
         
         
         
-          2 分钟
+          3 分钟
         
       </span>
     
@@ -300,6 +300,7 @@
               <div class="markdown-body">
                 
                 <h1 id="rosbag包绘图工具PlotJuggler使用方法"><a href="#rosbag包绘图工具PlotJuggler使用方法" class="headerlink" title="rosbag包绘图工具PlotJuggler使用方法"></a>rosbag包绘图工具PlotJuggler使用方法</h1><p>安装：<br>ubuntu版本为melodic，如果是其他版本作相应替换<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">sudo apt-<span class="hljs-built_in">get</span> install ros-melodic-plotjuggler<br></code></pre></td></tr></table></figure><br>ros插件安装<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">sudo apt-<span class="hljs-built_in">get</span> install ros-melodic-plotjuggler-msgs ros-melodic-plotjuggler-ros<br></code></pre></td></tr></table></figure><br>使用：<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">roscore</span><br></code></pre></td></tr></table></figure><br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">rosrun plotjuggler plotjuggler</span><br></code></pre></td></tr></table></figure></p>
+<h1 id="绘制XY曲线"><a href="#绘制XY曲线" class="headerlink" title="绘制XY曲线"></a>绘制XY曲线</h1><p>即使PlotJuggler主要关注时间序列，也可以将共享同一时间轴的两个时间序列混合在一起。一个经典的例子是机器人的XY位置，如果想知道机器人在全局坐标系下的运动轨迹，就要将xy同时描绘出来。要激活此模式，请使用鼠标右键而不是鼠标左键拖动XY数据到figure中</p>
 
                 
               </div>
