@@ -4,6 +4,46 @@
   
   
   <entry>
+    <title>rosbag包绘图工具PlotJuggler使用方法</title>
+    <link href="/2023/03/29/rosbag%E5%8C%85%E7%BB%98%E5%9B%BE%E5%B7%A5%E5%85%B7PlotJuggler%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/"/>
+    <url>/2023/03/29/rosbag%E5%8C%85%E7%BB%98%E5%9B%BE%E5%B7%A5%E5%85%B7PlotJuggler%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/</url>
+    
+    <content type="html"><![CDATA[<h1 id="rosbag包绘图工具PlotJuggler使用方法"><a href="#rosbag包绘图工具PlotJuggler使用方法" class="headerlink" title="rosbag包绘图工具PlotJuggler使用方法"></a>rosbag包绘图工具PlotJuggler使用方法</h1><p>安装：<br>ubuntu版本为melodic，如果是其他版本作相应替换<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">sudo apt-<span class="hljs-built_in">get</span> install ros-melodic-plotjuggler<br></code></pre></td></tr></table></figure><br>ros插件安装<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">sudo apt-<span class="hljs-built_in">get</span> install ros-melodic-plotjuggler-msgs ros-melodic-plotjuggler-ros<br></code></pre></td></tr></table></figure><br>使用：<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">roscore</span><br></code></pre></td></tr></table></figure><br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">rosrun plotjuggler plotjuggler</span><br></code></pre></td></tr></table></figure></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>slam</category>
+      
+      <category>ROS</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>转载</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>包绘图工具PlotJuggler使用方法</title>
+    <link href="/2023/03/29/%E5%8C%85%E7%BB%98%E5%9B%BE%E5%B7%A5%E5%85%B7PlotJuggler%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/"/>
+    <url>/2023/03/29/%E5%8C%85%E7%BB%98%E5%9B%BE%E5%B7%A5%E5%85%B7PlotJuggler%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>ROS消息或服务无法编译生成msg/srv文件产生的头文件</title>
     <link href="/2023/03/29/ROS%E6%B6%88%E6%81%AF%E6%88%96%E6%9C%8D%E5%8A%A1%E6%97%A0%E6%B3%95%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90msg-srv%E6%96%87%E4%BB%B6%E4%BA%A7%E7%94%9F%E7%9A%84%E5%A4%B4%E6%96%87%E4%BB%B6/"/>
     <url>/2023/03/29/ROS%E6%B6%88%E6%81%AF%E6%88%96%E6%9C%8D%E5%8A%A1%E6%97%A0%E6%B3%95%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90msg-srv%E6%96%87%E4%BB%B6%E4%BA%A7%E7%94%9F%E7%9A%84%E5%A4%B4%E6%96%87%E4%BB%B6/</url>
