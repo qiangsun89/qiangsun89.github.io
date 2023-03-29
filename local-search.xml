@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>ROS消息或服务无法编译生成msg/srv文件产生的头文件</title>
+    <link href="/2023/03/29/ROS%E6%B6%88%E6%81%AF%E6%88%96%E6%9C%8D%E5%8A%A1%E6%97%A0%E6%B3%95%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90msg-srv%E6%96%87%E4%BB%B6%E4%BA%A7%E7%94%9F%E7%9A%84%E5%A4%B4%E6%96%87%E4%BB%B6/"/>
+    <url>/2023/03/29/ROS%E6%B6%88%E6%81%AF%E6%88%96%E6%9C%8D%E5%8A%A1%E6%97%A0%E6%B3%95%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90msg-srv%E6%96%87%E4%BB%B6%E4%BA%A7%E7%94%9F%E7%9A%84%E5%A4%B4%E6%96%87%E4%BB%B6/</url>
+    
+    <content type="html"><![CDATA[<h1 id="ROS消息或服务无法编译生成msg-srv文件产生的头文件"><a href="#ROS消息或服务无法编译生成msg-srv文件产生的头文件" class="headerlink" title="ROS消息或服务无法编译生成msg/srv文件产生的头文件"></a>ROS消息或服务无法编译生成msg/srv文件产生的头文件</h1><p><strong>问题原因：</strong><br>一般情况下，如果你的msg/srv文件是一个单独的package的话(假设为A)，在依赖A生成的头文件的packageB里面编译对应的cpp文件时，在add_dependencies的最后添加${catkin_EXPORTED_TARGETS}会包含所有在find_package里面列出的包的_generate_messages_cpp宏用来生成对应的头文件，这样编译应该是没有问题的。但是当msg/srv和需要其产生头文件的cpp文件在同一个包里面时，第一次编译会报找不到头文件的错。<br><strong>解决：</strong><br>${catkin_EXPORTED_TARGETS}这个宏之前再加一个current_package_generate_messages_cpp，current_package换成当前的包名即可。<br><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">add_dependencies</span>(<span class="hljs-variable">$&#123;PROJECT_NAME&#125;</span>_node <span class="hljs-variable">$&#123;<span class="hljs-variable">$&#123;PROJECT_NAME&#125;</span>_EXPORTED_TARGETS&#125;</span> <span class="hljs-variable">$&#123;catkin_EXPORTED_TARGETS&#125;</span>)<br></code></pre></td></tr></table></figure><br>其中 ${PROJECT_NAME}_node 替换为自己的ros节点名<br>例如：<br><img src="/2023/03/29/ROS%E6%B6%88%E6%81%AF%E6%88%96%E6%9C%8D%E5%8A%A1%E6%97%A0%E6%B3%95%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90msg-srv%E6%96%87%E4%BB%B6%E4%BA%A7%E7%94%9F%E7%9A%84%E5%A4%B4%E6%96%87%E4%BB%B6/bug.png" class="" title="CmakeLists例子"></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>slam</category>
+      
+      <category>ROS</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>转载</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>ROS中使用rqt报错Command &#39;rqt&#39; not found</title>
     <link href="/2023/03/27/ROS%E4%B8%AD%E4%BD%BF%E7%94%A8rqt%E6%8A%A5%E9%94%99Command-rqt-not-found/"/>
     <url>/2023/03/27/ROS%E4%B8%AD%E4%BD%BF%E7%94%A8rqt%E6%8A%A5%E9%94%99Command-rqt-not-found/</url>

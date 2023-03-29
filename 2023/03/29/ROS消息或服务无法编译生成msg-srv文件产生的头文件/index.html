@@ -16,22 +16,24 @@
   <meta name="author" content="Qiang Sun">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Linux一行代码统计项目代码行数1find . -name &quot;*.cpp&quot; -or -name &quot;*.cc&quot; -or -name &quot;*.h&quot; -or -name &quot;*.hpp&quot; |xargs cat|wc -l">
+    <meta name="description" content="ROS消息或服务无法编译生成msg&#x2F;srv文件产生的头文件问题原因：一般情况下，如果你的msg&#x2F;srv文件是一个单独的package的话(假设为A)，在依赖A生成的头文件的packageB里面编译对应的cpp文件时，在add_dependencies的最后添加${catkin_EXPORTED_TARGETS}会包含所有在find_package里面列出的包的_generate_messages_">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux使用find统计代码行数">
-<meta property="og:url" content="https://qiangsun89.github.io/2023/02/17/Linux%E4%BD%BF%E7%94%A8find%E7%BB%9F%E8%AE%A1%E4%BB%A3%E7%A0%81%E8%A1%8C%E6%95%B0/index.html">
+<meta property="og:title" content="ROS消息或服务无法编译生成msg&#x2F;srv文件产生的头文件">
+<meta property="og:url" content="https://qiangsun89.github.io/2023/03/29/ROS%E6%B6%88%E6%81%AF%E6%88%96%E6%9C%8D%E5%8A%A1%E6%97%A0%E6%B3%95%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90msg-srv%E6%96%87%E4%BB%B6%E4%BA%A7%E7%94%9F%E7%9A%84%E5%A4%B4%E6%96%87%E4%BB%B6/index.html">
 <meta property="og:site_name" content="知识的搬运工">
-<meta property="og:description" content="Linux一行代码统计项目代码行数1find . -name &quot;*.cpp&quot; -or -name &quot;*.cc&quot; -or -name &quot;*.h&quot; -or -name &quot;*.hpp&quot; |xargs cat|wc -l">
+<meta property="og:description" content="ROS消息或服务无法编译生成msg&#x2F;srv文件产生的头文件问题原因：一般情况下，如果你的msg&#x2F;srv文件是一个单独的package的话(假设为A)，在依赖A生成的头文件的packageB里面编译对应的cpp文件时，在add_dependencies的最后添加${catkin_EXPORTED_TARGETS}会包含所有在find_package里面列出的包的_generate_messages_">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-02-17T06:34:18.000Z">
-<meta property="article:modified_time" content="2023-02-17T06:41:02.000Z">
+<meta property="og:image" content="https://qiangsun89.github.io/2023/03/29/ROS%E6%B6%88%E6%81%AF%E6%88%96%E6%9C%8D%E5%8A%A1%E6%97%A0%E6%B3%95%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90msg-srv%E6%96%87%E4%BB%B6%E4%BA%A7%E7%94%9F%E7%9A%84%E5%A4%B4%E6%96%87%E4%BB%B6/bug.png">
+<meta property="article:published_time" content="2023-03-29T07:05:09.000Z">
+<meta property="article:modified_time" content="2023-03-29T07:14:45.367Z">
 <meta property="article:author" content="Qiang Sun">
-<meta property="article:tag" content="原创">
+<meta property="article:tag" content="转载">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://qiangsun89.github.io/2023/03/29/ROS%E6%B6%88%E6%81%AF%E6%88%96%E6%9C%8D%E5%8A%A1%E6%97%A0%E6%B3%95%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90msg-srv%E6%96%87%E4%BB%B6%E4%BA%A7%E7%94%9F%E7%9A%84%E5%A4%B4%E6%96%87%E4%BB%B6/bug.png">
   
   
   
-  <title>Linux使用find统计代码行数 - 知识的搬运工</title>
+  <title>ROS消息或服务无法编译生成msg/srv文件产生的头文件 - 知识的搬运工</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -214,7 +216,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Linux使用find统计代码行数"></span>
+            <span id="subtitle" data-typed-text="ROS消息或服务无法编译生成msg/srv文件产生的头文件"></span>
           
         </div>
 
@@ -225,8 +227,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-02-17 14:34" pubdate>
-          2023年2月17日 下午
+        <time datetime="2023-03-29 15:05" pubdate>
+          2023年3月29日 下午
         </time>
       </span>
     
@@ -237,7 +239,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          131 字
+          556 字
         
       </span>
     
@@ -248,7 +250,7 @@
         
         
         
-          2 分钟
+          5 分钟
         
       </span>
     
@@ -294,12 +296,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Linux使用find统计代码行数</h1>
+            <h1 style="display: none">ROS消息或服务无法编译生成msg/srv文件产生的头文件</h1>
             
             
               <div class="markdown-body">
                 
-                <p>Linux一行代码统计项目代码行数<br><figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sqf"><span class="hljs-built_in">find</span> . -<span class="hljs-built_in">name</span> <span class="hljs-string">&quot;*.cpp&quot;</span> -<span class="hljs-built_in">or</span> -<span class="hljs-built_in">name</span> <span class="hljs-string">&quot;*.cc&quot;</span> -<span class="hljs-built_in">or</span> -<span class="hljs-built_in">name</span> <span class="hljs-string">&quot;*.h&quot;</span> -<span class="hljs-built_in">or</span> -<span class="hljs-built_in">name</span> <span class="hljs-string">&quot;*.hpp&quot;</span> |xargs cat|wc -l<br></code></pre></td></tr></table></figure></p>
+                <h1 id="ROS消息或服务无法编译生成msg-srv文件产生的头文件"><a href="#ROS消息或服务无法编译生成msg-srv文件产生的头文件" class="headerlink" title="ROS消息或服务无法编译生成msg/srv文件产生的头文件"></a>ROS消息或服务无法编译生成msg/srv文件产生的头文件</h1><p><strong>问题原因：</strong><br>一般情况下，如果你的msg/srv文件是一个单独的package的话(假设为A)，在依赖A生成的头文件的packageB里面编译对应的cpp文件时，在add_dependencies的最后添加${catkin_EXPORTED_TARGETS}会包含所有在find_package里面列出的包的_generate_messages_cpp宏用来生成对应的头文件，这样编译应该是没有问题的。但是当msg/srv和需要其产生头文件的cpp文件在同一个包里面时，第一次编译会报找不到头文件的错。<br><strong>解决：</strong><br>${catkin_EXPORTED_TARGETS}这个宏之前再加一个current_package_generate_messages_cpp，current_package换成当前的包名即可。<br><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">add_dependencies</span>(<span class="hljs-variable">$&#123;PROJECT_NAME&#125;</span>_node <span class="hljs-variable">$&#123;<span class="hljs-variable">$&#123;PROJECT_NAME&#125;</span>_EXPORTED_TARGETS&#125;</span> <span class="hljs-variable">$&#123;catkin_EXPORTED_TARGETS&#125;</span>)<br></code></pre></td></tr></table></figure><br>其中 ${PROJECT_NAME}_node 替换为自己的ros节点名<br>例如：<br><img src="/2023/03/29/ROS%E6%B6%88%E6%81%AF%E6%88%96%E6%9C%8D%E5%8A%A1%E6%97%A0%E6%B3%95%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90msg-srv%E6%96%87%E4%BB%B6%E4%BA%A7%E7%94%9F%E7%9A%84%E5%A4%B4%E6%96%87%E4%BB%B6/bug.png" srcset="/img/loading.gif" lazyload class="" title="CmakeLists例子"></p>
 
                 
               </div>
@@ -318,8 +320,15 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Linux/" class="category-chain-item">Linux</a>
+  <a href="/categories/slam/" class="category-chain-item">slam</a>
   
+  
+    <span>></span>
+    
+  <a href="/categories/slam/ROS/" class="category-chain-item">ROS</a>
+  
+  
+
   
 
       </span>
@@ -333,7 +342,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E5%8E%9F%E5%88%9B/">#原创</a>
+        <a href="/tags/%E8%BD%AC%E8%BD%BD/">#转载</a>
       
     </div>
   
@@ -345,8 +354,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Linux使用find统计代码行数</div>
-      <div>https://qiangsun89.github.io/2023/02/17/Linux使用find统计代码行数/</div>
+      <div>ROS消息或服务无法编译生成msg/srv文件产生的头文件</div>
+      <div>https://qiangsun89.github.io/2023/03/29/ROS消息或服务无法编译生成msg-srv文件产生的头文件/</div>
     </div>
     <div class="license-meta">
       
@@ -358,7 +367,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年2月17日</div>
+          <div>2023年3月29日</div>
         </div>
       
       
@@ -390,18 +399,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/02/18/%E7%BA%BF%E9%80%9F%E5%BA%A6%E4%B8%8E%E8%A7%92%E9%80%9F%E5%BA%A6%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB/" title="线速度与角速度之间的关系">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">线速度与角速度之间的关系</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/02/17/ubuntu18-04%E4%B8%ADROS%E7%89%88%E6%9C%AC%E4%B8%BAmelodic%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85cartographer/" title="ubuntu18.04中ROS版本为melodic环境安装cartographer">
-                        <span class="hidden-mobile">ubuntu18.04中ROS版本为melodic环境安装cartographer</span>
+                      <a href="/2023/03/27/ROS%E4%B8%AD%E4%BD%BF%E7%94%A8rqt%E6%8A%A5%E9%94%99Command-rqt-not-found/" title="ROS中使用rqt报错Command &#39;rqt&#39; not found">
+                        <span class="hidden-mobile">ROS中使用rqt报错Command &#39;rqt&#39; not found</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
