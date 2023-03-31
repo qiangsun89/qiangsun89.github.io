@@ -1,0 +1,761 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Qiang Sun">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="ROS海龟跟随-理解TF坐标变换本篇我们在海龟仿真器中，通过一个例程（turtle_tf）来理解TF的作用，并且熟悉之前学到的TF工具。该例程的功能包turtle_tf可以使用如下命令进行安装：1sudo apt-get install ros-melodic-turtle-tf安装完成后，就可以使用如下命令运行例程了：1roslaunch turtle_tf turtle_tf_demo.lau">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ROS海龟跟随-理解TF坐标变换">
+<meta property="og:url" content="https://qiangsun89.github.io/2023/03/31/ROS%E6%B5%B7%E9%BE%9F%E8%B7%9F%E9%9A%8F-%E7%90%86%E8%A7%A3TF%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2/index.html">
+<meta property="og:site_name" content="知识的搬运工">
+<meta property="og:description" content="ROS海龟跟随-理解TF坐标变换本篇我们在海龟仿真器中，通过一个例程（turtle_tf）来理解TF的作用，并且熟悉之前学到的TF工具。该例程的功能包turtle_tf可以使用如下命令进行安装：1sudo apt-get install ros-melodic-turtle-tf安装完成后，就可以使用如下命令运行例程了：1roslaunch turtle_tf turtle_tf_demo.lau">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://qiangsun89.github.io/2023/03/31/ROS%E6%B5%B7%E9%BE%9F%E8%B7%9F%E9%9A%8F-%E7%90%86%E8%A7%A3TF%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2/turtlesim.png">
+<meta property="og:image" content="https://qiangsun89.github.io/2023/03/31/ROS%E6%B5%B7%E9%BE%9F%E8%B7%9F%E9%9A%8F-%E7%90%86%E8%A7%A3TF%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2/follow.png">
+<meta property="og:image" content="https://qiangsun89.github.io/2023/03/31/ROS%E6%B5%B7%E9%BE%9F%E8%B7%9F%E9%9A%8F-%E7%90%86%E8%A7%A3TF%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2/view_frame.png">
+<meta property="og:image" content="https://qiangsun89.github.io/2023/03/31/ROS%E6%B5%B7%E9%BE%9F%E8%B7%9F%E9%9A%8F-%E7%90%86%E8%A7%A3TF%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2/trans.png">
+<meta property="og:image" content="https://qiangsun89.github.io/2023/03/31/ROS%E6%B5%B7%E9%BE%9F%E8%B7%9F%E9%9A%8F-%E7%90%86%E8%A7%A3TF%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2/trans_matrix.png">
+<meta property="og:image" content="https://qiangsun89.github.io/2023/03/31/ROS%E6%B5%B7%E9%BE%9F%E8%B7%9F%E9%9A%8F-%E7%90%86%E8%A7%A3TF%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2/rviz.png">
+<meta property="og:image" content="https://qiangsun89.github.io/2023/03/31/ROS%E6%B5%B7%E9%BE%9F%E8%B7%9F%E9%9A%8F-%E7%90%86%E8%A7%A3TF%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2/red.png">
+<meta property="og:image" content="https://qiangsun89.github.io/2023/03/31/ROS%E6%B5%B7%E9%BE%9F%E8%B7%9F%E9%9A%8F-%E7%90%86%E8%A7%A3TF%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2/color_path.png">
+<meta property="article:published_time" content="2023-03-31T02:50:46.000Z">
+<meta property="article:modified_time" content="2023-03-31T05:36:52.575Z">
+<meta property="article:author" content="Qiang Sun">
+<meta property="article:tag" content="转载">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://qiangsun89.github.io/2023/03/31/ROS%E6%B5%B7%E9%BE%9F%E8%B7%9F%E9%9A%8F-%E7%90%86%E8%A7%A3TF%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2/turtlesim.png">
+  
+  
+  
+  <title>ROS海龟跟随-理解TF坐标变换 - 知识的搬运工</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"qiangsun89.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"LEYjQzDk7jo8uqlOQoAEF5qm-gzGzoHsz","app_key":"7bBCyINnLw0akaPjI39pESMN","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>知识的搬运工</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="ROS海龟跟随-理解TF坐标变换"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-03-31 10:50" pubdate>
+          2023年3月31日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          47 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">ROS海龟跟随-理解TF坐标变换</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="ROS海龟跟随-理解TF坐标变换"><a href="#ROS海龟跟随-理解TF坐标变换" class="headerlink" title="ROS海龟跟随-理解TF坐标变换"></a>ROS海龟跟随-理解TF坐标变换</h1><p>本篇我们在海龟仿真器中，通过一个例程（turtle_tf）来理解TF的作用，并且熟悉之前学到的TF工具。该例程的功能包turtle_tf可以使用如下命令进行安装：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">sudo apt-<span class="hljs-built_in">get</span> install ros-melodic-turtle-tf<br></code></pre></td></tr></table></figure><br>安装完成后，就可以使用如下命令运行例程了：<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs applescript">roslaunch turtle_tf turtle_tf_demo.<span class="hljs-built_in">launch</span><br></code></pre></td></tr></table></figure><br>海龟仿真器打开后会出现两只小海龟，并且下方的小海龟自动向中心位置的小海龟移动<br><img src="/2023/03/31/ROS%E6%B5%B7%E9%BE%9F%E8%B7%9F%E9%9A%8F-%E7%90%86%E8%A7%A3TF%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2/turtlesim.png" srcset="/img/loading.gif" lazyload class="" title="海龟仿真器"><br>键盘控制一只海龟移动，另一只会跟随着一起移动<br><img src="/2023/03/31/ROS%E6%B5%B7%E9%BE%9F%E8%B7%9F%E9%9A%8F-%E7%90%86%E8%A7%A3TF%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2/follow.png" srcset="/img/loading.gif" lazyload class="" title="海龟跟随移动"><br>另外一只海龟总是会跟随我们控制的那只海龟运行。在这个例程中，TF是如何运用的呢？我们首先使用TF工具来看一下这个例程中的TF树是什么样的：<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">rosrun tf view_frames</span><br></code></pre></td></tr></table></figure><br><img src="/2023/03/31/ROS%E6%B5%B7%E9%BE%9F%E8%B7%9F%E9%9A%8F-%E7%90%86%E8%A7%A3TF%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2/view_frame.png" srcset="/img/loading.gif" lazyload class="" title="TF树"><br>在当前系统中存在三个坐标系：world、turtle1、turtle2。world是世界坐标系，作为系统的基础坐标系，其他坐标系都相对该坐标系建立，所以world是TF树的根节点。相对于world坐标系，又分别针对两只海龟创建了两个海龟坐标系，这两个坐标系的原点就是海龟在世界坐标系下的坐标位置。<br>现在要让turtle2跟随turtle1运动，相当于turtle2坐标系向turtle1坐标系移动，这就需要知道turtle2与turtle1之间的坐标变换。三个坐标系之间的变换关系可以使用如下公式描述：<br><img src="/2023/03/31/ROS%E6%B5%B7%E9%BE%9F%E8%B7%9F%E9%9A%8F-%E7%90%86%E8%A7%A3TF%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2/trans.png" srcset="/img/loading.gif" lazyload class="" title="海龟之间的坐标变换"><br>使用tf_echo工具在TF树中查找海龟坐标系之间的变换关系：<br><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">rosrun tf tf_<span class="hljs-keyword">echo</span> turtle1 turtle2<br></code></pre></td></tr></table></figure><br><img src="/2023/03/31/ROS%E6%B5%B7%E9%BE%9F%E8%B7%9F%E9%9A%8F-%E7%90%86%E8%A7%A3TF%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2/trans_matrix.png" srcset="/img/loading.gif" lazyload class="" title="变换矩阵"><br>也可以通过rviz的图形界面更加形象的看到这三者之间的坐标关系：<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gradle">rosrun rviz rviz -d `rospack <span class="hljs-keyword">find</span> turtle_tf`<span class="hljs-regexp">/rviz/</span>turtle_rviz.rviz<br></code></pre></td></tr></table></figure><br><img src="/2023/03/31/ROS%E6%B5%B7%E9%BE%9F%E8%B7%9F%E9%9A%8F-%E7%90%86%E8%A7%A3TF%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2/rviz.png" srcset="/img/loading.gif" lazyload class="" title="rviz中坐标系之间关系"><br>得到turtle2与turtle1之间的坐标变换后，就可以计算两只海龟间的距离和角度，即可控制turtle2向turtle1移动了。<br>接下来，我们以这个例程为目标，学习如何实现TF的广播和监听功能。  </p>
+<h1 id="创建TF广播器"><a href="#创建TF广播器" class="headerlink" title="创建TF广播器"></a>创建TF广播器</h1><p>首先，我们需要创建一个发布海龟坐标系与世界坐标系之间TF变换的节点，实现源码turtle_tf_broadcaster.cpp的具体内容如下：<br><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">#<span class="hljs-keyword">include</span> &lt;ros/ros.h&gt;<br>#<span class="hljs-keyword">include</span> &lt;tf/transform_broadcaster.h&gt;<br>#<span class="hljs-keyword">include</span> &lt;turtlesim/<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Pose</span>.</span></span>h&gt;<br><br>std::<span class="hljs-built_in">string</span> turtle_name;<br><br>void pose<span class="hljs-constructor">Callback(<span class="hljs-params">const</span> <span class="hljs-params">turtlesim</span>::PoseConstPtr&amp; <span class="hljs-params">msg</span>)</span><br>&#123;<br><span class="hljs-comment">// tf广播器</span><br>static tf::TransformBroadcaster br;<br><br><span class="hljs-comment">// 根据海龟当前的位姿，设置相对于世界坐标系的坐标变换</span><br>tf::Transform transform;<br>transform.set<span class="hljs-constructor">Origin( <span class="hljs-params">tf</span>::Vector3(<span class="hljs-params">msg</span>-&gt;<span class="hljs-params">x</span>, <span class="hljs-params">msg</span>-&gt;<span class="hljs-params">y</span>, 0.0)</span> );<br>tf::Quaternion q;<br>q.set<span class="hljs-constructor">RPY(0, 0, <span class="hljs-params">msg</span>-&gt;<span class="hljs-params">theta</span>)</span>;<br>transform.set<span class="hljs-constructor">Rotation(<span class="hljs-params">q</span>)</span>;<br><br><span class="hljs-comment">// 发布坐标变换</span><br>br.send<span class="hljs-constructor">Transform(<span class="hljs-params">tf</span>::StampedTransform(<span class="hljs-params">transform</span>, <span class="hljs-params">ros</span>::Time::<span class="hljs-params">now</span>()</span>, <span class="hljs-string">&quot;world&quot;</span>, turtle_name));<br>&#125;<br><br><span class="hljs-built_in">int</span> main(<span class="hljs-built_in">int</span> argc, <span class="hljs-built_in">char</span>** argv)<br>&#123;<br><span class="hljs-comment">// 初始化节点</span><br>ros::init(argc, argv, <span class="hljs-string">&quot;my_tf_broadcaster&quot;</span>);<br><span class="hljs-keyword">if</span> (argc != <span class="hljs-number">2</span>)<br>&#123;<br><span class="hljs-constructor">ROS_ERROR(<span class="hljs-string">&quot;need turtle name as argument&quot;</span>)</span>; <br>return -<span class="hljs-number">1</span>;<br>&#125;;<br>turtle_name = argv<span class="hljs-literal">[<span class="hljs-number">1</span>]</span>;<br><br><span class="hljs-comment">// 订阅海龟的pose信息</span><br>ros::NodeHandle node;<br>ros::Subscriber sub = node.subscribe(turtle_name+<span class="hljs-string">&quot;/pose&quot;</span>, <span class="hljs-number">10</span>, &amp;poseCallback);<br><br>ros::spin<span class="hljs-literal">()</span>;<br><br>return <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure><br>以上代码的关键部分是处理海龟pose消息的回调函数poseCallback。在广播TF消息之前需要定义tf::TransformBroadcaster广播器，然后根据海龟当前的位姿，设置tf::Transform类型的坐标变换，包含setOrigin设置的平移变换以及setRotation设置的旋转变换。<br>然后使用广播器将坐标变换插入TF树并且发布，这里发布的TF消息类型是tf::StampedTransform，不仅包含tf::Transform类型的坐标变换、时间戳，而且还需要指定坐标变换的源坐标系（parent）和目标坐标系（child）。  </p>
+<h1 id="创建TF监听器"><a href="#创建TF监听器" class="headerlink" title="创建TF监听器"></a>创建TF监听器</h1><p>TF消息广播之后，其他节点就可以监听该TF消息，从而获取需要的坐标变换了。<br>目前我们已经将海龟相对于world坐标系的TF变换广播，接下来需要监听TF消息，并从中获取turtle2相对于turtle1坐标系的变换，从而控制turtle2移动。实现源码turtle_tf_listener.cpp的详细内容如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;ros/ros.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;tf/transform_listener.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;geometry_msgs/Twist.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;turtlesim/Spawn.h&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span>** argv)</span></span><br><span class="hljs-function"></span>&#123;<br><span class="hljs-comment">// 初始化节点</span><br>ros::<span class="hljs-built_in">init</span>(argc, argv, <span class="hljs-string">&quot;my_tf_listener&quot;</span>);<br><br>ros::NodeHandle node;<br><br><span class="hljs-comment">// 通过服务调用，产生第二只乌龟turtle2</span><br>ros::service::<span class="hljs-built_in">waitForService</span>(<span class="hljs-string">&quot;spawn&quot;</span>);<br>ros::ServiceClient add_turtle =<br>node.<span class="hljs-built_in">serviceClient</span>&lt;turtlesim::Spawn&gt;(<span class="hljs-string">&quot;spawn&quot;</span>);<br>turtlesim::Spawn srv;<br>add_turtle.<span class="hljs-built_in">call</span>(srv);<br><br><span class="hljs-comment">// 定义turtle2的速度控制发布器</span><br>ros::Publisher turtle_vel =<br>node.<span class="hljs-built_in">advertise</span>&lt;geometry_msgs::Twist&gt;(<span class="hljs-string">&quot;turtle2/cmd_vel&quot;</span>, <span class="hljs-number">10</span>);<br><br><span class="hljs-comment">// tf监听器</span><br>tf::TransformListener listener;<br><br><span class="hljs-function">ros::Rate <span class="hljs-title">rate</span><span class="hljs-params">(<span class="hljs-number">10.0</span>)</span></span>;<br><span class="hljs-keyword">while</span> (node.<span class="hljs-built_in">ok</span>())<br>&#123;<br>tf::StampedTransform transform;<br><span class="hljs-keyword">try</span><br>&#123;<br><span class="hljs-comment">// 查找turtle2与turtle1的坐标变换</span><br>listener.<span class="hljs-built_in">waitForTransform</span>(<span class="hljs-string">&quot;/turtle2&quot;</span>, <span class="hljs-string">&quot;/turtle1&quot;</span>, ros::<span class="hljs-built_in">Time</span>(<span class="hljs-number">0</span>), ros::<span class="hljs-built_in">Duration</span>(<span class="hljs-number">3.0</span>));<br>listener.<span class="hljs-built_in">lookupTransform</span>(<span class="hljs-string">&quot;/turtle2&quot;</span>, <span class="hljs-string">&quot;/turtle1&quot;</span>, ros::<span class="hljs-built_in">Time</span>(<span class="hljs-number">0</span>), transform);<br>&#125;<br><span class="hljs-built_in">catch</span> (tf::TransformException &amp;ex) <br>&#123;<br><span class="hljs-built_in">ROS_ERROR</span>(<span class="hljs-string">&quot;%s&quot;</span>,ex.<span class="hljs-built_in">what</span>());<br>ros::<span class="hljs-built_in">Duration</span>(<span class="hljs-number">1.0</span>).<span class="hljs-built_in">sleep</span>();<br><span class="hljs-keyword">continue</span>;<br>&#125;<br><br><span class="hljs-comment">// 根据turtle1和turtle2之间的坐标变换，计算turtle2需要运动的线速度和角速度</span><br><span class="hljs-comment">// 并发布速度控制指令，使turtle2向turtle1移动</span><br>geometry_msgs::Twist vel_msg;<br>vel_msg.angular.z = <span class="hljs-number">4.0</span> * <span class="hljs-built_in">atan2</span>(transform.<span class="hljs-built_in">getOrigin</span>().<span class="hljs-built_in">y</span>(),<br>transform.<span class="hljs-built_in">getOrigin</span>().<span class="hljs-built_in">x</span>());<br>vel_msg.linear.x = <span class="hljs-number">0.5</span> * <span class="hljs-built_in">sqrt</span>(<span class="hljs-built_in">pow</span>(transform.<span class="hljs-built_in">getOrigin</span>().<span class="hljs-built_in">x</span>(), <span class="hljs-number">2</span>) +<br><span class="hljs-built_in">pow</span>(transform.<span class="hljs-built_in">getOrigin</span>().<span class="hljs-built_in">y</span>(), <span class="hljs-number">2</span>));<br>turtle_vel.<span class="hljs-built_in">publish</span>(vel_msg);<br><br>rate.<span class="hljs-built_in">sleep</span>();<br>&#125;<br><span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure><br>该节点首先通过服务调用产生海龟turtle2，然后声明控制turtle2速度的Publisher。在监听TF消息之前，需要创建一个tf::TransformListener类型的监听器，创建成功后监听器会自动接收TF树的消息，并且缓存10秒。<br>然后在循环中就可以实时查找TF树中的坐标变换了，这里需要调用的是tf::TransformListener中的两个接口：<br><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">wait<span class="hljs-constructor">ForTransform(<span class="hljs-params">const</span> <span class="hljs-params">std</span>::<span class="hljs-params">string</span> &amp;<span class="hljs-params">target_frame</span>, <span class="hljs-params">const</span> <span class="hljs-params">std</span>::<span class="hljs-params">string</span>&amp;<span class="hljs-params">source_frame</span>, <span class="hljs-params">const</span> <span class="hljs-params">ros</span>::Time&amp;<span class="hljs-params">time</span>, <span class="hljs-params">const</span> <span class="hljs-params">ros</span>::Duration &amp;<span class="hljs-params">timeout</span>)</span><br></code></pre></td></tr></table></figure><br>给定的源坐标系（source_frame）和目标坐标系（target_frame），等待两个坐标系之间指定时间（time）的变换关系，该函数会阻塞程序运行，所以需要设置超时时间（timeout）。<br><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">lookup<span class="hljs-constructor">Transform(<span class="hljs-params">const</span> <span class="hljs-params">std</span>::<span class="hljs-params">string</span> &amp;<span class="hljs-params">target_frame</span>,<span class="hljs-params">const</span> <span class="hljs-params">std</span>::<span class="hljs-params">string</span> &amp;<span class="hljs-params">source_frame</span>, <span class="hljs-params">const</span> <span class="hljs-params">ros</span>::Time &amp; <span class="hljs-params">time</span>,StampedTransform &amp;<span class="hljs-params">transform</span>)</span><br></code></pre></td></tr></table></figure><br>给定的源坐标系（source_frame）和目标坐标系（target_frame），得到两个坐标系之间指定时间（time）的坐标变换（transform），ros::Time(0) 表示我们想要的是最新一次的坐标变换。<br>通过以上两个接口的调用，就可以获取turtle2相对于turtle1的坐标变换了。然后根据坐标系之间的位置关系，计算得到turtle2需要运动的线速度和角速度，并发布速度控制指令，使turtle2向turtle1移动。</p>
+<h1 id="实现海龟跟随运动"><a href="#实现海龟跟随运动" class="headerlink" title="实现海龟跟随运动"></a>实现海龟跟随运动</h1><p>现在小海龟跟随例程的所有代码都已经完成，我们来编写一个launch文件，将所有节点运行起来，start_demo_with_listener.launch：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">launch</span>&gt;</span><br><span class="hljs-comment">&lt;!-- 海龟仿真器 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">node</span> <span class="hljs-attr">pkg</span>=<span class="hljs-string">&quot;turtlesim&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;turtlesim_node&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;sim&quot;</span>/&gt;</span><br><br><span class="hljs-comment">&lt;!-- 键盘控制 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">node</span> <span class="hljs-attr">pkg</span>=<span class="hljs-string">&quot;turtlesim&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;turtle_teleop_key&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;teleop&quot;</span> <span class="hljs-attr">output</span>=<span class="hljs-string">&quot;screen&quot;</span>/&gt;</span><br><br><span class="hljs-comment">&lt;!-- 两只海龟的tf广播 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">node</span> <span class="hljs-attr">pkg</span>=<span class="hljs-string">&quot;tf_demo&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;turtle_tf_broadcaster&quot;</span> <span class="hljs-attr">args</span>=<span class="hljs-string">&quot;/turtle1&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;turtle1_tf_broadcaster&quot;</span> /&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">node</span> <span class="hljs-attr">pkg</span>=<span class="hljs-string">&quot;tf_demo&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;turtle_tf_broadcaster&quot;</span> <span class="hljs-attr">args</span>=<span class="hljs-string">&quot;/turtle2&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;turtle2_tf_broadcaster&quot;</span> /&gt;</span><br><br><span class="hljs-comment">&lt;!-- 监听tf广播，并且控制turtle2移动 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">node</span> <span class="hljs-attr">pkg</span>=<span class="hljs-string">&quot;tf_demo&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;turtle_tf_listener&quot;</span></span><br><span class="hljs-tag"><span class="hljs-attr">name</span>=<span class="hljs-string">&quot;listener&quot;</span> /&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">launch</span>&gt;</span><br></code></pre></td></tr></table></figure><br>运行该launch文件，就可以看到与之前例程类似的两只海龟的界面了，在终端中通过键盘控制turtle1移动，turtle2也跟随移动。  </p>
+<h1 id="设置不同颜色区分海龟的轨迹"><a href="#设置不同颜色区分海龟的轨迹" class="headerlink" title="设置不同颜色区分海龟的轨迹"></a>设置不同颜色区分海龟的轨迹</h1><p>如果想用不同颜色区分小海龟的轨迹可以在新终端打开rqt<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">rqt</span><br></code></pre></td></tr></table></figure><br>然后在service下拉选项选择/turtle1/set_pen设置第一个小海龟轨迹的颜色<br><br>然后点击call完成设置<br><img src="/2023/03/31/ROS%E6%B5%B7%E9%BE%9F%E8%B7%9F%E9%9A%8F-%E7%90%86%E8%A7%A3TF%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2/red.png" srcset="/img/loading.gif" lazyload class="" title="海龟轨迹颜色设置"><br>然后键盘控制海龟移动，海归的轨迹显示了不同的颜色<br><img src="/2023/03/31/ROS%E6%B5%B7%E9%BE%9F%E8%B7%9F%E9%9A%8F-%E7%90%86%E8%A7%A3TF%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2/color_path.png" srcset="/img/loading.gif" lazyload class="" title="不同海龟轨迹颜色"></p>
+<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/58184028">参考文章</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/slam/" class="category-chain-item">slam</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/slam/ROS/" class="category-chain-item">ROS</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%BD%AC%E8%BD%BD/">#转载</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>ROS海龟跟随-理解TF坐标变换</div>
+      <div>https://qiangsun89.github.io/2023/03/31/ROS海龟跟随-理解TF坐标变换/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Qiang Sun</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年3月31日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/03/29/rosbag%E5%8C%85%E7%BB%98%E5%9B%BE%E5%B7%A5%E5%85%B7PlotJuggler%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/" title="rosbag包绘图工具PlotJuggler使用方法">
+                        <span class="hidden-mobile">rosbag包绘图工具PlotJuggler使用方法</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"LEYjQzDk7jo8uqlOQoAEF5qm-gzGzoHsz","appKey":"7bBCyINnLw0akaPjI39pESMN","path":"window.location.pathname","placeholder":"留言","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
