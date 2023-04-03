@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>ROS主从机配置</title>
+    <link href="/2023/04/03/ROS%E4%B8%BB%E4%BB%8E%E6%9C%BA%E9%85%8D%E7%BD%AE/"/>
+    <url>/2023/04/03/ROS%E4%B8%BB%E4%BB%8E%E6%9C%BA%E9%85%8D%E7%BD%AE/</url>
+    
+    <content type="html"><![CDATA[<p>与伙伴之间的工作配合可能涉及到ROS功能之间的调试，这时采用主从机的方式比较方便。</p><h1 id="配置虚拟机网络适配器"><a href="#配置虚拟机网络适配器" class="headerlink" title="配置虚拟机网络适配器"></a>配置虚拟机网络适配器</h1><p>虚拟机网络设置为桥接模式<br><img src="/2023/04/03/ROS%E4%B8%BB%E4%BB%8E%E6%9C%BA%E9%85%8D%E7%BD%AE/bridge.png" class="" title="虚拟机网络模式"></p><h1 id="查看主机和从机IP"><a href="#查看主机和从机IP" class="headerlink" title="查看主机和从机IP"></a>查看主机和从机IP</h1><p>打开终端输入<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">ifconfig</span><br></code></pre></td></tr></table></figure><br>如果报错请相应安装相关软件<br><img src="/2023/04/03/ROS%E4%B8%BB%E4%BB%8E%E6%9C%BA%E9%85%8D%E7%BD%AE/ifconfig.png" class="" title="查看主机和从机的IP"></p><h1 id="设置IP地址"><a href="#设置IP地址" class="headerlink" title="设置IP地址"></a>设置IP地址</h1><p>首先需要确定ROS多机系统中的所有计算机处于同一网络，同一网段，例如我的主机IP为192.168.21.228，从机IP为192.168.21.17<br>分别在两台计算机系统的/etc/hosts文件中加入对方的IP地址和对应的计算机名：</p><h1 id="主机hosts设置"><a href="#主机hosts设置" class="headerlink" title="主机hosts设置"></a>主机hosts设置</h1><p>主机设置的是从机的IP和计算机名<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">sudo gedit <span class="hljs-regexp">/etc/</span>hosts<br></code></pre></td></tr></table></figure><br><img src="/2023/04/03/ROS%E4%B8%BB%E4%BB%8E%E6%9C%BA%E9%85%8D%E7%BD%AE/host.png" class="" title="主机hosts设置"></p><h1 id="从机hosts设置"><a href="#从机hosts设置" class="headerlink" title="从机hosts设置"></a>从机hosts设置</h1><p>从机设置的是主机的IP和计算机名<br>从机打开终端<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">sudo gedit <span class="hljs-regexp">/etc/</span>hosts<br></code></pre></td></tr></table></figure><br><img src="/2023/04/03/ROS%E4%B8%BB%E4%BB%8E%E6%9C%BA%E9%85%8D%E7%BD%AE/slave.png" class="" title="从机hosts设置"></p><h1 id="主机环境变量设置"><a href="#主机环境变量设置" class="headerlink" title="主机环境变量设置"></a>主机环境变量设置</h1><p>这里两种方式可选择1、打开新终端设置环境变量2、在~/.bashrc文件末尾添加，两种方式都填入如下内容<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-built_in">export</span> <span class="hljs-attribute">ROS_HOSTNAME</span>=192.168.21.228 #主机IP地址  <br><span class="hljs-built_in">export</span> <span class="hljs-attribute">ROS_MASTER_URI</span>=http://192.168.21.228:11311 #主机IP地址:11311  <br><span class="hljs-built_in">export</span> <span class="hljs-attribute">ROS_IP</span>=190.168.21.228 #主机IP地址<br></code></pre></td></tr></table></figure></p><h1 id="从机环境变量设置"><a href="#从机环境变量设置" class="headerlink" title="从机环境变量设置"></a>从机环境变量设置</h1><p>这里同样有两种方式可选择1、打开新终端设置环境变量2、在~/.bashrc文件末尾添加，两种方式都填入如下内容<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-built_in">export</span> <span class="hljs-attribute">ROS_HOSTNAME</span>=192.168.21.17 #从机IP地址  <br><span class="hljs-built_in">export</span> <span class="hljs-attribute">ROS_MASTER_URI</span>=http://192.168.21.228:11311 #主机IP地址:11311<br><span class="hljs-built_in">export</span> <span class="hljs-attribute">ROS_IP</span>=190.168.21.228 #主机IP地址<br></code></pre></td></tr></table></figure></p><h1 id="验证配置"><a href="#验证配置" class="headerlink" title="验证配置"></a>验证配置</h1><p>配置完毕，接下来就要验证是否配置成功。但是运行前先要把之前的终端关掉，不然还是之前的配置<br>运行一个小海龟来验证一下，主机中输入：<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">roscore</span><br></code></pre></td></tr></table></figure><br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">rosrun turtlesim turtlesim_node</span><br></code></pre></td></tr></table></figure><br><img src="/2023/04/03/ROS%E4%B8%BB%E4%BB%8E%E6%9C%BA%E9%85%8D%E7%BD%AE/demo.png" class="" title="主机运行海龟"><br>在从机器中用键盘进行控制，从机中运行：<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">rosrun turtlesim turtle_teleop_key</span><br></code></pre></td></tr></table></figure><br><img src="/2023/04/03/ROS%E4%B8%BB%E4%BB%8E%E6%9C%BA%E9%85%8D%E7%BD%AE/demo2.png" class="" title="从机键盘控制主机的海龟移动"></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>slam</category>
+      
+      <category>ROS</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>转载</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>ROS海龟跟随-理解TF坐标变换</title>
     <link href="/2023/03/31/ROS%E6%B5%B7%E9%BE%9F%E8%B7%9F%E9%9A%8F-%E7%90%86%E8%A7%A3TF%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2/"/>
     <url>/2023/03/31/ROS%E6%B5%B7%E9%BE%9F%E8%B7%9F%E9%9A%8F-%E7%90%86%E8%A7%A3TF%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2/</url>
