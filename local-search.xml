@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>ROS中roll pitch yaw分别是绕哪个轴转</title>
+    <link href="/2023/04/06/ROS%E4%B8%ADroll-pitch-yaw%E5%88%86%E5%88%AB%E6%98%AF%E7%BB%95%E5%93%AA%E4%B8%AA%E8%BD%B4%E8%BD%AC/"/>
+    <url>/2023/04/06/ROS%E4%B8%ADroll-pitch-yaw%E5%88%86%E5%88%AB%E6%98%AF%E7%BB%95%E5%93%AA%E4%B8%AA%E8%BD%B4%E8%BD%AC/</url>
+    
+    <content type="html"><![CDATA[<h1 id="ROS中roll-pitch-yaw分别是绕哪个轴转"><a href="#ROS中roll-pitch-yaw分别是绕哪个轴转" class="headerlink" title="ROS中roll pitch yaw分别是绕哪个轴转"></a>ROS中roll pitch yaw分别是绕哪个轴转</h1><img src="/2023/04/06/ROS%E4%B8%ADroll-pitch-yaw%E5%88%86%E5%88%AB%E6%98%AF%E7%BB%95%E5%93%AA%E4%B8%AA%E8%BD%B4%E8%BD%AC/rpy.png" class="" title="roll-pitch-yaw">  <p>pitch是围绕X轴旋转，也叫做俯仰角。<br>yaw是围绕Y轴旋转，也叫偏航角。<br>roll是围绕Z轴旋转，也叫翻滚角。<br>在3D系统中，假设视点为原点，则视点坐标系如下图所示，通常z轴的负方向是视点方向<br><img src="/2023/04/06/ROS%E4%B8%ADroll-pitch-yaw%E5%88%86%E5%88%AB%E6%98%AF%E7%BB%95%E5%93%AA%E4%B8%AA%E8%BD%B4%E8%BD%AC/sight.png" class="" title="3D系统"></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>slam</category>
+      
+      <category>ROS</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>转载</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>ROS主从机配置</title>
     <link href="/2023/04/03/ROS%E4%B8%BB%E4%BB%8E%E6%9C%BA%E9%85%8D%E7%BD%AE/"/>
     <url>/2023/04/03/ROS%E4%B8%BB%E4%BB%8E%E6%9C%BA%E9%85%8D%E7%BD%AE/</url>
