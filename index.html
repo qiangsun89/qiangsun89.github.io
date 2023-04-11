@@ -243,6 +243,74 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2023/04/11/ROS%E4%B8%AD%E7%9A%84ros-spin-%E8%AF%A6%E8%A7%A3/" target="_self">
+          ROS中的ros::spin()详解
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/11/ROS%E4%B8%AD%E7%9A%84ros-spin-%E8%AF%A6%E8%A7%A3/" target="_self">
+        <div>
+          ROS中的ros::spin()详解在ROS中，ros::spin()是一个常见的函数调用，它允许ROS节点进入事件循环并处理来自其他节点的消息和服务请求。该函数被称为“自旋”，因为它在事件循环中持续运行，直到节点收到退出信号或调用ros::shutdown()函数。   当ROS节点调用ros::spin()时，它会一直等待直到有消息到达该节点。当节点接收到消息时，它将调用与该消息相关联的回调函
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-04-11 15:18" pubdate>
+              2023-04-11
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/slam/" class="category-chain-item">slam</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/slam/ROS/" class="category-chain-item">ROS</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%8E%9F%E5%88%9B/">#原创</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2023/04/11/ROS%E4%B8%ADsensor-msgs%E7%9A%84LaserScan%E8%AF%A6%E8%A7%A3/" target="_self">
           ROS中sensor_msgs的LaserScan详解
         </a>
@@ -788,74 +856,6 @@
           </div>
         
         
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/03/29/ROS%E6%B6%88%E6%81%AF%E6%88%96%E6%9C%8D%E5%8A%A1%E6%97%A0%E6%B3%95%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90msg-srv%E6%96%87%E4%BB%B6%E4%BA%A7%E7%94%9F%E7%9A%84%E5%A4%B4%E6%96%87%E4%BB%B6/" target="_self">
-          ROS消息或服务无法编译生成msg/srv文件产生的头文件
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/03/29/ROS%E6%B6%88%E6%81%AF%E6%88%96%E6%9C%8D%E5%8A%A1%E6%97%A0%E6%B3%95%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90msg-srv%E6%96%87%E4%BB%B6%E4%BA%A7%E7%94%9F%E7%9A%84%E5%A4%B4%E6%96%87%E4%BB%B6/" target="_self">
-        <div>
-          ROS消息或服务无法编译生成msg/srv文件产生的头文件问题原因：一般情况下，如果你的msg/srv文件是一个单独的package的话(假设为A)，在依赖A生成的头文件的packageB里面编译对应的cpp文件时，在add_dependencies的最后添加${catkin_EXPORTED_TARGETS}会包含所有在find_package里面列出的包的_generate_messages_
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-03-29 15:05" pubdate>
-              2023-03-29
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/slam/" class="category-chain-item">slam</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/slam/ROS/" class="category-chain-item">ROS</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E8%BD%AC%E8%BD%BD/">#转载</a>
-            
-          </div>
         
       </div>
     </article>

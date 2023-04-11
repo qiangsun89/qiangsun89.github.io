@@ -16,22 +16,22 @@
   <meta name="author" content="Qiang Sun">
   <meta name="keywords" content="">
   
-    <meta name="description" content="ROS中sensor_msgs的LaserScan详解在ROS（Robot Operating System，机器人操作系统）中，sensor_msgs::LaserScan是一个消息类型，用于表示一维的激光雷达（LIDAR）或者二维激光扫描仪的数据。激光扫描仪是一种常用于机器人导航、避障和建图的传感器。它通过向周围环境发射激光束，然后接收反射回来的激光束，进而测量物体距离和方位。sensor_m">
+    <meta name="description" content="ROS中的ros::spin()详解在ROS中，ros::spin()是一个常见的函数调用，它允许ROS节点进入事件循环并处理来自其他节点的消息和服务请求。该函数被称为“自旋”，因为它在事件循环中持续运行，直到节点收到退出信号或调用ros::shutdown()函数。   当ROS节点调用ros::spin()时，它会一直等待直到有消息到达该节点。当节点接收到消息时，它将调用与该消息相关联的回调函">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ROS中sensor_msgs的LaserScan详解">
-<meta property="og:url" content="https://qiangsun89.github.io/2023/04/11/ROS%E4%B8%ADsensor-msgs%E7%9A%84LaserScan%E8%AF%A6%E8%A7%A3/index.html">
+<meta property="og:title" content="ROS中的ros::spin()详解">
+<meta property="og:url" content="https://qiangsun89.github.io/2023/04/11/ROS%E4%B8%AD%E7%9A%84ros-spin-%E8%AF%A6%E8%A7%A3/index.html">
 <meta property="og:site_name" content="知识的搬运工">
-<meta property="og:description" content="ROS中sensor_msgs的LaserScan详解在ROS（Robot Operating System，机器人操作系统）中，sensor_msgs::LaserScan是一个消息类型，用于表示一维的激光雷达（LIDAR）或者二维激光扫描仪的数据。激光扫描仪是一种常用于机器人导航、避障和建图的传感器。它通过向周围环境发射激光束，然后接收反射回来的激光束，进而测量物体距离和方位。sensor_m">
+<meta property="og:description" content="ROS中的ros::spin()详解在ROS中，ros::spin()是一个常见的函数调用，它允许ROS节点进入事件循环并处理来自其他节点的消息和服务请求。该函数被称为“自旋”，因为它在事件循环中持续运行，直到节点收到退出信号或调用ros::shutdown()函数。   当ROS节点调用ros::spin()时，它会一直等待直到有消息到达该节点。当节点接收到消息时，它将调用与该消息相关联的回调函">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-04-11T06:56:49.000Z">
-<meta property="article:modified_time" content="2023-04-11T07:02:03.948Z">
+<meta property="article:published_time" content="2023-04-11T07:18:50.000Z">
+<meta property="article:modified_time" content="2023-04-11T07:23:23.197Z">
 <meta property="article:author" content="Qiang Sun">
 <meta property="article:tag" content="原创">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>ROS中sensor_msgs的LaserScan详解 - 知识的搬运工</title>
+  <title>ROS中的ros::spin()详解 - 知识的搬运工</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -214,7 +214,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="ROS中sensor_msgs的LaserScan详解"></span>
+            <span id="subtitle" data-typed-text="ROS中的ros::spin()详解"></span>
           
         </div>
 
@@ -225,7 +225,7 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-04-11 14:56" pubdate>
+        <time datetime="2023-04-11 15:18" pubdate>
           2023年4月11日 下午
         </time>
       </span>
@@ -237,7 +237,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.2k 字
+          2.7k 字
         
       </span>
     
@@ -248,7 +248,7 @@
         
         
         
-          10 分钟
+          23 分钟
         
       </span>
     
@@ -294,25 +294,25 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">ROS中sensor_msgs的LaserScan详解</h1>
+            <h1 style="display: none">ROS中的ros::spin()详解</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="ROS中sensor-msgs的LaserScan详解"><a href="#ROS中sensor-msgs的LaserScan详解" class="headerlink" title="ROS中sensor_msgs的LaserScan详解"></a>ROS中sensor_msgs的LaserScan详解</h1><p>在ROS（Robot Operating System，机器人操作系统）中，sensor_msgs::LaserScan是一个消息类型，用于表示一维的激光雷达（LIDAR）或者二维激光扫描仪的数据。激光扫描仪是一种常用于机器人导航、避障和建图的传感器。它通过向周围环境发射激光束，然后接收反射回来的激光束，进而测量物体距离和方位。<br>sensor_msgs::LaserScan消息包含了以下主要字段：  </p>
-<ol>
-<li>Header header：<br>header字段包含时间戳（stamp）和坐标系（frame_id）信息。时间戳表示此激光扫描数据的获取时间，而坐标系表示数据相对于哪个参考系进行描述。</li>
-<li>float32 angle_min：<br>angle_min字段表示扫描开始时的角度，通常以弧度为单位。这是激光雷达扫描范围的最小角度。</li>
-<li>float32 angle_max：<br>angle_max字段表示扫描结束时的角度，通常以弧度为单位。这是激光雷达扫描范围的最大角度。</li>
-<li>float32 angle_increment：<br>angle_increment表示激光雷达的两次扫描间隔的角度，以弧度为单位。这是激光雷达在扫描过程中，相邻两个测量点之间的角度差。</li>
-<li>float32 time_increment：<br>time_increment表示激光雷达在进行两次测量之间的时间间隔，以秒为单位。这有助于了解激光雷达采样速率。</li>
-<li>float32 scan_time：<br>scan_time表示激光雷达完成一次完整扫描所需的时间，以秒为单位。这有助于了解激光雷达的扫描频率。</li>
-<li>float32 range_min：<br>range_min表示激光雷达能够检测到的最小距离，通常以米为单位。这是激光雷达能够可靠测量的最短距离。</li>
-<li>float32 range_max：<br>range_max表示激光雷达能够检测到的最大距离，通常以米为单位。这是激光雷达能够可靠测量的最远距离。</li>
-<li>float32[] ranges：<br>ranges字段是一个浮点数组，包含从激光雷达返回的距离数据。数组中的每个元素表示对应角度的测量距离值。</li>
-<li>float32[] intensities：<br>intensities字段是一个可选的浮点数组，包含从激光雷达返回的反射强度数据。数组中的每个元素表示对应角度的反射强度值，通常用于检测物体的表面特性和反光性质。</li>
-</ol>
-<p>总之，sensor_msgs::LaserScan消息类型提供了机器人导航和避障等领域中广泛使用的激光雷达数据的表示和传输方式。激光雷达可以提供非常详细和准确的环境地图信息，但是处理这些数据也需要一定的计算资源和算法支持。在ROS中，可以使用各种算法和工具包来处理sensor_msgs::LaserScan消息，例如使用gmapping工具包生成地图，使用ROS Navigation Stack进行路径规划和避障等。</p>
+                <h1 id="ROS中的ros-spin-详解"><a href="#ROS中的ros-spin-详解" class="headerlink" title="ROS中的ros::spin()详解"></a>ROS中的ros::spin()详解</h1><p>在ROS中，ros::spin()是一个常见的函数调用，它允许ROS节点进入事件循环并处理来自其他节点的消息和服务请求。该函数被称为“自旋”，因为它在事件循环中持续运行，直到节点收到退出信号或调用ros::shutdown()函数。  </p>
+<p>当ROS节点调用ros::spin()时，它会一直等待直到有消息到达该节点。当节点接收到消息时，它将调用与该消息相关联的回调函数进行处理。这使得ROS节点能够响应其他节点的请求，同时保持事件循环处于活动状态。</p>
+<p>在ROS中，消息和服务请求都是通过ROS主题传输的。ROS主题是一种用于发布和订阅消息的通信机制。ROS节点可以发布消息到一个或多个主题，也可以订阅一个或多个主题以接收消息。当节点订阅主题时，它将等待消息到达并调用相应的回调函数进行处理。</p>
+<p>通过调用ros::spin()，ROS节点将一直处于事件循环中，等待来自主题的消息和服务请求。当节点接收到消息时，它将自动调用与该消息相关联的回调函数进行处理。这使得ROS节点能够以异步方式处理消息，而无需阻塞其他节点或执行其他任务。</p>
+<p>需要注意的是，调用ros::spin()函数将使节点永久保持活动状态，直到收到退出信号或调用ros::shutdown()函数。因此，如果节点需要在运行一段时间后退出，必须在程序中包含相应的退出机制，例如使用Ctrl+C信号等方式触发退出信号。</p>
+<p>另外，如果ROS节点有多个订阅者和/或发布者，调用ros::spin()函数将确保所有这些节点都在运行，并等待消息。这有助于确保节点可以同时处理来自多个主题的消息，并使整个ROS系统保持同步和一致性。</p>
+<p>另外，ROS节点还可以使用ros::spinOnce()函数进行自旋。与ros::spin()函数不同的是，ros::spinOnce()函数仅在事件循环中执行一次，然后返回。这使得节点能够在执行其他任务的同时处理来自主题的消息。但是，与调用ros::spin()函数一样，节点必须在某个时刻调用ros::shutdown()函数以关闭ROS节点。</p>
+<p>需要注意的是，使用ros::spin()或ros::spinOnce()函数时，节点必须在至少一个主题上进行订阅或发布，否则事件循环将不会启动。</p>
+<p>总之，ros::spin()是ROS中一个重要的函数，它允许节点处理来自其他节点的消息和服务请求，并保持节点在事件循环中运行。这使得ROS节点能够以异步方式处理消息，从而使整个ROS系统更加高效和灵活。</p>
+<h1 id="ros-spin-的例子"><a href="#ros-spin-的例子" class="headerlink" title="ros::spin()的例子"></a>ros::spin()的例子</h1><p>下面是一个简单的ROS节点示例，演示了如何使用ros::spin()函数进行自旋并处理来自其他节点的消息：<br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;ros/ros.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;std_msgs/String.h&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">messageCallback</span><span class="hljs-params">(<span class="hljs-type">const</span> std_msgs::<span class="hljs-type">String</span>::ConstPtr&amp; msg)</span></span><br><span class="hljs-function"></span>&#123;<br>  <span class="hljs-built_in">ROS_INFO</span>(<span class="hljs-string">&quot;I heard: [%s]&quot;</span>, msg-&gt;data.<span class="hljs-built_in">c_str</span>());<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> **argv)</span></span><br><span class="hljs-function"></span>&#123;<br>  <span class="hljs-comment">// 初始化ROS节点</span><br>  ros::<span class="hljs-built_in">init</span>(argc, argv, <span class="hljs-string">&quot;listener&quot;</span>);<br><br>  <span class="hljs-comment">// 创建节点句柄</span><br>  ros::NodeHandle nh;<br><br>  <span class="hljs-comment">// 创建订阅者并订阅名为&quot;chatter&quot;的主题</span><br>  ros::Subscriber sub = nh.<span class="hljs-built_in">subscribe</span>(<span class="hljs-string">&quot;chatter&quot;</span>, <span class="hljs-number">1000</span>, messageCallback);<br><br>  <span class="hljs-comment">// 启动ROS事件循环并进入自旋</span><br>  ros::<span class="hljs-built_in">spin</span>();<br><br>  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure><br>在此示例中，我们创建了一个名为”listener”的ROS节点，并创建了一个名为”chatter”的主题的订阅者。我们通过调用ros::spin()函数使该节点进入自旋状态，等待来自”chatter”主题的消息。</p>
+<p>当节点接收到消息时，将自动调用messageCallback()函数进行处理。在这个例子中，我们简单地将消息打印到ROS日志中。</p>
+<p>需要注意的是，在这个例子中，我们没有调用ros::shutdown()函数，因此节点将一直运行，直到我们手动终止它。如果要退出节点，可以使用Ctrl+C信号或其他退出机制。</p>
+<h1 id="ros-spinOnce"><a href="#ros-spinOnce" class="headerlink" title="ros::spinOnce()"></a>ros::spinOnce()</h1><p>另外，我们还可以使用ros::spinOnce()函数代替ros::spin()函数进行自旋，如下所示：<br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;ros/ros.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;std_msgs/String.h&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">messageCallback</span><span class="hljs-params">(<span class="hljs-type">const</span> std_msgs::<span class="hljs-type">String</span>::ConstPtr&amp; msg)</span></span><br><span class="hljs-function"></span>&#123;<br>  <span class="hljs-built_in">ROS_INFO</span>(<span class="hljs-string">&quot;I heard: [%s]&quot;</span>, msg-&gt;data.<span class="hljs-built_in">c_str</span>());<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> **argv)</span></span><br><span class="hljs-function"></span>&#123;<br>  <span class="hljs-comment">// 初始化ROS节点</span><br>  ros::<span class="hljs-built_in">init</span>(argc, argv, <span class="hljs-string">&quot;listener&quot;</span>);<br><br>  <span class="hljs-comment">// 创建节点句柄</span><br>  ros::NodeHandle nh;<br><br>  <span class="hljs-comment">// 创建订阅者并订阅名为&quot;chatter&quot;的主题</span><br>  ros::Subscriber sub = nh.<span class="hljs-built_in">subscribe</span>(<span class="hljs-string">&quot;chatter&quot;</span>, <span class="hljs-number">1000</span>, messageCallback);<br><br>  <span class="hljs-comment">// 进入ROS事件循环并处理来自其他节点的消息</span><br>  <span class="hljs-keyword">while</span> (ros::<span class="hljs-built_in">ok</span>())<br>  &#123;<br>    ros::<span class="hljs-built_in">spinOnce</span>();<br>  &#125;<br><br>  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure><br>在这个例子中，我们使用while循环和ros::spinOnce()函数来进行自旋，并在每次循环中处理来自”chatter”主题的消息。需要注意的是，在这个例子中，我们使用了ros::ok()函数来检查节点是否已经被关闭，从而决定是否退出自旋循环。</p>
+<p>总之，ros::spin()和ros::spinOnce()函数是ROS中非常重要的函数，它们使ROS节点能够响应其他节点的消息和服务请求，并保持节点在事件循环中运行。通过使用这些函数，我们可以更轻松地开发和部署ROS应用程序，并使其更加高效和灵活。</p>
 
                 
               </div>
@@ -365,8 +365,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>ROS中sensor_msgs的LaserScan详解</div>
-      <div>https://qiangsun89.github.io/2023/04/11/ROS中sensor-msgs的LaserScan详解/</div>
+      <div>ROS中的ros::spin()详解</div>
+      <div>https://qiangsun89.github.io/2023/04/11/ROS中的ros-spin-详解/</div>
     </div>
     <div class="license-meta">
       
@@ -410,18 +410,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/04/11/ROS%E4%B8%AD%E7%9A%84ros-spin-%E8%AF%A6%E8%A7%A3/" title="ROS中的ros::spin()详解">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">ROS中的ros::spin()详解</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/04/11/C-%E5%8E%9F%E5%AD%90%E7%B1%BB%E5%9E%8B%E8%AF%A6%E8%A7%A3/" title="C++原子类型详解">
-                        <span class="hidden-mobile">C++原子类型详解</span>
+                      <a href="/2023/04/11/ROS%E4%B8%ADsensor-msgs%E7%9A%84LaserScan%E8%AF%A6%E8%A7%A3/" title="ROS中sensor_msgs的LaserScan详解">
+                        <span class="hidden-mobile">ROS中sensor_msgs的LaserScan详解</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
