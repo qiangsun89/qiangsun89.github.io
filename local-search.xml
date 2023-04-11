@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>std::atomic_bool用法详解</title>
+    <link href="/2023/04/11/std-atomic-bool%E7%94%A8%E6%B3%95%E8%AF%A6%E8%A7%A3/"/>
+    <url>/2023/04/11/std-atomic-bool%E7%94%A8%E6%B3%95%E8%AF%A6%E8%A7%A3/</url>
+    
+    <content type="html"><![CDATA[<h1 id="std-atomic-bool用法详解"><a href="#std-atomic-bool用法详解" class="headerlink" title="std::atomic_bool用法详解"></a>std::atomic_bool用法详解</h1><p>std::atomic_bool 是 C++ 标准库中的一个原子类型，它用于表示一个原子布尔值。原子类型是一种特殊的数据类型，可以在多线程环境中实现无锁操作，避免数据竞争和同步问题。std::atomic_bool 是 std::atomic<bool> 的一个特化，提供了原子操作布尔值的接口。<br>以下是 std::atomic_bool 的一些常见用法：<br>1.初始化:<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ruby">std::atomic_bool flag(<span class="hljs-literal">false</span>); <span class="hljs-regexp">//</span> 初始化为 <span class="hljs-literal">false</span><br></code></pre></td></tr></table></figure><br>这将创建一个名为 flag 的原子布尔值并将其初始化为 false。<br>2.读取值：<br><figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sqf">bool currentValue = <span class="hljs-built_in">flag</span>.<span class="hljs-built_in">load</span>(); <span class="hljs-comment">// 读取原子布尔值</span><br></code></pre></td></tr></table></figure><br>load() 方法以原子方式读取 flag 的当前值。这可以确保在多线程环境中读取值时不会发生数据竞争。<br>3.设置值：<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ruby">flag.store(<span class="hljs-literal">true</span>); <span class="hljs-regexp">//</span> 设置原子布尔值为 <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure><br>store() 方法以原子方式设置 flag 的值。这可以确保在多线程环境中设置值时不会发生数据竞争。<br>4.原子比较和交换（Compare-and-swap）：<br><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-built_in">bool</span> expected = <span class="hljs-literal">false</span>;<br><span class="hljs-built_in">bool</span> desired = <span class="hljs-literal">true</span>;<br><span class="hljs-built_in">bool</span> result = flag.compare<span class="hljs-constructor">_exchange_weak(<span class="hljs-params">expected</span>, <span class="hljs-params">desired</span>)</span>;<br></code></pre></td></tr></table></figure><br>compare_exchange_weak() 方法比较 flag 的当前值与 expected 值。如果它们相等，该方法会将 flag 设置为 desired 值，并返回 true。如果它们不等，则返回 false，并将 expected 更新为 flag 的当前值。这个操作是原子的，因此在多线程环境中也是安全的。<br>5.原子操作符：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">bool</span> oldValue = flag.<span class="hljs-built_in">exchange</span>(<span class="hljs-literal">true</span>); <span class="hljs-comment">// 将原子布尔值设置为 true 并返回旧值</span><br></code></pre></td></tr></table></figure><br>exchange() 方法将 flag 的值设置为指定值，并返回其原始值。这个操作也是原子的。</p><p>使用 std::atomic_bool 可以方便地在多线程环境中实现无锁操作，避免使用互斥锁带来的性能损失。然而，需要注意的是，原子操作虽然高效，但并非所有场景都适用。在某些情况下，互斥锁和其他同步原语可能更合适。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>C++</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>合并分支到main上</title>
     <link href="/2023/04/06/%E5%90%88%E5%B9%B6%E5%88%86%E6%94%AF%E5%88%B0main%E4%B8%8A/"/>
     <url>/2023/04/06/%E5%90%88%E5%B9%B6%E5%88%86%E6%94%AF%E5%88%B0main%E4%B8%8A/</url>
