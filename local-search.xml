@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>ROS中sensor_msgs的LaserScan详解</title>
+    <link href="/2023/04/11/ROS%E4%B8%ADsensor-msgs%E7%9A%84LaserScan%E8%AF%A6%E8%A7%A3/"/>
+    <url>/2023/04/11/ROS%E4%B8%ADsensor-msgs%E7%9A%84LaserScan%E8%AF%A6%E8%A7%A3/</url>
+    
+    <content type="html"><![CDATA[<h1 id="ROS中sensor-msgs的LaserScan详解"><a href="#ROS中sensor-msgs的LaserScan详解" class="headerlink" title="ROS中sensor_msgs的LaserScan详解"></a>ROS中sensor_msgs的LaserScan详解</h1><p>在ROS（Robot Operating System，机器人操作系统）中，sensor_msgs::LaserScan是一个消息类型，用于表示一维的激光雷达（LIDAR）或者二维激光扫描仪的数据。激光扫描仪是一种常用于机器人导航、避障和建图的传感器。它通过向周围环境发射激光束，然后接收反射回来的激光束，进而测量物体距离和方位。<br>sensor_msgs::LaserScan消息包含了以下主要字段：  </p><ol><li>Header header：<br>header字段包含时间戳（stamp）和坐标系（frame_id）信息。时间戳表示此激光扫描数据的获取时间，而坐标系表示数据相对于哪个参考系进行描述。</li><li>float32 angle_min：<br>angle_min字段表示扫描开始时的角度，通常以弧度为单位。这是激光雷达扫描范围的最小角度。</li><li>float32 angle_max：<br>angle_max字段表示扫描结束时的角度，通常以弧度为单位。这是激光雷达扫描范围的最大角度。</li><li>float32 angle_increment：<br>angle_increment表示激光雷达的两次扫描间隔的角度，以弧度为单位。这是激光雷达在扫描过程中，相邻两个测量点之间的角度差。</li><li>float32 time_increment：<br>time_increment表示激光雷达在进行两次测量之间的时间间隔，以秒为单位。这有助于了解激光雷达采样速率。</li><li>float32 scan_time：<br>scan_time表示激光雷达完成一次完整扫描所需的时间，以秒为单位。这有助于了解激光雷达的扫描频率。</li><li>float32 range_min：<br>range_min表示激光雷达能够检测到的最小距离，通常以米为单位。这是激光雷达能够可靠测量的最短距离。</li><li>float32 range_max：<br>range_max表示激光雷达能够检测到的最大距离，通常以米为单位。这是激光雷达能够可靠测量的最远距离。</li><li>float32[] ranges：<br>ranges字段是一个浮点数组，包含从激光雷达返回的距离数据。数组中的每个元素表示对应角度的测量距离值。</li><li>float32[] intensities：<br>intensities字段是一个可选的浮点数组，包含从激光雷达返回的反射强度数据。数组中的每个元素表示对应角度的反射强度值，通常用于检测物体的表面特性和反光性质。</li></ol><p>总之，sensor_msgs::LaserScan消息类型提供了机器人导航和避障等领域中广泛使用的激光雷达数据的表示和传输方式。激光雷达可以提供非常详细和准确的环境地图信息，但是处理这些数据也需要一定的计算资源和算法支持。在ROS中，可以使用各种算法和工具包来处理sensor_msgs::LaserScan消息，例如使用gmapping工具包生成地图，使用ROS Navigation Stack进行路径规划和避障等。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>slam</category>
+      
+      <category>ROS</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>C++原子类型详解</title>
     <link href="/2023/04/11/C-%E5%8E%9F%E5%AD%90%E7%B1%BB%E5%9E%8B%E8%AF%A6%E8%A7%A3/"/>
     <url>/2023/04/11/C-%E5%8E%9F%E5%AD%90%E7%B1%BB%E5%9E%8B%E8%AF%A6%E8%A7%A3/</url>
