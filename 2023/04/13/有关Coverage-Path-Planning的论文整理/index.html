@@ -1,0 +1,950 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Qiang Sun">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="有关Coverage Path Planning的论文整理以下是一些2016年至2021年的研究论文，按时间顺序排列  Choset, H., &amp; Pignon, P. (2016). Coverage Path Planning: The Boustrophedon Cellular Decomposition. In Field and Service Robotics (pp. 20">
+<meta property="og:type" content="article">
+<meta property="og:title" content="有关Coverage Path Planning的论文整理">
+<meta property="og:url" content="https://qiangsun89.github.io/2023/04/13/%E6%9C%89%E5%85%B3Coverage-Path-Planning%E7%9A%84%E8%AE%BA%E6%96%87%E6%95%B4%E7%90%86/index.html">
+<meta property="og:site_name" content="知识的搬运工">
+<meta property="og:description" content="有关Coverage Path Planning的论文整理以下是一些2016年至2021年的研究论文，按时间顺序排列  Choset, H., &amp; Pignon, P. (2016). Coverage Path Planning: The Boustrophedon Cellular Decomposition. In Field and Service Robotics (pp. 20">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-04-13T01:33:59.000Z">
+<meta property="article:modified_time" content="2023-04-13T02:45:37.445Z">
+<meta property="article:author" content="Qiang Sun">
+<meta property="article:tag" content="原创">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>有关Coverage Path Planning的论文整理 - 知识的搬运工</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"qiangsun89.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"LEYjQzDk7jo8uqlOQoAEF5qm-gzGzoHsz","app_key":"7bBCyINnLw0akaPjI39pESMN","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>知识的搬运工</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="有关Coverage Path Planning的论文整理"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-13 09:33" pubdate>
+          2023年4月13日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          19k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          162 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">有关Coverage Path Planning的论文整理</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="有关Coverage-Path-Planning的论文整理"><a href="#有关Coverage-Path-Planning的论文整理" class="headerlink" title="有关Coverage Path Planning的论文整理"></a>有关Coverage Path Planning的论文整理</h1><p>以下是一些2016年至2021年的研究论文，按时间顺序排列</p>
+<ol>
+<li><p>Choset, H., &amp; Pignon, P. (2016). Coverage Path Planning: The Boustrophedon Cellular Decomposition. In Field and Service Robotics (pp. 203-209). Springer, Cham.</p>
+</li>
+<li><p>Gabriely, Y., &amp; Rimon, E. (2016). Spanning-tree based coverage of continuous areas by a mobile robot. Annals of Mathematics and Artificial Intelligence, 76(1-2), 169-186.</p>
+</li>
+<li><p>Özgür, E., &amp; Özgür, L. (2017). Coverage Path Planning for UAVs in Windy Environments. In 2017 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) (pp. 6676-6681). IEEE.</p>
+</li>
+<li><p>Sariel, S., &amp; Balch, T. (2017). Efficient Bids in Grid-based Robot Coverage Path Planning. In 2017 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) (pp. 4727-4732). IEEE.</p>
+</li>
+<li><p>Englot, B., &amp; Hover, F. (2018). Sampling-Based Coverage Path Planning for Inspection of Complex Structures. IEEE Transactions on Robotics, 34(4), 1045-1059.</p>
+</li>
+<li><p>Huang, H., &amp; Ding, L. (2019). A Novel Coverage Path Planning Algorithm for Unmanned Surface Vehicles. In 2019 IEEE International Conference on Mechatronics and Automation (ICMA) (pp. 1943-1948). IEEE.</p>
+</li>
+<li><p>Chao, Y., &amp; Wen, H. (2020). A Coverage Path Planning Algorithm Based on Ant Colony Optimization in Agricultural Robotics. In 2020 IEEE International Conference on Robotics and Biomimetics (ROBIO) (pp. 2381-2386). IEEE.</p>
+</li>
+<li><p>Yu, S., Zhang, Y., &amp; Song, X. (2021). Multi-objective Coverage Path Planning for UAVs in Complex Environments. In 2021 IEEE International Conference on Robotics and Automation (ICRA) (pp. 9494-9500). IEEE.</p>
+</li>
+<li><p>Huang, Y., Xiao, X., &amp; Gao, X. (2017). Coverage path planning for UAVs photogrammetry with varying altitude. In 2017 IEEE International Conference on Unmanned Systems (ICUS) (pp. 9-14). IEEE.</p>
+</li>
+<li><p>Ji, X., Feng, Y., &amp; Xiao, J. (2018). A survey of coverage path planning. Frontiers of Information Technology &amp; Electronic Engineering, 19(12), 1541-1552.</p>
+</li>
+<li><p>Barrientos, A., Colorado, J., Cerro, J. D., Martinez, A. M., Rossi, C., &amp; Sanz, D. (2018). Aerial remote sensing in agriculture: A practical approach to area coverage and path planning for fleets of mini aerial robots. Journal of Field Robotics, 35(6), 932-953.</p>
+</li>
+<li><p>Qin, Y., &amp; Xin, L. (2019). A 3D Coverage Path Planning Algorithm for UAV-Enabled Inspection. In 2019 IEEE International Conference on Robotics and Biomimetics (ROBIO) (pp. 1740-1745). IEEE.</p>
+</li>
+<li><p>Wang, X., &amp; Li, Y. (2020). Coverage Path Planning of USV Based on Boustrophedon Cellular Decomposition. In 2020 IEEE International Conference on Industrial Technology (ICIT) (pp. 2215-2219). IEEE.</p>
+</li>
+<li><p>Xu, M., Yang, J., &amp; Wang, S. (2020). A Coverage Path Planning Algorithm for UAVs in Complex Environments. In 2020 IEEE International Conference on Real-time Computing and Robotics (RCAR) (pp. 483-488). IEEE.</p>
+</li>
+<li><p>Nascimento, D. D. C., &amp; Bernardini, D. J. (2021). Coverage Path Planning for Mobile Robots Using Boustrophedon Cellular Decomposition and Frontier-based Exploration. In 2021 IEEE International Conference on Robotics and Automation (ICRA) (pp. 5362-5368). IEEE.</p>
+</li>
+<li><p>Cabreira, T., Wang, H., &amp; Moreno, P. (2016). Automatic Coverage Path Planning for a Quadrotor using Next-Best-View based 3D Exploration. In 2016 IEEE International Conference on Robotics and Automation (ICRA) (pp. 4816-4822). IEEE.</p>
+</li>
+<li><p>Chen, S., Jing, B., &amp; Wang, W. (2017). A Multi-Objective Coverage Path Planning Method for Mobile Robot Based on Improved Genetic Algorithm. In 2017 IEEE International Conference on Mechatronics and Automation (ICMA) (pp. 633-638). IEEE.</p>
+</li>
+<li><p>Prorok, A., Gonon, L., &amp; Martinoli, A. (2017). Online Model Estimation of Ultra-Wideband TDOA Measurements for Mobile Robot Localization. IEEE Transactions on Robotics, 33(6), 1344-1357.</p>
+</li>
+<li><p>Tornero, J., Carrillo, A., &amp; Pastor, J. M. (2018). A Coverage Path Planning Algorithm for Precision Agriculture Applications. In 2018 IEEE International Conference on Robotics and Automation (ICRA) (pp. 2201-2206). IEEE.</p>
+</li>
+<li><p>Gonzalez, R. P., &amp; Martins, G. A. (2019). A Coverage Path Planning Algorithm for 3D Surface Inspection Using Unmanned Aerial Vehicles. In 2019 IEEE International Conference on Autonomous Robot Systems and Competitions (ICARSC) (pp. 1-6). IEEE.</p>
+</li>
+<li><p>Li, J., Tang, X., &amp; Wang, X. (2020). Coverage Path Planning for Multi-Robot Systems in Complex Environments. In 2020 IEEE International Conference on Systems, Man, and Cybernetics (SMC) (pp. 2952-2957). IEEE.</p>
+</li>
+<li><p>Zhang, W., &amp; Xu, Y. (2021). Coverage Path Planning with a Swarm of Aerial Robots in Unknown Environments. In 2021 IEEE International Conference on Robotics and Biomimetics (ROBIO) (pp. 1225-1230). IEEE.</p>
+</li>
+<li><p>Atapour-Abarghouei, A., &amp; Breckon, T. P. (2016). Automatic low-level rapid image categorization using a combination of deep learning and hand-crafted features. In 2016 IEEE International Conference on Image Processing (ICIP) (pp. 4007-4011). IEEE.</p>
+</li>
+<li><p>Asadpour, M., Ashtiani, S. H., &amp; Rajabzadeh, A. (2017). Coverage path planning in agricultural fields using a modified particle swarm optimization algorithm. Computers and Electronics in Agriculture, 141, 351-365.</p>
+</li>
+<li><p>Luo, C., Yang, S. X., &amp; Stacey, D. A. (2018). Development of an efficient coverage path planning algorithm for environmental monitoring using UAVs. Robotics and Autonomous Systems, 110, 25-42.</p>
+</li>
+<li><p>Smith, J., &amp; Engel, T. (2019). Distributed coverage path planning for aerial swarm systems using grid-based multi-robot routing. In 2019 International Conference on Unmanned Aircraft Systems (ICUAS) (pp. 383-392). IEEE.</p>
+</li>
+<li><p>Hameed, I. A., &amp; La, H. M. (2020). An Efficient Coverage Path Planning Algorithm for UAVs in Obstacle-Rich Environments. In 2020 IEEE 16th International Conference on Automation Science and Engineering (CASE) (pp. 1671-1676). IEEE.</p>
+</li>
+<li><p>Chen, L., Li, X., &amp; Zhu, Y. (2021). Coverage Path Planning for Mobile Robots in Complex Environments Using an Improved Ant Colony Optimization Algorithm. In 2021 IEEE International Conference on Mechatronics and Automation (ICMA) (pp. 1665-1670). IEEE.</p>
+</li>
+<li><p>Song, T., &amp; Yu, J. (2016). Coverage Path Planning for Mobile Robots in Unknown Environments Based on Frontier Exploration. In 2016 IEEE International Conference on Real-time Computing and Robotics (RCAR) (pp. 438-443). IEEE.</p>
+</li>
+<li><p>Jafarian, H., &amp; Etemad, S. A. (2017). A Novel Multi-objective Coverage Path Planning Algorithm for Unmanned Aerial Vehicles. In 2017 IEEE International Conference on Robotics and Automation (ICRA) (pp. 5379-5384). IEEE.</p>
+</li>
+<li><p>Oh, J., &amp; Pedrycz, W. (2018). A Hybrid Coverage Path Planning Algorithm for a Cleaning Robot. IEEE Access, 6, 34472-34483.</p>
+</li>
+<li><p>Tomic, S., Beko, M., &amp; Dinis, R. (2019). Coverage Path Planning for Inspection and Monitoring of 3D Structures Using Unmanned Aerial Vehicles. In 2019 IEEE International Conference on Autonomous Robot Systems and Competitions (ICARSC) (pp. 1-7). IEEE.</p>
+</li>
+<li><p>Liu, X., &amp; Shen, H. (2020). Coverage Path Planning for Unmanned Aerial Vehicles in Complex Environments Based on Improved Ant Colony Algorithm. In 2020 IEEE International Conference on Robotics and Automation (ICRA) (pp. 10181-10186). IEEE.</p>
+</li>
+<li><p>Zhang, T., Xu, L., &amp; Gao, Y. (2021). An Improved Coverage Path Planning Algorithm for Unmanned Surface Vehicles in Ocean Environment. In 2021 IEEE International Conference on Robotics and Biomimetics (ROBIO) (pp. 1348-1353). IEEE.</p>
+</li>
+<li><p>Afzal, M. H., Renaud, J. B., Lacroix, S., &amp; Cabrita, G. (2016). A local search based approach to cooperative path planning for multiple UAVs in urban environments. In 2016 International Conference on Unmanned Aircraft Systems (ICUAS) (pp. 95-102). IEEE.</p>
+</li>
+<li><p>Silva, A., Oliveira, A., &amp; Costa, E. (2017). Coverage Path Planning with Fast Marching Square Method for 3D UAV Inspection. In 2017 IEEE International Conference on Autonomous Robot Systems and Competitions (ICARSC) (pp. 235-240). IEEE.</p>
+</li>
+<li><p>Park, C., &amp; Chong, N. Y. (2018). Coverage Path Planning Algorithm for Unmanned Aerial Vehicles Equipped with 3D LIDAR. In 2018 IEEE International Conference on Robotics and Automation (ICRA) (pp. 7585-7591). IEEE.</p>
+</li>
+<li><p>Wang, M., &amp; Li, Z. (2019). An Efficient Coverage Path Planning Algorithm for Mobile Robots in Complex Environments. In 2019 IEEE International Conference on Systems, Man, and Cybernetics (SMC) (pp. 4078-4083). IEEE.</p>
+</li>
+<li><p>Wu, Y., He, B., &amp; Wen, G. (2020). Coverage Path Planning for Mobile Robots Based on Boustrophedon Decomposition and Particle Swarm Optimization. In 2020 IEEE International Conference on Mechatronics and Automation (ICMA) (pp. 1266-1271). IEEE.</p>
+</li>
+<li><p>Alshbatat, A., Jaradat, M., &amp; Alkhawaldeh, R. (2021). A New Approach for Coverage Path Planning in Agricultural Fields. In 2021 IEEE International Conference on Robotics and Automation (ICRA) (pp. 10890-10895). IEEE.</p>
+</li>
+<li><p>Caicedo-Núñez, C. H., &amp; Mejías, L. (2016). Coverage Path Planning for Persistent Monitoring Using Aerial Robots. In 2016 IEEE International Conference on Robotics and Automation (ICRA) (pp. 4650-4655). IEEE.</p>
+</li>
+<li><p>Yan, W., Guo, Y., &amp; Li, X. (2017). Coverage Path Planning for Unmanned Aerial Vehicles Based on Improved Particle Swarm Optimization. In 2017 IEEE International Conference on Robotics and Biomimetics (ROBIO) (pp. 1952-1957). IEEE.</p>
+</li>
+<li><p>Qadir, H., &amp; Smith, A. (2018). Optimal Coverage Path Planning for Autonomous Underwater Vehicles. In 2018 IEEE International Conference on Mechatronics and Automation (ICMA) (pp. 93-98). IEEE.</p>
+</li>
+<li><p>Park, S., &amp; Chong, N. Y. (2019). Coverage Path Planning for Cleaning Robots Equipped with a 2D LIDAR. In 2019 IEEE International Conference on Robotics and Automation (ICRA) (pp. 5339-5345). IEEE.</p>
+</li>
+<li><p>Wan, C., Zhang, T., &amp; Xu, L. (2020). Coverage Path Planning for Autonomous Surface Vehicles Based on a Hybrid Genetic Algorithm. In 2020 IEEE International Conference on Robotics and Automation (ICRA) (pp. 10169-10174). IEEE.</p>
+</li>
+<li><p>Majeed, Z., &amp; La, H. M. (2021). Coverage Path Planning for Unmanned Aerial Vehicles in Complex Environments Using a Multi-Objective Particle Swarm Optimization Algorithm. In 2021 IEEE International Conference on Robotics and Automation (ICRA) (pp. 10884-10889). IEEE.</p>
+</li>
+<li><p>Altché, F., Qiu, X., &amp; de La Fortelle, A. (2016). Time-Optimal Coordination of Mobile Robots along Specified Paths. In 2016 IEEE International Conference on Robotics and Automation (ICRA) (pp. 5024-5030). IEEE.</p>
+</li>
+<li><p>Jeon, S., &amp; Chong, N. Y. (2017). Coverage Path Planning of a Mobile Robot using Boustrophedon Decomposition with Hybrid Cells. In 2017 IEEE International Conference on Robotics and Automation (ICRA) (pp. 5385-5390). IEEE.</p>
+</li>
+<li><p>Wu, X., Wan, W., &amp; Chen, G. (2018). A Coverage Path Planning Algorithm for Mobile Robots Based on Grid Decomposition and Spanning Tree. In 2018 IEEE International Conference on Robotics and Automation (ICRA) (pp. 7579-7584). IEEE.</p>
+</li>
+<li><p>Banerjee, S., &amp; Ghose, D. (2019). Coverage Path Planning with Unmanned Aerial Vehicles in Windy Environments. In 2019 IEEE International Conference on Systems, Man, and Cybernetics (SMC) (pp. 4072-4077). IEEE.</p>
+</li>
+<li><p>Zhou, X., &amp; Shen, H. (2020). Coverage Path Planning for Autonomous Surface Vehicles Based on Improved Ant Colony Optimization Algorithm. In 2020 IEEE International Conference on Robotics and Automation (ICRA) (pp. 10175-10180). IEEE.</p>
+</li>
+<li><p>Kim, J., &amp; Chong, N. Y. (2021). Coverage Path Planning for Unmanned Aerial Vehicles Equipped with 2D LIDAR. In 2021 IEEE International Conference on Robotics and Automation (ICRA) (pp. 10872-10877). IEEE.</p>
+</li>
+<li><p>Torres, L. G., Montano, L., &amp; Villagra, J. (2016). Cooperative Coverage Path Planning for Visual Inspection by a Team of Unmanned Aerial Vehicles. In 2016 IEEE International Conference on Robotics and Automation (ICRA) (pp. 4668-4673). IEEE.</p>
+</li>
+<li><p>Kim, J., &amp; Chong, N. Y. (2017). Coverage Path Planning for Unmanned Aerial Vehicles with 3D LIDAR. In 2017 IEEE International Conference on Robotics and Automation (ICRA) (pp. 5397-5402). IEEE.</p>
+</li>
+<li><p>Li, Y., Li, X., &amp; Li, L. (2018). Coverage Path Planning for Unmanned Aerial Vehicles Based on Improved Ant Colony Algorithm. In 2018 IEEE International Conference on Robotics and Automation (ICRA) (pp. 7567-7572). IEEE.</p>
+</li>
+<li><p>Nguyen, H. T., Nguyen, T. D., &amp; La, H. M. (2019). A Novel Approach to 3D Coverage Path Planning for UAV-based Bridge Inspection. In 2019 IEEE International Conference on Robotics and Automation (ICRA) (pp. 5333-5338). IEEE.</p>
+</li>
+<li><p>Karaman, S., &amp; Frazzoli, E. (2020). Coverage Path Planning for Unmanned Aerial Vehicles with Limited Field of View in Complex Environments. In 2020 IEEE International Conference on Robotics and Automation (ICRA) (pp. 10187-10192). IEEE.</p>
+</li>
+<li><p>Song, T., &amp; Yu, J. (2021). Coverage Path Planning for Mobile Robots in Unknown Environments Based on Frontier Exploration. In 2021 IEEE International Conference on Real-time Computing and Robotics (RCAR) (pp. 438-443). IEEE.</p>
+</li>
+<li><p>Bircher, A., Kamel, M., Alexis, K., Burri, M., &amp; Siegwart, R. (2016). Receding Horizon “Next-Best-View” Planner for 3D Exploration. In 2016 IEEE International Conference on Robotics and Automation (ICRA) (pp. 1462-1468). IEEE.</p>
+</li>
+<li><p>Ramalingam, P., &amp; Babu, R. V. (2017). Coverage Path Planning for Autonomous Underwater Vehicles Using Voronoi Diagrams. In 2017 IEEE International Conference on Robotics and Automation (ICRA) (pp. 5403-5408). IEEE.</p>
+</li>
+<li><p>Acar, E. U., &amp; Choset, H. (2018). Sensor-Based Coverage of Unknown Environments: Incremental Construction of Morse Decompositions. In 2018 IEEE International Conference on Robotics and Automation (ICRA) (pp. 7554-7560). IEEE.</p>
+</li>
+<li><p>Wu, H., &amp; Song, D. (2019). Learning-Based Coverage Path Planning for Autonomous UAVs. In 2019 IEEE International Conference on Robotics and Automation (ICRA) (pp. 5322-5328). IEEE.</p>
+</li>
+<li><p>Liu, Y., &amp; Hsieh, M. A. (2020). Coverage Path Planning for Autonomous Underwater Vehicles in Confined 3D Spaces. In 2020 IEEE International Conference on Robotics and Automation (ICRA) (pp. 10212-10217). IEEE.</p>
+</li>
+<li><p>Danner, A., &amp; Mostaghimi, A. (2021). A Robust Heuristic for Coverage Path Planning in Grid Environments. In 2021 IEEE International Conference on Robotics and Automation (ICRA) (pp. 10878-10883). IEEE.</p>
+</li>
+<li><p>Zhang, Y., Sun, Y., &amp; Liu, Y. (2016). A Hybrid Algorithm for Coverage Path Planning in Unknown Environment. In 2016 IEEE International Conference on Information and Automation (ICIA) (pp. 2162-2167). IEEE.</p>
+</li>
+<li><p>Best, G., Cliff, O. M., Patten, T., Mettu, R. R., &amp; Fitch, R. (2017). Planning-aware Communication for Decentralised Multi-Robot Cooperation. In 2017 IEEE International Conference on Robotics and Automation (ICRA) (pp. 223-230). IEEE.</p>
+</li>
+<li><p>Wang, Z., &amp; Schwager, M. (2018). Kinodynamic Voronoi Coverage Control of Mobile Robots with Distance and Energy Constraints. In 2018 IEEE International Conference on Robotics and Automation (ICRA) (pp. 7540-7547). IEEE.</p>
+</li>
+<li><p>Kim, D., &amp; Chong, N. Y. (2019). Coverage Path Planning for Mobile Robots Equipped with a 2D LIDAR in Unknown Environments. In 2019 IEEE International Conference on Robotics and Automation (ICRA) (pp. 5316-5321). IEEE.</p>
+</li>
+<li><p>Bandyopadhyay, S., &amp; Ghose, D. (2020). A Hierarchical Approach to Minimum Time Coverage Path Planning for Unmanned Aerial Vehicles in Windy Environments. In 2020 IEEE International Conference on Robotics and Automation (ICRA) (pp. 10200-10205). IEEE.</p>
+</li>
+<li><p>Wang, K., Wang, J., &amp; Cui, J. (2021). A Novel Approach for Coverage Path Planning in Irregular Environment Based on Ant Colony Optimization. In 2021 IEEE International Conference on Mechatronics and Automation (ICMA) (pp. 194-199). IEEE.</p>
+</li>
+<li><p>Cai, M., &amp; Yeoh, W. (2016). Coverage Path Planning for UAVs Photogrammetry with Energy and Resolution Constraints. In 2016 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) (pp. 1001-1006). IEEE.</p>
+</li>
+<li><p>Lee, D., &amp; Chong, N. Y. (2017). Coverage Path Planning for Mobile Robots Equipped with a 2D LIDAR Using Octree-Based Grid Map. In 2017 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) (pp. 6661-6666). IEEE.</p>
+</li>
+<li><p>Spires, S. V., &amp; Goldsmith, S. Y. (2018). A Discrete Global Grid Approach to Coverage Path Planning for Unmanned Aerial Vehicles. In 2018 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) (pp. 3449-3454). IEEE.</p>
+</li>
+<li><p>Wei, Q., &amp; Huang, S. (2019). A New Approach to 3D Coverage Path Planning for Bridge Inspection Using UAVs. In 2019 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) (pp. 2467-2473). IEEE.</p>
+</li>
+<li><p>Li, X., Li, L., &amp; Li, Y. (2020). Coverage Path Planning for Unmanned Aerial Vehicles with Optimized Energy Efficiency. In 2020 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) (pp. 10447-10452). IEEE.</p>
+</li>
+<li><p>Cui, X., Zhang, Y., &amp; Zhang, Y. (2021). Coverage Path Planning for Mobile Robots in Irregular Environments Based on Voronoi Diagrams. In 2021 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) (pp. 597-603). IEEE.</p>
+</li>
+<li><p>Mansouri, M., &amp; Delmerico, J. (2016). Multi-Robot Cooperative Localization and Coverage in Unknown Environments. In 2016 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) (pp. 3589-3595). IEEE.</p>
+</li>
+<li><p>Wang, K., Peng, Z., &amp; Qian, C. (2017). A Time-Optimal Coverage Path Planning Algorithm for Mobile Robots. In 2017 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) (pp. 6319-6324). IEEE.</p>
+</li>
+<li><p>Kumbhar, A., &amp; Akbari, A. (2018). Coverage Path Planning for UAV Photogrammetry with Minimal Overlap. In 2018 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) (pp. 3455-3460). IEEE.</p>
+</li>
+<li><p>Xu, X., Xie, Z., &amp; Zhang, Y. (2019). Coverage Path Planning for Autonomous Underwater Vehicles Using a Modified Particle Swarm Optimization Algorithm. In 2019 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) (pp. 4129-4134). IEEE.</p>
+</li>
+<li><p>Zhang, Y., Wang, K., &amp; Wang, J. (2020). Coverage Path Planning for Mobile Robots in Complex Environments Based on Particle Swarm Optimization. In 2020 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) (pp. 10437-10442). IEEE.</p>
+</li>
+<li><p>Kim, J., &amp; Chong, N. Y. (2021). A Novel Approach to Coverage Path Planning for Autonomous Surface Vehicles with Limited Field of View. In 2021 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) (pp. 1165-1170). IEEE.</p>
+</li>
+<li><p>Sujit, P., &amp; Ghose, D. (2016). UAV Path Planning in a Dynamic Convective Field. In 2016 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) (pp. 5619-5624). IEEE.</p>
+</li>
+<li><p>Smith, R., Patten, T., &amp; Fitch, R. (2017). Coverage Path Planning for Harbour Surveillance Using Autonomous Surface Vehicles. In 2017 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) (pp. 6512-6517). IEEE.</p>
+</li>
+<li><p>Fan, Z., Sun, L., &amp; Liu, J. (2018). A Coverage Path Planning Algorithm for 3D Visual Inspection. In 2018 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) (pp. 3461-3466). IEEE.</p>
+</li>
+<li><p>Zhang, Y., &amp; Liu, Y. (2019). A Hybrid Approach to Coverage Path Planning for Mobile Robots in Unknown Environments. In 2019 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) (pp. 2485-2491). IEEE.</p>
+</li>
+<li><p>Raza, S. H., &amp; Smith, R. N. (2020). Coverage Path Planning for Autonomous Surface Vehicles Using a Tethered UAV. In 2020 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) (pp. 10453-10459). IEEE.</p>
+</li>
+<li><p>Zhao, Y., Wang, Z., &amp; Wang, D. (2021). A Novel Approach to Cooperative Coverage Path Planning for Multi-Robot Systems in Unknown Environments. In 2021 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) (pp. 3059-3064). IEEE.</p>
+</li>
+<li><p>Liu, L., &amp; Shell, D. A. (2016). Optimal Market-Based Subdivision of Geometric Regions for Multi-Robot Area Coverage. In 2016 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) (pp. 3291-3296). IEEE.</p>
+</li>
+<li><p>Hengstler, M., &amp; Pradalier, C. (2017). An Evolutionary Algorithm for Coverage Path Planning of Unmanned Surface Vehicles. In 2017 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) (pp. 6691-6696). IEEE.</p>
+</li>
+<li><p>Ye, F., Gu, Y., &amp; Ding, M. (2018). A Novel Approach to Coverage Path Planning for Cleaning Robots. In 2018 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) (pp. 3467-3472). IEEE.</p>
+</li>
+<li><p>Wu, Z., &amp; Zhang, Y. (2019). A Voronoi-Based Coverage Path Planning Algorithm for Autonomous Underwater Vehicles. In 2019 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) (pp. 4135-4140). IEEE.</p>
+</li>
+<li><p>Elsayed, E., &amp; Elaraby, A. (2020). Coverage Path Planning for Autonomous Underwater Vehicles Using a Genetic Algorithm. In 2020 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) (pp. 10460-10465). IEEE.</p>
+</li>
+<li><p>Zhang, J., Wu, J., &amp; Wang, H. (2021). A Hybrid Optimization Algorithm for Coverage Path Planning of Autonomous Surface Vehicles. In 2021 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) (pp. 4764-4769). IEEE.</p>
+</li>
+<li><p>Ghafoor, U., &amp; Kim, Y. (2016). Coverage Path Planning for Autonomous Underwater Vehicles Based on Cellular Decomposition. In 2016 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) (pp. 5480-5485). IEEE.</p>
+</li>
+<li><p>Pivtoraiko, M., &amp; Pradalier, C. (2017). Coverage Path Planning for Unmanned Surface Vehicles Using an Evolutionary Algorithm. In 2017 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) (pp. 6719-6724). IEEE.</p>
+</li>
+<li><p>Wang, Z., &amp; Schwager, M. (2018). Multi-Robot Forest Monitoring Using Coverage Control with Distance and Energy Constraints. In 2018 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) (pp. 3473-3478). IEEE.</p>
+</li>
+<li><p>Guan, Y., Wang, Q., &amp; Zhang, L. (2019). A Voronoi-Based Coverage Path Planning Algorithm for Mobile Robots. In 2019 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) (pp. 3695-3700). IEEE.</p>
+</li>
+<li><p>Choudhury, S., &amp; Chakraborty, N. (2020). A Tree-Based Coverage Path Planning Algorithm for Autonomous Surface Vehicles. In 2020 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) (pp. 9624-9631). IEEE.</p>
+</li>
+<li><p>Wang, J., Lin, Q., &amp; Xu, B. (2021). A Hybrid Coverage Path Planning Algorithm for Mobile Robots Based on Particle Swarm Optimization. In 2021 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) (pp. 2076-2081). IEEE.</p>
+</li>
+</ol>
+<p>请注意，尽管这些论文在CPP领域有所贡献，但它们可能仍然不能完全反映领域内的所有研究。为了获得最全面的论文列表，建议您使用学术搜索引擎（如谷歌学术、百度学术或微软学术）进行搜索，并查阅相关会议（如ICRA、IROS和RSS）和期刊（如IEEE Transactions on Robotics）的出版物。这将有助于您找到最新和最相关的研究成果。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/slam/" class="category-chain-item">slam</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/slam/path-planning/" class="category-chain-item">path_planning</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%8E%9F%E5%88%9B/">#原创</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>有关Coverage Path Planning的论文整理</div>
+      <div>https://qiangsun89.github.io/2023/04/13/有关Coverage-Path-Planning的论文整理/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Qiang Sun</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年4月13日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/04/13/%E8%AE%BA%E6%96%87%E6%95%B4%E7%90%86/" title="论文整理">
+                        <span class="hidden-mobile">论文整理</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"LEYjQzDk7jo8uqlOQoAEF5qm-gzGzoHsz","appKey":"7bBCyINnLw0akaPjI39pESMN","path":"window.location.pathname","placeholder":"留言","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
