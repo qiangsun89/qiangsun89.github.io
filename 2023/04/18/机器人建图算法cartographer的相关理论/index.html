@@ -16,22 +16,22 @@
   <meta name="author" content="Qiang Sun">
   <meta name="keywords" content="">
   
-    <meta name="description" content="基于涂色地图的覆盖路径规划的相关理论基于涂色地图的覆盖路径规划是一种基于机器人探索未知环境、建立地图并规划路径的方法，其主要包括两个阶段：  第一阶段是通过机器人的传感器获取环境信息，将其编码为涂色地图，这里的“涂色”指的是将不同类型的地图信息标记为不同的颜色； 第二阶段是在建立好的涂色地图上进行路径规划，以使机器人能够有效地覆盖整个环境。  以下是关于基于涂色地图的覆盖路径规划的相关理论和方法：">
+    <meta name="description" content="MathJax.Hub.Config({             tex2jax: {             skipTags: [&#39;script&#39;, &#39;noscript&#39;, &#39;style&#39;, &#39;textarea&#39;, &#39;pre&#39;],             inlineMath: [[&#39;$&#39;,&#39;$&#39;]]             }         });">
 <meta property="og:type" content="article">
-<meta property="og:title" content="基于涂色地图的覆盖路径规划的相关理论">
-<meta property="og:url" content="https://qiangsun89.github.io/2023/04/17/%E5%9F%BA%E4%BA%8E%E6%B6%82%E8%89%B2%E5%9C%B0%E5%9B%BE%E7%9A%84%E8%A6%86%E7%9B%96%E8%B7%AF%E5%BE%84%E8%A7%84%E5%88%92%E7%9A%84%E7%9B%B8%E5%85%B3%E7%90%86%E8%AE%BA/index.html">
+<meta property="og:title" content="机器人建图算法cartographer的相关理论">
+<meta property="og:url" content="https://qiangsun89.github.io/2023/04/18/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%BB%BA%E5%9B%BE%E7%AE%97%E6%B3%95cartographer%E7%9A%84%E7%9B%B8%E5%85%B3%E7%90%86%E8%AE%BA/index.html">
 <meta property="og:site_name" content="知识的搬运工">
-<meta property="og:description" content="基于涂色地图的覆盖路径规划的相关理论基于涂色地图的覆盖路径规划是一种基于机器人探索未知环境、建立地图并规划路径的方法，其主要包括两个阶段：  第一阶段是通过机器人的传感器获取环境信息，将其编码为涂色地图，这里的“涂色”指的是将不同类型的地图信息标记为不同的颜色； 第二阶段是在建立好的涂色地图上进行路径规划，以使机器人能够有效地覆盖整个环境。  以下是关于基于涂色地图的覆盖路径规划的相关理论和方法：">
+<meta property="og:description" content="MathJax.Hub.Config({             tex2jax: {             skipTags: [&#39;script&#39;, &#39;noscript&#39;, &#39;style&#39;, &#39;textarea&#39;, &#39;pre&#39;],             inlineMath: [[&#39;$&#39;,&#39;$&#39;]]             }         });">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-04-17T03:09:26.000Z">
-<meta property="article:modified_time" content="2023-04-17T03:25:50.878Z">
+<meta property="article:published_time" content="2023-04-18T01:09:05.000Z">
+<meta property="article:modified_time" content="2023-04-18T01:17:49.952Z">
 <meta property="article:author" content="Qiang Sun">
 <meta property="article:tag" content="原创">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>基于涂色地图的覆盖路径规划的相关理论 - 知识的搬运工</title>
+  <title>机器人建图算法cartographer的相关理论 - 知识的搬运工</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -214,7 +214,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="基于涂色地图的覆盖路径规划的相关理论"></span>
+            <span id="subtitle" data-typed-text="机器人建图算法cartographer的相关理论"></span>
           
         </div>
 
@@ -225,8 +225,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-04-17 11:09" pubdate>
-          2023年4月17日 上午
+        <time datetime="2023-04-18 09:09" pubdate>
+          2023年4月18日 上午
         </time>
       </span>
     
@@ -237,7 +237,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          5k 字
+          3.7k 字
         
       </span>
     
@@ -248,7 +248,7 @@
         
         
         
-          42 分钟
+          31 分钟
         
       </span>
     
@@ -294,93 +294,64 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">基于涂色地图的覆盖路径规划的相关理论</h1>
+            <h1 style="display: none">机器人建图算法cartographer的相关理论</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="基于涂色地图的覆盖路径规划的相关理论"><a href="#基于涂色地图的覆盖路径规划的相关理论" class="headerlink" title="基于涂色地图的覆盖路径规划的相关理论"></a>基于涂色地图的覆盖路径规划的相关理论</h1><p>基于涂色地图的覆盖路径规划是一种基于机器人探索未知环境、建立地图并规划路径的方法，其主要包括两个阶段：</p>
-<ul>
-<li>第一阶段是通过机器人的传感器获取环境信息，将其编码为涂色地图，这里的“涂色”指的是将不同类型的地图信息标记为不同的颜色；</li>
-<li>第二阶段是在建立好的涂色地图上进行路径规划，以使机器人能够有效地覆盖整个环境。</li>
-</ul>
-<p>以下是关于基于涂色地图的覆盖路径规划的相关理论和方法：</p>
+                <head>
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+            inlineMath: [['$','$']]
+            }
+        });
+    </script>
+</head>
+
+<h1 id="机器人建图算法cartographer的相关理论"><a href="#机器人建图算法cartographer的相关理论" class="headerlink" title="机器人建图算法cartographer的相关理论"></a>机器人建图算法cartographer的相关理论</h1><p>Cartographer是一种用于机器人的实时同步定位与建图(SLAM)算法，它能帮助机器人在未知环境中建立地图并进行自我定位。Cartographer的主要原理是通过激光雷达（LIDAR）或其他传感器获取环境数据，然后通过多种算法对这些数据进行处理，以生成一幅精确的地图。下面我们来介绍Cartographer的主要理论知识。</p>
 <ol>
-<li>涂色地图表示：涂色地图是一种将环境信息编码为颜色的方法，通常用不同的颜色表示不同的信息。在基于涂色地图的覆盖路径规划中，一般将环境分成三类：障碍物区域、未探索区域和探索过的区域。对于每个区域，可以使用一种不同的颜色来表示。例如，绿色表示未探索区域，灰色表示障碍物区域，白色表示已探索区域。</li>
-<li>探索策略：涂色地图的建立需要机器人进行探索。探索策略通常包括前进、后退、旋转等动作，并使用传感器获取周围环境信息。一些经典的探索策略包括随机漫步、沿墙行走、最小成本遍历等方法。这些策略可以使机器人在尽可能短的时间内探索到整个环境。</li>
-<li>覆盖路径规划：覆盖路径规划的目标是使机器人尽可能地覆盖整个环境，并回到起始点。一些经典的覆盖路径规划方法包括基于单向链表的路径规划方法、基于分支定界的路径规划方法、基于深度优先搜索的路径规划方法等。这些方法可以根据不同的情况和环境，选择最适合的路径规划策略。</li>
-<li>基于强化学习的路径规划：涂色地图的覆盖路径规划可以通过强化学习等智能算法进行优化。例如，可以使用Q-learning算法来学习路径规划策略，通过不断迭代训练机器人的行动策略，最终使机器人能够找到最优的覆盖路径。</li>
+<li>概率栅格地图（Occupancy Grid Mapping）：<br>概率栅格地图是Cartographer中使用的一种地图表示方法。它将环境划分为等大小的单元格，并用概率值表示每个单元格是否被占据。地图更新通过贝叶斯滤波器进行，公式如下：<script type="math/tex; mode=display">
+P(m|z_{1:t},x_{1:t}) = \frac{P(z_t|m,x_t)P(m|z_{1:t-1},x_{1:t-1})}{P(z_t|z_{1:t-1},x_{1:t})}</script>其中，$m$表示地图，$z_{1:t}$表示传感器数据，$x_{1:t}$表示机器人位姿。</li>
+<li>扫描匹配（Scan Matching）：<br>扫描匹配是一种通过对比相邻激光扫描来估算机器人位姿的方法。Cartographer使用的是Ceres Solver求解器来优化位姿。目标函数是最小化当前激光扫描与先前地图之间的误差。误差函数可以表示为：<script type="math/tex; mode=display">
+E(x_t) = \sum_{i=1}^{n} w_i d^2(m(x_t, z_{t,i}), z_{t,i})</script>其中，$x_t$表示当前机器人位姿，$z_{t,i}$表示第$i$个激光点，$m(x_t, z_{t,i})$表示地图中与激光点对应的点，$w_i$是权重，$d^2$表示距离的平方。</li>
+<li>回环检测（Loop Closure）：<br>回环检测是检测机器人是否回到先前访问过的区域。Cartographer使用全局扫描匹配来寻找可能的回环。一旦检测到回环，Cartographer会通过位姿图优化（Pose Graph Optimization）对整个轨迹进行优化。目标函数是最小化所有激光扫描之间的误差，同时保持回环约束。<script type="math/tex; mode=display">
+E(x_{1:T}) = \sum_{t=1}^{T} E_{t,t-1}(x_t, x_{t-1}) + \sum_{(t_i, t_j) \in C} E_{t_i, t_j}(x_{t_i}, x_{t_j})</script>其中，$x_{1:T}$表示整个轨迹的位姿，$E_{t,t-1}(x_t, x_{t-1})$表示相邻时刻$t$和$t-1$之间的位姿误差，$(t_i, t_j) \in C$表示回环约束集合，$E_{t_i, t_j}(x_{t_i}, x_{t_j})$表示回环时刻$t_i$和$t_j$之间的位姿误差。通过最小化这个目标函数，我们可以获得一个全局一致的轨迹。</li>
+<li>子映射（Submaps）：<br>Cartographer使用子映射的方法将环境划分为多个局部地图。每个子映射都是一个局部的栅格地图，可以独立进行更新和优化。子映射的主要优点是可以减小计算复杂度，并且在发生回环时，可以通过子映射间的约束关系快速优化整个轨迹。</li>
+<li>多传感器融合：<br>Cartographer支持多种传感器数据输入，如激光雷达、IMU（惯性测量单元）、里程计等。通过融合多种传感器数据，可以提高定位和建图的准确性。例如，使用IMU数据可以在轨迹优化时加入重力方向约束，提高优化结果的准确性。</li>
+<li>实时性和并行计算：<br>为了实现实时的建图与定位，Cartographer采用了多线程和并行计算的方法。主要分为前端和后端两部分。前端负责处理实时传感器数据，包括激光雷达数据、IMU数据等，进行局部的扫描匹配和子映射的生成。后端负责处理全局的位姿图优化和回环检测。</li>
 </ol>
-<h1 id="涂色地图和路径规划算法的未来发展方向的思考和展望"><a href="#涂色地图和路径规划算法的未来发展方向的思考和展望" class="headerlink" title="涂色地图和路径规划算法的未来发展方向的思考和展望"></a>涂色地图和路径规划算法的未来发展方向的思考和展望</h1><ol>
-<li>结合深度学习技术进行路径规划<br>深度学习技术在近年来取得了重要进展，已经被广泛应用于图像识别、自然语言处理、语音识别等领域。将深度学习技术应用于路径规划，可以更加精确和高效地规划机器人的路径。例如，可以利用深度学习技术识别和学习环境中的特征和结构，从而实现更加智能和自适应的路径规划。</li>
-<li>结合虚拟现实技术进行路径规划仿真<br>路径规划算法的设计和实现需要进行大量的实验和测试，需要耗费大量的时间和资源。结合虚拟现实技术进行路径规划仿真，可以在虚拟环境中快速和精确地进行路径规划测试，从而降低路径规划算法的开发和测试成本。</li>
-<li>结合多机器人协作进行路径规划<br>在某些场景下，需要多个机器人协作完成任务，例如巡逻巡检、环境勘测等。多机器人协作路径规划需要考虑机器人之间的协作和通信问题，需要设计合适的路径规划算法和策略。因此，结合多机器人协作进行路径规划是一个有挑战性和有潜力的研究方向。</li>
-<li>结合人类的主观性进行路径规划<br>在某些情况下，机器人需要在人类活动的环境中进行路径规划，需要考虑人类的主观性和行为模式。例如，机器人在人类居住区巡逻巡检时，需要尽可能避免影响居民的生活和工作。因此，结合人类的主观性进行路径规划是一个重要的研究方向。</li>
-<li>考虑机器人的动态规划和运动控制<br>路径规划算法不仅需要考虑机器人的路径，还需要考虑机器人的动态规划和运动控制。例如，在环境勘测和清洁机器人等应用中，机器人需要在环境中进行高效和精确的运动控制，以实现任务目标。因此，考虑机器人的动态规划和运动控制是路径规划算法的一个重要研究方向。</li>
-<li>发展多模态路径规划算法<br>多模态路径规划算法可以根据不同的环境和任务需求，选择最优的路径规划模式。例如，在城市环境中，机器人需要考虑道路拥堵、交通规则等因素，选择最优的路径规划模式。因此，发展多模态路径规划算法是一个有潜力的研究方向。</li>
-<li>发展面向云计算的路径规划算法<br>云计算技术的发展，为路径规划算法的实时性和可扩展性提供了新的解决方案。利用云计算技术，可以将路径规划任务分布到多个计算节点中，提高路径规划的并行性和实时性。因此，发展面向云计算的路径规划算法是一个有前景的研究方向。</li>
-<li>结合实时感知和决策进行路径规划<br>实时感知和决策是移动机器人领域中的一个重要研究方向，可以帮助机器人快速和准确地感知环境和决策行动。将实时感知和决策技术应用于路径规划，可以实现更加高效和智能的路径规划。例如，机器人可以根据环境中的障碍物、人群、天气等因素进行实时感知和决策，从而实现更加高效和精确的路径规划。</li>
-<li>结合无人机技术进行路径规划<br>无人机技术在近年来得到了快速发展，已经被广泛应用于巡逻、勘测、救援等领域。将无人机技术和路径规划技术结合起来，可以实现更加高效和智能的探索和勘测任务。例如，可以利用无人机进行高空拍摄和图像识别，从而实现更加准确和高效的路径规划和探索。</li>
-<li>发展适应性路径规划算法<br>移动机器人的工作环境和任务需求具有不确定性和动态性，需要机器人具有一定的适应性和灵活性。发展适应性路径规划算法，可以根据环境和任务需求，选择最优的路径规划策略。例如，在突发事件和紧急救援等应用中，机器人需要快速适应环境和任务需求，选择最优的路径规划策略，以实现任务目标</li>
-<li>发展基于强化学习的路径规划算法<br>强化学习技术在近年来在移动机器人领域中得到了广泛应用，可以通过自主学习和交互学习的方式，优化机器人的行为策略和路径规划策略。将强化学习技术应用于路径规划，可以实现更加智能和自适应的路径规划策略。例如，在机器人巡逻和勘测等应用中，可以利用强化学习技术，优化机器人的路径规划策略和行为策略，从而实现更加高效和智能的探索和勘测任务。</li>
-<li>结合机器人学习和知识表示进行路径规划<br>机器人学习和知识表示是移动机器人领域中的重要研究方向，可以帮助机器人从多个角度理解和处理环境信息。将机器人学习和知识表示技术应用于路径规划，可以实现更加高效和智能的路径规划策略。例如，可以利用机器人学习和知识表示技术，理解和处理环境中的语义信息、结构信息等，从而实现更加精确和高效的路径规划。</li>
-<li>发展基于人工智能的多目标路径规划算法<br>多目标路径规划是移动机器人领域中的重要研究方向，可以实现在多个目标之间进行有效的路径规划。结合人工智能技术，可以实现更加高效和精确的多目标路径规划。例如，可以利用人工智能技术，自动学习和优化机器人的路径规划策略，以实现多目标路径规划。</li>
-<li>结合机器视觉和感知进行路径规划<br>机器视觉和感知是移动机器人领域中的重要技术，可以帮助机器人实现更加高效和准确的环境感知和探索。结合机器视觉和感知技术进行路径规划，可以实现更加智能和自适应的路径规划策略。例如，可以利用机器视觉技术，识别和学习环境中的特征和结构，从而实现更加高效和准确的路径规划。</li>
-<li>发展基于自组织的路径规划算法<br>自组织技术在移动机器人领域中具有广泛应用，可以帮助机器人实现自主决策和行动。结合自组织技术进行路径规划，可以实现更加智能和自适应的路径规划策略。例如，可以利用自组织技术，自主学习和适应环境中的变化，从而实现更加高效和智能的路径规划。</li>
-<li>发展混合路径规划算法<br>混合路径规划算法是一种综合多种路径规划策略的算法，可以根据不同的环境和任务需求，选择最优的路径规划策略。例如，在不同的场景下，可以利用不同的路径规划策略，如遗传算法、蚁群算法等，从而实现更加高效和精确的路径规划。<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1></li>
-<li>Huang, L., &amp; Wong, Y. K. (2017). A colored map-based coverage algorithm for mobile robots. Journal of Intelligent &amp; Robotic Systems, 86(1), 73-91. doi:10.1007/s10846-016-0481-2</li>
-</ol>
-<ul>
-<li>论文介绍了一种基于涂色地图的覆盖算法，可以在最短时间内覆盖整个环境，并提高机器人探索效率</li>
-</ul>
+<p>这种设计可以有效地利用多核处理器的计算能力，提高算法的实时性。同时，Cartographer还支持多种优化方法，如局部地图之间的约束搜索、子映射之间的回环检测等，以进一步降低计算复杂度。</p>
 <ol>
-<li>Leng, Y., Ren, H., &amp; Zhao, X. (2018). Colored map-based coverage path planning for mobile robots. IEEE Access, 6, 64233-64244. doi:10.1109/ACCESS.2018.2875918</li>
+<li>三维SLAM：<br>除了二维SLAM，Cartographer还支持三维SLAM，可以处理3D激光雷达数据和RGB-D相机数据。三维SLAM算法在核心原理上与二维SLAM类似，但需要考虑更多的自由度和数据量。通过使用八叉树（Octree）表示三维地图，可以有效地降低存储和计算复杂度。<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1>Cartographer是一种强大的实时SLAM算法，通过使用概率栅格地图、扫描匹配、回环检测、子映射和多传感器融合等方法，可以在未知环境中实时生成地图并进行自我定位。虽然Cartographer的核心算法已经相当成熟，但是随着硬件性能的提升和新算法的出现，未来的SLAM系统可能会在准确性、鲁棒性和计算效率等方面取得更大的突破。<h1 id="应用领域"><a href="#应用领域" class="headerlink" title="应用领域"></a>应用领域</h1>Cartographer的应用领域非常广泛，包括自动驾驶汽车、无人机、服务机器人、工业自动化、虚拟现实等。在这些领域中，SLAM算法可以帮助机器人或设备实现自主导航、避障、路径规划等功能。<h1 id="未来展望"><a href="#未来展望" class="headerlink" title="未来展望"></a>未来展望</h1>尽管Cartographer已经取得了很多成果，但SLAM技术仍有很多值得探索和改进的方向。例如，将深度学习方法引入SLAM系统，以提高数据处理和环境理解的能力；开发适应于特定场景和应用的专用SLAM算法，以提高性能和鲁棒性；以及研究更先进的传感器技术，以提高数据采集的精度和效率。随着相关技术的发展，我们可以期待SLAM系统在未来会有更多的突破和应用。<h1 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h1>Cartographer SLAM算法的优缺点总结如下：<h2 id="优点："><a href="#优点：" class="headerlink" title="优点："></a>优点：</h2></li>
+<li><p>实时性：通过多线程和并行计算设计，Cartographer能够实时处理传感器数据，实现快速的建图与定位。</p>
+</li>
+<li><p>鲁棒性：采用概率栅格地图、扫描匹配、回环检测等方法，Cartographer能够在不同环境中取得较好的性能。</p>
+</li>
+<li><p>多传感器融合：支持激光雷达、IMU、里程计等多种传感器数据输入，利用多种传感器数据提高定位和建图的准确性。</p>
+</li>
+<li><p>子映射技术：通过将环境划分为多个局部地图，可以降低计算复杂度，并在发生回环时快速优化整个轨迹。</p>
+</li>
+<li><p>二维和三维SLAM：支持二维和三维SLAM，可以处理不同类型的传感器数据和应用场景。</p>
+</li>
+<li><p>广泛的应用领域：适用于自动驾驶汽车、无人机、服务机器人、工业自动化、虚拟现实等多种应用场景。</p>
+<h2 id="缺点："><a href="#缺点：" class="headerlink" title="缺点："></a>缺点：</h2></li>
+<li><p>对参数敏感：Cartographer算法的性能受参数设置的影响较大，需要针对不同应用场景进行调整。</p>
+</li>
+<li><p>计算资源要求：虽然采用了多线程和并行计算，但Cartographer仍需要较高的计算资源以实现实时性。</p>
+</li>
+<li><p>环境依赖：在某些特定环境下，如光滑表面、低纹理区域等，Cartographer的性能可能会受到影响。</p>
+</li>
+<li><p>深度学习方法集成：相较于一些深度学习方法的SLAM算法，Cartographer在数据处理和环境理解方面的能力有待提高。</p>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1></li>
+<li>W. Hess, D. Kohler, H. Rapp, and D. Andor, “Real-Time Loop Closure in 2D LIDAR SLAM,” in IEEE Robotics and Automation Letters, vol. 2, no. 3, pp. 1271-1278, July 2017. DOI: 10.1109/LRA.2017.2665643.</li>
+<li>E. B. Olson, “Real-time correlative scan matching,” in Proceedings 2009 IEEE International Conference on Robotics and Automation, Kobe, Japan, 2009, pp. 4387-4393. DOI: 10.1109/ROBOT.2009.5152425.</li>
+<li>G. Grisetti, R. Kümmerle, C. Stachniss, and W. Burgard, “A Tutorial on Graph-Based SLAM,” IEEE Intelligent Transportation Systems Magazine, vol. 2, no. 4, pp. 31-43, Winter 2010. DOI: 10.1109/MITS.2010.939925.</li>
+<li>K. M. Wurm, A. Hornung, M. Bennewitz, C. Stachniss, and W. Burgard, “OctoMap: A Probabilistic, Flexible, and Compact 3D Map Representation for Robotic Systems,” in Proceedings of the ICRA 2010 Workshop on Best Practice in 3D Perception and Modeling for Mobile Manipulation, Anchorage, AK, USA, 2010.</li>
 </ol>
-<ul>
-<li>论文介绍了一种基于涂色地图的路径规划算法，可以有效规划机器人的路径，减少机器人行动的次数，提高机器人的工作效率</li>
-</ul>
-<ol>
-<li>Wu, Y., Wang, C., &amp; Yu, H. (2019). Coverage path planning for mobile robots based on colored map in unknown environment. Journal of Intelligent &amp; Fuzzy Systems, 36(3), 2723-2733. doi:10.3233/JIFS-181052</li>
-</ol>
-<ul>
-<li>篇论文介绍了一种基于涂色地图的路径规划算法，可以应对未知环境中的路径规划问题，实现机器人对环境的智能探索。</li>
-</ul>
-<ol>
-<li>Li, W., Li, B., &amp; Zhang, Y. (2019). A new coverage path planning algorithm based on colored Voronoi diagram for mobile robot in unknown environments. IEEE Access, 7, 94736-94747. doi:10.1109/ACCESS.2019.2926211</li>
-</ol>
-<ul>
-<li>论文介绍了一种基于彩色Voronoi图的覆盖路径规划算法，可以在未知环境中高效地规划机器人的行动路径</li>
-</ul>
-<ol>
-<li>Wang, Y., &amp; Tang, H. (2019). A coverage path planning algorithm based on improved ant colony optimization for mobile robots in unknown environments. Journal of Intelligent &amp; Fuzzy Systems, 37(5), 6625-6638. doi:10.3233/JIFS-181102</li>
-</ol>
-<ul>
-<li>论文介绍了一种基于改进的蚁群算法的路径规划方法，可以提高机器人探索效率和路径规划质量</li>
-</ul>
-<ol>
-<li>Ye, J., Shi, L., &amp; Zhao, X. (2020). A coverage path planning algorithm based on an improved ant colony optimization for mobile robots in unknown environments. Journal of Intelligent &amp; Fuzzy Systems, 38(5), 5575-5587. doi:10.3233/JIFS-190799</li>
-</ol>
-<ul>
-<li>论文介绍了一种基于强化学习的路径规划方法，可以通过不断迭代优化机器人的行动策略，实现更加智能化和自适应的路径规划。</li>
-</ul>
-<ol>
-<li>Kumar, S., &amp; Singh, S. P. (2019). Mobile robot path planning using colored Voronoi diagram. Journal of Robotics, 2019, 1-10. doi:10.1155/2019/7406937</li>
-</ol>
-<ul>
-<li>论文介绍了一种基于彩色Voronoi图的路径规划方法，可以实现机器人的智能导航和探索</li>
-</ul>
-<ol>
-<li>Wang, X., He, Y., &amp; Zou, J. (2018). A novel method for mobile robot coverage path planning based on improved Voronoi diagram. Proceedings of the Institution of Mechanical Engineers, Part C: Journal of Mechanical Engineering Science, 232(2), 323-338. doi:10.1177/0954406217719643</li>
-</ol>
-<ul>
-<li>论文介绍了一种基于改进的Voronoi图的路径规划方法，可以提高机器人的路径规划效率和覆盖质量。</li>
-</ul>
-<ol>
-<li>Liu, B., Li, L., &amp; Li, Y. (2018). Colored Voronoi diagram based global path planning of autonomous mobile robot in complex environment. International Journal of Advanced Robotic Systems, 15(1), 1-11. doi:10.1177/1729881417754009</li>
-</ol>
-<ul>
-<li>论文介绍了一种基于彩色Voronoi图的路径规划方法，可以在复杂环境中实现机器人的全局路径规划。</li>
-</ul>
+<p>这些文献涵盖了Cartographer算法的核心思想，包括实时闭环、概率栅格地图、扫描匹配、图优化等。通过阅读这些文献，您可以深入了解Cartographer SLAM算法的原理和实现细节。</p>
 
                 
               </div>
@@ -433,8 +404,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>基于涂色地图的覆盖路径规划的相关理论</div>
-      <div>https://qiangsun89.github.io/2023/04/17/基于涂色地图的覆盖路径规划的相关理论/</div>
+      <div>机器人建图算法cartographer的相关理论</div>
+      <div>https://qiangsun89.github.io/2023/04/18/机器人建图算法cartographer的相关理论/</div>
     </div>
     <div class="license-meta">
       
@@ -446,7 +417,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年4月17日</div>
+          <div>2023年4月18日</div>
         </div>
       
       
@@ -478,18 +449,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/04/18/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%BB%BA%E5%9B%BE%E7%AE%97%E6%B3%95cartographer%E7%9A%84%E7%9B%B8%E5%85%B3%E7%90%86%E8%AE%BA/" title="机器人建图算法cartographer的相关理论">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">机器人建图算法cartographer的相关理论</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/04/17/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%BB%BA%E5%9B%BE%E7%AE%97%E6%B3%95hector%E7%9A%84%E7%9B%B8%E5%85%B3%E7%90%86%E8%AE%BA/" title="机器人建图算法hector的相关理论">
-                        <span class="hidden-mobile">机器人建图算法hector的相关理论</span>
+                      <a href="/2023/04/17/%E5%9F%BA%E4%BA%8E%E6%B6%82%E8%89%B2%E5%9C%B0%E5%9B%BE%E7%9A%84%E8%A6%86%E7%9B%96%E8%B7%AF%E5%BE%84%E8%A7%84%E5%88%92%E7%9A%84%E7%9B%B8%E5%85%B3%E7%90%86%E8%AE%BA/" title="基于涂色地图的覆盖路径规划的相关理论">
+                        <span class="hidden-mobile">基于涂色地图的覆盖路径规划的相关理论</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
