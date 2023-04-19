@@ -1,0 +1,849 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Qiang Sun">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="详细介绍ROS的nav_msgs&#x2F;Pathnav_msgs&#x2F;Path是ROS（Robot Operating System，机器人操作系统）中一个重要的消息类型，用于表示路径。它在导航、路径规划和控制等领域中具有关键作用。nav_msgs&#x2F;Path消息类型主要包含两个字段：header和poses。  header：这是一个std_msgs&#x2F;Header类型的字段，包含了时间戳和坐标系信息。时间戳">
+<meta property="og:type" content="article">
+<meta property="og:title" content="详细介绍ROS的nav_msgs&#x2F;Path">
+<meta property="og:url" content="https://qiangsun89.github.io/2023/04/19/%E8%AF%A6%E7%BB%86%E4%BB%8B%E7%BB%8DROS%E7%9A%84nav-msgs-Path/index.html">
+<meta property="og:site_name" content="知识的搬运工">
+<meta property="og:description" content="详细介绍ROS的nav_msgs&#x2F;Pathnav_msgs&#x2F;Path是ROS（Robot Operating System，机器人操作系统）中一个重要的消息类型，用于表示路径。它在导航、路径规划和控制等领域中具有关键作用。nav_msgs&#x2F;Path消息类型主要包含两个字段：header和poses。  header：这是一个std_msgs&#x2F;Header类型的字段，包含了时间戳和坐标系信息。时间戳">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-04-19T07:25:54.000Z">
+<meta property="article:modified_time" content="2023-04-19T07:37:30.772Z">
+<meta property="article:author" content="Qiang Sun">
+<meta property="article:tag" content="原创">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>详细介绍ROS的nav_msgs/Path - 知识的搬运工</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"qiangsun89.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"LEYjQzDk7jo8uqlOQoAEF5qm-gzGzoHsz","app_key":"7bBCyINnLw0akaPjI39pESMN","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>知识的搬运工</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="详细介绍ROS的nav_msgs/Path"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-19 15:25" pubdate>
+          2023年4月19日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          67 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">详细介绍ROS的nav_msgs/Path</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="详细介绍ROS的nav-msgs-Path"><a href="#详细介绍ROS的nav-msgs-Path" class="headerlink" title="详细介绍ROS的nav_msgs/Path"></a>详细介绍ROS的nav_msgs/Path</h1><p>nav_msgs/Path是ROS（Robot Operating System，机器人操作系统）中一个重要的消息类型，用于表示路径。它在导航、路径规划和控制等领域中具有关键作用。nav_msgs/Path消息类型主要包含两个字段：header和poses。</p>
+<ol>
+<li>header：这是一个std_msgs/Header类型的字段，包含了时间戳和坐标系信息。时间戳用于记录消息的生成时间，有助于同步和调试；坐标系信息则有助于将路径转换到其他参考系中。</li>
+</ol>
+<p>header字段中的属性如下：</p>
+<ul>
+<li>seq：一个用于表示消息序列号的无符号整数。</li>
+<li>stamp：一个time类型的变量，表示消息生成时间。</li>
+<li>frame_id：一个字符串，表示参考坐标系的ID。</li>
+</ul>
+<ol>
+<li>poses：这是一个geometry_msgs/PoseStamped类型的数组，它包含了路径中的一系列位姿。数组中的每个元素都表示路径上的一个点，包括该点的位置（x, y, z）和方向（四元数表示）。</li>
+</ol>
+<p>geometry_msgs/PoseStamped中的属性如下：</p>
+<ul>
+<li>header：同样是一个std_msgs/Header类型的字段，包含了时间戳和坐标系信息。</li>
+<li>pose：一个geometry_msgs/Pose类型的变量，包含了位置和方向信息。<br>position：一个geometry_msgs/Point类型的变量，表示位置（x, y, z）。<br>orientation：一个geometry_msgs/Quaternion类型的变量，表示方向（x, y, z, w）。</li>
+</ul>
+<p>在ROS中，nav_msgs/Path消息通常用于在节点之间传递路径规划结果、可视化路径以及将路径发送给控制器。此外，它还可以用于表示从机器人的起始位置到目标位置的一系列位姿点。</p>
+<p>当使用ROS进行导航和路径规划时，nav_msgs/Path在多个环节发挥着作用。以下是一些常见的应用场景：</p>
+<ol>
+<li><p>全局路径规划：在导航过程中，全局路径规划器（如move_base中的global_planner）负责为机器人生成一条从起始位置到目标位置的安全路径。规划结果通常以nav_msgs/Path消息类型传递给其他节点。</p>
+</li>
+<li><p>局部路径规划：局部路径规划器（如move_base中的local_planner）会基于全局路径规划器生成的路径和机器人当前的局部环境信息，生成一个局部路径。这有助于机器人在实时环境中避开障碍物和动态调整路径。局部路径规划器同样使用nav_msgs/Path消息类型来表示局部路径。</p>
+</li>
+<li><p>路径跟踪：在收到路径后，控制器负责根据路径指引机器人运动。例如，diff_drive_controller可以将nav_msgs/Path消息转换为速度指令，使差速驱动的机器人沿规划路径行驶。</p>
+</li>
+<li><p>路径可视化：在ROS中，可以使用rviz工具对路径进行可视化。通过将nav_msgs/Path消息发布到特定的可视化主题，如/path或/trajectory，可以直观地显示路径规划结果。</p>
+</li>
+<li><p>多机器人协同：在多机器人系统中，nav_msgs/Path也可用于在机器人之间共享路径信息，以实现协同导航、避免碰撞等目的。</p>
+</li>
+</ol>
+<p>注意，在处理nav_msgs/Path时，要确保坐标系之间的转换是正确的。tf库提供了便捷的坐标系转换功能，以确保位姿在不同的参考系中可以正确解释。</p>
+<p>总之，nav_msgs/Path在ROS中扮演着重要角色，涉及到路径规划、可视化、控制器等多个方面，有助于实现高效、安全的机器人导航。除了前面提到的应用场景，nav_msgs/Path在ROS中还可以用于其他一些相关的任务，例如：  </p>
+<ol>
+<li><p>地图路径生成：在某些场景下，可能需要在已知的地图中生成一条指定的路径。通过使用特定的算法（例如A*算法、Dijkstra算法等），可以计算出一条从起始点到目标点的路径，并将结果存储为nav_msgs/Path消息类型。这种情况下，nav_msgs/Path用于表示地图中的路径信息，而不是实时导航的结果。</p>
+</li>
+<li><p>机器人控制接口：在某些应用中，可能需要通过外部控制接口（如Web端、手机APP等）为机器人提供路径信息。通过将路径信息转换为nav_msgs/Path消息并发布到机器人的导航节点，可以使机器人按照指定路径进行行动。这种情况下，nav_msgs/Path作为外部控制接口与机器人之间的通信桥梁。</p>
+</li>
+<li><p>自主路径学习：在机器人学习领域，nav_msgs/Path可以用于表示机器人自主学习的路径。例如，在强化学习中，机器人可能会自主探索环境并生成一条路径，然后将这条路径转换为nav_msgs/Path消息类型，以便于分析、评估和可视化。</p>
+</li>
+<li><p>路径优化：nav_msgs/Path可以作为输入来优化已生成的路径。例如，在生成一条路径后，可能需要对其进行平滑处理以减少曲率。可以将nav_msgs/Path作为输入，应用平滑算法（如贝塞尔曲线、样条曲线等），然后将优化后的路径重新封装为nav_msgs/Path消息并发布。</p>
+</li>
+<li><p>路径分析：nav_msgs/Path还可以用于分析路径的特性，例如长度、平均曲率、方向变化等。这些信息可以用于评估路径的质量、安全性和可行性，以便于在实际应用中选择最佳路径。</p>
+</li>
+</ol>
+<p>这些应用场景进一步展示了nav_msgs/Path在ROS中的广泛用途。在实际项目中，可以灵活使用nav_msgs/Path来实现不同的功能，并根据需求进行扩展和定制。</p>
+<h2 id="C-示例"><a href="#C-示例" class="headerlink" title="C++示例"></a>C++示例</h2><p>以下是一个简单的C++示例程序，演示了如何在ROS中创建、发布和订阅nav_msgs/Path消息。这个示例包含两个部分：一个路径发布节点（path_publisher_node）和一个路径订阅节点（path_subscriber_node）。</p>
+<ol>
+<li>路径发布节点（path_publisher_node）：</li>
+</ol>
+<p>首先，创建一个名为path_publisher_node的C++文件：<br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-comment">// 包含所需的头文件</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;ros/ros.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;nav_msgs/Path.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;geometry_msgs/PoseStamped.h&gt;</span></span><br><br><span class="hljs-comment">// 主函数</span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> **argv)</span></span><br><span class="hljs-function"></span>&#123;<br>  <span class="hljs-comment">// 初始化ROS节点</span><br>  ros::<span class="hljs-built_in">init</span>(argc, argv, <span class="hljs-string">&quot;path_publisher_node&quot;</span>);<br>  ros::NodeHandle nh;<br><br>  <span class="hljs-comment">// 创建一个Publisher，用于发布nav_msgs/Path消息</span><br>  ros::Publisher path_pub = nh.<span class="hljs-built_in">advertise</span>&lt;nav_msgs::Path&gt;(<span class="hljs-string">&quot;path&quot;</span>, <span class="hljs-number">1</span>);<br><br>  <span class="hljs-comment">// 设置发布频率</span><br>  <span class="hljs-function">ros::Rate <span class="hljs-title">loop_rate</span><span class="hljs-params">(<span class="hljs-number">1</span>)</span></span>;<br><br>  <span class="hljs-keyword">while</span> (ros::<span class="hljs-built_in">ok</span>())<br>  &#123;<br>    <span class="hljs-comment">// 创建一个nav_msgs/Path消息</span><br>    nav_msgs::Path path;<br>    path.header.stamp = ros::Time::<span class="hljs-built_in">now</span>();<br>    path.header.frame_id = <span class="hljs-string">&quot;map&quot;</span>;<br><br>    <span class="hljs-comment">// 添加几个位姿点到path中</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">5</span>; ++i)<br>    &#123;<br>      geometry_msgs::PoseStamped pose_stamped;<br>      pose_stamped.header.stamp = ros::Time::<span class="hljs-built_in">now</span>();<br>      pose_stamped.header.frame_id = <span class="hljs-string">&quot;map&quot;</span>;<br>      pose_stamped.pose.position.x = i;<br>      pose_stamped.pose.position.y = <span class="hljs-number">2.0</span>;<br>      pose_stamped.pose.position.z = <span class="hljs-number">0.0</span>;<br>      pose_stamped.pose.orientation.w = <span class="hljs-number">1.0</span>;<br><br>      path.poses.<span class="hljs-built_in">push_back</span>(pose_stamped);<br>    &#125;<br><br>    <span class="hljs-comment">// 发布路径消息</span><br>    path_pub.<span class="hljs-built_in">publish</span>(path);<br>    <span class="hljs-built_in">ROS_INFO</span>(<span class="hljs-string">&quot;Path published.&quot;</span>);<br><br>    <span class="hljs-comment">// 按照设定的频率等待</span><br>    loop_rate.<span class="hljs-built_in">sleep</span>();<br>  &#125;<br><br>  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure></p>
+<ol>
+<li>路径订阅节点（path_subscriber_node）：<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// 包含所需的头文件</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;ros/ros.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;nav_msgs/Path.h&gt;</span></span><br><br><span class="hljs-comment">// 回调函数，处理接收到的nav_msgs/Path消息</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">pathCallback</span><span class="hljs-params">(<span class="hljs-type">const</span> nav_msgs::Path::ConstPtr&amp; path_msg)</span></span><br><span class="hljs-function"></span>&#123;<br>  <span class="hljs-built_in">ROS_INFO</span>(<span class="hljs-string">&quot;Received path with %zu poses.&quot;</span>, path_msg-&gt;poses.<span class="hljs-built_in">size</span>());<br>&#125;<br><br><span class="hljs-comment">// 主函数</span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> **argv)</span></span><br><span class="hljs-function"></span>&#123;<br>  <span class="hljs-comment">// 初始化ROS节点</span><br>  ros::<span class="hljs-built_in">init</span>(argc, argv, <span class="hljs-string">&quot;path_subscriber_node&quot;</span>);<br>  ros::NodeHandle nh;<br><br>  <span class="hljs-comment">// 创建一个Subscriber，用于订阅nav_msgs/Path消息</span><br>  ros::Subscriber path_sub = nh.<span class="hljs-built_in">subscribe</span>(<span class="hljs-string">&quot;path&quot;</span>, <span class="hljs-number">1</span>, pathCallback);<br><br>  <span class="hljs-comment">// 通过回调函数处理消息</span><br>  ros::<span class="hljs-built_in">spin</span>();<br><br>  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure></li>
+<li>编译和运行示例程序：<br>为了编译和运行这个示例程序，请确保已经正确安装了ROS。然后，在你的ROS工作空间中创建一个名为path_example的包，并将以上两个C++文件添加到src目录下。接下来，按照以下步骤完成编译和运行：<br>a. 修改CMakeLists.txt文件：</li>
+</ol>
+<p>在path_example包的CMakeLists.txt文件中，首先找到find_package部分，并添加nav_msgs依赖项：<br><figure class="highlight isbl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs isbl"><span class="hljs-function"><span class="hljs-title">find_package</span>(<span class="hljs-variable">catkin</span> <span class="hljs-variable">REQUIRED</span> <span class="hljs-variable">COMPONENTS</span></span><br><span class="hljs-function">  <span class="hljs-variable">roscpp</span></span><br><span class="hljs-function">  <span class="hljs-variable">nav_msgs</span></span><br><span class="hljs-function">)</span><br><br></code></pre></td></tr></table></figure><br>然后，在catkin_package部分中添加nav_msgs：<br><figure class="highlight isbl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs isbl"><span class="hljs-function"><span class="hljs-title">catkin_package</span>(</span><br><span class="hljs-function">  <span class="hljs-variable">INCLUDE_DIRS</span> <span class="hljs-variable">include</span></span><br><span class="hljs-function">  <span class="hljs-variable">LIBRARIES</span> <span class="hljs-variable">path_example</span></span><br><span class="hljs-function">  <span class="hljs-variable">CATKIN_DEPENDS</span> <span class="hljs-variable">roscpp</span> <span class="hljs-variable">nav_msgs</span></span><br><span class="hljs-function">)</span><br><br></code></pre></td></tr></table></figure><br>接下来，添加可执行文件和目标链接库：<br><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">add<span class="hljs-constructor">_executable(<span class="hljs-params">path_publisher_node</span> <span class="hljs-params">src</span><span class="hljs-operator">/</span><span class="hljs-params">path_publisher_node</span>.<span class="hljs-params">cpp</span>)</span><br>target<span class="hljs-constructor">_link_libraries(<span class="hljs-params">path_publisher_node</span> $&#123;<span class="hljs-params">catkin_LIBRARIES</span>&#125;)</span><br><br>add<span class="hljs-constructor">_executable(<span class="hljs-params">path_subscriber_node</span> <span class="hljs-params">src</span><span class="hljs-operator">/</span><span class="hljs-params">path_subscriber_node</span>.<span class="hljs-params">cpp</span>)</span><br>target<span class="hljs-constructor">_link_libraries(<span class="hljs-params">path_subscriber_node</span> $&#123;<span class="hljs-params">catkin_LIBRARIES</span>&#125;)</span><br><br></code></pre></td></tr></table></figure><br>b. 编译ROS包：</p>
+<p>在终端中，进入ROS工作空间的根目录，并运行以下命令进行编译：<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">catkin_make</span><br><br></code></pre></td></tr></table></figure></p>
+<p>c. 运行节点：</p>
+<p>在终端中，运行以下命令启动roscore：<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">roscore</span><br><br></code></pre></td></tr></table></figure><br>接下来，打开另一个终端并运行以下命令启动path_publisher_node：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">source</span> devel/setup.bash<br>rosrun path_example path_publisher_node<br><br></code></pre></td></tr></table></figure><br>最后，在另一个新终端中运行以下命令启动path_subscriber_node：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">source</span> devel/setup.bash<br>rosrun path_example path_subscriber_node<br><br></code></pre></td></tr></table></figure><br>在path_subscriber_node所在的终端中，您将看到类似以下的输出：<br><figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs prolog">[<span class="hljs-symbol">INFO</span>] [<span class="hljs-number">1627590534.565542</span>]: <span class="hljs-symbol">Received</span> path with <span class="hljs-number">5</span> poses.<br>[<span class="hljs-symbol">INFO</span>] [<span class="hljs-number">1627590535.565542</span>]: <span class="hljs-symbol">Received</span> path with <span class="hljs-number">5</span> poses.<br>...<br><br></code></pre></td></tr></table></figure><br>这表明path_publisher_node发布的nav_msgs/Path消息已被path_subscriber_node成功接收。</p>
+<h2 id="一些扩展和应用"><a href="#一些扩展和应用" class="headerlink" title="一些扩展和应用"></a>一些扩展和应用</h2><ol>
+<li><p>路径可视化：为了更好地理解和调试路径，可以使用rviz工具进行可视化。启动rviz，然后添加一个Path显示类型。将Path显示类型的主题设置为/path，即我们在path_publisher_node中发布的nav_msgs/Path消息的主题。这样，您就可以看到路径在地图上的实际效果。</p>
+</li>
+<li><p>动态生成路径：在当前的示例中，路径是静态的，即每个发布周期都会发布相同的路径。您可以尝试修改path_publisher_node，使其动态生成不同的路径，以模拟实际导航场景中的变化。</p>
+</li>
+<li><p>路径处理和分析：在path_subscriber_node中，您可以对接收到的路径进行进一步处理和分析，例如计算路径长度、平均曲率等。此外，您还可以根据需求对路径进行优化，例如对路径进行平滑处理。</p>
+</li>
+<li><p>集成导航功能：要将此示例与实际导航功能集成，可以将path_publisher_node替换为全局路径规划器（如move_base中的global_planner），同时将path_subscriber_node替换为局部路径规划器或控制器（如move_base中的local_planner或diff_drive_controller）。这将使您的机器人能够根据nav_msgs/Path消息进行实际导航。</p>
+</li>
+<li><p>与其他ROS功能集成：您还可以将nav_msgs/Path消息与其他ROS功能（如传感器数据处理、SLAM、机器人控制等）集成，实现更加复杂的机器人应用。</p>
+</li>
+</ol>
+<p>通过这个示例程序，您已经学会了如何在ROS中创建、发布和订阅nav_msgs/Path消息。您可以根据实际需求对示例进行扩展，以适应不同的机器人导航和控制场景。</p>
+<h1 id="nav-msgs-Path相关的高级主题"><a href="#nav-msgs-Path相关的高级主题" class="headerlink" title="nav_msgs/Path相关的高级主题"></a>nav_msgs/Path相关的高级主题</h1><ol>
+<li><p>融合多种传感器信息：在复杂的机器人系统中，可能需要融合多种传感器信息（如激光雷达、摄像头、超声波等）以生成更可靠和准确的路径。为了实现这一目标，您可以将传感器数据预处理节点和路径规划器相互连接，以便路径规划器可以根据融合后的环境信息生成路径。在这种情况下，nav_msgs/Path消息可以用于在各个节点之间传递路径信息。</p>
+</li>
+<li><p>使用路径规划算法库：在实际项目中，为了简化路径规划任务，您可以使用现有的路径规划算法库，例如OMPL（Open Motion Planning Library，开放运动规划库）。这些库通常提供了一系列成熟的路径规划算法，可以帮助您快速实现导航功能。在使用这些库时，您可能需要将算法库的输出转换为nav_msgs/Path消息，以便与ROS导航框架集成。</p>
+</li>
+<li><p>考虑不同类型的机器人：在不同类型的机器人（例如四足机器人、无人机等）中，nav_msgs/Path的应用可能会有所不同。例如，无人机可能需要考虑三维空间中的路径规划，而四足机器人可能需要考虑足迹规划。在这些情况下，您可能需要根据实际需求对nav_msgs/Path消息进行适当修改或扩展。</p>
+</li>
+<li><p>多机器人协同导航：在多机器人系统中，nav_msgs/Path可以用于在机器人之间共享路径信息。例如，当一个机器人检测到障碍物并规划出一条避障路径时，可以通过nav_msgs/Path消息将该路径分享给其他机器人，以实现协同避障。在这种情况下，您可能需要考虑如何在多机器人系统中同步和管理nav_msgs/Path消息。</p>
+</li>
+<li><p>实现自适应路径规划：在某些场景下，可能需要根据环境的变化实时调整路径。例如，在机器人遇到动态障碍物时，可能需要重新规划路径。为了实现这一目标，您可以监控nav_msgs/Path消息，当检测到路径不再可行时，触发重新规划过程。这将使您的机器人能够在复杂环境中进行自适应导航。</p>
+</li>
+<li><p>利用机器学习进行路径规划：传统的路径规划方法通常基于搜索和优化算法。然而，近年来，基于机器学习的方法在路径规划领域也表现出了强大的性能。例如，通过使用深度学习来处理图像数据，可以从摄像头图像中直接推导出可行的路径。在这种情况下，您可以将机器学习模型的输出转换为nav_msgs/Path消息，以便与其他ROS节点集成。</p>
+</li>
+<li><p>模拟环境中的路径规划：在开发和测试机器人导航系统时，通常需要使用模拟环境。例如，您可以使用Gazebo模拟器构建虚拟的机器人和环境。在模拟环境中，您可以生成nav_msgs/Path消息，以便在不同的场景中评估和验证路径规划算法的性能。此外，您还可以使用ROS的仿真时间功能来控制模拟过程，以便更加精确地模拟实际环境中的时间变化。</p>
+</li>
+<li><p>路径的全局优化：在某些场景下，可能需要对规划出的路径进行全局优化，以实现更高效的导航。例如，您可以通过约束规划、最优控制等方法，将路径优化为最短路径、最小能耗路径等。在这些情况下，您可以使用nav_msgs/Path消息来存储和传递优化后的路径信息。</p>
+</li>
+<li><p>考虑社会规范的路径规划：在人机共享环境中，机器人可能需要遵循人类的社会规范来规划路径。例如，机器人应该避免穿越人群或者靠近人们的私人空间。为了实现这一目标，您可以将机器人的路径规划算法与人类行为建模方法相结合。在这种情况下，nav_msgs/Path消息可以用于存储和传递考虑社会规范的路径信息。</p>
+</li>
+<li><p>融合地图和路径信息：在某些场景下，可能需要将地图信息（例如栅格地图或者点云地图）与路径信息相结合，以实现更准确和可靠的导航。例如，您可以通过考虑地图中的障碍物、行驶区域等信息，来生成更加安全和高效的路径。在这种情况下，您可以使用nav_msgs/Path消息来存储和传递</p>
+</li>
+<li><p>将路径规划与避障结合：在实际导航过程中，机器人可能需要实时规划路径并避免障碍物。为了实现这一目标，您可以将局部避障算法与全局路径规划算法相结合。在这种情况下，nav_msgs/Path消息可以用于在全局路径规划器和局部避障器之间传递路径信息，以便机器人可以根据实时环境信息进行导航。</p>
+</li>
+<li><p>使用路径跟踪算法：在机器人导航过程中，需要设计路径跟踪算法来实现对预定路径的精确跟踪。您可以使用各种路径跟踪算法（如纯跟踪、模型预测控制等），根据nav_msgs/Path消息中的路径信息来控制机器人的运动。这将使您的机器人能够实现精确的路径跟踪和控制。</p>
+</li>
+<li><p>实现不确定性建模和预测：在复杂环境中，机器人的导航过程可能受到不确定性因素的影响，如传感器噪声、动态障碍物等。为了实现更可靠的导航，您可以利用概率建模和预测方法（如贝叶斯滤波、卡尔曼滤波等）来处理这些不确定性。在这种情况下，您可以使用nav_msgs/Path消息来存储和传递考虑不确定性因素的路径信息。</p>
+</li>
+<li><p>基于ROS的导航框架：要实现完整的机器人导航功能，可以使用现有的基于ROS的导航框架，如move_base或Navigation2。这些框架提供了一系列成熟的功能，如地图服务、定位、路径规划、避障等，可以帮助您快速构建机器人导航系统。在使用这些框架时，nav_msgs/Path消息将在不同功能模块之间传递路径信息。</p>
+</li>
+</ol>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/slam/" class="category-chain-item">slam</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/slam/ROS/" class="category-chain-item">ROS</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%8E%9F%E5%88%9B/">#原创</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>详细介绍ROS的nav_msgs/Path</div>
+      <div>https://qiangsun89.github.io/2023/04/19/详细介绍ROS的nav-msgs-Path/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Qiang Sun</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年4月19日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/04/19/%E8%AF%A6%E8%A7%A3ROS%E4%B8%AD%E7%9A%84CMakeLists/" title="详解ROS中的CMakeLists">
+                        <span class="hidden-mobile">详解ROS中的CMakeLists</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"LEYjQzDk7jo8uqlOQoAEF5qm-gzGzoHsz","appKey":"7bBCyINnLw0akaPjI39pESMN","path":"window.location.pathname","placeholder":"留言","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
