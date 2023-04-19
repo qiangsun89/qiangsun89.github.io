@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>C++友元介绍</title>
+    <link href="/2023/04/19/%E5%8F%8B%E5%85%83%E4%BB%8B%E7%BB%8D/"/>
+    <url>/2023/04/19/%E5%8F%8B%E5%85%83%E4%BB%8B%E7%BB%8D/</url>
+    
+    <content type="html"><![CDATA[<h1 id="C-友元介绍"><a href="#C-友元介绍" class="headerlink" title="C++友元介绍"></a>C++友元介绍</h1><p>C++中的友元（friend）是一种特殊的关系，它允许一个类或者函数访问另一个类的私有成员。友元机制可以在一定程度上突破C++中的封装性，但是它也可能导致代码的可维护性和可扩展性变差，需要谨慎使用。</p><p>在C++中，可以通过在类的定义中使用friend关键字来声明一个友元。例如：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">A</span> &#123;<br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-type">int</span> x;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">friend</span> <span class="hljs-type">void</span> <span class="hljs-title">foo</span><span class="hljs-params">(A&amp; a)</span></span>;  <span class="hljs-comment">// 声明函数foo为类A的友元</span><br>&#125;;<br><br></code></pre></td></tr></table></figure><br>在这个例子中，我们在类A的定义中声明了一个函数foo为类A的友元。这意味着函数foo可以访问类A的私有成员，包括变量x。注意，这里需要将参数a声明为引用类型，否则函数foo只能访问到一个副本，无法修改类A的成员变量。</p><p>除了函数之外，类也可以成为另一个类的友元。例如：<br><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><span class="hljs-keyword">class</span> <span class="hljs-title class_">B</span> &#123;<br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-built_in">int</span> y;<br><span class="hljs-keyword">public</span>:<br>    friend <span class="hljs-keyword">class</span> <span class="hljs-title class_">A</span>;  <span class="hljs-comment">// 声明类A为类B的友元</span><br>&#125;;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">A</span> &#123;<br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-built_in">int</span> x;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-keyword">void</span> foo(B&amp; b) &#123;<br>        b.y = <span class="hljs-number">42</span>;  <span class="hljs-comment">// 可以访问类B的私有成员y</span><br>    &#125;<br>&#125;;<br><br></code></pre></td></tr></table></figure><br>在这个例子中，我们在类B的定义中声明了类A为其友元。这意味着类A可以访问类B的私有成员变量y，例如在foo函数中就可以修改变量y的值。</p><p>需要注意的是，友元机制打破了C++中的封装性，因此在使用友元时需要特别小心。友元的使用应该尽可能少，只在必要的情况下使用，以确保代码的可维护性和可扩展性。在一些特定的情况下，友元可能是有用的，例如：</p><ol><li><p>在两个或多个类之间需要共享数据或者共同完成某个任务时，可以使用友元。</p></li><li><p>在一些高性能的代码中，如果需要频繁访问某个类的私有成员，可以考虑使用友元，避免频繁的函数调用和参数传递。</p></li><li><p>在某些特殊的情况下，需要在类的外部访问类的私有成员，但是不能通过类的公有成员函数实现时，可以使用友元。</p></li></ol><p>总的来说，友元是C++中的一种特殊机制，允许在一定程度上突破封装性，但是使用时需要谨慎，以避免对代码的可维护性和可扩展性造成负面影响。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>C++</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>C++实现没有继承关系的两个类之间的成员函数相互调用</title>
     <link href="/2023/04/19/C-%E5%AE%9E%E7%8E%B0%E6%B2%A1%E6%9C%89%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB%E7%9A%84%E4%B8%A4%E4%B8%AA%E7%B1%BB%E4%B9%8B%E9%97%B4%E7%9A%84%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E7%9B%B8%E4%BA%92%E8%B0%83%E7%94%A8/"/>
     <url>/2023/04/19/C-%E5%AE%9E%E7%8E%B0%E6%B2%A1%E6%9C%89%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB%E7%9A%84%E4%B8%A4%E4%B8%AA%E7%B1%BB%E4%B9%8B%E9%97%B4%E7%9A%84%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E7%9B%B8%E4%BA%92%E8%B0%83%E7%94%A8/</url>
