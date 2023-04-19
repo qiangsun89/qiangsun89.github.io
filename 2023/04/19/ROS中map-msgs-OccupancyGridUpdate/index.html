@@ -16,22 +16,22 @@
   <meta name="author" content="Qiang Sun">
   <meta name="keywords" content="">
   
-    <meta name="description" content="MathJax.Hub.Config({             tex2jax: {             skipTags: [&#39;script&#39;, &#39;noscript&#39;, &#39;style&#39;, &#39;textarea&#39;, &#39;pre&#39;],             inlineMath: [[&#39;$&#39;,&#39;$&#39;]]             }         });">
+    <meta name="description" content="ROS中map_msgs::OccupancyGridUpdatemap_msgs::OccupancyGridUpdate是一个在ROS（Robot Operating System）中使用的消息类型，它用于表示占据栅格地图（Occupancy Grid Map）的局部更新。占据栅格地图是一种用于机器人导航和建图的二维地图表示，其中地图被划分为固定大小的栅格单元，每个单元表示其被占据的概率。 m">
 <meta property="og:type" content="article">
-<meta property="og:title" content="机器人建图算法cartographer的相关理论">
-<meta property="og:url" content="https://qiangsun89.github.io/2023/04/18/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%BB%BA%E5%9B%BE%E7%AE%97%E6%B3%95cartographer%E7%9A%84%E7%9B%B8%E5%85%B3%E7%90%86%E8%AE%BA/index.html">
+<meta property="og:title" content="ROS中map_msgs::OccupancyGridUpdate">
+<meta property="og:url" content="https://qiangsun89.github.io/2023/04/19/ROS%E4%B8%ADmap-msgs-OccupancyGridUpdate/index.html">
 <meta property="og:site_name" content="知识的搬运工">
-<meta property="og:description" content="MathJax.Hub.Config({             tex2jax: {             skipTags: [&#39;script&#39;, &#39;noscript&#39;, &#39;style&#39;, &#39;textarea&#39;, &#39;pre&#39;],             inlineMath: [[&#39;$&#39;,&#39;$&#39;]]             }         });">
+<meta property="og:description" content="ROS中map_msgs::OccupancyGridUpdatemap_msgs::OccupancyGridUpdate是一个在ROS（Robot Operating System）中使用的消息类型，它用于表示占据栅格地图（Occupancy Grid Map）的局部更新。占据栅格地图是一种用于机器人导航和建图的二维地图表示，其中地图被划分为固定大小的栅格单元，每个单元表示其被占据的概率。 m">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-04-18T01:09:05.000Z">
-<meta property="article:modified_time" content="2023-04-18T01:17:49.952Z">
+<meta property="article:published_time" content="2023-04-19T01:25:42.000Z">
+<meta property="article:modified_time" content="2023-04-19T01:30:45.403Z">
 <meta property="article:author" content="Qiang Sun">
 <meta property="article:tag" content="原创">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>机器人建图算法cartographer的相关理论 - 知识的搬运工</title>
+  <title>ROS中map_msgs::OccupancyGridUpdate - 知识的搬运工</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -214,7 +214,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="机器人建图算法cartographer的相关理论"></span>
+            <span id="subtitle" data-typed-text="ROS中map_msgs::OccupancyGridUpdate"></span>
           
         </div>
 
@@ -225,8 +225,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-04-18 09:09" pubdate>
-          2023年4月18日 上午
+        <time datetime="2023-04-19 09:25" pubdate>
+          2023年4月19日 上午
         </time>
       </span>
     
@@ -237,7 +237,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.7k 字
+          2.9k 字
         
       </span>
     
@@ -248,7 +248,7 @@
         
         
         
-          31 分钟
+          25 分钟
         
       </span>
     
@@ -294,64 +294,52 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">机器人建图算法cartographer的相关理论</h1>
+            <h1 style="display: none">ROS中map_msgs::OccupancyGridUpdate</h1>
             
             
               <div class="markdown-body">
                 
-                <head>
-    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
-    <script type="text/x-mathjax-config">
-        MathJax.Hub.Config({
-            tex2jax: {
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
-            inlineMath: [['$','$']]
-            }
-        });
-    </script>
-</head>
-
-<h1 id="机器人建图算法cartographer的相关理论"><a href="#机器人建图算法cartographer的相关理论" class="headerlink" title="机器人建图算法cartographer的相关理论"></a>机器人建图算法cartographer的相关理论</h1><p>Cartographer是一种用于机器人的实时同步定位与建图(SLAM)算法，它能帮助机器人在未知环境中建立地图并进行自我定位。Cartographer的主要原理是通过激光雷达（LIDAR）或其他传感器获取环境数据，然后通过多种算法对这些数据进行处理，以生成一幅精确的地图。下面我们来介绍Cartographer的主要理论知识。</p>
+                <h1 id="ROS中map-msgs-OccupancyGridUpdate"><a href="#ROS中map-msgs-OccupancyGridUpdate" class="headerlink" title="ROS中map_msgs::OccupancyGridUpdate"></a>ROS中map_msgs::OccupancyGridUpdate</h1><p>map_msgs::OccupancyGridUpdate是一个在ROS（Robot Operating System）中使用的消息类型，它用于表示占据栅格地图（Occupancy Grid Map）的局部更新。占据栅格地图是一种用于机器人导航和建图的二维地图表示，其中地图被划分为固定大小的栅格单元，每个单元表示其被占据的概率。</p>
+<p>map_msgs::OccupancyGridUpdate消息在map_msgs包中定义，它是在对整个地图进行更新时，仅对需要更改的部分进行更新的一种有效方法。这种方法在处理大型地图时可以节省带宽和计算资源。</p>
+<p>map_msgs::OccupancyGridUpdate消息的定义如下：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs css"># This represents an update <span class="hljs-selector-tag">to</span> an occupancy <span class="hljs-attribute">grid</span>.<br><span class="hljs-selector-tag">Header</span> <span class="hljs-selector-tag">header</span><br>int32 x<br>int32 y<br>uint32 <span class="hljs-attribute">width</span><br>uint32 <span class="hljs-attribute">height</span><br>int8<span class="hljs-selector-attr">[]</span> data<br></code></pre></td></tr></table></figure></p>
+<p>各字段的解释如下：</p>
 <ol>
-<li>概率栅格地图（Occupancy Grid Mapping）：<br>概率栅格地图是Cartographer中使用的一种地图表示方法。它将环境划分为等大小的单元格，并用概率值表示每个单元格是否被占据。地图更新通过贝叶斯滤波器进行，公式如下：<script type="math/tex; mode=display">
-P(m|z_{1:t},x_{1:t}) = \frac{P(z_t|m,x_t)P(m|z_{1:t-1},x_{1:t-1})}{P(z_t|z_{1:t-1},x_{1:t})}</script>其中，$m$表示地图，$z_{1:t}$表示传感器数据，$x_{1:t}$表示机器人位姿。</li>
-<li>扫描匹配（Scan Matching）：<br>扫描匹配是一种通过对比相邻激光扫描来估算机器人位姿的方法。Cartographer使用的是Ceres Solver求解器来优化位姿。目标函数是最小化当前激光扫描与先前地图之间的误差。误差函数可以表示为：<script type="math/tex; mode=display">
-E(x_t) = \sum_{i=1}^{n} w_i d^2(m(x_t, z_{t,i}), z_{t,i})</script>其中，$x_t$表示当前机器人位姿，$z_{t,i}$表示第$i$个激光点，$m(x_t, z_{t,i})$表示地图中与激光点对应的点，$w_i$是权重，$d^2$表示距离的平方。</li>
-<li>回环检测（Loop Closure）：<br>回环检测是检测机器人是否回到先前访问过的区域。Cartographer使用全局扫描匹配来寻找可能的回环。一旦检测到回环，Cartographer会通过位姿图优化（Pose Graph Optimization）对整个轨迹进行优化。目标函数是最小化所有激光扫描之间的误差，同时保持回环约束。<script type="math/tex; mode=display">
-E(x_{1:T}) = \sum_{t=1}^{T} E_{t,t-1}(x_t, x_{t-1}) + \sum_{(t_i, t_j) \in C} E_{t_i, t_j}(x_{t_i}, x_{t_j})</script>其中，$x_{1:T}$表示整个轨迹的位姿，$E_{t,t-1}(x_t, x_{t-1})$表示相邻时刻$t$和$t-1$之间的位姿误差，$(t_i, t_j) \in C$表示回环约束集合，$E_{t_i, t_j}(x_{t_i}, x_{t_j})$表示回环时刻$t_i$和$t_j$之间的位姿误差。通过最小化这个目标函数，我们可以获得一个全局一致的轨迹。</li>
-<li>子映射（Submaps）：<br>Cartographer使用子映射的方法将环境划分为多个局部地图。每个子映射都是一个局部的栅格地图，可以独立进行更新和优化。子映射的主要优点是可以减小计算复杂度，并且在发生回环时，可以通过子映射间的约束关系快速优化整个轨迹。</li>
-<li>多传感器融合：<br>Cartographer支持多种传感器数据输入，如激光雷达、IMU（惯性测量单元）、里程计等。通过融合多种传感器数据，可以提高定位和建图的准确性。例如，使用IMU数据可以在轨迹优化时加入重力方向约束，提高优化结果的准确性。</li>
-<li>实时性和并行计算：<br>为了实现实时的建图与定位，Cartographer采用了多线程和并行计算的方法。主要分为前端和后端两部分。前端负责处理实时传感器数据，包括激光雷达数据、IMU数据等，进行局部的扫描匹配和子映射的生成。后端负责处理全局的位姿图优化和回环检测。</li>
+<li><p>header：消息头，包含了时间戳和坐标系信息。时间戳用于指示消息生成的时间，坐标系信息用于表示地图更新相对于哪个坐标系。</p>
+</li>
+<li><p>x 和 y：表示更新区域的左上角在整个地图中的坐标。这些值以栅格单元为单位。</p>
+</li>
+<li><p>width 和 height：表示更新区域的宽度和高度，单位为栅格单元。</p>
+</li>
+<li><p>data：一个整数数组，表示更新区域内的占据栅格数据。数组的长度等于width乘以height。数组中的每个元素表示一个栅格单元的占据概率，值范围从-1到100，其中-1表示未知状态，0表示空闲状态，100表示完全占据状态。</p>
+</li>
 </ol>
-<p>这种设计可以有效地利用多核处理器的计算能力，提高算法的实时性。同时，Cartographer还支持多种优化方法，如局部地图之间的约束搜索、子映射之间的回环检测等，以进一步降低计算复杂度。</p>
+<p>当接收到map_msgs::OccupancyGridUpdate消息时，订阅者应根据消息中的x、y、width、height和data字段更新其保存的占据栅格地图。这样，地图的局部更新可以在不重新发送整个地图的情况下进行，从而提高了效率。</p>
+<h2 id="map-msgs-OccupancyGridUpdate的使用方法和应用场景。"><a href="#map-msgs-OccupancyGridUpdate的使用方法和应用场景。" class="headerlink" title="map_msgs::OccupancyGridUpdate的使用方法和应用场景。"></a>map_msgs::OccupancyGridUpdate的使用方法和应用场景。</h2><p>使用方法：<br>在实际使用中，map_msgs::OccupancyGridUpdate主要通过发布者和订阅者来实现地图局部更新的传递。以下是一个简单的示例，说明如何使用map_msgs::OccupancyGridUpdate消息。</p>
 <ol>
-<li>三维SLAM：<br>除了二维SLAM，Cartographer还支持三维SLAM，可以处理3D激光雷达数据和RGB-D相机数据。三维SLAM算法在核心原理上与二维SLAM类似，但需要考虑更多的自由度和数据量。通过使用八叉树（Octree）表示三维地图，可以有效地降低存储和计算复杂度。<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1>Cartographer是一种强大的实时SLAM算法，通过使用概率栅格地图、扫描匹配、回环检测、子映射和多传感器融合等方法，可以在未知环境中实时生成地图并进行自我定位。虽然Cartographer的核心算法已经相当成熟，但是随着硬件性能的提升和新算法的出现，未来的SLAM系统可能会在准确性、鲁棒性和计算效率等方面取得更大的突破。<h1 id="应用领域"><a href="#应用领域" class="headerlink" title="应用领域"></a>应用领域</h1>Cartographer的应用领域非常广泛，包括自动驾驶汽车、无人机、服务机器人、工业自动化、虚拟现实等。在这些领域中，SLAM算法可以帮助机器人或设备实现自主导航、避障、路径规划等功能。<h1 id="未来展望"><a href="#未来展望" class="headerlink" title="未来展望"></a>未来展望</h1>尽管Cartographer已经取得了很多成果，但SLAM技术仍有很多值得探索和改进的方向。例如，将深度学习方法引入SLAM系统，以提高数据处理和环境理解的能力；开发适应于特定场景和应用的专用SLAM算法，以提高性能和鲁棒性；以及研究更先进的传感器技术，以提高数据采集的精度和效率。随着相关技术的发展，我们可以期待SLAM系统在未来会有更多的突破和应用。<h1 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h1>Cartographer SLAM算法的优缺点总结如下：<h2 id="优点："><a href="#优点：" class="headerlink" title="优点："></a>优点：</h2></li>
-<li><p>实时性：通过多线程和并行计算设计，Cartographer能够实时处理传感器数据，实现快速的建图与定位。</p>
+<li><p>发布者（局部地图更新生成器）：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;ros/ros.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;map_msgs/OccupancyGridUpdate.h&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> **argv)</span></span><br><span class="hljs-function"></span>&#123;<br>  ros::<span class="hljs-built_in">init</span>(argc, argv, <span class="hljs-string">&quot;occupancy_grid_update_publisher&quot;</span>);<br>  ros::NodeHandle nh;<br>  ros::Publisher pub = nh.<span class="hljs-built_in">advertise</span>&lt;map_msgs::OccupancyGridUpdate&gt;(<span class="hljs-string">&quot;occupancy_grid_update&quot;</span>, <span class="hljs-number">10</span>);<br><br>  <span class="hljs-function">ros::Rate <span class="hljs-title">loop_rate</span><span class="hljs-params">(<span class="hljs-number">1</span>)</span></span>; <span class="hljs-comment">// 1 Hz</span><br><br>  <span class="hljs-keyword">while</span> (ros::<span class="hljs-built_in">ok</span>())<br>  &#123;<br>    map_msgs::OccupancyGridUpdate update_msg;<br>    update_msg.header.stamp = ros::Time::<span class="hljs-built_in">now</span>();<br>    update_msg.header.frame_id = <span class="hljs-string">&quot;map&quot;</span>;<br>    update_msg.x = <span class="hljs-number">5</span>;<br>    update_msg.y = <span class="hljs-number">5</span>;<br>    update_msg.width = <span class="hljs-number">10</span>;<br>    update_msg.height = <span class="hljs-number">10</span>;<br>    update_msg.data.<span class="hljs-built_in">resize</span>(update_msg.width * update_msg.height, <span class="hljs-number">0</span>);<br><br>    pub.<span class="hljs-built_in">publish</span>(update_msg);<br>    ros::<span class="hljs-built_in">spinOnce</span>();<br>    loop_rate.<span class="hljs-built_in">sleep</span>();<br>  &#125;<br><br>  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>上述示例中，发布者每秒发布一个map_msgs::OccupancyGridUpdate消息，更新地图的一个10x10的区域。</p>
 </li>
-<li><p>鲁棒性：采用概率栅格地图、扫描匹配、回环检测等方法，Cartographer能够在不同环境中取得较好的性能。</p>
+<li><p>订阅者（地图更新接收器）：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;ros/ros.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;map_msgs/OccupancyGridUpdate.h&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">updateCallback</span><span class="hljs-params">(<span class="hljs-type">const</span> map_msgs::OccupancyGridUpdate::ConstPtr&amp; msg)</span></span><br><span class="hljs-function"></span>&#123;<br>  <span class="hljs-comment">// 根据接收到的消息更新地图</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> **argv)</span></span><br><span class="hljs-function"></span>&#123;<br>  ros::<span class="hljs-built_in">init</span>(argc, argv, <span class="hljs-string">&quot;occupancy_grid_update_subscriber&quot;</span>);<br>  ros::NodeHandle nh;<br>  ros::Subscriber sub = nh.<span class="hljs-built_in">subscribe</span>(<span class="hljs-string">&quot;occupancy_grid_update&quot;</span>, <span class="hljs-number">10</span>, updateCallback);<br><br>  ros::<span class="hljs-built_in">spin</span>();<br><br>  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>订阅者通过订阅occupancy_grid_update主题来接收地图更新。每当接收到新的map_msgs::OccupancyGridUpdate消息时，updateCallback函数会被调用，可以在此函数内更新地图数据。</p>
 </li>
-<li><p>多传感器融合：支持激光雷达、IMU、里程计等多种传感器数据输入，利用多种传感器数据提高定位和建图的准确性。</p>
-</li>
-<li><p>子映射技术：通过将环境划分为多个局部地图，可以降低计算复杂度，并在发生回环时快速优化整个轨迹。</p>
-</li>
-<li><p>二维和三维SLAM：支持二维和三维SLAM，可以处理不同类型的传感器数据和应用场景。</p>
-</li>
-<li><p>广泛的应用领域：适用于自动驾驶汽车、无人机、服务机器人、工业自动化、虚拟现实等多种应用场景。</p>
-<h2 id="缺点："><a href="#缺点：" class="headerlink" title="缺点："></a>缺点：</h2></li>
-<li><p>对参数敏感：Cartographer算法的性能受参数设置的影响较大，需要针对不同应用场景进行调整。</p>
-</li>
-<li><p>计算资源要求：虽然采用了多线程和并行计算，但Cartographer仍需要较高的计算资源以实现实时性。</p>
-</li>
-<li><p>环境依赖：在某些特定环境下，如光滑表面、低纹理区域等，Cartographer的性能可能会受到影响。</p>
-</li>
-<li><p>深度学习方法集成：相较于一些深度学习方法的SLAM算法，Cartographer在数据处理和环境理解方面的能力有待提高。</p>
-<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1></li>
-<li>W. Hess, D. Kohler, H. Rapp, and D. Andor, “Real-Time Loop Closure in 2D LIDAR SLAM,” in IEEE Robotics and Automation Letters, vol. 2, no. 3, pp. 1271-1278, July 2017. DOI: 10.1109/LRA.2017.2665643.</li>
-<li>E. B. Olson, “Real-time correlative scan matching,” in Proceedings 2009 IEEE International Conference on Robotics and Automation, Kobe, Japan, 2009, pp. 4387-4393. DOI: 10.1109/ROBOT.2009.5152425.</li>
-<li>G. Grisetti, R. Kümmerle, C. Stachniss, and W. Burgard, “A Tutorial on Graph-Based SLAM,” IEEE Intelligent Transportation Systems Magazine, vol. 2, no. 4, pp. 31-43, Winter 2010. DOI: 10.1109/MITS.2010.939925.</li>
-<li>K. M. Wurm, A. Hornung, M. Bennewitz, C. Stachniss, and W. Burgard, “OctoMap: A Probabilistic, Flexible, and Compact 3D Map Representation for Robotic Systems,” in Proceedings of the ICRA 2010 Workshop on Best Practice in 3D Perception and Modeling for Mobile Manipulation, Anchorage, AK, USA, 2010.</li>
 </ol>
-<p>这些文献涵盖了Cartographer算法的核心思想，包括实时闭环、概率栅格地图、扫描匹配、图优化等。通过阅读这些文献，您可以深入了解Cartographer SLAM算法的原理和实现细节。</p>
+<h2 id="应用场景："><a href="#应用场景：" class="headerlink" title="应用场景："></a>应用场景：</h2><ol>
+<li><p>map_msgs::OccupancyGridUpdate消息在以下场景中非常有用：<br>SLAM（同时定位与建图）：在SLAM过程中，机器人不断探测环境并更新地图。使用局部地图更新可以节省计算和通信资源。</p>
+</li>
+<li><p>多机器人系统：在多机器人协作场景中，一个机器人可能会在地图的一个区域进行探测并更新地图，而其他机器人需要获取这些更新。使用局部地图更新可以使得通信更高效。</p>
+</li>
+<li><p>动态环境：在机器人与动态环境交互的过程中，地图可能需要实时更新以反映环境中的变化。局部地图更新可以在不影响整个系统性能的情况下，实时更新地图。</p>
+</li>
+<li><p>在线地图编辑：在在线地图编辑应用中，用户可以对地图的局部区域进行手动编辑，然后将编辑后的局部区域发送给机器人。使用局部地图更新可以实现这种实时编辑功能，同时避免重新传输整个地图。</p>
+</li>
+<li><p>高分辨率地图：当处理高分辨率地图时，局部地图更新可以有效降低内存占用和计算需求，使系统能够更高效地运行。</p>
+</li>
+<li><p>分布式计算：在某些情况下，地图的计算任务可能分布在多个计算节点上。这些计算节点可以使用局部地图更新来交换地图信息，从而提高计算和通信效率。</p>
+</li>
+</ol>
+<p>综上所述，map_msgs::OccupancyGridUpdate在ROS中具有广泛的应用价值。通过有效地更新局部地图，可以节省计算资源和通信带宽，提高整个系统的性能。在实际应用中，根据具体需求和场景，可以灵活地选择使用局部地图更新来优化系统性能。</p>
 
                 
               </div>
@@ -375,7 +363,7 @@ E(x_{1:T}) = \sum_{t=1}^{T} E_{t,t-1}(x_t, x_{t-1}) + \sum_{(t_i, t_j) \in C} E_
   
     <span>></span>
     
-  <a href="/categories/slam/path-planning/" class="category-chain-item">path_planning</a>
+  <a href="/categories/slam/ROS/" class="category-chain-item">ROS</a>
   
   
 
@@ -404,8 +392,8 @@ E(x_{1:T}) = \sum_{t=1}^{T} E_{t,t-1}(x_t, x_{t-1}) + \sum_{(t_i, t_j) \in C} E_
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>机器人建图算法cartographer的相关理论</div>
-      <div>https://qiangsun89.github.io/2023/04/18/机器人建图算法cartographer的相关理论/</div>
+      <div>ROS中map_msgs::OccupancyGridUpdate</div>
+      <div>https://qiangsun89.github.io/2023/04/19/ROS中map-msgs-OccupancyGridUpdate/</div>
     </div>
     <div class="license-meta">
       
@@ -417,7 +405,7 @@ E(x_{1:T}) = \sum_{t=1}^{T} E_{t,t-1}(x_t, x_{t-1}) + \sum_{(t_i, t_j) \in C} E_
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年4月18日</div>
+          <div>2023年4月19日</div>
         </div>
       
       
@@ -449,18 +437,12 @@ E(x_{1:T}) = \sum_{t=1}^{T} E_{t,t-1}(x_t, x_{t-1}) + \sum_{(t_i, t_j) \in C} E_
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/04/19/ROS%E4%B8%ADmap-msgs-OccupancyGridUpdate/" title="ROS中map_msgs::OccupancyGridUpdate">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">ROS中map_msgs::OccupancyGridUpdate</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/04/17/%E5%9F%BA%E4%BA%8E%E6%B6%82%E8%89%B2%E5%9C%B0%E5%9B%BE%E7%9A%84%E8%A6%86%E7%9B%96%E8%B7%AF%E5%BE%84%E8%A7%84%E5%88%92%E7%9A%84%E7%9B%B8%E5%85%B3%E7%90%86%E8%AE%BA/" title="基于涂色地图的覆盖路径规划的相关理论">
-                        <span class="hidden-mobile">基于涂色地图的覆盖路径规划的相关理论</span>
+                      <a href="/2023/04/18/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%BB%BA%E5%9B%BE%E7%AE%97%E6%B3%95cartographer%E7%9A%84%E7%9B%B8%E5%85%B3%E7%90%86%E8%AE%BA/" title="机器人建图算法cartographer的相关理论">
+                        <span class="hidden-mobile">机器人建图算法cartographer的相关理论</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
