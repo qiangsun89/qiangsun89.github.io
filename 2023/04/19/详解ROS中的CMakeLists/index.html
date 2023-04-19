@@ -1,0 +1,843 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Qiang Sun">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="详解ROS中的CMakeLists在ROS（Robot Operating System）中，CMakeLists.txt文件是项目构建配置文件，它定义了如何构建ROS包中的可执行文件、库文件以及如何处理依赖关系等。CMakeLists.txt文件使用CMake语法编写，CMake是一个跨平台的构建系统，用于自动化编译、链接和打包过程。 下面我们详细介绍ROS中CMakeLists.txt的常用配">
+<meta property="og:type" content="article">
+<meta property="og:title" content="详解ROS中的CMakeLists">
+<meta property="og:url" content="https://qiangsun89.github.io/2023/04/19/%E8%AF%A6%E8%A7%A3ROS%E4%B8%AD%E7%9A%84CMakeLists/index.html">
+<meta property="og:site_name" content="知识的搬运工">
+<meta property="og:description" content="详解ROS中的CMakeLists在ROS（Robot Operating System）中，CMakeLists.txt文件是项目构建配置文件，它定义了如何构建ROS包中的可执行文件、库文件以及如何处理依赖关系等。CMakeLists.txt文件使用CMake语法编写，CMake是一个跨平台的构建系统，用于自动化编译、链接和打包过程。 下面我们详细介绍ROS中CMakeLists.txt的常用配">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-04-19T02:20:32.000Z">
+<meta property="article:modified_time" content="2023-04-19T02:47:08.300Z">
+<meta property="article:author" content="Qiang Sun">
+<meta property="article:tag" content="原创">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>详解ROS中的CMakeLists - 知识的搬运工</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"qiangsun89.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"LEYjQzDk7jo8uqlOQoAEF5qm-gzGzoHsz","app_key":"7bBCyINnLw0akaPjI39pESMN","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>知识的搬运工</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="详解ROS中的CMakeLists"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-19 10:20" pubdate>
+          2023年4月19日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          9.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          83 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">详解ROS中的CMakeLists</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="详解ROS中的CMakeLists"><a href="#详解ROS中的CMakeLists" class="headerlink" title="详解ROS中的CMakeLists"></a>详解ROS中的CMakeLists</h1><p>在ROS（Robot Operating System）中，CMakeLists.txt文件是项目构建配置文件，它定义了如何构建ROS包中的可执行文件、库文件以及如何处理依赖关系等。CMakeLists.txt文件使用CMake语法编写，CMake是一个跨平台的构建系统，用于自动化编译、链接和打包过程。</p>
+<p>下面我们详细介绍ROS中CMakeLists.txt的常用配置项：</p>
+<ol>
+<li>最低CMake版本要求：<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">cmake_minimum_required</span>(VERSION <span class="hljs-number">2</span>.<span class="hljs-number">8</span>.<span class="hljs-number">3</span>)<br></code></pre></td></tr></table></figure>
+这行代码定义了项目所需的最低CMake版本。在ROS中，通常需要CMake 2.8.3及以上版本  </li>
+<li>项目名称：<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">project</span><span class="hljs-params">(my_ros_package)</span></span><br></code></pre></td></tr></table></figure>
+这里定义了项目的名称，通常与ROS包名相同。</li>
+<li>查找依赖包：<figure class="highlight isbl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs isbl"><span class="hljs-function"><span class="hljs-title">find_package</span>(<span class="hljs-variable">catkin</span> <span class="hljs-variable">REQUIRED</span> <span class="hljs-variable">COMPONENTS</span></span><br><span class="hljs-function">  <span class="hljs-variable">roscpp</span></span><br><span class="hljs-function">  <span class="hljs-variable">rospy</span></span><br><span class="hljs-function">  <span class="hljs-variable">std_msgs</span></span><br><span class="hljs-function">  <span class="hljs-variable">message_generation</span></span><br><span class="hljs-function">)</span><br></code></pre></td></tr></table></figure>
+find_package()函数用于查找项目所需的依赖包。REQUIRED关键字表示必须找到这些依赖包，否则构建过程将失败。COMPONENTS关键字后面的参数是需要查找的依赖包列表。  </li>
+<li>声明构建依赖和运行时依赖：<figure class="highlight isbl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs isbl"><span class="hljs-function"><span class="hljs-title">catkin_package</span>(</span><br><span class="hljs-function">  <span class="hljs-variable">INCLUDE_DIRS</span> <span class="hljs-variable">include</span></span><br><span class="hljs-function">  <span class="hljs-variable">LIBRARIES</span> <span class="hljs-variable">my_ros_package</span></span><br><span class="hljs-function">  <span class="hljs-variable">CATKIN_DEPENDS</span> <span class="hljs-variable">roscpp</span> <span class="hljs-variable">rospy</span> <span class="hljs-variable">std_msgs</span> <span class="hljs-variable">message_runtime</span></span><br><span class="hljs-function">)</span><br></code></pre></td></tr></table></figure>
+catkin_package()函数用于声明项目的构建依赖和运行时依赖。INCLUDE_DIRS指定头文件的目录，LIBRARIES指定项目生成的库文件，CATKIN_DEPENDS声明了项目在构建和运行时所依赖的其他ROS包。  </li>
+<li>添加头文件目录：<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">include_directories</span>(<br>  <span class="hljs-keyword">include</span><br>  <span class="hljs-variable">$&#123;catkin_INCLUDE_DIRS&#125;</span><br>)<br></code></pre></td></tr></table></figure>
+include_directories()函数用于指定项目的头文件目录。这里包括了include目录和catkin_INCLUDE_DIRS（包含所有依赖包的头文件目录）。  </li>
+<li>添加可执行文件：<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">add<span class="hljs-constructor">_executable(<span class="hljs-params">my_node</span> <span class="hljs-params">src</span><span class="hljs-operator">/</span><span class="hljs-params">my_node</span>.<span class="hljs-params">cpp</span>)</span><br></code></pre></td></tr></table></figure>
+add_executable()函数用于添加可执行文件。第一个参数是可执行文件的名称，第二个参数是源文件路径。  </li>
+<li>链接库文件：<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">target_link_libraries</span>(my_node<br>  <span class="hljs-variable">$&#123;catkin_LIBRARIES&#125;</span><br>)<br></code></pre></td></tr></table></figure>
+target_link_libraries()函数用于为指定的可执行文件链接库文件。在本例中，为my_node可执行文件链接catkin_LIBRARIES，即所有依赖包的库文件。  </li>
+<li>添加依赖：<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">add<span class="hljs-constructor">_dependencies(<span class="hljs-params">my_node</span> $&#123;$&#123;PROJECT_NAME&#125;<span class="hljs-params">_EXPORTED_TARGETS</span>&#125; $&#123;<span class="hljs-params">catkin_EXPORTED_TARGETS</span>&#125;)</span><br></code></pre></td></tr></table></figure>
+add_dependencies()函数用于为指定的可执行文件添加依赖。在本例中，为my_node添加了项目导出目标和catkin_EXPORTED_TARGETS的依赖。  </li>
+<li>安装<br>在CMakeLists.txt中，可以使用install()函数指定在构建过程中生成的可执行文件、库文件、头文件以及其他相关文件的安装路径。这些安装路径与ROS的devel和install目录有关。</li>
+</ol>
+<p>例如，可以通过以下方式安装可执行文件、库文件和头文件：<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">install</span>(TARGETS my_node<br>  RUNTIME DESTINATION <span class="hljs-variable">$&#123;CATKIN_PACKAGE_BIN_DESTINATION&#125;</span><br>)<br><br><span class="hljs-keyword">install</span>(TARGETS my_library<br>  ARCHIVE DESTINATION <span class="hljs-variable">$&#123;CATKIN_PACKAGE_LIB_DESTINATION&#125;</span><br>  LIBRARY DESTINATION <span class="hljs-variable">$&#123;CATKIN_PACKAGE_LIB_DESTINATION&#125;</span><br>)<br><br><span class="hljs-keyword">install</span>(DIRECTORY <span class="hljs-keyword">include</span>/<span class="hljs-variable">$&#123;PROJECT_NAME&#125;</span>/<br>  DESTINATION <span class="hljs-variable">$&#123;CATKIN_PACKAGE_INCLUDE_DESTINATION&#125;</span><br>)<br></code></pre></td></tr></table></figure></p>
+<ol>
+<li>安装其他资源文件：<br>除了可执行文件、库文件和头文件外，还可以安装其他资源文件，例如launch文件、配置文件和地图文件等。以下是一些示例：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">install(DIRECTORY launch/<br>  DESTINATION <span class="hljs-variable">$&#123;CATKIN_PACKAGE_SHARE_DESTINATION&#125;</span>/launch<br>)<br><br>install(DIRECTORY config/<br>  DESTINATION <span class="hljs-variable">$&#123;CATKIN_PACKAGE_SHARE_DESTINATION&#125;</span>/config<br>)<br><br>install(DIRECTORY maps/<br>  DESTINATION <span class="hljs-variable">$&#123;CATKIN_PACKAGE_SHARE_DESTINATION&#125;</span>/maps<br>)<br></code></pre></td></tr></table></figure>
+这些配置选项为ROS项目中的CMakeLists.txt文件提供了基本框架。根据项目的具体需求，可以对这些选项进行调整和扩展。例如，可以为项目添加自定义消息、服务和动作定义，配置不同的库文件和可执行文件，以及安装其他所需资源。</li>
+</ol>
+<p>综上所述，ROS中的CMakeLists.txt文件负责管理构建过程，包括依赖关系、可执行文件、库文件、头文件等。为了使项目正常运行，需要正确地配置CMakeLists.txt文件。</p>
+<h2 id="自定义消息、服务和动作定义的处理"><a href="#自定义消息、服务和动作定义的处理" class="headerlink" title="自定义消息、服务和动作定义的处理"></a>自定义消息、服务和动作定义的处理</h2><p>接下来，我们将深入探讨ROS中的CMakeLists.txt文件，包括自定义消息、服务和动作定义的处理。</p>
+<ol>
+<li>自定义消息（msg）：<br>要创建自定义消息，需要在项目的msg目录中定义.msg文件。接下来，在CMakeLists.txt中，将以下内容添加到find_package()函数中：<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">message_generation</span><br></code></pre></td></tr></table></figure>
+然后添加如下指令来指定要生成的自定义消息文件：<figure class="highlight isbl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs isbl"><span class="hljs-function"><span class="hljs-title">add_message_files</span>(</span><br><span class="hljs-function">  <span class="hljs-variable">FILES</span></span><br><span class="hljs-function">  <span class="hljs-variable">MyCustomMessage.msg</span></span><br><span class="hljs-function">)</span><br></code></pre></td></tr></table></figure>
+接下来，调用generate_messages()函数来生成消息文件：<figure class="highlight isbl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs isbl"><span class="hljs-function"><span class="hljs-title">generate_messages</span>(</span><br><span class="hljs-function">  <span class="hljs-variable">DEPENDENCIES</span></span><br><span class="hljs-function">  <span class="hljs-variable">std_msgs</span></span><br><span class="hljs-function">)</span><br></code></pre></td></tr></table></figure>
+这里，DEPENDENCIES指定了自定义消息所依赖的其他消息包。  </li>
+<li>自定义服务（srv）：<br>与自定义消息类似，自定义服务需要在项目的srv目录中定义.srv文件。然后，在CMakeLists.txt中，将以下内容添加到find_package()函数中：<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">message_generation</span><br><br></code></pre></td></tr></table></figure>
+接着添加如下指令来指定要生成的自定义服务文件：<figure class="highlight isbl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs isbl"><span class="hljs-function"><span class="hljs-title">add_service_files</span>(</span><br><span class="hljs-function">  <span class="hljs-variable">FILES</span></span><br><span class="hljs-function">  <span class="hljs-variable">MyCustomService.srv</span></span><br><span class="hljs-function">)</span><br><br></code></pre></td></tr></table></figure>
+接下来，调用generate_messages()函数来生成服务文件：<figure class="highlight isbl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs isbl"><span class="hljs-function"><span class="hljs-title">generate_messages</span>(</span><br><span class="hljs-function">  <span class="hljs-variable">DEPENDENCIES</span></span><br><span class="hljs-function">  <span class="hljs-variable">std_msgs</span></span><br><span class="hljs-function">)</span><br><br></code></pre></td></tr></table></figure></li>
+<li><p>自定义动作（action）：<br>要创建自定义动作，需要在项目的action目录中定义.action文件。在CMakeLists.txt中，将以下内容添加到find_package()函数中：</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">actionlib_msgs</span><br><br></code></pre></td></tr></table></figure>
+<p>然后添加如下指令来指定要生成的自定义动作文件：</p>
+<figure class="highlight isbl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs isbl"><span class="hljs-function"><span class="hljs-title">add_action_files</span>(</span><br><span class="hljs-function">  <span class="hljs-variable">FILES</span></span><br><span class="hljs-function">  <span class="hljs-variable">MyCustomAction.action</span></span><br><span class="hljs-function">)</span><br><br></code></pre></td></tr></table></figure>
+<p>接着，调用generate_messages()函数来生成动作文件：</p>
+<figure class="highlight isbl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs isbl"><span class="hljs-function"><span class="hljs-title">generate_messages</span>(</span><br><span class="hljs-function">  <span class="hljs-variable">DEPENDENCIES</span></span><br><span class="hljs-function">  <span class="hljs-variable">std_msgs</span> <span class="hljs-variable">actionlib_msgs</span></span><br><span class="hljs-function">)</span><br><br></code></pre></td></tr></table></figure>
+<p>在处理自定义消息、服务和动作时，还需要在catkin_package()函数中添加CATKIN_DEPENDS message_runtime以声明运行时依赖：</p>
+<figure class="highlight isbl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs isbl"><span class="hljs-function"><span class="hljs-title">catkin_package</span>(</span><br><span class="hljs-function">  ...</span><br><span class="hljs-function">  CATKIN_DEPENDS <span class="hljs-variable">message_runtime</span></span><br><span class="hljs-function">)</span><br><br></code></pre></td></tr></table></figure>
+<p>总之，ROS的CMakeLists.txt文件涵盖了项目构建过程中的各个方面，包括依赖关系、可执行文件、库文件、头文件以及自定义消息、服务和动作。正确配置CMakeLists.txt文件，可确保ROS项目的顺利构建和运行。</p>
+<h2 id="高级配置选项和技巧"><a href="#高级配置选项和技巧" class="headerlink" title="高级配置选项和技巧"></a>高级配置选项和技巧</h2><p>现在让我们继续深入探讨ROS中CMakeLists.txt的一些高级配置选项和技巧。</p>
+</li>
+<li><p>设置编译标志：</p>
+</li>
+</ol>
+<p>在CMakeLists.txt中，可以为项目设置编译标志。例如，可以使用以下指令为C++源文件启用C++11标准：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">set</span><span class="hljs-params">(CMAKE_CXX_STANDARD <span class="hljs-number">11</span>)</span></span><br><span class="hljs-function"><span class="hljs-title">set</span><span class="hljs-params">(CMAKE_CXX_STANDARD_REQUIRED ON)</span></span><br><br></code></pre></td></tr></table></figure><br>如果要设置特定的编译器选项，可以使用set()函数：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-built_in">set</span>(CMAKE_CXX_FLAGS <span class="hljs-string">&quot;<span class="hljs-variable">$&#123;CMAKE_CXX_FLAGS&#125;</span> -Wall -Wextra&quot;</span>)<br><br></code></pre></td></tr></table></figure><br>上述代码将为项目启用了所有警告（-Wall）以及额外警告（-Wextra）。</p>
+<ol>
+<li>添加自定义CMake模块： </li>
+</ol>
+<p>在某些情况下，可能需要使用自定义CMake模块来扩展项目的构建过程。为此，可以在项目的cmake目录中创建自定义CMake模块，并在CMakeLists.txt中使用list(APPEND …)和find_package()函数将其添加到CMAKE_MODULE_PATH：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">list</span><span class="hljs-params">(APPEND CMAKE_MODULE_PATH $&#123;CMAKE_CURRENT_SOURCE_DIR&#125;/cmake)</span></span><br><span class="hljs-function"><span class="hljs-title">find_package</span><span class="hljs-params">(MyCustomCMakeModule REQUIRED)</span></span><br><br></code></pre></td></tr></table></figure></p>
+<ol>
+<li>条件编译：</li>
+</ol>
+<p>在某些情况下，可能需要根据特定条件启用或禁用项目中的某些功能。可以使用option()函数和if()语句来实现这一目标：<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">option</span>(ENABLE_MY_FEATURE <span class="hljs-string">&quot;Enable my custom feature&quot;</span> <span class="hljs-keyword">OFF</span>)<br><br><span class="hljs-keyword">if</span>(ENABLE_MY_FEATURE)<br>  <span class="hljs-comment"># Add custom code or configuration for the feature</span><br>  <span class="hljs-keyword">add_definitions</span>(-DENABLE_MY_FEATURE)<br><span class="hljs-keyword">endif</span>()<br><br></code></pre></td></tr></table></figure><br>上述代码定义了一个名为ENABLE_MY_FEATURE的选项，默认值为OFF。如果选项被启用，将会添加一个预处理器定义ENABLE_MY_FEATURE。</p>
+<ol>
+<li>为项目添加测试：</li>
+</ol>
+<p>在ROS项目中，可以使用catkin_add_gtest()函数和gtest库为项目添加单元测试。首先，确保在find_package()函数中添加了rostest组件：<br><figure class="highlight isbl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs isbl"><span class="hljs-function"><span class="hljs-title">find_package</span>(<span class="hljs-variable">catkin</span> <span class="hljs-variable">REQUIRED</span> <span class="hljs-variable">COMPONENTS</span></span><br><span class="hljs-function">  ...</span><br><span class="hljs-function">  rostest</span><br><span class="hljs-function">)</span><br><br></code></pre></td></tr></table></figure><br>然后添加测试可执行文件和链接库：<br><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">catkin<span class="hljs-constructor">_add_gtest(<span class="hljs-params">my_test</span> <span class="hljs-params">test</span><span class="hljs-operator">/</span><span class="hljs-params">my_test</span>.<span class="hljs-params">cpp</span>)</span><br>target<span class="hljs-constructor">_link_libraries(<span class="hljs-params">my_test</span> $&#123;<span class="hljs-params">catkin_LIBRARIES</span>&#125; <span class="hljs-params">my_library</span>)</span><br><br></code></pre></td></tr></table></figure><br>以上示例中，my_test是测试的名称，test/my_test.cpp是测试源文件，而my_library是测试所需链接的库。</p>
+<p>这些高级配置选项和技巧可以帮助你在ROS项目中实现更复杂的构建过程。理解这些选项的用途和功能，将有助于创建更可扩展和可维护的ROS项目。</p>
+<h2 id="实现一些实用功能和配置"><a href="#实现一些实用功能和配置" class="headerlink" title="实现一些实用功能和配置"></a>实现一些实用功能和配置</h2><p>接下来，我们将讨论如何在ROS中的CMakeLists.txt文件中实现一些实用功能和配置：</p>
+<ol>
+<li>添加Python可执行文件：</li>
+</ol>
+<p>在ROS项目中，你可能需要添加Python脚本作为可执行文件。首先，确保在find_package()函数中添加了rospy组件：<br><figure class="highlight isbl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs isbl"><span class="hljs-function"><span class="hljs-title">find_package</span>(<span class="hljs-variable">catkin</span> <span class="hljs-variable">REQUIRED</span> <span class="hljs-variable">COMPONENTS</span></span><br><span class="hljs-function">  ...</span><br><span class="hljs-function">  rospy</span><br><span class="hljs-function">)</span><br><br></code></pre></td></tr></table></figure><br>然后，可以使用catkin_install_python()函数将Python脚本安装为可执行文件：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">catkin_install_python(PROGRAMS scripts/my_python_script.py<br>  DESTINATION <span class="hljs-variable">$&#123;CATKIN_PACKAGE_BIN_DESTINATION&#125;</span><br>)<br><br></code></pre></td></tr></table></figure></p>
+<ol>
+<li>添加动态链接库（动态库）：</li>
+</ol>
+<p>有时候，可能需要在ROS项目中创建动态链接库。为此，可以使用add_library()函数和SHARED关键字：<br><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">add<span class="hljs-constructor">_library(<span class="hljs-params">my_shared_library</span> SHARED <span class="hljs-params">src</span><span class="hljs-operator">/</span><span class="hljs-params">my_shared_library</span>.<span class="hljs-params">cpp</span>)</span><br><br></code></pre></td></tr></table></figure><br>接着，为生成的库文件添加安装目标：<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">install</span>(TARGETS my_shared_library<br>  LIBRARY DESTINATION <span class="hljs-variable">$&#123;CATKIN_PACKAGE_LIB_DESTINATION&#125;</span><br>)<br><br></code></pre></td></tr></table></figure></p>
+<ol>
+<li>链接系统库：</li>
+</ol>
+<p>在某些情况下，可能需要链接系统库。可以使用find_library()函数查找系统库，并使用target_link_libraries()函数将其链接到目标：<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs awk">find_library(MY_SYSTEM_LIBRARY<br>  NAMES my_system_library<br>  PATHS <span class="hljs-regexp">/path/</span>to/libraries<br>)<br><br>target_link_libraries(my_executable<br>  <span class="hljs-variable">$&#123;catkin_LIBRARIES&#125;</span><br>  <span class="hljs-variable">$&#123;MY_SYSTEM_LIBRARY&#125;</span><br>)<br><br></code></pre></td></tr></table></figure></p>
+<ol>
+<li>链接Boost库：<br>在ROS项目中，可能需要使用Boost库。为此，首先确保在find_package()函数中添加了Boost组件：<figure class="highlight isbl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs isbl"><span class="hljs-function"><span class="hljs-title">find_package</span>(<span class="hljs-variable">Boost</span> <span class="hljs-variable">REQUIRED</span> <span class="hljs-variable">COMPONENTS</span></span><br><span class="hljs-function">  <span class="hljs-variable">system</span></span><br><span class="hljs-function">  <span class="hljs-variable">thread</span></span><br><span class="hljs-function">)</span><br><br></code></pre></td></tr></table></figure>
+然后，将Boost库添加到target_link_libraries()函数中：<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">target_link_libraries</span>(my_executable<br>  <span class="hljs-variable">$&#123;catkin_LIBRARIES&#125;</span><br>  <span class="hljs-variable">$&#123;Boost_LIBRARIES&#125;</span><br>)<br><br></code></pre></td></tr></table></figure></li>
+<li>使用环境变量：</li>
+</ol>
+<p>在CMakeLists.txt中，可以通过$ENV{VAR_NAME}语法访问环境变量。例如，以下代码从环境变量MY_VAR获取值并将其存储在CMake变量my_var中：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">set</span><span class="hljs-params">(my_var <span class="hljs-variable">$ENV</span>&#123;MY_VAR&#125;)</span></span><br><br></code></pre></td></tr></table></figure><br>了解这些实用功能和配置将有助于处理ROS项目中的各种需求。这些示例可以根据项目需求进行调整和扩展，以便更好地适应特定的构建环境和依赖关系。现在让我们继续探讨ROS中CMakeLists.txt文件的一些其他实用功能和技巧。</p>
+<h2 id="使用外部项目"><a href="#使用外部项目" class="headerlink" title="使用外部项目"></a>使用外部项目</h2><p>在ROS项目中，可能需要使用外部项目的代码和资源。CMake具有一个名为ExternalProject的模块，可用于下载、构建和安装外部项目。首先，需要在CMakeLists.txt中包含ExternalProject模块：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">include</span><span class="hljs-params">(ExternalProject)</span></span><br><br></code></pre></td></tr></table></figure><br>接下来，使用ExternalProject_Add()函数定义外部项目：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs routeros">ExternalProject_Add(my_external_project<br>  GIT_REPOSITORY <span class="hljs-string">&quot;https://github.com/user/my_external_project.git&quot;</span><br>  GIT_TAG <span class="hljs-string">&quot;master&quot;</span><br>  CMAKE_ARGS <span class="hljs-attribute">-DCMAKE_INSTALL_PREFIX</span>=<span class="hljs-variable">$&#123;CMAKE_CURRENT_BINARY_DIR&#125;</span>/external<br>)<br><br></code></pre></td></tr></table></figure><br>这里，my_external_project是外部项目的名称，GIT_REPOSITORY和GIT_TAG指定了项目的源代码仓库和分支。CMAKE_ARGS用于传递给外部项目的CMake构建的参数，其中CMAKE_INSTALL_PREFIX指定了安装路径。</p>
+<h2 id="使用pkg-config："><a href="#使用pkg-config：" class="headerlink" title="使用pkg-config："></a>使用pkg-config：</h2><p>有时，可能需要使用pkg-config工具查询库的编译和链接标志。CMake提供了一个名为PkgConfig的模块，可用于与pkg-config交互。首先，需要在CMakeLists.txt中包含PkgConfig模块：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">find_package</span><span class="hljs-params">(PkgConfig REQUIRED)</span></span><br><br></code></pre></td></tr></table></figure><br>然后，可以使用pkg_check_modules()函数查询库信息：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">pkg_check_modules</span><span class="hljs-params">(MY_LIBRARY_PKGCONFIG REQUIRED my_library)</span></span><br><br></code></pre></td></tr></table></figure><br>接下来，可以使用查询到的信息为目标设置编译和链接标志：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">target_include_directories</span><span class="hljs-params">(my_executable PRIVATE $&#123;MY_LIBRARY_PKGCONFIG_INCLUDE_DIRS&#125;)</span></span><br><span class="hljs-function"><span class="hljs-title">target_link_libraries</span><span class="hljs-params">(my_executable $&#123;catkin_LIBRARIES&#125; $&#123;MY_LIBRARY_PKGCONFIG_LIBRARIES&#125;)</span></span><br><br></code></pre></td></tr></table></figure></p>
+<h2 id="在ROS中使用Eigen库："><a href="#在ROS中使用Eigen库：" class="headerlink" title="在ROS中使用Eigen库："></a>在ROS中使用Eigen库：</h2><p>在ROS项目中，可能需要使用Eigen库进行线性代数计算。首先，确保在find_package()函数中添加了Eigen3组件：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">find_package</span><span class="hljs-params">(Eigen3 REQUIRED)</span></span><br><br></code></pre></td></tr></table></figure><br>然后，将Eigen库添加到target_include_directories()函数中：<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">target_include_directories</span>(my_executable<br>  PRIVATE<br>    <span class="hljs-variable">$&#123;EIGEN3_INCLUDE_DIRS&#125;</span><br>)<br><br></code></pre></td></tr></table></figure><br>这些实用功能和技巧可以帮助您在ROS项目中处理各种需求和依赖项。了解如何使用这些功能可以使您的项目更具灵活性和可扩展性，同时确保与其他库和软件包的兼容性。请注意，这些示例可能需要根据项目的具体需求进行调整。</p>
+<h2 id="使用OpenCV库"><a href="#使用OpenCV库" class="headerlink" title="使用OpenCV库"></a>使用OpenCV库</h2><p>在ROS项目中，可能需要使用OpenCV库进行计算机视觉处理。首先，在find_package()函数中添加OpenCV组件：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">find_package</span><span class="hljs-params">(OpenCV REQUIRED)</span></span><br><br></code></pre></td></tr></table></figure><br>接下来，在target_link_libraries()函数中链接OpenCV库：<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">target_link_libraries</span>(my_executable <span class="hljs-variable">$&#123;catkin_LIBRARIES&#125;</span> <span class="hljs-variable">$&#123;OpenCV_LIBRARIES&#125;</span>)<br><br></code></pre></td></tr></table></figure></p>
+<h2 id="设置安装规则"><a href="#设置安装规则" class="headerlink" title="设置安装规则"></a>设置安装规则</h2><p>在ROS项目中，通过使用install()函数，可以将构建的可执行文件、库文件、头文件和其他资源文件安装到目标目录，以方便分发和部署。下面是一些常见的安装规则示例：</p>
+<p>安装可执行文件：<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">install</span>(TARGETS my_executable<br>  RUNTIME DESTINATION <span class="hljs-variable">$&#123;CATKIN_PACKAGE_BIN_DESTINATION&#125;</span><br>)<br><br></code></pre></td></tr></table></figure></p>
+<p>安装库文件：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">install</span>(TARGETS my_library<br>  ARCHIVE DESTINATION <span class="hljs-variable">$&#123;CATKIN_PACKAGE_LIB_DESTINATION&#125;</span><br>  LIBRARY DESTINATION <span class="hljs-variable">$&#123;CATKIN_PACKAGE_LIB_DESTINATION&#125;</span><br>)<br><br></code></pre></td></tr></table></figure>
+<p>安装头文件：<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">install</span>(DIRECTORY <span class="hljs-keyword">include</span>/<span class="hljs-variable">$&#123;PROJECT_NAME&#125;</span>/<br>  DESTINATION <span class="hljs-variable">$&#123;CATKIN_PACKAGE_INCLUDE_DESTINATION&#125;</span><br>)<br><br></code></pre></td></tr></table></figure><br>安装资源文件（如配置文件、launch文件等）：<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">install</span>(DIRECTORY config launch<br>  DESTINATION <span class="hljs-variable">$&#123;CATKIN_PACKAGE_SHARE_DESTINATION&#125;</span><br>)<br><br></code></pre></td></tr></table></figure></p>
+<h2 id="在CMakeLists-txt中添加自定义命令"><a href="#在CMakeLists-txt中添加自定义命令" class="headerlink" title="在CMakeLists.txt中添加自定义命令"></a>在CMakeLists.txt中添加自定义命令</h2><p>有时，可能需要在构建过程中执行一些自定义操作，如生成代码或处理资源文件。可以使用add_custom_command()函数在CMakeLists.txt中定义自定义命令：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-built_in">add_custom_command</span>(<br>  OUTPUT generated_file<span class="hljs-selector-class">.cpp</span><br>  COMMAND my_generator_tool <span class="hljs-attr">--input</span>=input_file <span class="hljs-attr">--output</span>=generated_file<span class="hljs-selector-class">.cpp</span><br>  DEPENDS input_file<br>)<br><br></code></pre></td></tr></table></figure><br>上述代码指定了一个自定义命令，它在generated_file.cpp文件不存在或input_file文件发生更改时，运行my_generator_tool工具。</p>
+<h2 id="使用message、service和action文件生成代码"><a href="#使用message、service和action文件生成代码" class="headerlink" title="使用message、service和action文件生成代码"></a>使用message、service和action文件生成代码</h2><p>ROS中的消息、服务和动作定义文件需要生成相应的C++、Python等语言的代码。在CMakeLists.txt中，可以使用以下函数生成代码：<br><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs clean"># Generate message <span class="hljs-keyword">code</span><br>add_message_files(<br>  FILES<br>  MyMessage.msg<br>)<br><br># Generate service <span class="hljs-keyword">code</span><br>add_service_files(<br>  FILES<br>  MyService.srv<br>)<br><br># Generate action <span class="hljs-keyword">code</span><br>add_action_files(<br>  FILES<br>  MyAction.action<br>)<br><br></code></pre></td></tr></table></figure><br>生成代码之前，需要确保在find_package()函数中添加了message_generation、actionlib_msgs等组件：<br><figure class="highlight isbl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs isbl"><span class="hljs-function"><span class="hljs-title">find_package</span>(<span class="hljs-variable">catkin</span> <span class="hljs-variable">REQUIRED</span> <span class="hljs-variable">COMPONENTS</span></span><br><span class="hljs-function">  ...</span><br><span class="hljs-function">  message_generation</span><br><span class="hljs-function">  <span class="hljs-variable">actionlib_msgs</span></span><br><span class="hljs-function">)</span><br><br></code></pre></td></tr></table></figure><br>然后，使用generate_messages()函数生成代码：<br><figure class="highlight isbl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs isbl"><span class="hljs-function"><span class="hljs-title">generate_messages</span>(</span><br><span class="hljs-function">  <span class="hljs-variable">DEPENDENCIES</span></span><br><span class="hljs-function">  <span class="hljs-variable">std_msgs</span></span><br><span class="hljs-function">  <span class="hljs-variable">actionlib_msgs</span></span><br><span class="hljs-function">)</span><br><br></code></pre></td></tr></table></figure></p>
+<p>使用message、service和action文件的依赖关系：</p>
+<p>有时候，一个ROS软件包可能依赖于另一个软件包中定义的消息、服务或动作。在这种情况下，需要确保在find_package()函数中添加了相应的组件：<br><figure class="highlight isbl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs isbl"><span class="hljs-function"><span class="hljs-title">find_package</span>(<span class="hljs-variable">catkin</span> <span class="hljs-variable">REQUIRED</span> <span class="hljs-variable">COMPONENTS</span></span><br><span class="hljs-function">  ...</span><br><span class="hljs-function">  other_package_msgs</span><br><span class="hljs-function">)</span><br><br></code></pre></td></tr></table></figure><br>此外，还需要将依赖关系添加到catkin_package()函数中：<br><figure class="highlight isbl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs isbl"><span class="hljs-function"><span class="hljs-title">catkin_package</span>(</span><br><span class="hljs-function">  ...</span><br><span class="hljs-function">  CATKIN_DEPENDS <span class="hljs-variable">other_package_msgs</span></span><br><span class="hljs-function">)</span><br><br></code></pre></td></tr></table></figure></p>
+<h2 id="使用CMake的message-函数"><a href="#使用CMake的message-函数" class="headerlink" title="使用CMake的message()函数"></a>使用CMake的message()函数</h2><p>在CMakeLists.txt文件中，可以使用message()函数打印调试信息。这对于调试构建过程中的问题很有帮助。message()函数接受不同的严重性级别，例如：STATUS、WARNING和FATAL_ERROR。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">message</span><span class="hljs-params">(STATUS <span class="hljs-string">&quot;This is a status message&quot;</span>)</span></span><br><span class="hljs-function"><span class="hljs-title">message</span><span class="hljs-params">(WARNING <span class="hljs-string">&quot;This is a warning message&quot;</span>)</span></span><br><span class="hljs-function"><span class="hljs-title">message</span><span class="hljs-params">(FATAL_ERROR <span class="hljs-string">&quot;This is a fatal error message&quot;</span>)</span></span><br><br></code></pre></td></tr></table></figure><br>通过掌握这些实用功能和技巧，可以帮助您在ROS项目中应对各种需求和依赖。了解如何使用这些功能可以使您的项目更具灵活性和可扩展性，同时确保与其他库和软件包的兼容性。请注意，这些示例可能需要根据项目的具体需求进行调整。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/slam/" class="category-chain-item">slam</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/slam/ROS/" class="category-chain-item">ROS</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%8E%9F%E5%88%9B/">#原创</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>详解ROS中的CMakeLists</div>
+      <div>https://qiangsun89.github.io/2023/04/19/详解ROS中的CMakeLists/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Qiang Sun</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年4月19日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/04/19/%E8%AF%A6%E8%A7%A3ros-ServiceServer%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/" title="详解ros::ServiceServer的使用方法">
+                        <span class="hidden-mobile">详解ros::ServiceServer的使用方法</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"LEYjQzDk7jo8uqlOQoAEF5qm-gzGzoHsz","appKey":"7bBCyINnLw0akaPjI39pESMN","path":"window.location.pathname","placeholder":"留言","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
