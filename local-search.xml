@@ -31,19 +31,6 @@
   
   
   <entry>
-    <title>的使用方法</title>
-    <link href="/2023/04/19/%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/"/>
-    <url>/2023/04/19/%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/</url>
-    
-    <content type="html"><![CDATA[]]></content>
-    
-    
-    
-  </entry>
-  
-  
-  
-  <entry>
     <title>ROS中map_msgs::OccupancyGridUpdate</title>
     <link href="/2023/04/19/ROS%E4%B8%ADmap-msgs-OccupancyGridUpdate/"/>
     <url>/2023/04/19/ROS%E4%B8%ADmap-msgs-OccupancyGridUpdate/</url>
@@ -964,31 +951,6 @@
     <categories>
       
       <category>机器人运动控制</category>
-      
-    </categories>
-    
-    
-    <tags>
-      
-      <tag>原创</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>test</title>
-    <link href="/2023/02/19/test/"/>
-    <url>/2023/02/19/test/</url>
-    
-    <content type="html"><![CDATA[<h1 id="测试文章"><a href="#测试文章" class="headerlink" title="测试文章"></a>测试文章</h1><p>这是一篇测试公式是否渲染的文章  </p><script type="math/tex; mode=display">\frac{V}{r}=\omega</script>]]></content>
-    
-    
-    <categories>
-      
-      <category>Java</category>
       
     </categories>
     
