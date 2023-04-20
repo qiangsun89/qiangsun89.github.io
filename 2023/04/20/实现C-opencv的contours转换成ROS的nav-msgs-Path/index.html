@@ -16,22 +16,22 @@
   <meta name="author" content="Qiang Sun">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Linux一行代码统计项目代码行数1find . -name &quot;*.cpp&quot; -or -name &quot;*.cc&quot; -or -name &quot;*.h&quot; -or -name &quot;*.hpp&quot; |xargs cat|wc -l">
+    <meta name="description" content="实现C++ opencv的contours转换成ROS的nav_msgs&#x2F;Path以下是一个示例C++代码，用于将OpenCV的轮廓（contours）转换为ROS的nav_msgs&#x2F;Path消息类型：123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051#inclu">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux使用find统计代码行数">
-<meta property="og:url" content="https://qiangsun89.github.io/2023/02/17/Linux%E4%BD%BF%E7%94%A8find%E7%BB%9F%E8%AE%A1%E4%BB%A3%E7%A0%81%E8%A1%8C%E6%95%B0/index.html">
+<meta property="og:title" content="实现C++ opencv的contours转换成ROS的nav_msgs&#x2F;Path">
+<meta property="og:url" content="https://qiangsun89.github.io/2023/04/20/%E5%AE%9E%E7%8E%B0C-opencv%E7%9A%84contours%E8%BD%AC%E6%8D%A2%E6%88%90ROS%E7%9A%84nav-msgs-Path/index.html">
 <meta property="og:site_name" content="知识的搬运工">
-<meta property="og:description" content="Linux一行代码统计项目代码行数1find . -name &quot;*.cpp&quot; -or -name &quot;*.cc&quot; -or -name &quot;*.h&quot; -or -name &quot;*.hpp&quot; |xargs cat|wc -l">
+<meta property="og:description" content="实现C++ opencv的contours转换成ROS的nav_msgs&#x2F;Path以下是一个示例C++代码，用于将OpenCV的轮廓（contours）转换为ROS的nav_msgs&#x2F;Path消息类型：123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051#inclu">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-02-17T06:34:18.000Z">
-<meta property="article:modified_time" content="2023-02-17T06:41:02.000Z">
+<meta property="article:published_time" content="2023-04-20T02:41:19.000Z">
+<meta property="article:modified_time" content="2023-04-20T02:43:02.304Z">
 <meta property="article:author" content="Qiang Sun">
 <meta property="article:tag" content="原创">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>Linux使用find统计代码行数 - 知识的搬运工</title>
+  <title>实现C++ opencv的contours转换成ROS的nav_msgs/Path - 知识的搬运工</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -214,7 +214,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Linux使用find统计代码行数"></span>
+            <span id="subtitle" data-typed-text="实现C++ opencv的contours转换成ROS的nav_msgs/Path"></span>
           
         </div>
 
@@ -225,8 +225,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-02-17 14:34" pubdate>
-          2023年2月17日 下午
+        <time datetime="2023-04-20 10:41" pubdate>
+          2023年4月20日 上午
         </time>
       </span>
     
@@ -237,7 +237,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          131 字
+          1.6k 字
         
       </span>
     
@@ -248,7 +248,7 @@
         
         
         
-          2 分钟
+          13 分钟
         
       </span>
     
@@ -294,12 +294,13 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Linux使用find统计代码行数</h1>
+            <h1 style="display: none">实现C++ opencv的contours转换成ROS的nav_msgs/Path</h1>
             
             
               <div class="markdown-body">
                 
-                <p>Linux一行代码统计项目代码行数<br><figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sqf"><span class="hljs-built_in">find</span> . -<span class="hljs-built_in">name</span> <span class="hljs-string">&quot;*.cpp&quot;</span> -<span class="hljs-built_in">or</span> -<span class="hljs-built_in">name</span> <span class="hljs-string">&quot;*.cc&quot;</span> -<span class="hljs-built_in">or</span> -<span class="hljs-built_in">name</span> <span class="hljs-string">&quot;*.h&quot;</span> -<span class="hljs-built_in">or</span> -<span class="hljs-built_in">name</span> <span class="hljs-string">&quot;*.hpp&quot;</span> |xargs cat|wc -l<br></code></pre></td></tr></table></figure></p>
+                <h1 id="实现C-opencv的contours转换成ROS的nav-msgs-Path"><a href="#实现C-opencv的contours转换成ROS的nav-msgs-Path" class="headerlink" title="实现C++ opencv的contours转换成ROS的nav_msgs/Path"></a>实现C++ opencv的contours转换成ROS的nav_msgs/Path</h1><p>以下是一个示例C++代码，用于将OpenCV的轮廓（contours）转换为ROS的nav_msgs/Path消息类型：<br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;ros/ros.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;nav_msgs/Path.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;geometry_msgs/PoseStamped.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;opencv2/core.hpp&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;opencv2/imgproc.hpp&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">contoursToPath</span><span class="hljs-params">(<span class="hljs-type">const</span> std::vector&lt;std::vector&lt;cv::Point&gt;&gt;&amp; contours, nav_msgs::Path&amp; path, <span class="hljs-type">const</span> std::string&amp; frame_id)</span></span><br><span class="hljs-function"></span>&#123;<br>    path.header.frame_id = frame_id;<br>    path.header.stamp = ros::Time::<span class="hljs-built_in">now</span>();<br>    path.poses.<span class="hljs-built_in">clear</span>();<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">const</span> <span class="hljs-keyword">auto</span>&amp; contour : contours) &#123;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">const</span> <span class="hljs-keyword">auto</span>&amp; pt : contour) &#123;<br>            geometry_msgs::PoseStamped pose;<br>            pose.header.frame_id = frame_id;<br>            pose.header.stamp = ros::Time::<span class="hljs-built_in">now</span>();<br>            pose.pose.position.x = pt.x;<br>            pose.pose.position.y = pt.y;<br>            pose.pose.position.z = <span class="hljs-number">0.0</span>;<br>            pose.pose.orientation.w = <span class="hljs-number">1.0</span>;<br><br>            path.poses.<span class="hljs-built_in">push_back</span>(pose);<br>        &#125;<br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span>** argv)</span></span><br><span class="hljs-function"></span>&#123;<br>    ros::<span class="hljs-built_in">init</span>(argc, argv, <span class="hljs-string">&quot;contours_to_path&quot;</span>);<br>    ros::NodeHandle nh;<br><br>    cv::Mat image = cv::<span class="hljs-built_in">imread</span>(<span class="hljs-string">&quot;image.jpg&quot;</span>, cv::IMREAD_GRAYSCALE);<br><br>    std::vector&lt;std::vector&lt;cv::Point&gt;&gt; contours;<br>    cv::<span class="hljs-built_in">findContours</span>(image, contours, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_NONE);<br><br>    nav_msgs::Path path;<br>    <span class="hljs-built_in">contoursToPath</span>(contours, path, <span class="hljs-string">&quot;map&quot;</span>);<br><br>    ros::Publisher path_pub = nh.<span class="hljs-built_in">advertise</span>&lt;nav_msgs::Path&gt;(<span class="hljs-string">&quot;/path&quot;</span>, <span class="hljs-number">1</span>);<br><br>    <span class="hljs-keyword">while</span> (ros::<span class="hljs-built_in">ok</span>()) &#123;<br>        path_pub.<span class="hljs-built_in">publish</span>(path);<br>        ros::<span class="hljs-built_in">spinOnce</span>();<br>        ros::<span class="hljs-built_in">Duration</span>(<span class="hljs-number">1.0</span>).<span class="hljs-built_in">sleep</span>();<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure><br>在这个示例中，我们首先使用OpenCV的cv::findContours()函数从一张灰度图像中提取轮廓。然后，我们定义了一个contoursToPath函数，该函数接受一个std::vector<std::vector<cv::Point>&gt;类型的轮廓向量，以及一个nav_msgs::Path类型的路径消息和一个字符串类型的帧ID。函数将轮廓向量中的每个轮廓转换为一组位姿，并将所有位姿添加到路径消息中。然后，我们在主函数中创建了一个图像，并使用cv::findContours()函数提取轮廓。最后，我们将轮廓转换为路径消息，并将路径消息发布到/path话题中。</p>
+<p>请注意，这个示例中的图像只是用于演示目的，并且没有通过ROS订阅任何数据源。实际上，您需要从实际的传感器、算法或其他节点中获取图像数据，并将其转换为轮廓向量，然后再将其转换为路径消息类型。</p>
 
                 
               </div>
@@ -318,8 +319,15 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Linux/" class="category-chain-item">Linux</a>
+  <a href="/categories/slam/" class="category-chain-item">slam</a>
   
+  
+    <span>></span>
+    
+  <a href="/categories/slam/ROS/" class="category-chain-item">ROS</a>
+  
+  
+
   
 
       </span>
@@ -345,8 +353,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Linux使用find统计代码行数</div>
-      <div>https://qiangsun89.github.io/2023/02/17/Linux使用find统计代码行数/</div>
+      <div>实现C++ opencv的contours转换成ROS的nav_msgs/Path</div>
+      <div>https://qiangsun89.github.io/2023/04/20/实现C-opencv的contours转换成ROS的nav-msgs-Path/</div>
     </div>
     <div class="license-meta">
       
@@ -358,7 +366,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年2月17日</div>
+          <div>2023年4月20日</div>
         </div>
       
       
@@ -390,18 +398,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/02/18/%E7%BA%BF%E9%80%9F%E5%BA%A6%E4%B8%8E%E8%A7%92%E9%80%9F%E5%BA%A6%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB/" title="线速度与角速度之间的关系">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">线速度与角速度之间的关系</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/02/17/ubuntu18-04%E4%B8%ADROS%E7%89%88%E6%9C%AC%E4%B8%BAmelodic%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85cartographer/" title="ubuntu18.04中ROS版本为melodic环境安装cartographer">
-                        <span class="hidden-mobile">ubuntu18.04中ROS版本为melodic环境安装cartographer</span>
+                      <a href="/2023/04/20/%E5%AE%9E%E7%8E%B0C-opencv%E6%8F%90%E5%8F%96%E8%BD%AE%E5%BB%93%E5%B9%B6%E5%AF%B9%E8%BD%AE%E5%BB%93%E8%BF%9B%E8%A1%8C%E5%B9%B3%E6%BB%91%E5%A4%84%E7%90%86/" title="实现C++  opencv提取轮廓并对轮廓进行平滑处理">
+                        <span class="hidden-mobile">实现C++  opencv提取轮廓并对轮廓进行平滑处理</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
