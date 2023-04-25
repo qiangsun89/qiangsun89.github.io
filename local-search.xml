@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>介绍C++的namespace</title>
+    <link href="/2023/04/25/%E4%BB%8B%E7%BB%8DC-%E7%9A%84namespace/"/>
+    <url>/2023/04/25/%E4%BB%8B%E7%BB%8DC-%E7%9A%84namespace/</url>
+    
+    <content type="html"><![CDATA[<h1 id="介绍C-的namespace"><a href="#介绍C-的namespace" class="headerlink" title="介绍C++的namespace"></a>介绍C++的namespace</h1><p>在 C++ 中，命名空间（namespace）是一种用来解决命名冲突问题的机制，可以将全局命名空间分割成若干个子命名空间，从而使得程序中不同部分的命名可以分别存在不同的命名空间中，互不干扰。</p><p>命名空间的作用如下：</p><ol><li>解决命名冲突：C++ 中，同一名称的实体只能被定义一次。如果在不同的地方定义了同名的实体，编译器将无法区分这些实体，从而导致编译错误。使用命名空间可以将全局命名空间分割成若干个子命名空间，使得不同部分的命名可以分别存在不同的命名空间中，从而避免了命名冲突问题。</li><li>提高可读性：使用命名空间可以使得程序中的命名更加有意义、清晰，提高了程序的可读性和可维护性。</li><li>避免全局变量：命名空间可以将变量和函数的作用域限定在特定的命名空间中，从而避免了全局变量和函数的滥用。</li></ol><p>C++ 中，命名空间可以嵌套定义，使用 :: 运算符可以访问不同命名空间中的实体。例如：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">namespace</span> my_namespace &#123;<br>    <span class="hljs-type">int</span> my_variable;<br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">my_function</span><span class="hljs-params">()</span> </span>&#123;&#125;<br>    <br>    <span class="hljs-keyword">namespace</span> inner_namespace &#123;<br>        <span class="hljs-type">int</span> inner_variable;<br>        <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">inner_function</span><span class="hljs-params">()</span> </span>&#123;&#125;<br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    my_namespace::my_variable = <span class="hljs-number">10</span>;<br>    my_namespace::<span class="hljs-built_in">my_function</span>();<br>    my_namespace::inner_namespace::inner_variable = <span class="hljs-number">20</span>;<br>    my_namespace::inner_namespace::<span class="hljs-built_in">inner_function</span>();<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure><br>在上述示例中，定义了一个名为 my_namespace 的命名空间，其中包含了一个名为 my_variable 的变量和一个名为 my_function 的函数。另外，还定义了一个名为 inner_namespace 的子命名空间，其中包含了一个名为 inner_variable 的变量和一个名为 inner_function 的函数。在 main() 函数中，使用 :: 运算符访问不同命名空间中的实体。</p><p>总之，在 C++ 中，命名空间是一种用于解决命名冲突问题的机制，也可以提高程序的可读性和可维护性。在编写 C++ 程序时，建议使用命名空间来管理变量、函数等实体，从而使得程序更加清晰、易读、易维护。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>C++</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>介绍ROS中的package.xml</title>
     <link href="/2023/04/25/%E4%BB%8B%E7%BB%8DROS%E4%B8%AD%E7%9A%84package-xml/"/>
     <url>/2023/04/25/%E4%BB%8B%E7%BB%8DROS%E4%B8%AD%E7%9A%84package-xml/</url>
