@@ -1,0 +1,792 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Qiang Sun">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="介绍ROS中sensor_msgssensor_msgs 是 ROS（Robot Operating System）中一个常用的消息包，用于表示来自各种传感器的数据。它包含了一系列消息类型，如 LaserScan, PointCloud2, Image, Imu 等。这些消息类型在机器人感知、导航、控制等任务中非常有用。 以下是 sensor_msgs 中一些常用消息类型的简介以及 C++ 示例：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="介绍ROS中sensor_msgs">
+<meta property="og:url" content="https://qiangsun89.github.io/2023/04/25/%E4%BB%8B%E7%BB%8DROS%E4%B8%ADsensor-msgs/index.html">
+<meta property="og:site_name" content="知识的搬运工">
+<meta property="og:description" content="介绍ROS中sensor_msgssensor_msgs 是 ROS（Robot Operating System）中一个常用的消息包，用于表示来自各种传感器的数据。它包含了一系列消息类型，如 LaserScan, PointCloud2, Image, Imu 等。这些消息类型在机器人感知、导航、控制等任务中非常有用。 以下是 sensor_msgs 中一些常用消息类型的简介以及 C++ 示例：">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-04-25T01:52:42.000Z">
+<meta property="article:modified_time" content="2023-04-25T02:04:28.449Z">
+<meta property="article:author" content="Qiang Sun">
+<meta property="article:tag" content="原创">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>介绍ROS中sensor_msgs - 知识的搬运工</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"qiangsun89.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"LEYjQzDk7jo8uqlOQoAEF5qm-gzGzoHsz","app_key":"7bBCyINnLw0akaPjI39pESMN","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>知识的搬运工</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="介绍ROS中sensor_msgs"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-25 09:52" pubdate>
+          2023年4月25日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          16k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          136 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">介绍ROS中sensor_msgs</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="介绍ROS中sensor-msgs"><a href="#介绍ROS中sensor-msgs" class="headerlink" title="介绍ROS中sensor_msgs"></a>介绍ROS中sensor_msgs</h1><p>sensor_msgs 是 ROS（Robot Operating System）中一个常用的消息包，用于表示来自各种传感器的数据。它包含了一系列消息类型，如 LaserScan, PointCloud2, Image, Imu 等。这些消息类型在机器人感知、导航、控制等任务中非常有用。</p>
+<p>以下是 sensor_msgs 中一些常用消息类型的简介以及 C++ 示例：</p>
+<ol>
+<li>LaserScan<br>LaserScan 用于表示从激光雷达（如 2D LIDAR）获取的扫描数据。它包含了关于激光雷达配置和扫描数据的信息。<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-comment">#include &lt;sensor_msgs/LaserScan.h&gt;</span><br><br><span class="hljs-attribute">sensor_msgs</span>::LaserScan scan;<br><span class="hljs-attribute">scan</span>.header.frame_id = <span class="hljs-string">&quot;laser_frame&quot;</span>;<br><span class="hljs-attribute">scan</span>.header.stamp = ros::Time::now();<br><span class="hljs-attribute">scan</span>.angle_min = -<span class="hljs-number">1</span>.<span class="hljs-number">57</span>; // -<span class="hljs-number">90</span> degrees<br><span class="hljs-attribute">scan</span>.angle_max = <span class="hljs-number">1</span>.<span class="hljs-number">57</span>; // <span class="hljs-number">90</span> degrees<br><span class="hljs-attribute">scan</span>.angle_increment = <span class="hljs-number">0</span>.<span class="hljs-number">017</span>; // <span class="hljs-number">1</span> degree<br><span class="hljs-attribute">scan</span>.time_increment = <span class="hljs-number">0</span>.<span class="hljs-number">001</span>;<br><span class="hljs-attribute">scan</span>.range_min = <span class="hljs-number">0</span>.<span class="hljs-number">1</span>;<br><span class="hljs-attribute">scan</span>.range_max = <span class="hljs-number">10</span>.<span class="hljs-number">0</span>;<br><span class="hljs-attribute">scan</span>.ranges.resize(<span class="hljs-number">181</span>); // <span class="hljs-number">181</span> readings<br><span class="hljs-attribute">scan</span>.intensities.resize(<span class="hljs-number">181</span>);<br><br></code></pre></td></tr></table></figure></li>
+<li>PointCloud2<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-meta">#include &lt;sensor_msgs/PointCloud2.h&gt;</span><br><br>sensor_msgs::PointCloud2 pc;<br>pc.<span class="hljs-keyword">header</span>.frame_id = &quot;sensor_frame&quot;;<br>pc.<span class="hljs-keyword">header</span>.stamp = ros::<span class="hljs-type">Time</span>::now();<br>pc.height = <span class="hljs-number">1</span>; // Unorganized <span class="hljs-type">point</span> cloud<br>pc.width = <span class="hljs-number">1000</span>;<br>pc.is_bigendian = <span class="hljs-keyword">false</span>;<br>pc.point_step = <span class="hljs-number">16</span>; // <span class="hljs-keyword">Each</span> <span class="hljs-type">point</span> has <span class="hljs-number">16</span> bytes (x, y, z, <span class="hljs-keyword">and</span> intensity)<br>pc.row_step = pc.point_step * pc.width;<br>pc.is_dense = <span class="hljs-keyword">false</span>;<br>pc.data.resize(pc.row_step * pc.height);<br><br>// <span class="hljs-keyword">Add</span> <span class="hljs-type">point</span> field information<br>sensor_msgs::PointField field;<br>field.name = &quot;x&quot;;<br>field.<span class="hljs-keyword">offset</span> = <span class="hljs-number">0</span>;<br>field.datatype = sensor_msgs::PointField::FLOAT32;<br>field.count = <span class="hljs-number">1</span>;<br>pc.fields.push_back(field);<br><br>field.name = &quot;y&quot;;<br>field.<span class="hljs-keyword">offset</span> = <span class="hljs-number">4</span>;<br>pc.fields.push_back(field);<br><br>field.name = &quot;z&quot;;<br>field.<span class="hljs-keyword">offset</span> = <span class="hljs-number">8</span>;<br>pc.fields.push_back(field);<br><br>field.name = &quot;intensity&quot;;<br>field.<span class="hljs-keyword">offset</span> = <span class="hljs-number">12</span>;<br>pc.fields.push_back(field);<br><br></code></pre></td></tr></table></figure></li>
+<li>Image<br>Image 用于表示从摄像头（如 RGB 或灰度摄像头）获取的图像数据。它包含了关于图像大小、格式和实际像素数据的信息。<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sensor_msgs/Image.h&gt;</span></span><br><br>sensor_msgs::Image img;<br>img.header.frame_id = <span class="hljs-string">&quot;camera_frame&quot;</span>;<br>img.header.stamp = ros::Time::<span class="hljs-built_in">now</span>();<br>img.height = <span class="hljs-number">480</span>;<br>img.width = <span class="hljs-number">640</span>;<br>img.encoding = <span class="hljs-string">&quot;rgb8&quot;</span>;<br>img.is_bigendian = <span class="hljs-literal">false</span>;<br>img.step = img.width * <span class="hljs-number">3</span>; <span class="hljs-comment">// 3 bytes per pixel for RGB image</span><br>img.data.<span class="hljs-built_in">resize</span>(img.step * img.height);<br><br></code></pre></td></tr></table></figure></li>
+<li>Imu<br>Imu 用于表示从惯性测量单元（IMU）获取的数据。它包含了关于加速度计、陀螺仪和磁力计的信息。<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-meta">#include &lt;sensor_msgs/Imu.h&gt;</span><br><br>sensor_msgs::Imu imu;<br>imu.<span class="hljs-keyword">header</span>.frame_id = &quot;imu_frame&quot;;<br>imu.<span class="hljs-keyword">header</span>.stamp = ros::<span class="hljs-type">Time</span>::now();<br>imu.orientation_covariance[<span class="hljs-number">0</span>] = <span class="hljs-number">-1</span>; // <span class="hljs-keyword">Set</span> orientation_covariance[<span class="hljs-number">0</span>] <span class="hljs-keyword">to</span> <span class="hljs-number">-1</span> <span class="hljs-keyword">if</span> orientation <span class="hljs-keyword">is</span> invalid<br>imu.angular_velocity_covariance[<span class="hljs-number">0</span>] = <span class="hljs-number">-1</span>; // <span class="hljs-keyword">Set</span> angular_velocity_covariance[<span class="hljs-number">0</span>] <span class="hljs-keyword">to</span> <span class="hljs-number">-1</span> <span class="hljs-keyword">if</span> angular_velocity <span class="hljs-keyword">is</span> invalid<br>imu.linear_acceleration_covariance[<span class="hljs-number">0</span>] = <span class="hljs-number">-1</span>; // <span class="hljs-keyword">Set</span> linear_acceleration_covariance[<span class="hljs-number">0</span>] <span class="hljs-keyword">to</span> <span class="hljs-number">-1</span> <span class="hljs-keyword">if</span> linear_acceleration <span class="hljs-keyword">is</span> invalid<br><br><br></code></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>下面是一个使用 C++ 编写的 ROS 节点示例，该节点发布一个假设的 sensor_msgs::LaserScan 消息。</p>
+<p>首先，创建一个名为 sensor_msgs_example 的 ROS 节点包，并在其中创建一个名为 sensor_msgs_example_node.cpp 的文件。编辑文件并添加以下代码：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;ros/ros.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sensor_msgs/LaserScan.h&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span>** argv)</span></span><br><span class="hljs-function"></span>&#123;<br>  ros::<span class="hljs-built_in">init</span>(argc, argv, <span class="hljs-string">&quot;sensor_msgs_example_node&quot;</span>);<br>  ros::NodeHandle nh;<br><br>  ros::Publisher laser_pub = nh.<span class="hljs-built_in">advertise</span>&lt;sensor_msgs::LaserScan&gt;(<span class="hljs-string">&quot;laser_scan&quot;</span>, <span class="hljs-number">1</span>);<br><br>  <span class="hljs-function">ros::Rate <span class="hljs-title">loop_rate</span><span class="hljs-params">(<span class="hljs-number">10</span>)</span></span>;<br><br>  <span class="hljs-keyword">while</span> (ros::<span class="hljs-built_in">ok</span>())<br>  &#123;<br>    sensor_msgs::LaserScan scan;<br>    scan.header.frame_id = <span class="hljs-string">&quot;laser_frame&quot;</span>;<br>    scan.header.stamp = ros::Time::<span class="hljs-built_in">now</span>();<br>    scan.angle_min = <span class="hljs-number">-1.57</span>; <span class="hljs-comment">// -90 degrees</span><br>    scan.angle_max = <span class="hljs-number">1.57</span>; <span class="hljs-comment">// 90 degrees</span><br>    scan.angle_increment = <span class="hljs-number">0.017</span>; <span class="hljs-comment">// 1 degree</span><br>    scan.time_increment = <span class="hljs-number">0.001</span>;<br>    scan.range_min = <span class="hljs-number">0.1</span>;<br>    scan.range_max = <span class="hljs-number">10.0</span>;<br>    scan.ranges.<span class="hljs-built_in">resize</span>(<span class="hljs-number">181</span>); <span class="hljs-comment">// 181 readings</span><br>    scan.intensities.<span class="hljs-built_in">resize</span>(<span class="hljs-number">181</span>);<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">size_t</span> i = <span class="hljs-number">0</span>; i &lt; scan.ranges.<span class="hljs-built_in">size</span>(); ++i)<br>    &#123;<br>      scan.ranges[i] = <span class="hljs-number">5.0</span>; <span class="hljs-comment">// Assign a constant range value (5 meters)</span><br>      scan.intensities[i] = <span class="hljs-number">50.0</span>; <span class="hljs-comment">// Assign a constant intensity value (50 units)</span><br>    &#125;<br><br>    laser_pub.<span class="hljs-built_in">publish</span>(scan);<br><br>    ros::<span class="hljs-built_in">spinOnce</span>();<br>    loop_rate.<span class="hljs-built_in">sleep</span>();<br>  &#125;<br><br>  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure><br>在这个示例中，我们创建了一个名为 laser_scan 的 sensor_msgs::LaserScan 类型的发布器。然后我们初始化一个假设的 LaserScan 消息，并在循环中持续发布它。</p>
+<p>要编译和运行此示例，请在 sensor_msgs_example 包的 CMakeLists.txt 文件中添加以下内容：<br><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs scss"><span class="hljs-built_in">find_package</span>(catkin REQUIRED COMPONENTS<br>  roscpp<br>  sensor_msgs<br>)<br><br><span class="hljs-built_in">catkin_package</span>(<br>  INCLUDE_DIRS include<br>  LIBRARIES sensor_msgs_example<br>  CATKIN_DEPENDS roscpp sensor_msgs<br>)<br><br><span class="hljs-built_in">include_directories</span>(<br>  include<br>  $&#123;catkin_INCLUDE_DIRS&#125;<br>)<br><br><span class="hljs-built_in">add_executable</span>(sensor_msgs_example_node src/sensor_msgs_example_node.cpp)<br><span class="hljs-built_in">target_link_libraries</span>(sensor_msgs_example_node $&#123;catkin_LIBRARIES&#125;)<br><br></code></pre></td></tr></table></figure><br>在终端中，进入包的目录，然后运行以下命令以构建和运行节点：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">catkin_make</span><br><span class="hljs-meta prompt_">$ </span><span class="language-bash"><span class="hljs-built_in">source</span> devel/setup.bash</span><br><span class="hljs-meta prompt_">$ </span><span class="language-bash">rosrun sensor_msgs_example sensor_msgs_example_node</span><br><br></code></pre></td></tr></table></figure><br>现在，你的节点应该在名为 /laser_scan 的主题上发布假设的激光扫描数据。你可以通过运行以下命令查看发布的数据：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">rostopic <span class="hljs-built_in">echo</span> /laser_scan</span><br><br></code></pre></td></tr></table></figure><br>在实际应用中，你可能需要根据你的任务需求和系统配置来修改这些示例。例如，你可以将实际传感器（如激光雷达、摄像头或 IMU）的驱动程序与发布 sensor_msgs 消息的节点相结合，以执行更复杂的任务，如机器人导航、控制和感知。</p>
+<p>接下来，我们将介绍如何在 ROS 节点中订阅 sensor_msgs::Image 消息并处理图像数据。在这个示例中，我们将简单地计算每个像素的灰度值并将其打印到控制台。</p>
+<p>首先，在你的 ROS 包中创建一个名为 image_subscriber_node.cpp 的文件。编辑文件并添加以下代码：<br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;ros/ros.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sensor_msgs/Image.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sensor_msgs/image_encodings.h&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">imageCallback</span><span class="hljs-params">(<span class="hljs-type">const</span> sensor_msgs::ImageConstPtr&amp; msg)</span></span><br><span class="hljs-function"></span>&#123;<br>  <span class="hljs-keyword">if</span> (msg-&gt;encoding != sensor_msgs::image_encodings::RGB8)<br>  &#123;<br>    <span class="hljs-built_in">ROS_ERROR</span>(<span class="hljs-string">&quot;Invalid image encoding, expected &#x27;rgb8&#x27;.&quot;</span>);<br>    <span class="hljs-keyword">return</span>;<br>  &#125;<br><br>  <span class="hljs-keyword">for</span> (<span class="hljs-type">size_t</span> y = <span class="hljs-number">0</span>; y &lt; msg-&gt;height; ++y)<br>  &#123;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">size_t</span> x = <span class="hljs-number">0</span>; x &lt; msg-&gt;width; ++x)<br>    &#123;<br>      <span class="hljs-type">size_t</span> index = y * msg-&gt;step + x * <span class="hljs-number">3</span>;<br>      <span class="hljs-type">uint8_t</span> r = msg-&gt;data[index];<br>      <span class="hljs-type">uint8_t</span> g = msg-&gt;data[index + <span class="hljs-number">1</span>];<br>      <span class="hljs-type">uint8_t</span> b = msg-&gt;data[index + <span class="hljs-number">2</span>];<br><br>      <span class="hljs-comment">// Calculate the grayscale value</span><br>      <span class="hljs-type">uint8_t</span> gray = <span class="hljs-built_in">static_cast</span>&lt;<span class="hljs-type">uint8_t</span>&gt;(<span class="hljs-number">0.299</span> * r + <span class="hljs-number">0.587</span> * g + <span class="hljs-number">0.114</span> * b);<br><br>      <span class="hljs-comment">// Print the grayscale value</span><br>      <span class="hljs-built_in">ROS_INFO</span>(<span class="hljs-string">&quot;Pixel (%zu, %zu) gray value: %u&quot;</span>, x, y, gray);<br>    &#125;<br>  &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span>** argv)</span></span><br><span class="hljs-function"></span>&#123;<br>  ros::<span class="hljs-built_in">init</span>(argc, argv, <span class="hljs-string">&quot;image_subscriber_node&quot;</span>);<br>  ros::NodeHandle nh;<br><br>  ros::Subscriber image_sub = nh.<span class="hljs-built_in">subscribe</span>(<span class="hljs-string">&quot;camera/image_raw&quot;</span>, <span class="hljs-number">1</span>, imageCallback);<br><br>  ros::<span class="hljs-built_in">spin</span>();<br><br>  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure><br>在这个示例中，我们创建了一个名为 imageCallback 的回调函数，该函数接收 sensor_msgs::Image 类型的消息。我们首先检查图像的编码是否为 RGB8。然后，我们遍历图像中的每个像素并计算其灰度值。</p>
+<p>为了编译和运行此示例，请在你的 ROS 包的 CMakeLists.txt 文件中添加以下内容：<br><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs scss"><span class="hljs-built_in">find_package</span>(catkin REQUIRED COMPONENTS<br>  roscpp<br>  sensor_msgs<br>)<br><br># ...<br><br><span class="hljs-built_in">add_executable</span>(image_subscriber_node src/image_subscriber_node.cpp)<br><span class="hljs-built_in">target_link_libraries</span>(image_subscriber_node $&#123;catkin_LIBRARIES&#125;)<br><br></code></pre></td></tr></table></figure><br>在终端中，进入包的目录，然后运行以下命令以构建和运行节点：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">catkin_make</span><br><span class="hljs-meta prompt_">$ </span><span class="language-bash"><span class="hljs-built_in">source</span> devel/setup.bash</span><br><span class="hljs-meta prompt_">$ </span><span class="language-bash">rosrun your_package_name image_subscriber_node</span><br><br></code></pre></td></tr></table></figure><br>请注意，为了让这个示例正常工作，你需要确保在 ROS 环境中有一个节点在名为 /camera/image_raw 的主题上发布 sensor_msgs::Image 类型的消息。这通常由摄像头驱动程序节点（如 usb_cam）执行。</p>
+<p>如果你没有实际的摄像头设备，可以使用 rosbag 工具播放预先录制的图像数据。你还可以使用 image_transport 包中的 republish 工具将图像编码为 sensor_msgs::Image 消息类型，以便在本示例中使用。</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs arcade">$ rosrun image_transport republish raw in:=<span class="hljs-regexp">/camera/im</span>age_raw/compressed out:=<span class="hljs-regexp">/camera/im</span>age_raw _image_transport:=compressed<br><br></code></pre></td></tr></table></figure>
+<p>在这个示例中，我们假设已有一个节点发布名为 /camera/image_raw/compressed 的压缩图像数据。republish 工具将其重新发布为未压缩的 sensor_msgs::Image 类型消息，以便我们的 image_subscriber_node 节点能够订阅并处理它。</p>
+<p>在实际应用中，你可能需要根据你的任务需求和系统配置来修改这些示例。例如，你可以将图像处理算法（如特征检测、目标跟踪等）与订阅 sensor_msgs::Image 消息的节点相结合，以执行更复杂的任务，如机器人导航、控制和感知。</p>
+<p>总之，在本回答中，我们详细介绍了 ROS 中的 geometry_msgs 和 sensor_msgs，并提供了一些 C++ 示例。这些示例涵盖了创建、发布和订阅消息，以及处理这些消息以完成特定任务。在实际项目中，你可以根据具体需求来调整和扩展这些示例。</p>
+<p>接下来，让我们深入了解如何在 ROS 中使用 sensor_msgs::PointCloud2 消息进行点云处理。我们将使用 PCL（Point Cloud Library）这个功能强大的点云处理库。</p>
+<p>首先，在你的 ROS 包中创建一个名为 pointcloud_processing_node.cpp 的文件。编辑文件并添加以下代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;ros/ros.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sensor_msgs/PointCloud2.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;pcl_conversions/pcl_conversions.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;pcl/point_cloud.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;pcl/point_types.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;pcl/filters/voxel_grid.h&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">pointCloudCallback</span><span class="hljs-params">(<span class="hljs-type">const</span> sensor_msgs::PointCloud2ConstPtr&amp; msg)</span></span><br><span class="hljs-function"></span>&#123;<br>  <span class="hljs-comment">// Convert sensor_msgs::PointCloud2 to pcl::PointCloud</span><br>  pcl::PointCloud&lt;pcl::PointXYZ&gt;::<span class="hljs-function">Ptr <span class="hljs-title">cloud</span><span class="hljs-params">(<span class="hljs-keyword">new</span> pcl::PointCloud&lt;pcl::PointXYZ&gt;)</span></span>;<br>  pcl::<span class="hljs-built_in">fromROSMsg</span>(*msg, *cloud);<br><br>  <span class="hljs-comment">// Perform voxel grid filtering</span><br>  pcl::PointCloud&lt;pcl::PointXYZ&gt;::<span class="hljs-function">Ptr <span class="hljs-title">cloud_filtered</span><span class="hljs-params">(<span class="hljs-keyword">new</span> pcl::PointCloud&lt;pcl::PointXYZ&gt;)</span></span>;<br>  pcl::VoxelGrid&lt;pcl::PointXYZ&gt; sor;<br>  sor.<span class="hljs-built_in">setInputCloud</span>(cloud);<br>  sor.<span class="hljs-built_in">setLeafSize</span>(<span class="hljs-number">0.1f</span>, <span class="hljs-number">0.1f</span>, <span class="hljs-number">0.1f</span>);<br>  sor.<span class="hljs-built_in">filter</span>(*cloud_filtered);<br><br>  <span class="hljs-comment">// Process the filtered point cloud</span><br>  <span class="hljs-comment">// For example, you can calculate the centroid, perform clustering, etc.</span><br><br>  <span class="hljs-built_in">ROS_INFO</span>(<span class="hljs-string">&quot;Filtered point cloud size: %zu&quot;</span>, cloud_filtered-&gt;<span class="hljs-built_in">size</span>());<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span>** argv)</span></span><br><span class="hljs-function"></span>&#123;<br>  ros::<span class="hljs-built_in">init</span>(argc, argv, <span class="hljs-string">&quot;pointcloud_processing_node&quot;</span>);<br>  ros::NodeHandle nh;<br><br>  ros::Subscriber pointcloud_sub = nh.<span class="hljs-built_in">subscribe</span>(<span class="hljs-string">&quot;sensor/point_cloud&quot;</span>, <span class="hljs-number">1</span>, pointCloudCallback);<br><br>  ros::<span class="hljs-built_in">spin</span>();<br><br>  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<p>在这个示例中，我们创建了一个名为 pointCloudCallback 的回调函数，该函数接收 sensor_msgs::PointCloud2 类型的消息。我们首先将 sensor_msgs::PointCloud2 类型的数据转换为 PCL 中的 pcl::PointCloud。然后我们对点云应用体素网格滤波（Voxel Grid Filtering）来降低点云的密度。最后我们打印出过滤后的点云的大小。</p>
+<p>为了编译和运行此示例，请在你的 ROS 包的 CMakeLists.txt 文件中添加以下内容：</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs scss"><span class="hljs-built_in">find_package</span>(catkin REQUIRED COMPONENTS<br>  roscpp<br>  sensor_msgs<br>  pcl_conversions<br>  pcl_ros<br>)<br><br># ...<br><br><span class="hljs-built_in">add_executable</span>(pointcloud_processing_node src/pointcloud_processing_node.cpp)<br><span class="hljs-built_in">target_link_libraries</span>(pointcloud_processing_node $&#123;catkin_LIBRARIES&#125;)<br><br></code></pre></td></tr></table></figure>
+<p>在终端中，进入包的目录，然后运行以下命令以构建和运行节点：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">catkin_make</span><br><span class="hljs-meta prompt_">$ </span><span class="language-bash"><span class="hljs-built_in">source</span> devel/setup.bash</span><br><span class="hljs-meta prompt_">$ </span><span class="language-bash">rosrun your_package_name pointcloud_processing_node</span><br><br></code></pre></td></tr></table></figure>
+<p>请注意，为了让这个示例正常工作，你需要确保在 ROS 环境中有一个节点在名为 /sensor/point_cloud 的主题上发布 sensor_msgs::PointCloud2 类型的消息。这通常由点云驱动程序节点（如 velodyne_pointcloud 或 depthimage_to_laserscan）执行。</p>
+<p>本示例仅演示了 PCL 中一种基本点云处理方法。实际上，PCL 提供了许多高级的点云处理功能，例如点云分割、特征提取、配准、表面重建等。在实际应用中，你可以根据你的任务需求和系统配置来修改这些示例。例如，你可以将点云处理算法与订阅 sensor_msgs::PointCloud2 消息的节点相结合，以执行更复杂的任务，如机器人导航、控制和感知。</p>
+<p>此外，当处理大型点云数据时，考虑使用八叉树（Octree）和 k-d树（k-d tree）等数据结构以提高计算效率。你还可以结合机器学习和深度学习技术来解决点云分类、目标检测和目标跟踪等问题。</p>
+<p>总之，在本回答中，我们详细介绍了 ROS 中的 geometry_msgs 和 sensor_msgs，并提供了一些 C++ 示例，涵盖了创建、发布和订阅消息以及处理这些消息以完成特定任务。在实际项目中，你可以根据具体需求来调整和扩展这些示例，为你的机器人系统添加更多功能。</p>
+<p>现在我们将讨论如何在 ROS 中使用 tf2 库进行坐标变换。tf2 库提供了处理坐标帧之间变换的功能，这对于机器人导航、感知和多传感器融合等任务至关重要。</p>
+<p>首先，在你的 ROS 包中创建一个名为 tf2_example_node.cpp 的文件。编辑文件并添加以下代码：<br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;ros/ros.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;geometry_msgs/PointStamped.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;tf2_ros/transform_listener.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;tf2_geometry_msgs/tf2_geometry_msgs.h&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span>** argv)</span></span><br><span class="hljs-function"></span>&#123;<br>  ros::<span class="hljs-built_in">init</span>(argc, argv, <span class="hljs-string">&quot;tf2_example_node&quot;</span>);<br>  ros::NodeHandle nh;<br><br>  tf2_ros::Buffer tfBuffer;<br>  <span class="hljs-function">tf2_ros::TransformListener <span class="hljs-title">tfListener</span><span class="hljs-params">(tfBuffer)</span></span>;<br><br>  geometry_msgs::PointStamped point_in_base_frame;<br>  point_in_base_frame.header.frame_id = <span class="hljs-string">&quot;base_link&quot;</span>;<br>  point_in_base_frame.point.x = <span class="hljs-number">1.0</span>;<br>  point_in_base_frame.point.y = <span class="hljs-number">0.0</span>;<br>  point_in_base_frame.point.z = <span class="hljs-number">0.0</span>;<br><br>  <span class="hljs-function">ros::Rate <span class="hljs-title">rate</span><span class="hljs-params">(<span class="hljs-number">1.0</span>)</span></span>;<br>  <span class="hljs-keyword">while</span> (nh.<span class="hljs-built_in">ok</span>())<br>  &#123;<br>    point_in_base_frame.header.stamp = ros::Time::<span class="hljs-built_in">now</span>();<br><br>    <span class="hljs-keyword">try</span><br>    &#123;<br>      geometry_msgs::PointStamped point_in_map_frame;<br>      tfBuffer.<span class="hljs-built_in">transform</span>(point_in_base_frame, point_in_map_frame, <span class="hljs-string">&quot;map&quot;</span>);<br>      <span class="hljs-built_in">ROS_INFO</span>(<span class="hljs-string">&quot;Point in map frame: (%.2f, %.2f, %.2f)&quot;</span>,<br>               point_in_map_frame.point.x,<br>               point_in_map_frame.point.y,<br>               point_in_map_frame.point.z);<br>    &#125;<br>    <span class="hljs-built_in">catch</span> (tf2::TransformException&amp; ex)<br>    &#123;<br>      <span class="hljs-built_in">ROS_WARN</span>(<span class="hljs-string">&quot;%s&quot;</span>, ex.<span class="hljs-built_in">what</span>());<br>    &#125;<br><br>    rate.<span class="hljs-built_in">sleep</span>();<br>  &#125;<br><br>  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure></p>
+<p>在这个示例中，我们创建了一个名为 point_in_base_frame 的 geometry_msgs::PointStamped 消息，该消息包含了一个在 base_link 坐标系下的点。然后我们使用 tf2_ros::Buffer 和 tf2_ros::TransformListener 来监听坐标变换。我们尝试将点从 base_link 坐标系转换到 map 坐标系，并打印出转换后的点坐标。</p>
+<p>为了编译和运行此示例，请在你的 ROS 包的 CMakeLists.txt 文件中添加以下内容：<br><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs scss"><span class="hljs-built_in">find_package</span>(catkin REQUIRED COMPONENTS<br>  roscpp<br>  geometry_msgs<br>  tf2<br>  tf2_ros<br>  tf2_geometry_msgs<br>)<br><br># ...<br><br><span class="hljs-built_in">add_executable</span>(tf2_example_node src/tf2_example_node.cpp)<br><span class="hljs-built_in">target_link_libraries</span>(tf2_example_node $&#123;catkin_LIBRARIES&#125;)<br><br></code></pre></td></tr></table></figure><br>在终端中，进入包的目录，然后运行以下命令以构建和运行节点：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">catkin_make</span><br><span class="hljs-meta prompt_">$ </span><span class="language-bash"><span class="hljs-built_in">source</span> devel/setup.bash</span><br><span class="hljs-meta prompt_">$ </span><span class="language-bash">rosrun your_package_name tf2_example_node</span><br><br></code></pre></td></tr></table></figure><br>请注意，为了让这个示例正常工作，你需要确保在 ROS 环境中有一个节点发布 map 和 base_link 之间的坐标变换。这通常由机器人定位系统（如 amcl）或静态变换发布器（如 static_transform_publisher）执行。在没有实际机器人的情况下，你可以使用 static_transform_publisher 来发布一个固定的坐标变换。在终端中，运行以下命令：<br><figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs tap">$ rosrun tf2_ros static_transform_publisher<span class="hljs-number"> 0 </span>0<span class="hljs-number"> 0 </span>0<span class="hljs-number"> 0 </span>0 map base_link<br><br></code></pre></td></tr></table></figure><br>这将发布一个将 base_link 坐标系与 map 坐标系对齐的静态变换。</p>
+<p>在实际应用中，你可能需要根据你的任务需求和系统配置来修改这些示例。例如，你可以订阅机器人或传感器发布的 geometry_msgs::PoseStamped 或 geometry_msgs::PoseWithCovarianceStamped 消息，然后将它们转换到全局坐标系，如 map 或 odom。这对于多机器人协同、全局路径规划和融合来自不同传感器的信息等任务非常有用。</p>
+<p>总之，在本回答中，我们详细介绍了 ROS 中的 geometry_msgs 和 sensor_msgs，并提供了一些 C++ 示例。这些示例涵盖了创建、发布和订阅消息，以及处理这些消息以完成特定任务。本回答还讨论了如何在 ROS 中使用 tf2 库进行坐标变换。在实际项目中，你可以根据具体需求来调整和扩展这些示例，以便为你的机器人系统添加更多功能。</p>
+<p>现在我们将讨论如何在ROS中使用动作服务器（Action Server）和动作客户端（Action Client）。动作允许你执行那些需要较长时间才能完成的任务，同时提供反馈和可抢占（可中止）的功能。</p>
+<p>首先，让我们创建一个简单的斐波那契数列计算的动作。在你的ROS包中创建一个名为Fibonacci.action的文件，并添加以下内容：<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment"># Goal definition</span><br><span class="hljs-string">int32</span> <span class="hljs-string">order</span><br><span class="hljs-meta">---</span><br><span class="hljs-comment"># Result definition</span><br><span class="hljs-string">int32[]</span> <span class="hljs-string">sequence</span><br><span class="hljs-meta">---</span><br><span class="hljs-comment"># Feedback definition</span><br><span class="hljs-string">int32[]</span> <span class="hljs-string">sequence</span><br><br></code></pre></td></tr></table></figure><br>这个动作接受一个整数（斐波那契数列的阶数）作为目标，返回一个整数数组（计算得到的斐波那契数列）作为结果，并在执行过程中提供整数数组作为反馈。</p>
+<p>接下来，在CMakeLists.txt文件中添加以下内容以生成动作消息：<br><figure class="highlight isbl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs isbl"><span class="hljs-function"><span class="hljs-title">find_package</span>(<span class="hljs-variable">catkin</span> <span class="hljs-variable">REQUIRED</span> <span class="hljs-variable">COMPONENTS</span></span><br><span class="hljs-function">  <span class="hljs-variable">actionlib_msgs</span></span><br><span class="hljs-function">)</span><br><br><span class="hljs-function"><span class="hljs-title">add_action_files</span>(</span><br><span class="hljs-function">  <span class="hljs-variable">DIRECTORY</span> <span class="hljs-variable">action</span></span><br><span class="hljs-function">  <span class="hljs-variable">FILES</span> <span class="hljs-variable">Fibonacci.action</span></span><br><span class="hljs-function">)</span><br><br><span class="hljs-function"><span class="hljs-title">generate_messages</span>(</span><br><span class="hljs-function">  <span class="hljs-variable">DEPENDENCIES</span> <span class="hljs-variable">actionlib_msgs</span></span><br><span class="hljs-function">)</span><br><br></code></pre></td></tr></table></figure></p>
+<p>创建一个名为fibonacci_server_node.cpp的文件以实现动作服务器。编辑文件并添加以下代码：<br><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">#<span class="hljs-keyword">include</span> &lt;ros/ros.h&gt;<br>#<span class="hljs-keyword">include</span> &lt;actionlib/server/simple_action_server.h&gt;<br>#<span class="hljs-keyword">include</span> &lt;your_package_name/<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">FibonacciAction</span>.</span></span>h&gt;<br><br><span class="hljs-keyword">class</span> FibonacciActionServer<br>&#123;<br>  protected:<br>    ros::NodeHandle nh_;<br>    actionlib::SimpleActionServer&lt;your_package_name::FibonacciAction&gt; as_;<br>    std::<span class="hljs-built_in">string</span> action_name_;<br>    your_package_name::FibonacciFeedback feedback_;<br>    your_package_name::FibonacciResult result_;<br><br>  public:<br>    <span class="hljs-constructor">FibonacciActionServer(<span class="hljs-params">const</span> <span class="hljs-params">std</span>::<span class="hljs-params">string</span>&amp; <span class="hljs-params">name</span>)</span> :<br>      <span class="hljs-keyword">as</span><span class="hljs-constructor">_(<span class="hljs-params">nh_</span>, <span class="hljs-params">name</span>, <span class="hljs-params">boost</span>::<span class="hljs-params">bind</span>(&amp;FibonacciActionServer::<span class="hljs-params">executeCb</span>, <span class="hljs-params">this</span>, <span class="hljs-params">_1</span>)</span>, <span class="hljs-literal">false</span>),<br>      action<span class="hljs-constructor">_name_(<span class="hljs-params">name</span>)</span><br>    &#123;<br>      as_.start<span class="hljs-literal">()</span>;<br>    &#125;<br><br>    void execute<span class="hljs-constructor">Cb(<span class="hljs-params">const</span> <span class="hljs-params">your_package_name</span>::FibonacciGoalConstPtr&amp; <span class="hljs-params">goal</span>)</span><br>    &#123;<br>      ros::Rate r(<span class="hljs-number">1</span>);<br>      <span class="hljs-built_in">bool</span> success = <span class="hljs-literal">true</span>;<br><br>      feedback_.sequence.clear<span class="hljs-literal">()</span>;<br>      feedback_.sequence.push<span class="hljs-constructor">_back(0)</span>;<br>      feedback_.sequence.push<span class="hljs-constructor">_back(1)</span>;<br><br>      <span class="hljs-keyword">for</span> (<span class="hljs-built_in">int</span> i = <span class="hljs-number">1</span>; i &lt;= goal-&gt;order; ++i)<br>      &#123;<br>        <span class="hljs-keyword">if</span> (as_.is<span class="hljs-constructor">PreemptRequested()</span><span class="hljs-operator"> || </span>!ros::ok<span class="hljs-literal">()</span>)<br>        &#123;<br>          as_.set<span class="hljs-constructor">Preempted()</span>;<br>          success = <span class="hljs-literal">false</span>;<br>          break;<br>        &#125;<br><br>        feedback_.sequence.push<span class="hljs-constructor">_back(<span class="hljs-params">feedback_</span>.<span class="hljs-params">sequence</span>[<span class="hljs-params">i</span>] + <span class="hljs-params">feedback_</span>.<span class="hljs-params">sequence</span>[<span class="hljs-params">i</span> - 1])</span>;<br>        as_.publish<span class="hljs-constructor">Feedback(<span class="hljs-params">feedback_</span>)</span>;<br>        r.sleep<span class="hljs-literal">()</span>;<br>      &#125;<br><br>      <span class="hljs-keyword">if</span> (success)<br>      &#123;<br>        result_.sequence = feedback_.sequence;<br>        as_.set<span class="hljs-constructor">Succeeded(<span class="hljs-params">result_</span>)</span>;<br>      &#125;<br>    &#125;<br>&#125;;<br><br><span class="hljs-built_in">int</span> main(<span class="hljs-built_in">int</span> argc, <span class="hljs-built_in">char</span>** argv)<br>&#123;<br>  ros::init(argc, argv, <span class="hljs-string">&quot;fibonacci_server_node&quot;</span>);<br>  FibonacciActionServer fibonacci<span class="hljs-constructor">_action_server(<span class="hljs-string">&quot;fibonacci&quot;</span>)</span>;<br>  ros::spin<span class="hljs-literal">()</span>;<br>  return <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure><br>在这个示例中，我们创建了一个名为FibonacciActionServer的类，并实现了一个名为executeCb的回调函数。该回调函数在收到一个目标时计算斐波那契数列，并在执行过程中通过publishFeedback 方法发布反馈。如果动作被抢占或者 ROS 不再运行，该回调函数会提前结束并设置抢占状态。在成功完成斐波那契数列计算后，结果将被发布。</p>
+<p>为了编译和运行此示例，你需要在你的 ROS 包的 CMakeLists.txt 文件中添加以下内容：<br><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs scss"><span class="hljs-built_in">find_package</span>(catkin REQUIRED COMPONENTS<br>  roscpp<br>  actionlib<br>  your_package_name<br>)<br><br># ...<br><br><span class="hljs-built_in">add_executable</span>(fibonacci_server_node src/fibonacci_server_node.cpp)<br><span class="hljs-built_in">target_link_libraries</span>(fibonacci_server_node $&#123;catkin_LIBRARIES&#125;)<br><br></code></pre></td></tr></table></figure><br>在终端中，进入包的目录，然后运行以下命令以构建和运行节点：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">catkin_make</span><br><span class="hljs-meta prompt_">$ </span><span class="language-bash"><span class="hljs-built_in">source</span> devel/setup.bash</span><br><span class="hljs-meta prompt_">$ </span><span class="language-bash">rosrun your_package_name fibonacci_server_node</span><br><br></code></pre></td></tr></table></figure><br>现在我们将创建一个名为fibonacci_client_node.cpp的文件以实现动作客户端。编辑文件并添加以下代码：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;ros/ros.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;actionlib/client/simple_action_client.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;your_package_name/FibonacciAction.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">feedbackCb</span><span class="hljs-params">(<span class="hljs-type">const</span> your_package_name::FibonacciFeedbackConstPtr&amp; feedback)</span></span><br><span class="hljs-function"></span>&#123;<br>  std::cout &lt;&lt; <span class="hljs-string">&quot;Current Fibonacci sequence: &quot;</span>;<br>  <span class="hljs-keyword">for</span> (<span class="hljs-type">size_t</span> i = <span class="hljs-number">0</span>; i &lt; feedback-&gt;sequence.<span class="hljs-built_in">size</span>(); ++i)<br>  &#123;<br>    std::cout &lt;&lt; feedback-&gt;sequence[i] &lt;&lt; (i &lt; feedback-&gt;sequence.<span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span> ? <span class="hljs-string">&quot;, &quot;</span> : <span class="hljs-string">&quot;\n&quot;</span>);<br>  &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span>** argv)</span></span><br><span class="hljs-function"></span>&#123;<br>  ros::<span class="hljs-built_in">init</span>(argc, argv, <span class="hljs-string">&quot;fibonacci_client_node&quot;</span>);<br>  <span class="hljs-function">actionlib::SimpleActionClient&lt;your_package_name::FibonacciAction&gt; <span class="hljs-title">ac</span><span class="hljs-params">(<span class="hljs-string">&quot;fibonacci&quot;</span>, <span class="hljs-literal">true</span>)</span></span>;<br>  ac.<span class="hljs-built_in">waitForServer</span>();<br><br>  your_package_name::FibonacciGoal goal;<br>  goal.order = <span class="hljs-number">10</span>;<br><br>  ac.<span class="hljs-built_in">sendGoal</span>(goal, actionlib::SimpleActionClient&lt;your_package_name::FibonacciAction&gt;::<span class="hljs-built_in">SimpleDoneCallback</span>(),<br>              actionlib::SimpleActionClient&lt;your_package_name::FibonacciAction&gt;::<span class="hljs-built_in">SimpleActiveCallback</span>(),<br>              boost::<span class="hljs-built_in">bind</span>(&amp;feedbackCb, _1));<br><br>  ac.<span class="hljs-built_in">waitForResult</span>();<br><br>  <span class="hljs-keyword">if</span> (ac.<span class="hljs-built_in">getState</span>() == actionlib::SimpleClientGoalState::SUCCEEDED)<br>  &#123;<br>    std::cout &lt;&lt; <span class="hljs-string">&quot;Successfully computed the Fibonacci sequence&quot;</span> &lt;&lt; std::endl;<br>  &#125;<br>  <span class="hljs-keyword">else</span><br>  &#123;<br>    std::cout &lt;&lt; <span class="hljs-string">&quot;Failed to compute the Fibonacci sequence&quot;</span> &lt;&lt; std::endl;<br>  &#125;<br><br>  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure><br>在这个示例中，我们创建了一个动作客户端并等待动作服务器。然后，我们发送一个目标并等待结果。在此过程中，我们提供了一个名为feedbackCb的反馈回调函数，用于显示当前计算的斐波那契数列。</p>
+<p>为了编译和运行此示例，请在你的 ROS 包的 CMakeLists.txt 文件中添加以下内容：<br><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">add<span class="hljs-constructor">_executable(<span class="hljs-params">fibonacci_client_node</span> <span class="hljs-params">src</span><span class="hljs-operator">/</span><span class="hljs-params">fibonacci_client_node</span>.<span class="hljs-params">cpp</span>)</span><br>target<span class="hljs-constructor">_link_libraries(<span class="hljs-params">fibonacci_client_node</span> $&#123;<span class="hljs-params">catkin_LIBRARIES</span>&#125;)</span><br><br></code></pre></td></tr></table></figure><br>在终端中，进入包的目录，然后运行以下命令以构建和运行节点：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">catkin_make</span><br><span class="hljs-meta prompt_">$ </span><span class="language-bash"><span class="hljs-built_in">source</span> devel/setup.bash</span><br><span class="hljs-meta prompt_">$</span><span class="language-bash"></span><br><span class="language-bash">$ rosrun your_package_name fibonacci_client_node</span><br><br></code></pre></td></tr></table></figure><br>当客户端运行时，你将看到当前计算的斐波那契数列作为反馈，以及计算是否成功完成的最终结果。</p>
+<p>在实际应用中，你可能需要根据你的任务需求和系统配置来修改这些示例。例如，你可以实现一个机器人导航任务，其中动作服务器负责接收目标位置并控制机器人移动，同时向客户端提供移动过程的反馈。客户端可以通过发送新的目标位置或取消当前目标来控制机器人的行为。这些功能对于实现可抢占的机器人任务和自适应控制策略非常有用。</p>
+<p>总之，在本回答中，我们详细介绍了如何在 ROS 中实现动作服务器和动作客户端，并提供了一个简单的斐波那契数列计算示例。这些示例涵盖了创建动作服务器和客户端，发送目标，处理反馈和结果以完成特定任务。在实际项目中，你可以根据具体需求来调整和扩展这些示例，以便为你的机器人系统添加更多功能。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/slam/" class="category-chain-item">slam</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/slam/ROS/" class="category-chain-item">ROS</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%8E%9F%E5%88%9B/">#原创</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>介绍ROS中sensor_msgs</div>
+      <div>https://qiangsun89.github.io/2023/04/25/介绍ROS中sensor-msgs/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Qiang Sun</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年4月25日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/04/25/%E4%BB%8B%E7%BB%8DROS%E4%B8%ADgeometry-msgs/" title="介绍ROS中geometry_msgs">
+                        <span class="hidden-mobile">介绍ROS中geometry_msgs</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"LEYjQzDk7jo8uqlOQoAEF5qm-gzGzoHsz","appKey":"7bBCyINnLw0akaPjI39pESMN","path":"window.location.pathname","placeholder":"留言","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
