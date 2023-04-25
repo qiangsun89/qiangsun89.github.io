@@ -1,0 +1,828 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Qiang Sun">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="如何调试C++多线程程序在C++中调试多线程程序时，需要使用一个支持多线程调试的调试器。常用的调试器有GDB（GNU调试器）和Visual Studio。下面是针对这两种调试器的方法。 在Ubuntu系统上使用GDB调试C++多线程程序，你可以按照以下步骤操作：  安装GDB:  首先确保你已经安装了GDB。如果没有安装，可以通过以下命令安装：123sudo apt-get updatesudo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何调试C++多线程程序">
+<meta property="og:url" content="https://qiangsun89.github.io/2023/04/25/%E5%A6%82%E4%BD%95%E8%B0%83%E8%AF%95C-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%A8%8B%E5%BA%8F/index.html">
+<meta property="og:site_name" content="知识的搬运工">
+<meta property="og:description" content="如何调试C++多线程程序在C++中调试多线程程序时，需要使用一个支持多线程调试的调试器。常用的调试器有GDB（GNU调试器）和Visual Studio。下面是针对这两种调试器的方法。 在Ubuntu系统上使用GDB调试C++多线程程序，你可以按照以下步骤操作：  安装GDB:  首先确保你已经安装了GDB。如果没有安装，可以通过以下命令安装：123sudo apt-get updatesudo">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-04-25T10:28:32.000Z">
+<meta property="article:modified_time" content="2023-04-25T10:42:35.107Z">
+<meta property="article:author" content="Qiang Sun">
+<meta property="article:tag" content="原创">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>如何调试C++多线程程序 - 知识的搬运工</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"qiangsun89.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"LEYjQzDk7jo8uqlOQoAEF5qm-gzGzoHsz","app_key":"7bBCyINnLw0akaPjI39pESMN","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>知识的搬运工</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="如何调试C++多线程程序"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-25 18:28" pubdate>
+          2023年4月25日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          24 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">如何调试C++多线程程序</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="如何调试C-多线程程序"><a href="#如何调试C-多线程程序" class="headerlink" title="如何调试C++多线程程序"></a>如何调试C++多线程程序</h1><p>在C++中调试多线程程序时，需要使用一个支持多线程调试的调试器。常用的调试器有GDB（GNU调试器）和Visual Studio。下面是针对这两种调试器的方法。</p>
+<p>在Ubuntu系统上使用GDB调试C++多线程程序，你可以按照以下步骤操作：</p>
+<ol>
+<li>安装GDB:</li>
+</ol>
+<p>首先确保你已经安装了GDB。如果没有安装，可以通过以下命令安装：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs routeros">sudo apt-<span class="hljs-built_in">get</span> update<br>sudo apt-<span class="hljs-built_in">get</span> install gdb<br><br></code></pre></td></tr></table></figure></p>
+<ol>
+<li>编译程序：</li>
+</ol>
+<p>确保你的程序使用-g选项进行了编译以生成调试信息，同时使用-pthread选项来链接pthread库。例如：<br><figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs brainfuck"><span class="hljs-comment">g</span><span class="hljs-literal">++</span> <span class="hljs-literal">-</span><span class="hljs-comment">g</span> <span class="hljs-literal">-</span><span class="hljs-comment">o your_program_name your_program_name</span><span class="hljs-string">.</span><span class="hljs-comment">cpp</span> <span class="hljs-literal">-</span><span class="hljs-comment">pthread</span><br><br></code></pre></td></tr></table></figure></p>
+<ol>
+<li>启动GDB:</li>
+</ol>
+<p>使用以下命令启动GDB并加载你的程序：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">gdb ./your_program_name<br><br></code></pre></td></tr></table></figure></p>
+<ol>
+<li>查看线程信息：</li>
+</ol>
+<p>在GDB中，输入info threads命令查看所有线程的信息。你将看到每个线程的ID、状态等信息。</p>
+<ol>
+<li>设置断点：</li>
+</ol>
+<p>为了在特定线程上设置断点，可以使用tbreak命令，后面跟线程ID和要设置断点的代码位置。例如，设置断点在第2个线程的my_function函数上：<br><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">tbreak</span> <span class="hljs-number">2</span>, my_function<br><br></code></pre></td></tr></table></figure><br>或者，你可以在特定条件下设置断点，如下所示：<br><figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs abnf">break my_function if thread_num <span class="hljs-operator">=</span><span class="hljs-operator">=</span> <span class="hljs-number">2</span><br><br></code></pre></td></tr></table></figure><br>这将在满足thread_num == 2条件时在my_function函数上设置一个断点。</p>
+<ol>
+<li>开始调试：</li>
+</ol>
+<p>在GDB中输入run命令开始运行程序。当程序运行到断点时，它将自动暂停。</p>
+<ol>
+<li>切换线程和查看堆栈：</li>
+</ol>
+<p>使用thread <thread_id>命令切换到感兴趣的线程。例如，切换到线程2：<br><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">thread</span> <span class="hljs-number">2</span><br><br></code></pre></td></tr></table></figure><br>使用bt命令查看当前线程的调用堆栈。</p>
+<ol>
+<li>其他调试命令：</li>
+</ol>
+<ul>
+<li>使用next（或简写n）命令逐行执行代码。</li>
+<li>使用step（或简写s）命令单步执行代码，进入函数内部。</li>
+<li>使用continue（或简写c）命令继续执行程序，直到遇到下一个断点。</li>
+<li>使用print（或简写p）命令查看变量值，例如：print my_variable。</li>
+<li>使用quit（或简写q）命令退出GDB。</li>
+</ul>
+<p>以上就是在Ubuntu系统上使用GDB调试C++多线程程序的方法。通过设置线程相关的断点和条件，你可以更轻松地定位和解决多线程程序中的问题。</p>
+<p>当你使用GDB调试多线程程序时，可以使用一些高级功能来更有效地定位问题。以下是一些建议：</p>
+<ol>
+<li>检查线程状态：</li>
+</ol>
+<p>使用info threads命令查看所有线程的信息。此命令将显示每个线程的ID、状态（例如正在运行、已暂停等）等信息。</p>
+<ol>
+<li>设置观察点（Watchpoints）：</li>
+</ol>
+<p>观察点（Watchpoints）允许你在变量值发生更改时暂停程序。这对于调试多线程程序中的竞争条件和数据竞争问题非常有用。使用watch命令设置观察点，例如：<br><figure class="highlight ceylon"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ceylon">watch my<span class="hljs-number">_</span><span class="hljs-keyword">variable</span><br><br></code></pre></td></tr></table></figure></p>
+<ol>
+<li>处理死锁问题：</li>
+</ol>
+<p>死锁是多线程程序中的一个常见问题。要检测死锁，可以在GDB中暂停程序执行，然后使用info threads命令查看线程状态。检查每个线程的状态和调用堆栈，以确定是否有线程被阻塞在某个同步原语（如互斥锁）上。</p>
+<ol>
+<li>使用条件断点：</li>
+</ol>
+<p>在多线程程序中，通常需要在特定条件下设置断点。例如，当某个变量达到特定值时，你可能希望暂停程序。在GDB中，可以使用break命令设置条件断点，例如：<br><figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs abnf">break my_function if my_variable <span class="hljs-operator">=</span><span class="hljs-operator">=</span> <span class="hljs-number">10</span><br><br></code></pre></td></tr></table></figure><br>这将在my_variable等于10时，在my_function函数上设置一个断点。</p>
+<ol>
+<li>查看和修改变量值：</li>
+</ol>
+<p>在调试过程中，你可以使用print命令查看变量值。例如：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-built_in">print</span> my_variable<br><br></code></pre></td></tr></table></figure><br>此外，你还可以使用set命令修改变量值，例如：<br><figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs gams"><span class="hljs-keyword">set</span> my_variable <span class="hljs-comment">= 20</span><br><br></code></pre></td></tr></table></figure><br>这有助于测试程序中不同变量值的影响。</p>
+<ol>
+<li>使用catch命令捕获特定事件：</li>
+</ol>
+<p>GDB允许你捕获特定事件，如抛出异常、加载共享库等。例如，要在抛出C++异常时设置断点，请使用以下命令：<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs actionscript"><span class="hljs-keyword">catch</span> <span class="hljs-keyword">throw</span><br><br></code></pre></td></tr></table></figure><br>这样，每当程序抛出异常时，GDB都会暂停程序执行。</p>
+<p>通过使用这些高级功能，你可以在调试多线程程序时更有效地定位和解决问题。在多线程调试中，熟练掌握这些功能非常重要，因为多线程问题往往更难以调试和复现。</p>
+<p>继续深入了解GDB调试多线程程序的高级技巧，以下是一些额外的建议：</p>
+<ol>
+<li>使用断点命令（Breakpoint commands）：</li>
+</ol>
+<p>在设置断点时，你可以为断点分配一个要执行的命令。当程序运行到断点时，GDB将自动执行这些命令。这对于自动检查变量值或更改程序状态非常有用。例如，为了在每次运行到某个断点时打印变量的值，你可以这样设置：<br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-keyword">break</span> my_function<br>commands<br>  print my_variable<br>  <span class="hljs-keyword">continue</span><br>end<br><br></code></pre></td></tr></table></figure><br>这将在运行到my_function时自动打印my_variable的值并继续执行。</p>
+<ol>
+<li>使用GDB的reverse-*命令：</li>
+</ol>
+<p>GDB的reverse-*命令允许你反向执行程序，这有助于找出导致问题的特定代码行。例如，使用reverse-step或reverse-next命令可以逐步返回到之前的程序状态。要启用此功能，首先需要执行以下命令：<br><figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sqf"><span class="hljs-built_in">set</span> <span class="hljs-built_in">exec</span>-<span class="hljs-built_in">direction</span> <span class="hljs-built_in">reverse</span><br><br></code></pre></td></tr></table></figure><br>然后，你可以使用reverse-step、reverse-next等命令进行反向调试。</p>
+<ol>
+<li>使用save breakpoints和source命令保存和加载断点：</li>
+</ol>
+<p>你可以将当前设置的所有断点保存到一个文件中，以便以后重新加载。使用save breakpoints命令将断点保存到一个文件中，例如：<br><figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs fortran"><span class="hljs-keyword">save</span> breakpoints my_breakpoints.txt<br><br></code></pre></td></tr></table></figure><br>要重新加载这些断点，使用source命令：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">source</span> my_breakpoints.txt<br><br></code></pre></td></tr></table></figure><br>这样，在不同调试会话之间，你可以轻松地保留和加载断点。</p>
+<ol>
+<li>使用set scheduler-locking命令控制线程调度：</li>
+</ol>
+<p>set scheduler-locking命令允许你控制GDB如何调度线程。例如，要在当前线程暂停时阻止其他线程运行，使用以下命令：<br><figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs oxygene"><span class="hljs-keyword">set</span> scheduler-<span class="hljs-keyword">locking</span> <span class="hljs-keyword">on</span><br><br></code></pre></td></tr></table></figure><br>这有助于避免在调试过程中发生不必要的线程切换。</p>
+<ol>
+<li>使用Python脚本扩展GDB功能：</li>
+</ol>
+<p>GDB支持使用Python脚本扩展其功能。你可以编写自定义脚本来实现更高级的调试功能，如自动检测死锁、跟踪特定线程的状态变化等。要加载Python脚本，使用source命令：<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs vim"><span class="hljs-keyword">source</span> my_script.<span class="hljs-keyword">py</span><br><br></code></pre></td></tr></table></figure><br>要了解如何编写GDB Python脚本，可以查阅<a target="_blank" rel="noopener" href="https://sourceware.org/gdb/onlinedocs/gdb/Python.html">GDB官方文档</a>。</p>
+<p>通过这些高级技巧，你将能够更有效地使用GDB调试多线程程序。多线程问题可能复杂且难以复现，因此熟练使用这些功能可以帮助你更快地找到并修</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/C/" class="category-chain-item">C++</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%8E%9F%E5%88%9B/">#原创</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>如何调试C++多线程程序</div>
+      <div>https://qiangsun89.github.io/2023/04/25/如何调试C-多线程程序/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Qiang Sun</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年4月25日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/04/25/%E8%AF%A6%E7%BB%86%E4%BB%8B%E7%BB%8DVS-code-C-tasks-json%E5%92%8Claunch-json%E7%9A%84%E8%AE%BE%E7%BD%AE/" title="详细介绍VS code C++ tasks.json和launch.json的设置">
+                        <span class="hidden-mobile">详细介绍VS code C++ tasks.json和launch.json的设置</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"LEYjQzDk7jo8uqlOQoAEF5qm-gzGzoHsz","appKey":"7bBCyINnLw0akaPjI39pESMN","path":"window.location.pathname","placeholder":"留言","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
