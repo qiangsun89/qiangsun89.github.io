@@ -16,22 +16,22 @@
   <meta name="author" content="Qiang Sun">
   <meta name="keywords" content="">
   
-    <meta name="description" content="单独启动costmap_2d生成代价地图要单独启动costmap_2d以生成代价地图，您需要创建一个自定义的ROS节点，将costmap_2d::Costmap2DROS类实例化，并加载适当的参数。以下是一个简单示例：  首先，在您的工作空间中创建一个名为standalone_costmap的ROS包。确保您已安装costmap_2d及其依赖项：  123cd ~&#x2F;catkin_ws&#x2F;srccat">
+    <meta name="description" content="详细介绍ROS中的map_servermap_server 是 ROS (Robot Operating System) 中的一个功能包，它提供了一个用于处理二维地图的节点。该功能包主要有两个核心组件：map_server 和 map_saver。它们分别用于加载地图到 ROS 系统并从系统中保存地图。  map_server：这是一个用于加载地图的节点。它从文件系统中读取一个 YAML 格式的配">
 <meta property="og:type" content="article">
-<meta property="og:title" content="单独启动costmap_2d生成代价地图">
-<meta property="og:url" content="https://qiangsun89.github.io/2023/04/27/%E5%8D%95%E7%8B%AC%E5%90%AF%E5%8A%A8costmap-2d%E7%94%9F%E6%88%90%E4%BB%A3%E4%BB%B7%E5%9C%B0%E5%9B%BE/index.html">
+<meta property="og:title" content="详细介绍ROS中的map_server">
+<meta property="og:url" content="https://qiangsun89.github.io/2023/04/27/%E8%AF%A6%E7%BB%86%E4%BB%8B%E7%BB%8DROS%E4%B8%AD%E7%9A%84map-server/index.html">
 <meta property="og:site_name" content="知识的搬运工">
-<meta property="og:description" content="单独启动costmap_2d生成代价地图要单独启动costmap_2d以生成代价地图，您需要创建一个自定义的ROS节点，将costmap_2d::Costmap2DROS类实例化，并加载适当的参数。以下是一个简单示例：  首先，在您的工作空间中创建一个名为standalone_costmap的ROS包。确保您已安装costmap_2d及其依赖项：  123cd ~&#x2F;catkin_ws&#x2F;srccat">
+<meta property="og:description" content="详细介绍ROS中的map_servermap_server 是 ROS (Robot Operating System) 中的一个功能包，它提供了一个用于处理二维地图的节点。该功能包主要有两个核心组件：map_server 和 map_saver。它们分别用于加载地图到 ROS 系统并从系统中保存地图。  map_server：这是一个用于加载地图的节点。它从文件系统中读取一个 YAML 格式的配">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-04-27T03:10:58.000Z">
-<meta property="article:modified_time" content="2023-04-27T03:14:26.063Z">
+<meta property="article:published_time" content="2023-04-27T03:26:15.000Z">
+<meta property="article:modified_time" content="2023-04-27T03:28:56.098Z">
 <meta property="article:author" content="Qiang Sun">
 <meta property="article:tag" content="原创">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>单独启动costmap_2d生成代价地图 - 知识的搬运工</title>
+  <title>详细介绍ROS中的map_server - 知识的搬运工</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -214,7 +214,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="单独启动costmap_2d生成代价地图"></span>
+            <span id="subtitle" data-typed-text="详细介绍ROS中的map_server"></span>
           
         </div>
 
@@ -225,7 +225,7 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-04-27 11:10" pubdate>
+        <time datetime="2023-04-27 11:26" pubdate>
           2023年4月27日 上午
         </time>
       </span>
@@ -237,7 +237,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.6k 字
+          1.6k 字
         
       </span>
     
@@ -248,7 +248,7 @@
         
         
         
-          22 分钟
+          14 分钟
         
       </span>
     
@@ -294,39 +294,30 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">单独启动costmap_2d生成代价地图</h1>
+            <h1 style="display: none">详细介绍ROS中的map_server</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="单独启动costmap-2d生成代价地图"><a href="#单独启动costmap-2d生成代价地图" class="headerlink" title="单独启动costmap_2d生成代价地图"></a>单独启动costmap_2d生成代价地图</h1><p>要单独启动costmap_2d以生成代价地图，您需要创建一个自定义的ROS节点，将costmap_2d::Costmap2DROS类实例化，并加载适当的参数。以下是一个简单示例：</p>
+                <h1 id="详细介绍ROS中的map-server"><a href="#详细介绍ROS中的map-server" class="headerlink" title="详细介绍ROS中的map_server"></a>详细介绍ROS中的map_server</h1><p>map_server 是 ROS (Robot Operating System) 中的一个功能包，它提供了一个用于处理二维地图的节点。该功能包主要有两个核心组件：map_server 和 map_saver。它们分别用于加载地图到 ROS 系统并从系统中保存地图。</p>
 <ol>
-<li>首先，在您的工作空间中创建一个名为standalone_costmap的ROS包。确保您已安装costmap_2d及其依赖项：</li>
+<li>map_server：这是一个用于加载地图的节点。它从文件系统中读取一个 YAML 格式的配置文件和一个图像文件（PGM、PNG 等）。配置文件包含地图的基本信息，如分辨率、原点、图像文件名等。map_server 将地图发布为 nav_msgs/OccupancyGrid 消息类型，使其他 ROS 节点能够访问和使用地图数据。通常，map_server 在启动文件中启动，并加载地图文件。例如：</li>
 </ol>
-<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs arcade">cd ~<span class="hljs-regexp">/catkin_ws/</span>src<br>catkin_create_pkg standalone_costmap roscpp costmap_2d<br><br></code></pre></td></tr></table></figure>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs abnf">&lt;launch&gt;<br>  &lt;node name<span class="hljs-operator">=</span><span class="hljs-string">&quot;map_server&quot;</span> pkg<span class="hljs-operator">=</span><span class="hljs-string">&quot;map_server&quot;</span> type<span class="hljs-operator">=</span><span class="hljs-string">&quot;map_server&quot;</span> args<span class="hljs-operator">=</span><span class="hljs-string">&quot;$(find my_package)/maps/my_map.yaml&quot;</span> /&gt;<br>&lt;/launch&gt;<br><br></code></pre></td></tr></table></figure>
 <ol>
-<li>在standalone_costmap包中创建一个名为costmap_node.cpp的C++源文件，并添加以下代码：</li>
+<li>map_saver：这是一个用于从 ROS 系统保存地图的命令行工具。它订阅发布为 nav_msgs/OccupancyGrid 消息类型的地图，并将其保存为一个图像文件（默认为 PGM 格式）和一个 YAML 配置文件。map_saver 的一个常见用例是保存 SLAM（Simultaneous Localization and Mapping）算法生成的地图。要使用 map_saver，请在终端中运行以下命令：</li>
 </ol>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;ros/ros.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;costmap_2d/costmap_2d_ros.h&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span>** argv)</span> </span>&#123;<br>  ros::<span class="hljs-built_in">init</span>(argc, argv, <span class="hljs-string">&quot;standalone_costmap_node&quot;</span>);<br>  ros::NodeHandle nh;<br><br>  tf2_ros::Buffer tf_buffer;<br>  <span class="hljs-function">tf2_ros::TransformListener <span class="hljs-title">tf_listener</span><span class="hljs-params">(tf_buffer)</span></span>;<br><br>  <span class="hljs-function">costmap_2d::Costmap2DROS <span class="hljs-title">costmap</span><span class="hljs-params">(<span class="hljs-string">&quot;standalone_costmap&quot;</span>, tf_buffer)</span></span>;<br><br>  ros::<span class="hljs-built_in">spin</span>();<br><br>  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs xml">rosrun map_server map_saver -f <span class="hljs-tag">&lt;<span class="hljs-name">output_path_and_filename</span>&gt;</span><br><br></code></pre></td></tr></table></figure>
+<p><output_path_and_filename> 是保存地图文件和 YAML 配置文件的路径和文件名（不包括扩展名）。例如：</p>
+<p>这将在 ~/maps 目录中创建名为 my_saved_map.pgm 和 my_saved_map.yaml 的文件。</p>
+<p>总之，map_server 功能包提供了一个用于加载、发布和保存二维地图的简单接口。它是许多 ROS 导航和定位任务的基础，如基于已知地图的定位和路径规划。</p>
+<h2 id="修改map-server发布的话题"><a href="#修改map-server发布的话题" class="headerlink" title="修改map_server发布的话题"></a>修改map_server发布的话题</h2><p>要修改map_server发布的话题名称，您可以使用remap标签在启动文件中将默认的map话题重映射为所需的新话题名称。以下是如何在启动文件中更改map_server发布的话题名称的示例。</p>
 <ol>
-<li>修改CMakeLists.txt以添加可执行文件，并将其链接到相应的库：</li>
+<li>创建一个名为custom_map_server.launch的新启动文件，或编辑现有的启动文件。假设您的地图文件名为my_map.yaml，并位于名为my_package的ROS包的maps目录中。</li>
+<li>在启动文件中，添加map_server节点，并使用remap标签更改发布的话题名称。例如，将默认的/map话题重映射为/custom_map：</li>
 </ol>
-<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">#<span class="hljs-operator"> ...</span><br><span class="hljs-operator"></span>add<span class="hljs-constructor">_executable(<span class="hljs-params">standalone_costmap_node</span> <span class="hljs-params">src</span><span class="hljs-operator">/</span><span class="hljs-params">costmap_node</span>.<span class="hljs-params">cpp</span>)</span><br>target<span class="hljs-constructor">_link_libraries(<span class="hljs-params">standalone_costmap_node</span> $&#123;<span class="hljs-params">catkin_LIBRARIES</span>&#125;)</span><br><br></code></pre></td></tr></table></figure>
-<ol>
-<li>创建一个名为config的目录，并在其中创建一个名为costmap_params.yaml的配置文件。在此文件中，定义costmap_2d所需的参数，例如：</li>
-</ol>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">standalone_costmap:</span><br>  <span class="hljs-attr">global_frame:</span> <span class="hljs-string">/map</span><br>  <span class="hljs-attr">robot_base_frame:</span> <span class="hljs-string">/base_link</span><br>  <span class="hljs-attr">update_frequency:</span> <span class="hljs-number">5.0</span><br>  <span class="hljs-attr">publish_frequency:</span> <span class="hljs-number">1.0</span><br>  <span class="hljs-attr">static_map:</span> <span class="hljs-literal">true</span><br>  <span class="hljs-attr">rolling_window:</span> <span class="hljs-literal">false</span><br>  <span class="hljs-attr">width:</span> <span class="hljs-number">10.0</span><br>  <span class="hljs-attr">height:</span> <span class="hljs-number">10.0</span><br>  <span class="hljs-attr">resolution:</span> <span class="hljs-number">0.05</span><br><br>  <span class="hljs-attr">plugins:</span><br>    <span class="hljs-bullet">-</span> &#123;<span class="hljs-attr">name:</span> <span class="hljs-string">static_layer</span>, <span class="hljs-attr">type:</span> <span class="hljs-string">&quot;costmap_2d::StaticLayer&quot;</span>&#125;<br>    <span class="hljs-bullet">-</span> &#123;<span class="hljs-attr">name:</span> <span class="hljs-string">obstacle_layer</span>, <span class="hljs-attr">type:</span> <span class="hljs-string">&quot;costmap_2d::VoxelLayer&quot;</span>&#125;<br>    <span class="hljs-bullet">-</span> &#123;<span class="hljs-attr">name:</span> <span class="hljs-string">inflation_layer</span>, <span class="hljs-attr">type:</span> <span class="hljs-string">&quot;costmap_2d::InflationLayer&quot;</span>&#125;<br><br>  <span class="hljs-attr">static_layer:</span><br>    <span class="hljs-attr">map_topic:</span> <span class="hljs-string">/map</span><br>    <span class="hljs-attr">subscribe_to_updates:</span> <span class="hljs-literal">true</span><br><br>  <span class="hljs-attr">obstacle_layer:</span><br>    <span class="hljs-attr">observation_sources:</span> <span class="hljs-string">laser_scan_sensor</span><br>    <span class="hljs-attr">laser_scan_sensor:</span> &#123;<span class="hljs-attr">sensor_frame:</span> <span class="hljs-string">base_link</span>, <span class="hljs-attr">data_type:</span> <span class="hljs-string">LaserScan</span>, <span class="hljs-attr">topic:</span> <span class="hljs-string">/scan</span>, <span class="hljs-attr">marking:</span> <span class="hljs-literal">true</span>, <span class="hljs-attr">clearing:</span> <span class="hljs-literal">true</span>&#125;<br><br>  <span class="hljs-attr">inflation_layer:</span><br>    <span class="hljs-attr">inflation_radius:</span> <span class="hljs-number">0.55</span><br><br></code></pre></td></tr></table></figure>
-<p>这里，我们定义了一个名为standalone_costmap的代价地图配置，其中包括static_layer（静态层）、obstacle_layer（障碍物层）和inflation_layer（膨胀层）。</p>
-<ol>
-<li>创建一个名为launch的目录，并在其中创建一个名为costmap.launch的启动文件。在此文件中，包含costmap_node.cpp可执行文件并加载costmap_params.yaml配置文件：</li>
-</ol>
-<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs abnf">&lt;launch&gt;<br>  &lt;node name<span class="hljs-operator">=</span><span class="hljs-string">&quot;standalone_costmap_node&quot;</span> pkg<span class="hljs-operator">=</span><span class="hljs-string">&quot;standalone_costmap&quot;</span>type<span class="hljs-operator">=</span><span class="hljs-string">&quot;standalone_costmap_node&quot;</span> output<span class="hljs-operator">=</span><span class="hljs-string">&quot;screen&quot;</span>&gt;<br>&lt;rosparam command<span class="hljs-operator">=</span><span class="hljs-string">&quot;load&quot;</span> file<span class="hljs-operator">=</span><span class="hljs-string">&quot;$(find standalone_costmap)/config/costmap_params.yaml&quot;</span> /&gt;<br>&lt;/node&gt;<br>&lt;/launch&gt;<br><br></code></pre></td></tr></table></figure>
-<ol>
-<li>在您的工作空间中构建和运行新创建的<code>standalone_costmap</code>包：</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> ~/catkin_ws<br>catkin_make<br><span class="hljs-built_in">source</span> devel/setup.bash<br>roslaunch standalone_costmap costmap.launch<br></code></pre></td></tr></table></figure>
-<p>此时，standalone_costmap节点应启动并生成代价地图。确保您提供了地图和传感器数据，例如激光扫描。现在，您可以将此代价地图与其他ROS节点一起使用，例如导航和路径规划。</p>
-<p>要在RViz中可视化代价地图，请添加一个Map显示类型并将其指向standalone_costmap发布的nav_msgs/OccupancyGrid消息。默认情况下，代价地图发布在/standalone_costmap/costmap话题上。在RViz中，您应该能够看到代价地图，其中不同的颜色表示不同的代价值，例如，黑色表示障碍物，蓝色表示未知区域，白色表示可通行区域。</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs abnf">&lt;launch&gt;<br>  &lt;node name<span class="hljs-operator">=</span><span class="hljs-string">&quot;map_server&quot;</span> pkg<span class="hljs-operator">=</span><span class="hljs-string">&quot;map_server&quot;</span> type<span class="hljs-operator">=</span><span class="hljs-string">&quot;map_server&quot;</span> args<span class="hljs-operator">=</span><span class="hljs-string">&quot;$(find my_package)/maps/my_map.yaml&quot;</span>&gt;<br>    &lt;remap from<span class="hljs-operator">=</span><span class="hljs-string">&quot;map&quot;</span> to<span class="hljs-operator">=</span><span class="hljs-string">&quot;custom_map&quot;</span>/&gt;<br>  &lt;/node&gt;<br>&lt;/launch&gt;<br><br></code></pre></td></tr></table></figure>
+<p>现在，map_server节点将地图发布到名为/custom_map的话题上，而不是默认的/map话题。您需要确保其他使用地图数据的节点（如导航、定位和路径规划）订阅到正确的新话题。如有需要，可以使用相同的方法修改这些节点的订阅话题。</p>
 
                 
               </div>
@@ -379,8 +370,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>单独启动costmap_2d生成代价地图</div>
-      <div>https://qiangsun89.github.io/2023/04/27/单独启动costmap-2d生成代价地图/</div>
+      <div>详细介绍ROS中的map_server</div>
+      <div>https://qiangsun89.github.io/2023/04/27/详细介绍ROS中的map-server/</div>
     </div>
     <div class="license-meta">
       
@@ -424,18 +415,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/04/27/%E8%AF%A6%E7%BB%86%E4%BB%8B%E7%BB%8DROS%E4%B8%AD%E7%9A%84map-server/" title="详细介绍ROS中的map_server">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">详细介绍ROS中的map_server</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/04/27/%E4%BB%A3%E4%BB%B7%E5%9C%B0%E5%9B%BEcostmap-2d%E5%8C%85%E4%B8%AD%E4%B8%8E%E7%82%B9%E4%BA%91%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E7%9B%B8%E5%85%B3%E7%9A%84%E9%83%A8%E5%88%86/" title="代价地图costmap_2d包中与点云数据处理相关的部分">
-                        <span class="hidden-mobile">代价地图costmap_2d包中与点云数据处理相关的部分</span>
+                      <a href="/2023/04/27/%E5%8D%95%E7%8B%AC%E5%90%AF%E5%8A%A8costmap-2d%E7%94%9F%E6%88%90%E4%BB%A3%E4%BB%B7%E5%9C%B0%E5%9B%BE/" title="单独启动costmap_2d生成代价地图">
+                        <span class="hidden-mobile">单独启动costmap_2d生成代价地图</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
