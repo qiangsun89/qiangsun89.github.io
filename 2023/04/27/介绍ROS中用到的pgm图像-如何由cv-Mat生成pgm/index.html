@@ -16,22 +16,22 @@
   <meta name="author" content="Qiang Sun">
   <meta name="keywords" content="">
   
-    <meta name="description" content="面向对象编程设计原则面向对象编程（Object-Oriented Programming, OOP）设计原则有助于提高代码的可维护性、可复用性和可扩展性。以下是一些常见的面向对象设计原则：  单一职责原则（Single Responsibility Principle, SRP）  一个类应该只有一个原因引起变化。换句话说，一个类应该只负责一项职责。这有助于降低代码的复杂性和提高可维护性。  开放">
+    <meta name="description" content="介绍ROS中用到的pgm图像 如何由cv Mat生成pgmROS（Robot Operating System）是一个开源的机器人操作系统平台，提供了软件库和工具以帮助开发机器人应用。在ROS中，pgm（Portable Gray Map）图像是地图数据的一种常用格式，通常用于导航和定位任务。pgm图像是一种灰度图像，可以存储每个像素的灰度值，范围从0（黑色）到255（白色）。 为了从OpenCV">
 <meta property="og:type" content="article">
-<meta property="og:title" content="面向对象编程设计原则">
-<meta property="og:url" content="https://qiangsun89.github.io/2023/04/25/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/index.html">
+<meta property="og:title" content="介绍ROS中用到的pgm图像 如何由cv Mat生成pgm">
+<meta property="og:url" content="https://qiangsun89.github.io/2023/04/27/%E4%BB%8B%E7%BB%8DROS%E4%B8%AD%E7%94%A8%E5%88%B0%E7%9A%84pgm%E5%9B%BE%E5%83%8F-%E5%A6%82%E4%BD%95%E7%94%B1cv-Mat%E7%94%9F%E6%88%90pgm/index.html">
 <meta property="og:site_name" content="知识的搬运工">
-<meta property="og:description" content="面向对象编程设计原则面向对象编程（Object-Oriented Programming, OOP）设计原则有助于提高代码的可维护性、可复用性和可扩展性。以下是一些常见的面向对象设计原则：  单一职责原则（Single Responsibility Principle, SRP）  一个类应该只有一个原因引起变化。换句话说，一个类应该只负责一项职责。这有助于降低代码的复杂性和提高可维护性。  开放">
+<meta property="og:description" content="介绍ROS中用到的pgm图像 如何由cv Mat生成pgmROS（Robot Operating System）是一个开源的机器人操作系统平台，提供了软件库和工具以帮助开发机器人应用。在ROS中，pgm（Portable Gray Map）图像是地图数据的一种常用格式，通常用于导航和定位任务。pgm图像是一种灰度图像，可以存储每个像素的灰度值，范围从0（黑色）到255（白色）。 为了从OpenCV">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-04-25T11:53:34.000Z">
-<meta property="article:modified_time" content="2023-04-25T11:59:20.170Z">
+<meta property="article:published_time" content="2023-04-27T01:59:27.000Z">
+<meta property="article:modified_time" content="2023-04-27T02:15:10.192Z">
 <meta property="article:author" content="Qiang Sun">
 <meta property="article:tag" content="原创">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>面向对象编程设计原则 - 知识的搬运工</title>
+  <title>介绍ROS中用到的pgm图像 如何由cv Mat生成pgm - 知识的搬运工</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -214,7 +214,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="面向对象编程设计原则"></span>
+            <span id="subtitle" data-typed-text="介绍ROS中用到的pgm图像 如何由cv Mat生成pgm"></span>
           
         </div>
 
@@ -225,8 +225,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-04-25 19:53" pubdate>
-          2023年4月25日 晚上
+        <time datetime="2023-04-27 09:59" pubdate>
+          2023年4月27日 上午
         </time>
       </span>
     
@@ -237,7 +237,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.6k 字
+          1.5k 字
         
       </span>
     
@@ -248,7 +248,7 @@
         
         
         
-          14 分钟
+          13 分钟
         
       </span>
     
@@ -294,73 +294,57 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">面向对象编程设计原则</h1>
+            <h1 style="display: none">介绍ROS中用到的pgm图像 如何由cv Mat生成pgm</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="面向对象编程设计原则"><a href="#面向对象编程设计原则" class="headerlink" title="面向对象编程设计原则"></a>面向对象编程设计原则</h1><p>面向对象编程（Object-Oriented Programming, OOP）设计原则有助于提高代码的可维护性、可复用性和可扩展性。以下是一些常见的面向对象设计原则：</p>
+                <h1 id="介绍ROS中用到的pgm图像-如何由cv-Mat生成pgm"><a href="#介绍ROS中用到的pgm图像-如何由cv-Mat生成pgm" class="headerlink" title="介绍ROS中用到的pgm图像 如何由cv Mat生成pgm"></a>介绍ROS中用到的pgm图像 如何由cv Mat生成pgm</h1><p>ROS（Robot Operating System）是一个开源的机器人操作系统平台，提供了软件库和工具以帮助开发机器人应用。在ROS中，pgm（Portable Gray Map）图像是地图数据的一种常用格式，通常用于导航和定位任务。pgm图像是一种灰度图像，可以存储每个像素的灰度值，范围从0（黑色）到255（白色）。</p>
+<p>为了从OpenCV的Mat对象生成pgm图像，你需要执行以下步骤：</p>
 <ol>
-<li>单一职责原则（Single Responsibility Principle, SRP）</li>
+<li>首先，确保你已经安装了OpenCV库。在ROS中，你可以使用rosdep来安装相应的依赖项。例如，对于ROS Noetic版本，可以通过以下命令安装：<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs routeros">sudo apt-<span class="hljs-built_in">get</span> install ros-noetic-opencv-contrib<br><br></code></pre></td></tr></table></figure></li>
+<li>在你的C++代码中，包含所需的头文件：<figure class="highlight stan"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs stan"><span class="hljs-meta">#include &lt;<span class="hljs-string">opencv</span>2/<span class="hljs-string">opencv.hpp</span>&gt;</span><br><span class="hljs-meta">#include &lt;<span class="hljs-string">opencv</span>2/<span class="hljs-string">highgui</span>/<span class="hljs-string">highgui.hpp</span>&gt;</span><br><span class="hljs-meta">#include &lt;<span class="hljs-string">opencv</span>2/<span class="hljs-string">imgproc</span>/<span class="hljs-string">imgproc.hpp</span>&gt;</span><br><br></code></pre></td></tr></table></figure></li>
+<li>将你的原始图像转换为灰度图像。这可以使用OpenCV的cvtColor()函数完成。例如：</li>
 </ol>
-<p>一个类应该只有一个原因引起变化。换句话说，一个类应该只负责一项职责。这有助于降低代码的复杂性和提高可维护性。</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs dts"><span class="hljs-symbol">cv:</span>:Mat input_<span class="hljs-attr">image</span><span class="hljs-punctuation">;</span> <span class="hljs-comment">// 这是你的原始图像</span><br><span class="hljs-symbol">cv:</span>:Mat gray_<span class="hljs-attr">image</span><span class="hljs-punctuation">;</span><br><span class="hljs-symbol">cv:</span>:cvtColor(input_image, gray_image, cv::COLOR_BGR2GRAY)<span class="hljs-punctuation">;</span><br><br></code></pre></td></tr></table></figure>
 <ol>
-<li>开放封闭原则（Open/Closed Principle, OCP）</li>
+<li>将灰度图像调整到合适的尺寸和灰度范围。你可能需要对灰度图像进行缩放、裁剪或阈值处理。例如，使用resize()函数进行缩放：</li>
 </ol>
-<p>软件实体（类、模块、函数等）应该对扩展开放，对修改封闭。这意味着在不修改现有代码的情况下，可以通过添加新代码来扩展功能。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs css">cv::Mat resized_image;<br>cv::<span class="hljs-built_in">resize</span>(gray_image, resized_image, cv::<span class="hljs-built_in">Size</span>(new_width, new_height));<br><br></code></pre></td></tr></table></figure>
 <ol>
-<li>里氏替换原则（Liskov Substitution Principle, LSP）</li>
+<li>将处理后的灰度图像保存为pgm文件。你可以使用OpenCV的imwrite()函数将Mat对象保存为pgm格式的文件。例如：</li>
 </ol>
-<p>子类型必须能够替换它们的基类型。这意味着子类应该遵循基类的契约，并能在不影响程序正确性的情况下替换基类。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs css">std::string output_file_path = <span class="hljs-string">&quot;/path/to/your/output/file.pgm&quot;</span>;<br>cv::<span class="hljs-built_in">imwrite</span>(output_file_path, resized_image);<br><br></code></pre></td></tr></table></figure>
+<p>完成以上步骤后，你就可以将OpenCV的Mat对象转换为ROS中使用的pgm图像格式了。</p>
+<h1 id="pgm与png的不同之处"><a href="#pgm与png的不同之处" class="headerlink" title="pgm与png的不同之处"></a>pgm与png的不同之处</h1><p>PGM（Portable Gray Map）和PNG（Portable Network Graphics）都是图像文件格式，它们有一些重要的区别：</p>
 <ol>
-<li>接口隔离原则（Interface Segregation Principle, ISP）</li>
+<li>颜色模式：</li>
 </ol>
-<p>客户端不应该被强制依赖于它们不使用的接口。换句话说，类之间的依赖关系应该建立在最小的接口上，避免创建包含多个职责的“胖”接口。</p>
+<ul>
+<li>PGM：PGM 图像是一种灰度图像格式，只包含灰度信息。灰度值的范围通常是从 0（黑色）到 255（白色）。</li>
+<li>PNG：PNG 是一种支持多种颜色模式的图像格式，包括灰度、真彩色（RGB）、带透明通道的真彩色（RGBA）等。这意味着 PNG 可以存储更丰富的颜色信息。</li>
+</ul>
 <ol>
-<li>依赖倒置原则（Dependency Inversion Principle, DIP）</li>
+<li>文件大小和压缩：</li>
 </ol>
-<p>高层模块不应该依赖于低层模块，它们都应该依赖于抽象。抽象不应该依赖于细节，细节应该依赖于抽象。这有助于实现模块之间的松耦合。</p>
+<ul>
+<li>PGM：PGM 图像通常使用无损压缩，但压缩效果相对较弱。因此，PGM 图像文件可能相对较大。</li>
+<li>PNG：PNG 图像使用的是 DEFLATE 无损压缩算法，这使得 PNG 文件在保持图像质量的同时，具有较小的文件大小。</li>
+</ul>
 <ol>
-<li>合成复用原则（Composition Over Inheritance, COI）</li>
+<li>透明度支持：</li>
 </ol>
-<p>优先使用对象组合而不是继承来实现代码重用。通过组合，你可以更灵活地创建新的行为，而继承可能会导致类层次结构的膨胀和代码的僵化。</p>
+<ul>
+<li>PGM：由于 PGM 只存储灰度信息，所以不支持透明度。</li>
+<li>PNG：PNG 支持透明度信息，可以使用带有 Alpha 通道的 RGBA 颜色模式来表示透明度。</li>
+</ul>
 <ol>
-<li>最少知识原则（Least Knowledge Principle, LKP）或迪米特法则（Law of Demeter, LoD）</li>
+<li>兼容性和应用场景：</li>
 </ol>
-<p>一个对象应该尽量少地了解其他对象。这意味着类之间的交互应该尽量简单，尽量减少依赖，以降低系统的耦合度。</p>
-<ol>
-<li>封装变化（Encapsulate What Varies）</li>
-</ol>
-<p>将可能发生变化的部分封装起来，以便于未来的修改和扩展。这有助于提高代码的可维护性和灵活性。</p>
-<ol>
-<li>针对接口编程，而不是针对实现编程（Program to Interfaces, not Implementations）</li>
-</ol>
-<p>通过编程针对接口（抽象类或者C++中的纯虚函数），而不是具体的实现，可以降低代码之间的耦合度，提高系统的可扩展性和可维护性。</p>
-<ol>
-<li>优先使用对象，而不是原始类型（Favor Object Over Primitive Types）</li>
-</ol>
-<p>使用对象而不是原始类型可以增加代码的可读性和可维护性。对象可以封装一些行为和约束，而原始类型则无法提供这些特性。</p>
-<ol>
-<li>保持类的聚焦（Keep Classes Focused）</li>
-</ol>
-<p>每个类应该只关注一个特定的领域。避免创建“上帝类”（God Classes），它们试图做太多事情并具有过多的职责。将类保持聚焦可以提高代码的可读性、可维护性和可扩展性。</p>
-<ol>
-<li>遵循“告诉别人，不要问”原则（Tell, Don’t Ask）</li>
-</ol>
-<p>尽量避免从对象中获取数据，然后基于这些数据执行操作。相反，应该告诉对象执行所需的操作。这有助于降低耦合度，并使代码更符合面向对象的思想。</p>
-<ol>
-<li>优先使用异常而不是返回错误码（Favor Exceptions Over Error Codes）</li>
-</ol>
-<p>使用异常处理错误情况比返回错误码更具可读性，也能使代码更加干净。此外，异常可以传递更多的错误信息，有助于诊断问题。</p>
-<ol>
-<li>保持函数和方法简短（Keep Functions and Methods Short）</li>
-</ol>
-<p>尽量保持函数和方法简短，每个函数或方法应该只做一件事情。简短的函数和方法更容易阅读、测试和维护。</p>
-<ol>
-<li>代码重用（Code Reuse）</li>
-</ol>
-<p>避免重复代码，尽量在不同的地方重用现有的代码。这可以降低维护成本和错误风险。</p>
-<p>这些面向对象编程设计原则和最佳实践有助于创建高质量、可维护和可扩展的软件。在实际项目中，你可能需要根据项目需求和上下文来灵活运用这些原则，以实现最佳的设计。在学习和实践过程中，你将逐渐掌握如何将这些原则应用于不同场景，从而提高你的编程技巧。</p>
+<ul>
+<li>PGM：PGM 格式简单，易于解析和处理，常用于科学计算、图像处理和机器人领域，如 ROS（Robot Operating System）中的地图表示。</li>
+<li>PNG：PNG 格式广泛应用于 Web 和各种图像编辑软件中，因为它支持丰富的颜色模式和透明度，且具有较好的压缩效果。</li>
+</ul>
 
                 
               </div>
@@ -379,8 +363,15 @@
     
       <span class="category-chain">
         
-  <a href="/categories/C/" class="category-chain-item">C++</a>
+  <a href="/categories/slam/" class="category-chain-item">slam</a>
   
+  
+    <span>></span>
+    
+  <a href="/categories/slam/ROS/" class="category-chain-item">ROS</a>
+  
+  
+
   
 
       </span>
@@ -406,8 +397,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>面向对象编程设计原则</div>
-      <div>https://qiangsun89.github.io/2023/04/25/面向对象编程设计原则/</div>
+      <div>介绍ROS中用到的pgm图像 如何由cv Mat生成pgm</div>
+      <div>https://qiangsun89.github.io/2023/04/27/介绍ROS中用到的pgm图像-如何由cv-Mat生成pgm/</div>
     </div>
     <div class="license-meta">
       
@@ -419,7 +410,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年4月25日</div>
+          <div>2023年4月27日</div>
         </div>
       
       
@@ -451,18 +442,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/04/27/%E4%BB%8B%E7%BB%8DROS%E4%B8%AD%E7%94%A8%E5%88%B0%E7%9A%84pgm%E5%9B%BE%E5%83%8F-%E5%A6%82%E4%BD%95%E7%94%B1cv-Mat%E7%94%9F%E6%88%90pgm/" title="介绍ROS中用到的pgm图像 如何由cv Mat生成pgm">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">介绍ROS中用到的pgm图像 如何由cv Mat生成pgm</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/04/25/%E5%A6%82%E4%BD%95%E8%B0%83%E8%AF%95C-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%A8%8B%E5%BA%8F/" title="如何调试C++多线程程序">
-                        <span class="hidden-mobile">如何调试C++多线程程序</span>
+                      <a href="/2023/04/25/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/" title="面向对象编程设计原则">
+                        <span class="hidden-mobile">面向对象编程设计原则</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
