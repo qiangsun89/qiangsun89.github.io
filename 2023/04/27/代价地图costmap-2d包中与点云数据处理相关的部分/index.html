@@ -16,22 +16,22 @@
   <meta name="author" content="Qiang Sun">
   <meta name="keywords" content="">
   
-    <meta name="description" content="详细介绍ROS costmap_2d的代码结构ROS（Robot Operating System）中的costmap_2d包是一个用于处理二维代价地图的库。它用于表示机器人周围的环境，特别是在导航和避障任务中。costmap_2d可以从不同的传感器数据（如激光雷达、深度相机等）构建地图，并提供一种用于规划路径和避障的通用表示。 costmap_2d包的主要组件包括：  Costmap2D类：">
+    <meta name="description" content="代价地图costmap_2d包中与点云数据处理相关的部分在costmap_2d包中，costmap_2d::ObstacleLayer类负责处理来自多种传感器数据的障碍物信息，其中包括点云数据。处理点云数据的关键部分是PointCloud2数据类型的观测源。 首先，在costmap_2d::ObstacleLayer类的配置文件中，需要为PointCloud2数据类型的观测源添加一个条目，如下所示">
 <meta property="og:type" content="article">
-<meta property="og:title" content="详细介绍ROS costmap_2d的代码结构">
-<meta property="og:url" content="https://qiangsun89.github.io/2023/04/27/%E8%AF%A6%E7%BB%86%E4%BB%8B%E7%BB%8DROS-costmap-2d%E7%9A%84%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84/index.html">
+<meta property="og:title" content="代价地图costmap_2d包中与点云数据处理相关的部分">
+<meta property="og:url" content="https://qiangsun89.github.io/2023/04/27/%E4%BB%A3%E4%BB%B7%E5%9C%B0%E5%9B%BEcostmap-2d%E5%8C%85%E4%B8%AD%E4%B8%8E%E7%82%B9%E4%BA%91%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E7%9B%B8%E5%85%B3%E7%9A%84%E9%83%A8%E5%88%86/index.html">
 <meta property="og:site_name" content="知识的搬运工">
-<meta property="og:description" content="详细介绍ROS costmap_2d的代码结构ROS（Robot Operating System）中的costmap_2d包是一个用于处理二维代价地图的库。它用于表示机器人周围的环境，特别是在导航和避障任务中。costmap_2d可以从不同的传感器数据（如激光雷达、深度相机等）构建地图，并提供一种用于规划路径和避障的通用表示。 costmap_2d包的主要组件包括：  Costmap2D类：">
+<meta property="og:description" content="代价地图costmap_2d包中与点云数据处理相关的部分在costmap_2d包中，costmap_2d::ObstacleLayer类负责处理来自多种传感器数据的障碍物信息，其中包括点云数据。处理点云数据的关键部分是PointCloud2数据类型的观测源。 首先，在costmap_2d::ObstacleLayer类的配置文件中，需要为PointCloud2数据类型的观测源添加一个条目，如下所示">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-04-27T02:17:31.000Z">
-<meta property="article:modified_time" content="2023-04-27T02:30:01.210Z">
+<meta property="article:published_time" content="2023-04-27T02:37:53.000Z">
+<meta property="article:modified_time" content="2023-04-27T02:44:24.286Z">
 <meta property="article:author" content="Qiang Sun">
 <meta property="article:tag" content="原创">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>详细介绍ROS costmap_2d的代码结构 - 知识的搬运工</title>
+  <title>代价地图costmap_2d包中与点云数据处理相关的部分 - 知识的搬运工</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -214,7 +214,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="详细介绍ROS costmap_2d的代码结构"></span>
+            <span id="subtitle" data-typed-text="代价地图costmap_2d包中与点云数据处理相关的部分"></span>
           
         </div>
 
@@ -225,7 +225,7 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-04-27 10:17" pubdate>
+        <time datetime="2023-04-27 10:37" pubdate>
           2023年4月27日 上午
         </time>
       </span>
@@ -237,7 +237,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.6k 字
+          4k 字
         
       </span>
     
@@ -248,7 +248,7 @@
         
         
         
-          39 分钟
+          34 分钟
         
       </span>
     
@@ -294,124 +294,63 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">详细介绍ROS costmap_2d的代码结构</h1>
+            <h1 style="display: none">代价地图costmap_2d包中与点云数据处理相关的部分</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="详细介绍ROS-costmap-2d的代码结构"><a href="#详细介绍ROS-costmap-2d的代码结构" class="headerlink" title="详细介绍ROS costmap_2d的代码结构"></a>详细介绍ROS costmap_2d的代码结构</h1><p>ROS（Robot Operating System）中的costmap_2d包是一个用于处理二维代价地图的库。它用于表示机器人周围的环境，特别是在导航和避障任务中。costmap_2d可以从不同的传感器数据（如激光雷达、深度相机等）构建地图，并提供一种用于规划路径和避障的通用表示。</p>
-<p>costmap_2d包的主要组件包括：</p>
+                <h1 id="代价地图costmap-2d包中与点云数据处理相关的部分"><a href="#代价地图costmap-2d包中与点云数据处理相关的部分" class="headerlink" title="代价地图costmap_2d包中与点云数据处理相关的部分"></a>代价地图costmap_2d包中与点云数据处理相关的部分</h1><p>在costmap_2d包中，costmap_2d::ObstacleLayer类负责处理来自多种传感器数据的障碍物信息，其中包括点云数据。处理点云数据的关键部分是PointCloud2数据类型的观测源。</p>
+<p>首先，在costmap_2d::ObstacleLayer类的配置文件中，需要为PointCloud2数据类型的观测源添加一个条目，如下所示：<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">obstacle_layer:</span><br>  <span class="hljs-attr">observation_sources:</span> <span class="hljs-string">point_cloud_sensor</span><br>  <span class="hljs-attr">point_cloud_sensor:</span><br>    <span class="hljs-attr">sensor_frame:</span> <span class="hljs-string">/sensor_frame</span><br>    <span class="hljs-attr">data_type:</span> <span class="hljs-string">PointCloud2</span><br>    <span class="hljs-attr">topic:</span> <span class="hljs-string">/point_cloud</span><br>    <span class="hljs-attr">marking:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-attr">clearing:</span> <span class="hljs-literal">true</span><br><br></code></pre></td></tr></table></figure><br>在此示例中，我们为观测源point_cloud_sensor指定了sensor_frame、data_type和topic等参数。data_type设置为PointCloud2，以指示我们使用的是点云数据。topic参数指定了发布点云数据的ROS话题。</p>
+<p>接下来，我们详细介绍处理点云数据的关键代码部分：</p>
 <ol>
-<li>Costmap2D类：</li>
+<li>在ObstacleLayer类的readParameters()函数中，代码将读取配置文件中的参数，以便了解观测源的类型和配置。</li>
 </ol>
-<p>costmap_2d::Costmap2D类是代价地图的核心数据结构。它提供了用于表示和操作二维代价地图的基本功能，包括获取地图尺寸、查询和设置单元格代价等。</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">std::<span class="hljs-built_in">string</span> source_type;<br>private_nh.param(<span class="hljs-string">&quot;observation_sources&quot;</span>, source_names, std::<span class="hljs-built_in">string</span>(<span class="hljs-string">&quot;&quot;</span>));<br><span class="hljs-constructor">BOOST_FOREACH(<span class="hljs-params">std</span>::<span class="hljs-params">string</span> <span class="hljs-params">source</span>, <span class="hljs-params">boost</span>::<span class="hljs-params">tokenizer</span>&lt;<span class="hljs-params">boost</span>::<span class="hljs-params">char_separator</span>&lt;<span class="hljs-params">char</span>&gt;&gt;(<span class="hljs-params">source_names</span>, <span class="hljs-params">boost</span>::<span class="hljs-params">char_separator</span>&lt;<span class="hljs-params">char</span>&gt;(<span class="hljs-string">&quot; &quot;</span>)</span>))<br>&#123;<br>  private_nh.param(source + <span class="hljs-string">&quot;/data_type&quot;</span>, source_type, std::<span class="hljs-built_in">string</span>(<span class="hljs-string">&quot;&quot;</span>));<br><br>  <span class="hljs-keyword">if</span> (source_type<span class="hljs-operator"> == </span><span class="hljs-string">&quot;PointCloud2&quot;</span>)<br>  &#123;<br>    <span class="hljs-comment">// 处理PointCloud2数据类型的观测源</span><br>  &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
 <ol>
-<li>Layer类：</li>
+<li>对于PointCloud2数据类型的观测源，ObstacleLayer类将创建一个costmap_2d::ObservationBuffer对象，并将其添加到观测源列表中。</li>
 </ol>
-<p>costmap_2d::Layer类是代价地图层的基类。代价地图层用于表示环境中的不同特征，如静态地图、障碍物、膨胀层等。costmap_2d包包含了一些常用的层类型，如StaticLayer、ObstacleLayer和InflationLayer，并允许用户自定义新的层类型。</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">double observation_keep_time;<br>private_nh.param(source + <span class="hljs-string">&quot;/observation_keep_time&quot;</span>, observation_keep_time, <span class="hljs-number">0.0</span>);<br><br>observation_buffers_.push<span class="hljs-constructor">_back(<span class="hljs-params">boost</span>::<span class="hljs-params">shared_ptr</span>&lt;<span class="hljs-params">costmap_2d</span>::ObservationBuffer&gt;(<span class="hljs-params">new</span> <span class="hljs-params">costmap_2d</span>::ObservationBuffer(<span class="hljs-params">source</span>, <span class="hljs-params">observation_keep_time</span>, <span class="hljs-params">expected_update_rate</span>, <span class="hljs-params">min_obstacle_height_</span>, <span class="hljs-params">max_obstacle_height_</span>, <span class="hljs-params">obstacle_range_</span>, <span class="hljs-params">raytrace_range_</span>, <span class="hljs-operator">*</span><span class="hljs-params">tf_</span>, <span class="hljs-params">global_frame_</span>, <span class="hljs-params">sensor_frame</span>, <span class="hljs-params">transform_tolerance</span>)</span>));<br><br></code></pre></td></tr></table></figure>
 <ol>
-<li>Costmap2DROS类：</li>
+<li>ObstacleLayer类通过订阅观测源的ROS话题来接收点云数据。ObservationBuffer类的bufferCloud()成员函数将负责处理接收到的点云数据。</li>
 </ol>
-<p>costmap_2d::Costmap2DROS类是代价地图的ROS接口。它提供了将代价地图与ROS集成的功能，包括订阅传感器数据、发布代价地图信息、动态参数调整等。它还包含了一个或多个代价地图层，这些层可以通过配置文件或参数服务器进行配置。</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">boost::shared_ptr&lt;message_filters::Subscriber&lt;sensor_msgs::PointCloud2&gt; &gt; pc<span class="hljs-constructor">_sub(<span class="hljs-params">new</span> <span class="hljs-params">message_filters</span>::Subscriber&lt;<span class="hljs-params">sensor_msgs</span>::PointCloud2&gt;(<span class="hljs-params">private_nh</span>, <span class="hljs-params">topic</span>, 50)</span>);<br>boost::shared_ptr&lt;tf2_ros::MessageFilter&lt;sensor_msgs::PointCloud2&gt; &gt; pc<span class="hljs-constructor">_notifier(<span class="hljs-params">new</span> <span class="hljs-params">tf2_ros</span>::MessageFilter&lt;<span class="hljs-params">sensor_msgs</span>::PointCloud2&gt;(<span class="hljs-operator">*</span><span class="hljs-params">pc_sub</span>, <span class="hljs-operator">*</span><span class="hljs-params">tf_</span>, <span class="hljs-params">global_frame_</span>,50, <span class="hljs-params">private_nh</span>)</span>);<br>pc_notifier-&gt;register<span class="hljs-constructor">Callback(<span class="hljs-params">boost</span>::<span class="hljs-params">bind</span>(&amp;<span class="hljs-params">costmap_2d</span>::ObservationBuffer::<span class="hljs-params">bufferCloud</span>, <span class="hljs-params">observation_buffers_</span>.<span class="hljs-params">back</span>()</span>, <span class="hljs-number">1</span>));<br>pc_notifier-&gt;register<span class="hljs-constructor">FailureCallback(<span class="hljs-params">boost</span>::<span class="hljs-params">bind</span>(&amp;ObservationBuffer::<span class="hljs-params">bufferCloudFailure</span>, <span class="hljs-params">observation_buffers</span>.<span class="hljs-params">back</span>()</span>, _1, <span class="hljs-number">2</span>));<br>observation_notifiers.push<span class="hljs-constructor">_back(<span class="hljs-params">pc_notifier</span>)</span>;<br><br></code></pre></td></tr></table></figure>
+<p>上述代码创建了一个<code>sensor_msgs::PointCloud2</code>类型的<code>message_filters::Subscriber</code>，并订阅了指定的ROS话题。接着，它创建了一个<code>tf2_ros::MessageFilter</code>对象，该对象用于确保接收到的点云数据与代价地图的全局坐标系（例如<code>/map</code>）之间的坐标变换可用。最后，它将<code>ObservationBuffer::bufferCloud</code>函数注册为回调函数，用于处理接收到的点云数据。</p>
 <ol>
-<li>Plugins：</li>
+<li><p><code>ObservationBuffer::bufferCloud</code>函数将接收到的<code>PointCloud2</code>数据转换为<code>costmap_2d::Observation</code>对象，并将其添加到观测缓冲区中。这些观测数据随后将被用于更新代价地图中的障碍物信息。</p>
+</li>
+<li><p><code>ObstacleLayer</code>类的<code>updateCosts()</code>函数会遍历观测缓冲区，将观测数据用于更新代价地图。它将调用<code>raytraceFreespace()</code>函数来清除障碍物之间的自由空间，并根据观测数据将障碍物添加到代价地图中。</p>
+</li>
 </ol>
-<p>costmap_2d包支持通过插件来扩展其功能。这些插件可以为代价地图添加新的层类型，如自定义的障碍物检测、地形表示等。插件需要实现costmap_2d::Layer类的接口，并在运行时通过配置文件或参数服务器进行加载。</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-constructor">BOOST_FOREACH(<span class="hljs-params">const</span> <span class="hljs-params">boost</span>::<span class="hljs-params">shared_ptr</span>&lt;ObservationBuffer&gt;&amp; <span class="hljs-params">buffer</span>, <span class="hljs-params">observation_buffers_</span>)</span><br>&#123;<br>  <span class="hljs-keyword">if</span> (buffer-&gt;is<span class="hljs-constructor">Current()</span>)<br>  &#123;<br>    std::vector&lt;Observation&gt; observations;<br>    buffer-&gt;get<span class="hljs-constructor">Observations(<span class="hljs-params">observations</span>)</span>;<br><br>    <span class="hljs-constructor">BOOST_FOREACH(<span class="hljs-params">const</span> Observation&amp; <span class="hljs-params">obs</span>, <span class="hljs-params">observations</span>)</span><br>    &#123;<br>      <span class="hljs-comment">// 将障碍物添加到代价地图中</span><br>      update<span class="hljs-constructor">WithAddition(<span class="hljs-params">master_grid</span>, <span class="hljs-params">obs</span>)</span>;<br><br>      <span class="hljs-comment">// 清除障碍物之间的自由空间</span><br>      raytrace<span class="hljs-constructor">Freespace(<span class="hljs-params">master_grid</span>, <span class="hljs-params">obs</span>)</span>;<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这就是处理costmap_2d包中的点云数据的关键部分。costmap_2d::ObstacleLayer类负责管理和处理多种传感器数据，其中包括PointCloud2类型的观测源。在实际项目中，你可能需要根据应用场景和传感器配置调整点云数据的处理和代价地图更新。</p>
+<p>接下来，我们将讨论如何根据实际项目需求定制costmap_2d包中的点云数据处理。</p>
 <ol>
-<li>辅助功能和工具：</li>
+<li>参数调整：</li>
 </ol>
-<p>costmap_2d包还包含一些辅助功能和工具，如CostTranslator（用于将代价值与ROS导航栈中的其他组件进行转换）和costmap_2d_markers（用于将代价地图以可视化标记的形式发布到ROS的RViz工具中）。</p>
-<p>在costmap_2d包的代码结构中，主要的源代码和头文件位于src和include目录下。其中，costmap_2d命名空间包含了上述提到的类和功能。配置文件和插件加载相关的内容通常位于cfg和plugins目录下。此外，test目录包含了一些单元测试和集成测试。</p>
-<p>要使用costmap_2d，你需要创建一个costmap_2d::Costmap2DROS对象，并通过配置文件或参数服务器来配置代价地图的各个层。下面是一个简单的示例，说明如何在ROS节点中创建和配置costmap_2d::Costmap2DROS对象：</p>
-<ol>
-<li>首先，在你的C++代码中包含所需的头文件：</li>
-</ol>
-<figure class="highlight stan"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs stan"><span class="hljs-meta">#include &lt;<span class="hljs-string">ros</span>/<span class="hljs-string">ros.h</span>&gt;</span><br><span class="hljs-meta">#include &lt;<span class="hljs-string">costmap_</span>2d/<span class="hljs-string">costmap_</span>2<span class="hljs-string">d_ros.h</span>&gt;</span><br><br></code></pre></td></tr></table></figure>
-<ol>
-<li>编写一个简单的ROS节点，创建并配置一个costmap_2d::Costmap2DROS对象：</li>
-</ol>
-<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-built_in">int</span> main(<span class="hljs-built_in">int</span> argc, <span class="hljs-built_in">char</span>** argv) &#123;<br>  <span class="hljs-comment">// 初始化ROS节点</span><br>  ros::init(argc, argv, <span class="hljs-string">&quot;costmap_2d_example&quot;</span>);<br><br>  <span class="hljs-comment">// 创建ROS节点句柄</span><br>  ros::NodeHandle nh;<br><br>  <span class="hljs-comment">// 创建一个costmap_2d::Costmap2DROS对象</span><br>  costmap_2d::Costmap2DROS costmap(<span class="hljs-string">&quot;my_costmap&quot;</span>, tf2_ros::<span class="hljs-constructor">Buffer()</span>);<br><br>  <span class="hljs-comment">// 通过参数服务器或配置文件配置代价地图</span><br>  <span class="hljs-comment">// 例如，加载一个静态地图层和一个障碍物层</span><br>  <span class="hljs-comment">// 这些参数通常位于ROS包中的yaml配置文件中</span><br>  nh.set<span class="hljs-constructor">Param(<span class="hljs-string">&quot;my_costmap/global_frame&quot;</span>, <span class="hljs-string">&quot;/map&quot;</span>)</span>;<br>  nh.set<span class="hljs-constructor">Param(<span class="hljs-string">&quot;my_costmap/robot_base_frame&quot;</span>, <span class="hljs-string">&quot;/base_link&quot;</span>)</span>;<br>  nh.set<span class="hljs-constructor">Param(<span class="hljs-string">&quot;my_costmap/update_frequency&quot;</span>, 10.0)</span>;<br>  nh.set<span class="hljs-constructor">Param(<span class="hljs-string">&quot;my_costmap/publish_frequency&quot;</span>, 1.0)</span>;<br>  nh.set<span class="hljs-constructor">Param(<span class="hljs-string">&quot;my_costmap/layers&quot;</span>, <span class="hljs-params">std</span>::<span class="hljs-params">vector</span>&lt;<span class="hljs-params">std</span>::<span class="hljs-params">string</span>&gt;&#123;<span class="hljs-string">&quot;static_layer&quot;</span>, <span class="hljs-string">&quot;obstacle_layer&quot;</span>&#125;)</span>;<br><br>  <span class="hljs-comment">// 初始化代价地图</span><br>  costmap.start<span class="hljs-literal">()</span>;<br><br>  <span class="hljs-comment">// 运行ROS节点</span><br>  ros::spin<span class="hljs-literal">()</span>;<br><br>  return <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
-<ol>
-<li>创建一个用于配置代价地图层的YAML文件，例如：</li>
-</ol>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">static_layer:</span><br>  <span class="hljs-attr">map_topic:</span> <span class="hljs-string">&quot;/map&quot;</span><br>  <span class="hljs-attr">use_maximum:</span> <span class="hljs-literal">true</span><br>  <span class="hljs-attr">first_map_only:</span> <span class="hljs-literal">false</span><br>  <span class="hljs-attr">subscribe_to_updates:</span> <span class="hljs-literal">true</span><br><br><span class="hljs-attr">obstacle_layer:</span><br>  <span class="hljs-attr">observation_sources:</span> <span class="hljs-string">laser_scan_sensor</span><br>  <span class="hljs-attr">laser_scan_sensor:</span><br>    <span class="hljs-attr">sensor_frame:</span> <span class="hljs-string">/laser_frame</span><br>    <span class="hljs-attr">data_type:</span> <span class="hljs-string">LaserScan</span><br>    <span class="hljs-attr">topic:</span> <span class="hljs-string">/scan</span><br>    <span class="hljs-attr">marking:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-attr">clearing:</span> <span class="hljs-literal">true</span><br><br></code></pre></td></tr></table></figure>
-<ol>
-<li>在你的launch文件中启动ROS节点，并加载配置文件：</li>
-</ol>
-<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs abnf">&lt;launch&gt;<br>  &lt;rosparam file<span class="hljs-operator">=</span><span class="hljs-string">&quot;$(find your_package)/config/costmap_layers.yaml&quot;</span> command<span class="hljs-operator">=</span><span class="hljs-string">&quot;load&quot;</span> /&gt;<br>  &lt;node name<span class="hljs-operator">=</span><span class="hljs-string">&quot;costmap_2d_example_node&quot;</span> pkg<span class="hljs-operator">=</span><span class="hljs-string">&quot;your_package&quot;</span> type<span class="hljs-operator">=</span><span class="hljs-string">&quot;costmap_2d_example&quot;</span> /&gt;<br>&lt;/launch&gt;<br><br></code></pre></td></tr></table></figure>
-<p>完成以上步骤后，你就可以在ROS节点中创建和配置一个costmap_2d::Costmap2DROS对象。根据实际应用场景和需求，你可以调整代价地图的配置参数，添加或删除代价地图层，以及加载自定义插件。</p>
-<h2 id="每个模块的主要功能和关键部分"><a href="#每个模块的主要功能和关键部分" class="headerlink" title="每个模块的主要功能和关键部分"></a>每个模块的主要功能和关键部分</h2><ol>
-<li>Costmap2D类：</li>
-</ol>
-<p>costmap_2d::Costmap2D是代价地图的核心数据结构。它是一个基于数组的数据结构，用于存储二维代价地图的数据。关键成员函数包括：</p>
+<p>要根据项目需求调整点云数据处理，首先可以调整costmap_2d::ObstacleLayer的参数。这些参数包括：</p>
 <ul>
-<li>getCost(x, y)：获取给定坐标(x, y)处的代价值。</li>
-<li>setCost(x, y, cost)：设置给定坐标(x, y)处的代价值。</li>
-<li>getSizeInCellsX() 和 getSizeInCellsY()：获取地图的宽度和高度（以单元格为单位）。</li>
-<li>getResolution()：获取地图的分辨率（以米为单位）。</li>
-<li>worldToMap(x, y, &amp;mx, &amp;my) 和 mapToWorld(mx, my, &amp;x, &amp;y)：实现从世界坐标到地图坐标的转换，反之亦然。</li>
+<li>observation_keep_time：观测数据在缓冲区中保留的时间。</li>
+<li>min_obstacle_height和max_obstacle_height：表示障碍物高度的范围。</li>
+<li>obstacle_range：障碍物的最大检测距离。</li>
+<li>raytrace_range：射线追踪的最大距离，用于清除障碍物之间的自由空间。<br>通过调整这些参数，可以优化点云数据处理和代价地图更新，以满足项目需求。</li>
 </ul>
 <ol>
-<li>Layer类：</li>
+<li>自定义处理逻辑：</li>
 </ol>
-<p>costmap_2d::Layer是代价地图层的基类。它定义了用于表示和操作代价地图层的通用接口。关键虚函数包括：</p>
+<p>如果需要实现自定义的点云数据处理逻辑，可以通过以下方式进行操作：</p>
 <ul>
-<li>updateBounds()：更新层的边界。派生类应该实现此函数以计算当前层的边界。</li>
-<li>updateCosts()：更新代价地图中的代价值。派生类应该实现此函数以根据层的数据更新代价地图。</li>
+<li>修改ObservationBuffer::bufferCloud函数，以实现自定义的点云数据预处理，例如滤波、降采样等。</li>
+<li>扩展或修改ObstacleLayer::updateCosts函数，以实现自定义的代价地图更新逻辑，例如不同类型障碍物的处理，或根据传感器可靠性调整代价值等。</li>
 </ul>
 <ol>
-<li>Costmap2DROS类：</li>
+<li>高级功能和算法：</li>
 </ol>
-<p>costmap_2d::Costmap2DROS是代价地图的ROS接口。它负责与ROS进行交互，包括订阅传感器数据、发布代价地图信息、动态参数调整等。此外，它还负责管理代价地图的多个层。关键成员函数包括：</p>
+<p>在处理点云数据时，可以使用一些高级功能和算法来提高性能和准确性。例如：</p>
 <ul>
-<li>start() 和 stop()：启动或停止代价地图的更新。</li>
-<li>resetLayers()：重置代价地图的所有层。</li>
-<li>getRobotPose()：获取机器人在代价地图中的位姿。</li>
+<li>使用PCL库（Point Cloud Library）进行点云数据处理，如滤波、分割、特征提取等。</li>
+<li>使用机器学习或深度学习算法进行障碍物检测和分类，以便在代价地图中表示更丰富的信息。</li>
 </ul>
-<ol>
-<li>Plugins：</li>
-</ol>
-<p>costmap_2d包支持通过插件来扩展其功能。插件应该派生自costmap_2d::Layer基类，并实现其虚函数。插件的具体实现将取决于插件的功能和需求。</p>
-<ol>
-<li>辅助功能和工具：</li>
-</ol>
-<p>costmap_2d包还包含一些辅助功能和工具。以下是一些关键部分：</p>
-<ul>
-<li>CostTranslator：将代价值与ROS导航栈中的其他组件进行转换。它提供了footprintCost()函数，用于计算机器人在代价地图上的足迹代价。</li>
-<li>costmap_2d_markers：将代价地图以可视化</li>
-</ul>
-<p>标记的形式发布到ROS的RViz工具中。costmap_2d_markers包括以下关键部分：</p>
-<ul>
-<li>Costmap2DPublisher：负责将代价地图数据转换为用于RViz的标记消息。它包含publishCostmap()函数，该函数可以将代价地图发布为nav_msgs::OccupancyGrid消息或可视化标记。</li>
-<li>CostmapMarker：一个用于在RViz中显示代价地图的标记。它可以根据代价值使用不同的颜色和形状来表示代价地图中的障碍物、空闲区域等。</li>
-</ul>
-<p>在使用costmap_2d时，你需要关注这些模块和功能，以便根据实际应用场景和需求进行配置和定制。在实际项目中，你可能需要修改和扩展代价地图层，添加自定义插件，以及调整代价地图和传感器数据的处理。此外，要充分利用ROS和OpenCV等库提供的功能，以简化代码和提高性能。</p>
-<p>为了深入了解costmap_2d包，可以阅读ROS Wiki页面和源代码，了解更多关于不同模块和功能的详细信息。这里是一些建议的资源：</p>
-<ol>
-<li>ROS Wiki页面：</li>
-</ol>
-<ul>
-<li>costmap_2d：<a target="_blank" rel="noopener" href="http://wiki.ros.org/costmap_2d">http://wiki.ros.org/costmap_2d</a></li>
-<li>navigation：<a target="_blank" rel="noopener" href="http://wiki.ros.org/navigation">http://wiki.ros.org/navigation</a></li>
-</ul>
-<p>ROS Wiki页面提供了关于costmap_2d和导航栈的概述、教程和API文档。这些页面是了解如何使用和配置costmap_2d的良好起点。</p>
-<ol>
-<li>源代码：</li>
-</ol>
-<p>costmap_2d包的源代码位于ROS的navigation存储库中。你可以在GitHub上找到源代码：</p>
-<ul>
-<li>navigation：<a target="_blank" rel="noopener" href="https://github.com/ros-planning/navigation/tree/melodic-devel/costmap_2d">https://github.com/ros-planning/navigation/tree/melodic-devel/costmap_2d</a></li>
-</ul>
-<p>阅读源代码是了解costmap_2d内部工作原理和实现细节的最佳方法。你可以学习如何实现自定义代价地图层、插件和工具，以及如何在你的项目中使用costmap_2d。</p>
-<ol>
-<li>ROS论坛和社区：</li>
-</ol>
-<p>ROS社区是解决问题和获取帮助的好地方。你可以在ROS论坛和邮件列表上找到有关costmap_2d和ROS导航栈的讨论：</p>
-<ul>
-<li>ROS Discourse：<a target="_blank" rel="noopener" href="https://discourse.ros.org/">https://discourse.ros.org/</a></li>
-<li>ROS Answers：<a target="_blank" rel="noopener" href="https://answers.ros.org/questions/">https://answers.ros.org/questions/</a></li>
-</ul>
-<p>在这些平台上，你可以提问、查找答案和参与讨论，以获取关于costmap_2d和其他ROS组件的帮助和建议。</p>
+<p>通过以上方法，可以定制costmap_2d包中的点云数据处理，以满足实际项目需求和应用场景。这可能需要深入了解costmap_2d包的内部实现，以便进行有效的修改和扩展。在实际项目中，务必充分利用现有的库和工具（如ROS、OpenCV和PCL等），以简化开发过程并提高性能。</p>
 
                 
               </div>
@@ -464,8 +403,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>详细介绍ROS costmap_2d的代码结构</div>
-      <div>https://qiangsun89.github.io/2023/04/27/详细介绍ROS-costmap-2d的代码结构/</div>
+      <div>代价地图costmap_2d包中与点云数据处理相关的部分</div>
+      <div>https://qiangsun89.github.io/2023/04/27/代价地图costmap-2d包中与点云数据处理相关的部分/</div>
     </div>
     <div class="license-meta">
       
@@ -509,18 +448,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/04/27/%E4%BB%A3%E4%BB%B7%E5%9C%B0%E5%9B%BEcostmap-2d%E5%8C%85%E4%B8%AD%E4%B8%8E%E7%82%B9%E4%BA%91%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E7%9B%B8%E5%85%B3%E7%9A%84%E9%83%A8%E5%88%86/" title="代价地图costmap_2d包中与点云数据处理相关的部分">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">代价地图costmap_2d包中与点云数据处理相关的部分</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/04/27/%E4%BB%8B%E7%BB%8DROS%E4%B8%AD%E7%94%A8%E5%88%B0%E7%9A%84pgm%E5%9B%BE%E5%83%8F-%E5%A6%82%E4%BD%95%E7%94%B1cv-Mat%E7%94%9F%E6%88%90pgm/" title="介绍ROS中用到的pgm图像 如何由cv Mat生成pgm">
-                        <span class="hidden-mobile">介绍ROS中用到的pgm图像 如何由cv Mat生成pgm</span>
+                      <a href="/2023/04/27/%E8%AF%A6%E7%BB%86%E4%BB%8B%E7%BB%8DROS-costmap-2d%E7%9A%84%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84/" title="详细介绍ROS costmap_2d的代码结构">
+                        <span class="hidden-mobile">详细介绍ROS costmap_2d的代码结构</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
