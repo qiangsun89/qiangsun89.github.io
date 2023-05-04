@@ -1,0 +1,763 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Qiang Sun">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="介绍C++中this指针在C++中，this指针是一个非常重要的概念，它是一个隐式的指针，表示指向正在调用类成员函数的对象的指针。this指针在类的成员函数中可以使用，用于引用调用该成员函数的对象。它主要有以下用途:  区分局部变量和成员变量：当成员函数的局部变量与类的成员变量同名时，可以使用this指针来引用类的成员变量。 链式调用：在类的成员函数中返回this指针，可以实现链式调用。 作为友元">
+<meta property="og:type" content="article">
+<meta property="og:title" content="介绍C++中this指针">
+<meta property="og:url" content="https://qiangsun89.github.io/2023/05/04/%E4%BB%8B%E7%BB%8DC-%E4%B8%ADthis%E6%8C%87%E9%92%88/index.html">
+<meta property="og:site_name" content="知识的搬运工">
+<meta property="og:description" content="介绍C++中this指针在C++中，this指针是一个非常重要的概念，它是一个隐式的指针，表示指向正在调用类成员函数的对象的指针。this指针在类的成员函数中可以使用，用于引用调用该成员函数的对象。它主要有以下用途:  区分局部变量和成员变量：当成员函数的局部变量与类的成员变量同名时，可以使用this指针来引用类的成员变量。 链式调用：在类的成员函数中返回this指针，可以实现链式调用。 作为友元">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-05-04T02:16:51.000Z">
+<meta property="article:modified_time" content="2023-05-04T02:51:59.290Z">
+<meta property="article:author" content="Qiang Sun">
+<meta property="article:tag" content="原创">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>介绍C++中this指针 - 知识的搬运工</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"qiangsun89.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"LEYjQzDk7jo8uqlOQoAEF5qm-gzGzoHsz","app_key":"7bBCyINnLw0akaPjI39pESMN","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>知识的搬运工</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="介绍C++中this指针"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-05-04 10:16" pubdate>
+          2023年5月4日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          9.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          82 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">介绍C++中this指针</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="介绍C-中this指针"><a href="#介绍C-中this指针" class="headerlink" title="介绍C++中this指针"></a>介绍C++中this指针</h1><p>在C++中，this指针是一个非常重要的概念，它是一个隐式的指针，表示指向正在调用类成员函数的对象的指针。this指针在类的成员函数中可以使用，用于引用调用该成员函数的对象。它主要有以下用途:</p>
+<ol>
+<li>区分局部变量和成员变量：当成员函数的局部变量与类的成员变量同名时，可以使用this指针来引用类的成员变量。</li>
+<li>链式调用：在类的成员函数中返回this指针，可以实现链式调用。</li>
+<li>作为友元函数的参数：将this指针作为参数传递给友元函数，可以让友元函数访问当前对象的成员。</li>
+</ol>
+<p>以下是一个简单的示例，说明this指针的使用：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyClass</span> &#123;<br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-type">int</span> x;<br><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">MyClass</span>(<span class="hljs-type">int</span> x) : <span class="hljs-built_in">x</span>(x) &#123;&#125;<br><br>    <span class="hljs-comment">// 使用this指针区分成员变量和局部变量</span><br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">setX</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>-&gt;x = x;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">getX</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> x;<br>    &#125;<br><br>    <span class="hljs-comment">// 使用this指针实现链式调用</span><br>    <span class="hljs-function">MyClass&amp; <span class="hljs-title">increment</span><span class="hljs-params">()</span> </span>&#123;<br>        ++x;<br>        <span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span>;<br>    &#125;<br><br>    <span class="hljs-comment">// 声明友元函数</span><br>    <span class="hljs-function"><span class="hljs-keyword">friend</span> <span class="hljs-type">void</span> <span class="hljs-title">printX</span><span class="hljs-params">(<span class="hljs-type">const</span> MyClass* obj)</span></span>;<br>&#125;;<br><br><span class="hljs-comment">// 使用this指针作为参数的友元函数</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">printX</span><span class="hljs-params">(<span class="hljs-type">const</span> MyClass* obj)</span> </span>&#123;<br>    std::cout &lt;&lt; <span class="hljs-string">&quot;x = &quot;</span> &lt;&lt; obj-&gt;x &lt;&lt; std::endl;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-function">MyClass <span class="hljs-title">obj</span><span class="hljs-params">(<span class="hljs-number">5</span>)</span></span>;<br><br>    std::cout &lt;&lt; <span class="hljs-string">&quot;Initial value: &quot;</span> &lt;&lt; obj.<span class="hljs-built_in">getX</span>() &lt;&lt; std::endl;<br><br>    obj.<span class="hljs-built_in">setX</span>(<span class="hljs-number">10</span>);<br>    std::cout &lt;&lt; <span class="hljs-string">&quot;After setX: &quot;</span> &lt;&lt; obj.<span class="hljs-built_in">getX</span>() &lt;&lt; std::endl;<br><br>    obj.<span class="hljs-built_in">increment</span>().<span class="hljs-built_in">increment</span>().<span class="hljs-built_in">increment</span>();<br>    std::cout &lt;&lt; <span class="hljs-string">&quot;After increment chain: &quot;</span> &lt;&lt; obj.<span class="hljs-built_in">getX</span>() &lt;&lt; std::endl;<br><br>    <span class="hljs-built_in">printX</span>(&amp;obj);<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure></p>
+<p>输出：<br><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">Initial</span> value: <span class="hljs-number">5</span><br><span class="hljs-attribute">After</span> setX: <span class="hljs-number">10</span><br><span class="hljs-attribute">After</span> increment chain: <span class="hljs-number">13</span><br><span class="hljs-attribute">x</span> = <span class="hljs-number">13</span><br><br></code></pre></td></tr></table></figure><br>在这个例子中，我们展示了this指针在成员函数中如何用于区分成员变量和局部变量，实现链式调用，以及作为参数传递给友元函数。</p>
+<p>接下来，我们通过另一个示例来介绍this指针在C++中的其他用途。<br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Rectangle</span> &#123;<br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-type">double</span> width;<br>    <span class="hljs-type">double</span> height;<br><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">Rectangle</span>(<span class="hljs-type">double</span> width, <span class="hljs-type">double</span> height) : <span class="hljs-built_in">width</span>(width), <span class="hljs-built_in">height</span>(height) &#123;&#125;<br><br>    <span class="hljs-comment">// 使用this指针实现方法的重载</span><br>    <span class="hljs-function">Rectangle&amp; <span class="hljs-title">setWidth</span><span class="hljs-params">(<span class="hljs-type">double</span> width)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>-&gt;width = width;<br>        <span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span>;<br>    &#125;<br><br>    <span class="hljs-function">Rectangle&amp; <span class="hljs-title">setHeight</span><span class="hljs-params">(<span class="hljs-type">double</span> height)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>-&gt;height = height;<br>        <span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span>;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-type">double</span> <span class="hljs-title">getWidth</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> width;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-type">double</span> <span class="hljs-title">getHeight</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> height;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-type">double</span> <span class="hljs-title">getArea</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> width * height;<br>    &#125;<br><br>    <span class="hljs-comment">// 使用this指针实现比较操作</span><br>    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">isBiggerThan</span><span class="hljs-params">(<span class="hljs-type">const</span> Rectangle&amp; other)</span> <span class="hljs-type">const</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>-&gt;<span class="hljs-built_in">getArea</span>() &gt; other.<span class="hljs-built_in">getArea</span>();<br>    &#125;<br><br>    <span class="hljs-comment">// 使用this指针实现拷贝赋值操作符重载</span><br>    Rectangle&amp; <span class="hljs-keyword">operator</span>=(<span class="hljs-type">const</span> Rectangle&amp; other) &#123;<br>        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span> == &amp;other) &#123;<br>            <span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span>;<br>        &#125;<br><br>        <span class="hljs-keyword">this</span>-&gt;width = other.width;<br>        <span class="hljs-keyword">this</span>-&gt;height = other.height;<br><br>        <span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span>;<br>    &#125;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-function">Rectangle <span class="hljs-title">r1</span><span class="hljs-params">(<span class="hljs-number">4</span>, <span class="hljs-number">5</span>)</span></span>;<br>    <span class="hljs-function">Rectangle <span class="hljs-title">r2</span><span class="hljs-params">(<span class="hljs-number">6</span>, <span class="hljs-number">7</span>)</span></span>;<br><br>    std::cout &lt;&lt; <span class="hljs-string">&quot;Area of r1: &quot;</span> &lt;&lt; r1.<span class="hljs-built_in">getArea</span>() &lt;&lt; std::endl;<br>    std::cout &lt;&lt; <span class="hljs-string">&quot;Area of r2: &quot;</span> &lt;&lt; r2.<span class="hljs-built_in">getArea</span>() &lt;&lt; std::endl;<br><br>    <span class="hljs-keyword">if</span> (r1.<span class="hljs-built_in">isBiggerThan</span>(r2)) &#123;<br>        std::cout &lt;&lt; <span class="hljs-string">&quot;r1 is bigger than r2&quot;</span> &lt;&lt; std::endl;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        std::cout &lt;&lt; <span class="hljs-string">&quot;r1 is smaller than or equal to r2&quot;</span> &lt;&lt; std::endl;<br>    &#125;<br><br>    r1 = r2;<br>    std::cout &lt;&lt; <span class="hljs-string">&quot;After assignment, area of r1: &quot;</span> &lt;&lt; r1.<span class="hljs-built_in">getArea</span>() &lt;&lt; std::endl;<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure><br>输出：<br><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-symbol">Area</span> of <span class="hljs-built_in">r1</span>: <span class="hljs-number">20</span><br><span class="hljs-symbol">Area</span> of <span class="hljs-built_in">r2</span>: <span class="hljs-number">42</span><br><span class="hljs-symbol">r1</span> is smaller than or equal to <span class="hljs-built_in">r2</span><br><span class="hljs-symbol">After</span> assignment, <span class="hljs-meta">area</span> of <span class="hljs-built_in">r1</span>: <span class="hljs-number">42</span><br><br></code></pre></td></tr></table></figure><br>在这个例子中，我们展示了this指针在实现方法重载、比较操作、以及拷贝赋值操作符重载时的使用。通过使用this指针，我们可以让代码更易读且功能更强大。</p>
+<p>在此示例中，我们将进一步探讨this指针在类的继承和多态中的应用。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;memory&gt;</span></span><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Animal</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-type">void</span> <span class="hljs-title">makeSound</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>&#123;<br>        std::cout &lt;&lt; <span class="hljs-string">&quot;The animal makes a generic sound.&quot;</span> &lt;&lt; std::endl;<br>    &#125;<br><br>    <span class="hljs-comment">// 使用this指针实现运行时多态</span><br>    <span class="hljs-function">Animal* <span class="hljs-title">getThis</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;<br>    &#125;<br>&#125;;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Dog</span> : <span class="hljs-keyword">public</span> Animal &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">makeSound</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> <span class="hljs-keyword">override</span> </span>&#123;<br>        std::cout &lt;&lt; <span class="hljs-string">&quot;The dog barks: Woof!&quot;</span> &lt;&lt; std::endl;<br>    &#125;<br>&#125;;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Cat</span> : <span class="hljs-keyword">public</span> Animal &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">makeSound</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> <span class="hljs-keyword">override</span> </span>&#123;<br>        std::cout &lt;&lt; <span class="hljs-string">&quot;The cat meows: Meow!&quot;</span> &lt;&lt; std::endl;<br>    &#125;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">playWithAnimal</span><span class="hljs-params">(Animal* animal)</span> </span>&#123;<br>    animal-&gt;<span class="hljs-built_in">makeSound</span>();<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    std::unique_ptr&lt;Animal&gt; dog = std::<span class="hljs-built_in">make_unique</span>&lt;Dog&gt;();<br>    std::unique_ptr&lt;Animal&gt; cat = std::<span class="hljs-built_in">make_unique</span>&lt;Cat&gt;();<br><br>    <span class="hljs-built_in">playWithAnimal</span>(dog.<span class="hljs-built_in">get</span>());<br>    <span class="hljs-built_in">playWithAnimal</span>(cat.<span class="hljs-built_in">get</span>());<br><br>    Animal* polymorphicAnimal = dog-&gt;<span class="hljs-built_in">getThis</span>();<br>    polymorphicAnimal-&gt;<span class="hljs-built_in">makeSound</span>();<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure><br>输出：<br><figure class="highlight erlang-repl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs erlang-repl">The dog barks: Woof!<br>The cat meows: Meow!<br>The dog barks: Woof!<br><br></code></pre></td></tr></table></figure><br>在这个例子中，我们创建了一个Animal基类，以及两个派生类Dog和Cat。我们重写了基类的makeSound方法，以实现多态行为。通过使用this指针，我们可以在运行时获取多态对象的实际类型，从而调用相应的方法。</p>
+<p>当我们使用this指针调用getThis()方法时，返回的是一个指向当前对象的指针。由于getThis()方法返回的是Animal*类型的指针，this指针在这里发挥了运行时多态的作用。这允许我们在运行时确定调用哪个类的makeSound方法。在这个例子中，polymorphicAnimal-&gt;makeSound();将调用Dog类的makeSound方法，因为polymorphicAnimal指针指向的实际对象类型是Dog。</p>
+<p>这个例子展示了this指针在类继承和运行时多态中的应用，帮助我们更好地理解C++面向对象编程的概念。</p>
+<p>接下来，我们将通过一个实例来了解this指针在构造函数和析构函数中的使用。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyClass</span> &#123;<br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-type">int</span> id;<br><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-type">static</span> <span class="hljs-type">int</span> objectCount;<br><br>    <span class="hljs-built_in">MyClass</span>() &#123;<br>        id = ++objectCount;<br>        std::cout &lt;&lt; <span class="hljs-string">&quot;Constructor called for object ID: &quot;</span> &lt;&lt; id &lt;&lt; std::endl;<br>    &#125;<br><br>    ~<span class="hljs-built_in">MyClass</span>() &#123;<br>        std::cout &lt;&lt; <span class="hljs-string">&quot;Destructor called for object ID: &quot;</span> &lt;&lt; id &lt;&lt; std::endl;<br>    &#125;<br><br>    <span class="hljs-comment">// 返回this指针以进行比较</span><br>    <span class="hljs-function"><span class="hljs-type">const</span> MyClass* <span class="hljs-title">getThis</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">isEqual</span><span class="hljs-params">(<span class="hljs-type">const</span> MyClass* other)</span> <span class="hljs-type">const</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span> == other;<br>    &#125;<br>&#125;;<br><br><span class="hljs-type">int</span> MyClass::objectCount = <span class="hljs-number">0</span>;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    MyClass obj1;<br>    MyClass obj2;<br><br>    <span class="hljs-keyword">if</span> (obj1.<span class="hljs-built_in">getThis</span>() == obj2.<span class="hljs-built_in">getThis</span>()) &#123;<br>        std::cout &lt;&lt; <span class="hljs-string">&quot;obj1 and obj2 are the same object.&quot;</span> &lt;&lt; std::endl;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        std::cout &lt;&lt; <span class="hljs-string">&quot;obj1 and obj2 are different objects.&quot;</span> &lt;&lt; std::endl;<br>    &#125;<br><br>    <span class="hljs-keyword">if</span> (obj1.<span class="hljs-built_in">isEqual</span>(&amp;obj2)) &#123;<br>        std::cout &lt;&lt; <span class="hljs-string">&quot;obj1 is equal to obj2.&quot;</span> &lt;&lt; std::endl;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        std::cout &lt;&lt; <span class="hljs-string">&quot;obj1 is not equal to obj2.&quot;</span> &lt;&lt; std::endl;<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure><br>输出：<br><figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs delphi"><span class="hljs-function"><span class="hljs-keyword">Constructor</span> <span class="hljs-title">called</span> <span class="hljs-title">for</span> <span class="hljs-title">object</span> <span class="hljs-title">ID</span>:</span> <span class="hljs-number">1</span><br><span class="hljs-function"><span class="hljs-keyword">Constructor</span> <span class="hljs-title">called</span> <span class="hljs-title">for</span> <span class="hljs-title">object</span> <span class="hljs-title">ID</span>:</span> <span class="hljs-number">2</span><br>obj1 <span class="hljs-keyword">and</span> obj2 are different objects.<br>obj1 <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> equal <span class="hljs-keyword">to</span> obj2.<br><span class="hljs-function"><span class="hljs-keyword">Destructor</span> <span class="hljs-title">called</span> <span class="hljs-title">for</span> <span class="hljs-title">object</span> <span class="hljs-title">ID</span>:</span> <span class="hljs-number">2</span><br><span class="hljs-function"><span class="hljs-keyword">Destructor</span> <span class="hljs-title">called</span> <span class="hljs-title">for</span> <span class="hljs-title">object</span> <span class="hljs-title">ID</span>:</span> <span class="hljs-number">1</span><br><br></code></pre></td></tr></table></figure><br>在这个例子中，我们创建了一个MyClass类，并在构造函数中为每个对象分配了一个唯一的ID。通过使用this指针，我们可以在析构函数中访问对象的ID，以便在对象被销毁时输出相应的信息。</p>
+<p>同时，我们还实现了getThis()方法，该方法返回一个指向当前对象的指针。我们可以通过比较两个对象的this指针来判断它们是否是同一个对象。此外，我们还实现了一个isEqual()方法，用于比较两个对象的this指针，以确定它们是否相等。</p>
+<p>这个例子展示了this指针在构造函数和析构函数中的用途，以及如何通过比较this指针来判断两个对象是否相等。</p>
+<p>在这个例子中，我们将探讨如何在类模板中使用this指针。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><br><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyVector</span> &#123;<br><span class="hljs-keyword">private</span>:<br>    T x, y, z;<br><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">MyVector</span>(T x, T y, T z) : <span class="hljs-built_in">x</span>(x), <span class="hljs-built_in">y</span>(y), <span class="hljs-built_in">z</span>(z) &#123;&#125;<br><br>    <span class="hljs-comment">// 使用this指针实现输出操作符重载</span><br>    <span class="hljs-keyword">friend</span> std::ostream&amp; <span class="hljs-keyword">operator</span>&lt;&lt;(std::ostream&amp; os, <span class="hljs-type">const</span> MyVector&amp; v) &#123;<br>        os &lt;&lt; <span class="hljs-string">&quot;(&quot;</span> &lt;&lt; v.x &lt;&lt; <span class="hljs-string">&quot;, &quot;</span> &lt;&lt; v.y &lt;&lt; <span class="hljs-string">&quot;, &quot;</span> &lt;&lt; v.z &lt;&lt; <span class="hljs-string">&quot;)&quot;</span>;<br>        <span class="hljs-keyword">return</span> os;<br>    &#125;<br><br>    <span class="hljs-comment">// 使用this指针实现加法操作符重载</span><br>    MyVector <span class="hljs-keyword">operator</span>+(<span class="hljs-type">const</span> MyVector&amp; other) <span class="hljs-type">const</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">MyVector</span>(<span class="hljs-keyword">this</span>-&gt;x + other.x, <span class="hljs-keyword">this</span>-&gt;y + other.y, <span class="hljs-keyword">this</span>-&gt;z + other.z);<br>    &#125;<br><br>    <span class="hljs-comment">// 使用this指针实现赋值操作符重载</span><br>    MyVector&amp; <span class="hljs-keyword">operator</span>+=(<span class="hljs-type">const</span> MyVector&amp; other) &#123;<br>        <span class="hljs-keyword">this</span>-&gt;x += other.x;<br>        <span class="hljs-keyword">this</span>-&gt;y += other.y;<br>        <span class="hljs-keyword">this</span>-&gt;z += other.z;<br>        <span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span>;<br>    &#125;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-function">MyVector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">v1</span><span class="hljs-params">(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>)</span></span>;<br>    <span class="hljs-function">MyVector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">v2</span><span class="hljs-params">(<span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>)</span></span>;<br><br>    std::cout &lt;&lt; <span class="hljs-string">&quot;v1: &quot;</span> &lt;&lt; v1 &lt;&lt; std::endl;<br>    std::cout &lt;&lt; <span class="hljs-string">&quot;v2: &quot;</span> &lt;&lt; v2 &lt;&lt; std::endl;<br><br>    MyVector&lt;<span class="hljs-type">int</span>&gt; v3 = v1 + v2;<br>    std::cout &lt;&lt; <span class="hljs-string">&quot;v3 (v1 + v2): &quot;</span> &lt;&lt; v3 &lt;&lt; std::endl;<br><br>    v1 += v2;<br>    std::cout &lt;&lt; <span class="hljs-string">&quot;v1 after (v1 += v2): &quot;</span> &lt;&lt; v1 &lt;&lt; std::endl;<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure><br>输出：<br><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">v1</span>: (<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>)<br><span class="hljs-attribute">v2</span>: (<span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>)<br><span class="hljs-attribute">v3</span> (v1 + v2): (<span class="hljs-number">5</span>, <span class="hljs-number">7</span>, <span class="hljs-number">9</span>)<br><span class="hljs-attribute">v1</span> after (v1 += v2): (<span class="hljs-number">5</span>, <span class="hljs-number">7</span>, <span class="hljs-number">9</span>)<br><br></code></pre></td></tr></table></figure><br>在这个例子中，我们创建了一个类模板MyVector，用于表示一个三维向量。我们在类模板中使用this指针实现了输出操作符重载、加法操作符重载和赋值操作符重载。</p>
+<p>通过使用this指针，我们可以访问当前对象的成员变量，并返回当前对象的引用。这在实现类模板中的操作符重载时非常有用，因为我们可以轻松地访问和修改当前对象的状态</p>
+<p>这个例子展示了this指针在类模板中的应用，以及如何通过this指针实现操作符重载。</p>
+<p>在这个示例中，我们将探讨如何在智能指针中使用this指针。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;memory&gt;</span></span><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyClass</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-type">int</span> value;<br><br>    <span class="hljs-built_in">MyClass</span>(<span class="hljs-type">int</span> v) : <span class="hljs-built_in">value</span>(v) &#123;<br>        std::cout &lt;&lt; <span class="hljs-string">&quot;Constructor called: &quot;</span> &lt;&lt; value &lt;&lt; std::endl;<br>    &#125;<br><br>    ~<span class="hljs-built_in">MyClass</span>() &#123;<br>        std::cout &lt;&lt; <span class="hljs-string">&quot;Destructor called: &quot;</span> &lt;&lt; value &lt;&lt; std::endl;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">printValue</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>&#123;<br>        std::cout &lt;&lt; <span class="hljs-string">&quot;Value: &quot;</span> &lt;&lt; value &lt;&lt; std::endl;<br>    &#125;<br><br>    <span class="hljs-comment">// 使用this指针实现工厂方法，创建shared_ptr对象</span><br>    <span class="hljs-function"><span class="hljs-type">static</span> std::shared_ptr&lt;MyClass&gt; <span class="hljs-title">create</span><span class="hljs-params">(<span class="hljs-type">int</span> value)</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> std::<span class="hljs-built_in">shared_ptr</span>&lt;MyClass&gt;(<span class="hljs-keyword">new</span> <span class="hljs-built_in">MyClass</span>(value));<br>    &#125;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">processObject</span><span class="hljs-params">(std::shared_ptr&lt;MyClass&gt; obj)</span> </span>&#123;<br>    obj-&gt;<span class="hljs-built_in">printValue</span>();<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    std::shared_ptr&lt;MyClass&gt; obj1 = MyClass::<span class="hljs-built_in">create</span>(<span class="hljs-number">5</span>);<br>    <span class="hljs-built_in">processObject</span>(obj1);<br><br>    std::shared_ptr&lt;MyClass&gt; obj2 = MyClass::<span class="hljs-built_in">create</span>(<span class="hljs-number">10</span>);<br>    <span class="hljs-built_in">processObject</span>(obj2);<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure><br>输出：<br><figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs delphi"><span class="hljs-function"><span class="hljs-keyword">Constructor</span> <span class="hljs-title">called</span>:</span> <span class="hljs-number">5</span><br>Value: <span class="hljs-number">5</span><br><span class="hljs-function"><span class="hljs-keyword">Constructor</span> <span class="hljs-title">called</span>:</span> <span class="hljs-number">10</span><br>Value: <span class="hljs-number">10</span><br><span class="hljs-function"><span class="hljs-keyword">Destructor</span> <span class="hljs-title">called</span>:</span> <span class="hljs-number">10</span><br><span class="hljs-function"><span class="hljs-keyword">Destructor</span> <span class="hljs-title">called</span>:</span> <span class="hljs-number">5</span><br><br></code></pre></td></tr></table></figure><br>在这个例子中，我们创建了一个MyClass类，该类包含一个静态方法create，用于创建MyClass对象的std::shared_ptr智能指针。在create方法中，我们使用new操作符分配一个新的MyClass对象，并将其传递给std::shared_ptr构造函数。这样，当std::shared_ptr对象超出作用域时，会自动调用MyClass对象的析构函数并释放内存。</p>
+<p>我们还实现了一个processObject函数，该函数接受一个std::shared_ptr<MyClass>参数，并在其中调用printValue方法。通过使用智能指针，我们可以确保资源在不再使用时被正确释放，避免内存泄漏。</p>
+<p>虽然这个例子中没有直接使用this指针，但它演示了如何使用智能指针来管理类实例的生命周期。智能指针可以与this指针一起使用，以确保在操作类对象时始终遵循良好的内存管理实践。</p>
+<p>在本示例中，我们将研究如何使用this指针在成员函数中返回自身的引用以支持链式调用。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span></span><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Person</span> &#123;<br><span class="hljs-keyword">private</span>:<br>    std::string name;<br>    <span class="hljs-type">int</span> age;<br><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">Person</span>(<span class="hljs-type">const</span> std::string&amp; name, <span class="hljs-type">int</span> age) : <span class="hljs-built_in">name</span>(name), <span class="hljs-built_in">age</span>(age) &#123;&#125;<br><br>    <span class="hljs-function">Person&amp; <span class="hljs-title">setName</span><span class="hljs-params">(<span class="hljs-type">const</span> std::string&amp; newName)</span> </span>&#123;<br>        name = newName;<br>        <span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span>;<br>    &#125;<br><br>    <span class="hljs-function">Person&amp; <span class="hljs-title">setAge</span><span class="hljs-params">(<span class="hljs-type">int</span> newAge)</span> </span>&#123;<br>        age = newAge;<br>        <span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span>;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">introduce</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>&#123;<br>        std::cout &lt;&lt; <span class="hljs-string">&quot;Hi, my name is &quot;</span> &lt;&lt; name &lt;&lt; <span class="hljs-string">&quot; and I am &quot;</span> &lt;&lt; age &lt;&lt; <span class="hljs-string">&quot; years old.&quot;</span> &lt;&lt; std::endl;<br>    &#125;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-function">Person <span class="hljs-title">alice</span><span class="hljs-params">(<span class="hljs-string">&quot;Alice&quot;</span>, <span class="hljs-number">28</span>)</span></span>;<br>    alice.<span class="hljs-built_in">introduce</span>();<br><br>    alice.<span class="hljs-built_in">setName</span>(<span class="hljs-string">&quot;Alicia&quot;</span>).<span class="hljs-built_in">setAge</span>(<span class="hljs-number">29</span>);<br>    alice.<span class="hljs-built_in">introduce</span>();<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure><br>输出：<br><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">Hi, my <span class="hljs-type">name</span> <span class="hljs-keyword">is</span> Alice <span class="hljs-keyword">and</span> I am <span class="hljs-number">28</span> years <span class="hljs-built_in">old</span>.<br>Hi, my <span class="hljs-type">name</span> <span class="hljs-keyword">is</span> Alicia <span class="hljs-keyword">and</span> I am <span class="hljs-number">29</span> years <span class="hljs-built_in">old</span>.<br><br></code></pre></td></tr></table></figure><br>在此示例中，我们创建了一个名为Person的类，其中包含两个成员函数setName和setAge，这两个函数返回当前对象的引用（通过*this）。这允许我们实现链式调用，即在单个语句中连续调用多个成员函数。</p>
+<p>在main函数中，我们首先创建了一个名为alice的Person对象，并调用introduce方法。然后，我们使用链式调用来同时设置alice的新名称和年龄，再次调用introduce方法以查看更改是否生效。</p>
+<p>这个例子展示了如何使用this指针在成员函数中返回对象的引用，从而实现链式调用。这种方法可以使代码更紧凑，更具可读性。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/C/" class="category-chain-item">C++</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%8E%9F%E5%88%9B/">#原创</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>介绍C++中this指针</div>
+      <div>https://qiangsun89.github.io/2023/05/04/介绍C-中this指针/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Qiang Sun</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年5月4日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/04/27/%E8%AF%A6%E7%BB%86%E4%BB%8B%E7%BB%8DROS%E4%B8%AD%E7%9A%84map-server/" title="详细介绍ROS中的map_server">
+                        <span class="hidden-mobile">详细介绍ROS中的map_server</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"LEYjQzDk7jo8uqlOQoAEF5qm-gzGzoHsz","appKey":"7bBCyINnLw0akaPjI39pESMN","path":"window.location.pathname","placeholder":"留言","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
