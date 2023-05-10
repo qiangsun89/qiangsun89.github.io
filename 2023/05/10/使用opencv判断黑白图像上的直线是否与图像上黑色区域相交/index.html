@@ -16,22 +16,22 @@
   <meta name="author" content="Qiang Sun">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Linux一行代码统计项目代码行数1find . -name &quot;*.cpp&quot; -or -name &quot;*.cc&quot; -or -name &quot;*.h&quot; -or -name &quot;*.hpp&quot; |xargs cat|wc -l">
+    <meta name="description" content="使用opencv判断黑白图像上的直线是否与图像上黑色区域相交在OpenCV中，可以使用Hough Transform算法检测一幅黑白图像中的直线。如果要判断一条直线是否与图像上的黑色区域相交，可以将黑色区域提取出来，然后检查直线与黑色区域是否有交集。下面是一个示例代码，演示如何使用OpenCV判断黑白图像上的直线是否与图像上黑色区域相交：123456789101112131415161718192">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux使用find统计代码行数">
-<meta property="og:url" content="https://qiangsun89.github.io/2023/02/17/Linux%E4%BD%BF%E7%94%A8find%E7%BB%9F%E8%AE%A1%E4%BB%A3%E7%A0%81%E8%A1%8C%E6%95%B0/index.html">
+<meta property="og:title" content="使用opencv判断黑白图像上的直线是否与图像上黑色区域相交">
+<meta property="og:url" content="https://qiangsun89.github.io/2023/05/10/%E4%BD%BF%E7%94%A8opencv%E5%88%A4%E6%96%AD%E9%BB%91%E7%99%BD%E5%9B%BE%E5%83%8F%E4%B8%8A%E7%9A%84%E7%9B%B4%E7%BA%BF%E6%98%AF%E5%90%A6%E4%B8%8E%E5%9B%BE%E5%83%8F%E4%B8%8A%E9%BB%91%E8%89%B2%E5%8C%BA%E5%9F%9F%E7%9B%B8%E4%BA%A4/index.html">
 <meta property="og:site_name" content="知识的搬运工">
-<meta property="og:description" content="Linux一行代码统计项目代码行数1find . -name &quot;*.cpp&quot; -or -name &quot;*.cc&quot; -or -name &quot;*.h&quot; -or -name &quot;*.hpp&quot; |xargs cat|wc -l">
+<meta property="og:description" content="使用opencv判断黑白图像上的直线是否与图像上黑色区域相交在OpenCV中，可以使用Hough Transform算法检测一幅黑白图像中的直线。如果要判断一条直线是否与图像上的黑色区域相交，可以将黑色区域提取出来，然后检查直线与黑色区域是否有交集。下面是一个示例代码，演示如何使用OpenCV判断黑白图像上的直线是否与图像上黑色区域相交：123456789101112131415161718192">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-02-17T06:34:18.000Z">
-<meta property="article:modified_time" content="2023-02-17T06:41:02.000Z">
+<meta property="article:published_time" content="2023-05-10T01:14:57.000Z">
+<meta property="article:modified_time" content="2023-05-10T01:16:50.920Z">
 <meta property="article:author" content="Qiang Sun">
 <meta property="article:tag" content="原创">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>Linux使用find统计代码行数 - 知识的搬运工</title>
+  <title>使用opencv判断黑白图像上的直线是否与图像上黑色区域相交 - 知识的搬运工</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -214,7 +214,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Linux使用find统计代码行数"></span>
+            <span id="subtitle" data-typed-text="使用opencv判断黑白图像上的直线是否与图像上黑色区域相交"></span>
           
         </div>
 
@@ -225,8 +225,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-02-17 14:34" pubdate>
-          2023年2月17日 下午
+        <time datetime="2023-05-10 09:14" pubdate>
+          2023年5月10日 上午
         </time>
       </span>
     
@@ -237,7 +237,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          131 字
+          1.7k 字
         
       </span>
     
@@ -248,7 +248,7 @@
         
         
         
-          2 分钟
+          14 分钟
         
       </span>
     
@@ -294,12 +294,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Linux使用find统计代码行数</h1>
+            <h1 style="display: none">使用opencv判断黑白图像上的直线是否与图像上黑色区域相交</h1>
             
             
               <div class="markdown-body">
                 
-                <p>Linux一行代码统计项目代码行数<br><figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sqf"><span class="hljs-built_in">find</span> . -<span class="hljs-built_in">name</span> <span class="hljs-string">&quot;*.cpp&quot;</span> -<span class="hljs-built_in">or</span> -<span class="hljs-built_in">name</span> <span class="hljs-string">&quot;*.cc&quot;</span> -<span class="hljs-built_in">or</span> -<span class="hljs-built_in">name</span> <span class="hljs-string">&quot;*.h&quot;</span> -<span class="hljs-built_in">or</span> -<span class="hljs-built_in">name</span> <span class="hljs-string">&quot;*.hpp&quot;</span> |xargs cat|wc -l<br></code></pre></td></tr></table></figure></p>
+                <h1 id="使用opencv判断黑白图像上的直线是否与图像上黑色区域相交"><a href="#使用opencv判断黑白图像上的直线是否与图像上黑色区域相交" class="headerlink" title="使用opencv判断黑白图像上的直线是否与图像上黑色区域相交"></a>使用opencv判断黑白图像上的直线是否与图像上黑色区域相交</h1><p>在OpenCV中，可以使用Hough Transform算法检测一幅黑白图像中的直线。如果要判断一条直线是否与图像上的黑色区域相交，可以将黑色区域提取出来，然后检查直线与黑色区域是否有交集。下面是一个示例代码，演示如何使用OpenCV判断黑白图像上的直线是否与图像上黑色区域相交：<br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;opencv2/opencv.hpp&gt;</span></span><br><br><span class="hljs-comment">// Check if a line intersects with a black region in an image</span><br><span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">intersectsBlackRegion</span><span class="hljs-params">(<span class="hljs-type">const</span> cv::Mat&amp; image, <span class="hljs-type">const</span> cv::Vec4i&amp; line)</span> </span>&#123;<br>  <span class="hljs-comment">// Convert the image to binary</span><br>  cv::Mat binary;<br>  cv::<span class="hljs-built_in">threshold</span>(image, binary, <span class="hljs-number">128</span>, <span class="hljs-number">255</span>, cv::THRESH_BINARY);<br><br>  <span class="hljs-comment">// Find the black region</span><br>  std::vector&lt;std::vector&lt;cv::Point&gt;&gt; contours;<br>  cv::<span class="hljs-built_in">findContours</span>(binary, contours, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE);<br>  cv::Mat black_region = cv::Mat::<span class="hljs-built_in">zeros</span>(image.<span class="hljs-built_in">size</span>(), CV_8UC1);<br>  cv::<span class="hljs-built_in">drawContours</span>(black_region, contours, <span class="hljs-number">0</span>, cv::<span class="hljs-built_in">Scalar</span>(<span class="hljs-number">255</span>), cv::FILLED);<br><br>  <span class="hljs-comment">// Check if the line intersects with the black region</span><br>  cv::Mat line_mask = cv::Mat::<span class="hljs-built_in">zeros</span>(image.<span class="hljs-built_in">size</span>(), CV_8UC1);<br>  cv::<span class="hljs-built_in">line</span>(line_mask, cv::<span class="hljs-built_in">Point</span>(line[<span class="hljs-number">0</span>], line[<span class="hljs-number">1</span>]), cv::<span class="hljs-built_in">Point</span>(line[<span class="hljs-number">2</span>], line[<span class="hljs-number">3</span>]), cv::<span class="hljs-built_in">Scalar</span>(<span class="hljs-number">255</span>), <span class="hljs-number">1</span>);<br>  cv::Mat intersection = line_mask &amp; black_region;<br>  <span class="hljs-keyword">return</span> cv::<span class="hljs-built_in">countNonZero</span>(intersection) &gt; <span class="hljs-number">0</span>;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>  <span class="hljs-comment">// Load an image</span><br>  cv::Mat image = cv::<span class="hljs-built_in">imread</span>(<span class="hljs-string">&quot;test.png&quot;</span>, cv::IMREAD_GRAYSCALE);<br><br>  <span class="hljs-comment">// Detect lines using Hough Transform</span><br>  std::vector&lt;cv::Vec4i&gt; lines;<br>  cv::<span class="hljs-built_in">HoughLinesP</span>(image, lines, <span class="hljs-number">1</span>, CV_PI/<span class="hljs-number">180</span>, <span class="hljs-number">50</span>, <span class="hljs-number">50</span>, <span class="hljs-number">10</span>);<br><br>  <span class="hljs-comment">// Check if each line intersects with a black region</span><br>  <span class="hljs-keyword">for</span> (<span class="hljs-type">const</span> <span class="hljs-keyword">auto</span>&amp; line : lines) &#123;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">intersectsBlackRegion</span>(image, line)) &#123;<br>      std::cout &lt;&lt; <span class="hljs-string">&quot;Line intersects with black region.&quot;</span> &lt;&lt; std::endl;<br>    &#125;<br>  &#125;<br><br>  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure><br>这个示例代码假设图像是从文件中加载的。首先，我们将图像转换为二值图像，并提取出黑色区域。接下来，使用Hough Transform算法检测出直线，然后遍历每条直线，并检查它是否与黑色区域相交。为了检查直线是否与黑色区域相交，我们创建了一个直线掩码，并使用按位与操作符将直线掩码与黑色区域进行组合。如果两者有交集，则直线与黑色区域相交。</p>
 
                 
               </div>
@@ -318,7 +318,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Linux/" class="category-chain-item">Linux</a>
+  <a href="/categories/opencv/" class="category-chain-item">opencv</a>
   
   
 
@@ -345,8 +345,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Linux使用find统计代码行数</div>
-      <div>https://qiangsun89.github.io/2023/02/17/Linux使用find统计代码行数/</div>
+      <div>使用opencv判断黑白图像上的直线是否与图像上黑色区域相交</div>
+      <div>https://qiangsun89.github.io/2023/05/10/使用opencv判断黑白图像上的直线是否与图像上黑色区域相交/</div>
     </div>
     <div class="license-meta">
       
@@ -358,7 +358,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年2月17日</div>
+          <div>2023年5月10日</div>
         </div>
       
       
@@ -390,18 +390,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/02/18/%E7%BA%BF%E9%80%9F%E5%BA%A6%E4%B8%8E%E8%A7%92%E9%80%9F%E5%BA%A6%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB/" title="线速度与角速度之间的关系">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">线速度与角速度之间的关系</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/02/17/ubuntu18-04%E4%B8%ADROS%E7%89%88%E6%9C%AC%E4%B8%BAmelodic%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85cartographer/" title="ubuntu18.04中ROS版本为melodic环境安装cartographer">
-                        <span class="hidden-mobile">ubuntu18.04中ROS版本为melodic环境安装cartographer</span>
+                      <a href="/2023/05/08/%E8%AF%A6%E7%BB%86%E4%BB%8B%E7%BB%8DROS-costmap-2d%E5%8C%85%E4%B8%AD%E4%B8%BB%E8%A6%81%E5%87%BD%E6%95%B0/" title="详细介绍ROS costmap_2d包中主要函数">
+                        <span class="hidden-mobile">详细介绍ROS costmap_2d包中主要函数</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
