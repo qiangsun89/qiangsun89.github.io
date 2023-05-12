@@ -24,7 +24,7 @@
 <meta property="og:description" content="MathJax.Hub.Config({             tex2jax: {             skipTags: [&#39;script&#39;, &#39;noscript&#39;, &#39;style&#39;, &#39;textarea&#39;, &#39;pre&#39;],             inlineMath: [[&#39;$&#39;,&#39;$&#39;]]             }         });">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-05-11T03:09:38.000Z">
-<meta property="article:modified_time" content="2023-05-11T10:09:15.621Z">
+<meta property="article:modified_time" content="2023-05-12T05:20:59.440Z">
 <meta property="article:author" content="Qiang Sun">
 <meta property="article:tag" content="原创">
 <meta name="twitter:card" content="summary_large_image">
@@ -237,7 +237,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          15k 字
+          16k 字
         
       </span>
     
@@ -248,7 +248,7 @@
         
         
         
-          127 分钟
+          134 分钟
         
       </span>
     
@@ -299,7 +299,7 @@
             
               <div class="markdown-body">
                 
-                <p><head>
+                <head>
     <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
     <script type="text/x-mathjax-config">
         MathJax.Hub.Config({
@@ -309,7 +309,8 @@
             }
         });
     </script>
-</head></p>
+</head>
+
 <h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><p>地图分割，或者称为空间划分，是将一个连续的环境或空间分解为一组离散的、通常是非重叠的区域的过程。这个过程在很多领域中都有应用，包括计算机图形学、地理信息系统（GIS）、机器人学等。</p>
 <p>在清洁机器人，特别是扫地机器人的应用中，地图分割具有重要作用。以下是一些具体的应用案例：</p>
 <ol>
@@ -325,9 +326,15 @@
 <p>在实际的扫地机器人系统中，可能会使用一种或多种地图分割方法，以满足不同的清洁需求。例如，一些先进的扫地机器人系统可能会结合使用栅格化、基于Voronoi图的分割、基于拓扑的分割等方法，来进行路径规划、避障、任务规划和多机器人协作。</p>
 <h1 id="地图分割主要技术方向"><a href="#地图分割主要技术方向" class="headerlink" title="地图分割主要技术方向"></a>地图分割主要技术方向</h1><p>地图分割的主要方法有很多种，以下是一些常见的方法：</p>
 <ol>
-<li><p>栅格化（Grid-based）：这是一种将连续环境划分为离散网格（如正方形或六边形）的方法。栅格化方法在许多领域中都有广泛应用，如机器人导航、地理信息系统（GIS）等。它的优点是简单、直观且易于实现，但可能无法很好地处理复杂的环境特性，如障碍物和地形。</p>
+<li><p>传统图像处理方法：这些方法包括基于阈值的分割、边缘检测、形态学操作和基于区域的方法等。这些方法通常简单、直观且计算效率高，但可能无法很好地处理复杂地图和细节丰富的环境。</p>
 </li>
 <li><p>基于Voronoi图的分割：Voronoi图是一种将空间划分为多个区域的方法，其中每个区域包含一个种子点，并由离该种子点最近的所有点组成。基于Voronoi图的分割方法可以生成均匀且连续的覆盖路径，适用于许多应用场景，如机器人导航和无人农机。然而，这种方法的计算复杂度可能较高，特别是在大规模或动态环境中。</p>
+</li>
+<li><p>基于图论的方法：图割算法（如最大流最小割算法和归一化割算法）和区域生长算法等是用于地图分割的流行方法。这些方法可以很好地处理复杂地图和连通性问题。</p>
+</li>
+</ol>
+<ol>
+<li><p>基于距离变换的方法：如前文所述，基于距离变换的方法是一种在图像处理和计算机视觉领域中用于分割二维地图的技术。这种方法可以广泛应用于路径规划、导航、机器人视觉等领域。</p>
 </li>
 <li><p>基于拓扑的分割（Topological）：拓扑分割是根据环境的拓扑结构将其划分为一系列连通区域的方法。这种方法侧重于环境中的空间关系和连通性，而不是几何形状。基于拓扑的分割方法可以很好地处理复杂的环境特性，如走廊、房间等，但可能需要复杂的数据结构和算法，如图论和拓扑学。</p>
 </li>
@@ -341,7 +348,7 @@
 </li>
 <li><p>多尺度地图分割：在一些大规模或复杂的环境中，可能需要使用多尺度的地图分割方法。例如，可以首先在大尺度上进行粗略的分割，然后在小尺度上进行更细致的分割。多尺度地图分割可以提高地图分割和路径规划的效率，但可能需要更复杂的算法和数据结构。</p>
 </li>
-<li><p>基于学习的地图分割：随着人工智能和机器学习技术的发展，基于学习的地图分割方法也变得越来越流行。这些方法通常使用深度学习或强化学习算法来自动学习如何进行地图分割。基于学习的地图分割方法可以适应各种复杂的环境和任务，但可能需要大量的训练数据和计算资源。</p>
+<li><p>深度学习方法：近年来，卷积神经网络（CNN）和其他深度学习方法在图像分割和场景理解方面取得了显著的进展。对于地图分割，深度学习方法可以更好地捕捉地图中的复杂结构和语义信息。常见的深度学习方法包括U-Net、SegNet和DeepLab等。</p>
 </li>
 </ol>
 <p>以上只是地图分割方法的一些基本概念和技术，实际的研究和应用可能会更加复杂和多样化。例如，许多先进的机器人导航系统会结合使用多种地图分割方法，并且可能会使用一些先进的算法和技术，如人工智能和机器学习，以提高地图分割和路径规划的效率和效果。</p>
@@ -498,9 +505,18 @@
 </li>
 </ol>
 <p>总的来说，基于Voronoi的地图分割方法在很多情况下是非常有用的，但是也需要根据具体的任务和环境条件，结合其他地图分割和路径规划方法，以达到最佳的效果。</p>
-<h2 id="基于距离变换（distance-transform，DT）的地图分割方法"><a href="#基于距离变换（distance-transform，DT）的地图分割方法" class="headerlink" title="基于距离变换（distance transform，DT）的地图分割方法"></a>基于距离变换（distance transform，DT）的地图分割方法</h2><p>基于距离变换（Distance Transform，DT）的地图分割方法是一种常用的地图分割技术。这种方法的基本思想是将地图上的每个点转化为距离值，这个距离值代表该点到最近障碍物的距离。接下来，我会更详细地解释这个过程。</p>
-<p>假设我们有一个二维地图，其中有一些障碍物。我们可以将地图中的每个点视为一个像素，然后将每个像素的值设置为该像素到最近障碍物的距离。这样，我们就可以得到一个距离图像，其中的每个像素都包含了距离信息。</p>
-<p>一旦我们得到了这个距离图像，我们就可以基于它进行地图分割。例如，我们可以将距离值大于某个阈值的所有像素划分为一个区域，将距离值小于该阈值的所有像素划分为另一个区域。这样，我们就可以得到一个基于距离变换的地图分割结果。</p>
+<h2 id="基于距离变换（distance-transform，DT）的地图分割方法"><a href="#基于距离变换（distance-transform，DT）的地图分割方法" class="headerlink" title="基于距离变换（distance transform，DT）的地图分割方法"></a>基于距离变换（distance transform，DT）的地图分割方法</h2><p>基于距离变换（Distance Transform，DT）的地图分割方法是一种在图像处理和计算机视觉领域中用于分割二维地图的技术。这种方法主要用于处理二值图像，例如用于表示障碍物和自由空间的地图。在这里，我们详细介绍基于距离变换的地图分割方法的基本概念和步骤。</p>
+<ol>
+<li><p>二值图像：首先，将地图表示为二值图像，其中障碍物（如墙壁、建筑物等）通常用像素值1表示，而自由空间（如道路、人行道等）用像素值0表示。</p>
+</li>
+<li><p>距离变换：接下来，对二值图像进行距离变换。距离变换是一种图像处理方法，用于计算图像中每个像素到其最近的非零像素的距离。常见的距离度量有欧几里得距离、曼哈顿距离和切比雪夫距离等。距离变换的结果是一个与原始二值图像具有相同尺寸的浮点图像，其中每个像素的值表示其到最近障碍物的距离。</p>
+</li>
+<li><p>分割：根据距离变换结果，可以执行多种分割策略。例如，可以设置一个距离阈值，将所有距离大于阈值的像素分配给一个区域，将所有距离小于或等于阈值的像素分配给另一个区域。这样，地图将被分割成两个或多个区域，这些区域可以表示不同的环境特征，如开放空间、狭窄通道等。</p>
+</li>
+<li><p>后处理：在分割完成后，可能需要进行一些后处理步骤，以去除噪声、填补空洞或优化区域边界。常见的后处理方法包括形态学操作（如腐蚀、膨胀、开操作和闭操作）和区域生长算法等。</p>
+</li>
+</ol>
+<p>基于距离变换的地图分割方法可以广泛应用于路径规划、导航、机器人视觉等领域。这种方法的优点是简单、直观且计算效率高，但在处理复杂地图和细节丰富的环境时可能需要更高级的方法，如基于图割的分割方法和深度学习方法。</p>
 <h2 id="基于距离变换的地图分割的伪代码"><a href="#基于距离变换的地图分割的伪代码" class="headerlink" title="基于距离变换的地图分割的伪代码"></a>基于距离变换的地图分割的伪代码</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs css"># 伪代码，不可直接运行<br>输入：地图 M<br>输出：距离变换地图 D<br><br><span class="hljs-number">1</span>. 初始化一个空的距离地图 D，和地图 M 具有相同的尺寸<br><br><span class="hljs-number">2</span>. 对于地图 M 中的每个像素点 (<span class="hljs-selector-tag">i</span>, j)，执行以下步骤：<br>   <span class="hljs-number">2.1</span> 如果像素点 (<span class="hljs-selector-tag">i</span>, j) 是一个障碍物，则将 D<span class="hljs-selector-attr">[i]</span><span class="hljs-selector-attr">[j]</span> 设置为 <span class="hljs-number">0</span><br>   <span class="hljs-number">2.2</span> 否则，计算像素点 (<span class="hljs-selector-tag">i</span>, j) 到最近障碍物的欧氏距离，然后将该距离设置为 D<span class="hljs-selector-attr">[i]</span><span class="hljs-selector-attr">[j]</span><br><br><span class="hljs-number">3</span>. 返回距离变换地图 D<br><br></code></pre></td></tr></table></figure>
 <p>请注意，以上是一个非常基础的版本，实际的实现可能需要考虑更多的细节，例如如何有效地计算每个像素到最近障碍物的距离。有一种常用的方法是使用“扫描”的方式，从左上角开始，先向右下角扫描一遍，再从右下角向左上角扫描一遍。这样可以保证每个像素点都能找到最近的障碍物。</p>
 <p>此外，还可以采用更复杂的距离度量方式，例如曼哈顿距离、切比雪夫距离等，以更好地适应特定的环境和任务需求。</p>
@@ -553,6 +569,12 @@
 <li><p>Fortune, S. (1987). A sweepline algorithm for Voronoi diagrams. Algorithmica, 2(1-4), 153-174.<br>这是Steven Fortune在1987年发表的原始论文，其中提出了一种高效的Voronoi图生成算法，即所谓的Fortune’s算法。这个算法至今仍然是计算Voronoi图的主流方法。</p>
 </li>
 <li><p>Guibas, L., &amp; Stolfi, J. (1985). Primitives for the manipulation of general subdivisions and the computation of Voronoi diagrams. ACM transactions on graphics (TOG), 4(2), 74-123.<br>这篇文章介绍了如何使用基于边的数据结构来处理Voronoi图和其它的地图分割问题。这种数据结构可以方便地表示和操作Voronoi图的拓扑结构，是许多地图分割算法的基础。</p>
+</li>
+<li><p>“Digital Distance Transforms in Two and Three Dimensions,” Gunilla Borgefors, 1984. 这篇论文详细介绍了二维和三维的数字距离变换，包括欧几里得距离、城市街区距离（曼哈顿距离）和棋盘距离（切比雪夫距离）。</p>
+</li>
+<li><p>“Distance Transforms of Sampled Functions,” Pedro F. Felzenszwalb and Daniel P. Huttenlocher, 2004. 这篇论文提出了一种有效的算法来计算距离变换，特别是在计算机视觉应用中。</p>
+</li>
+<li><p>“A Review on Image Segmentation Techniques,” Pal, N.R., and Pal, S.K., 1993. 这篇文献综述了图像分割的各种技术，包括阈值法、边缘检测法、基于区域的方法等。</p>
 </li>
 </ol>
 
