@@ -1,0 +1,798 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Qiang Sun">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="介绍ROS 2 的服务质量 (QoS) 策略ROS 2（Robot Operating System 2）引入了服务质量（Quality of Service，QoS）策略，以满足不同的通信需求和应用场景。QoS策略允许开发者根据消息的可靠性、延迟、带宽等方面的要求来配置通信行为。以下是ROS 2中可用的一些重要的QoS策略：  可靠性（Reliability）：可靠性指定了消息传递的保证。在RO">
+<meta property="og:type" content="article">
+<meta property="og:title" content="介绍ROS 2 的服务质量 (QoS) 策略">
+<meta property="og:url" content="https://qiangsun89.github.io/2023/05/15/%E4%BB%8B%E7%BB%8DROS-2-%E7%9A%84%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F-QoS-%E7%AD%96%E7%95%A5/index.html">
+<meta property="og:site_name" content="知识的搬运工">
+<meta property="og:description" content="介绍ROS 2 的服务质量 (QoS) 策略ROS 2（Robot Operating System 2）引入了服务质量（Quality of Service，QoS）策略，以满足不同的通信需求和应用场景。QoS策略允许开发者根据消息的可靠性、延迟、带宽等方面的要求来配置通信行为。以下是ROS 2中可用的一些重要的QoS策略：  可靠性（Reliability）：可靠性指定了消息传递的保证。在RO">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-05-15T02:43:05.000Z">
+<meta property="article:modified_time" content="2023-05-15T02:52:26.371Z">
+<meta property="article:author" content="Qiang Sun">
+<meta property="article:tag" content="原创">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>介绍ROS 2 的服务质量 (QoS) 策略 - 知识的搬运工</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"qiangsun89.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"LEYjQzDk7jo8uqlOQoAEF5qm-gzGzoHsz","app_key":"7bBCyINnLw0akaPjI39pESMN","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>知识的搬运工</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="介绍ROS 2 的服务质量 (QoS) 策略"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-05-15 10:43" pubdate>
+          2023年5月15日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          12k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          100 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">介绍ROS 2 的服务质量 (QoS) 策略</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="介绍ROS-2-的服务质量-QoS-策略"><a href="#介绍ROS-2-的服务质量-QoS-策略" class="headerlink" title="介绍ROS 2 的服务质量 (QoS) 策略"></a>介绍ROS 2 的服务质量 (QoS) 策略</h1><p>ROS 2（Robot Operating System 2）引入了服务质量（Quality of Service，QoS）策略，以满足不同的通信需求和应用场景。QoS策略允许开发者根据消息的可靠性、延迟、带宽等方面的要求来配置通信行为。以下是ROS 2中可用的一些重要的QoS策略：</p>
+<ol>
+<li>可靠性（Reliability）：可靠性指定了消息传递的保证。在ROS 2中，可靠性可以设置为Reliable或Best-Effort两种级别。Reliable级别确保消息的可靠传输，确保消息不会丢失。Best-Effort级别则不提供可靠性保证，消息可能会丢失。可靠性级别的选择取决于应用的需求。</li>
+<li>保证序列化（Durability）：保证序列化决定了消息在发送者和接收者之间的持久性。ROS 2提供了Transient Local、Volatile和Persistent三种保证序列化级别。Transient Local级别保证消息在发布者处保持持久性，但在发布者终止后不会保存。Volatile级别不保证消息的持久性。Persistent级别确保消息的持久性，即使发布者终止后，消息也会保存在系统中。</li>
+<li>延迟（Deadline）：延迟定义了接收者处理消息的时间限制。可以通过设置延迟参数来确保在指定的时间范围内处理消息，否则消息将被视为无效。延迟参数可以帮助开发者控制实时性需求。</li>
+<li>带宽（Bandwidth）：带宽指定了消息传输的速率。ROS 2允许设置消息的最大发送速率，以限制带宽的使用。这对于网络资源有限或需要限制通信开销的应用非常有用。</li>
+<li>生命周期（Liveliness）：生命周期定义了节点或通信实体的活动状态。ROS 2提供了两种生命周期策略：Automatic和Manual。Automatic策略根据节点的活动情况自动管理生命周期。Manual策略需要开发者手动管理生命周期，以便在节点不活动时通知其他节点。</li>
+<li>历史（History）：历史策略决定了接收者在订阅主题时接收到的消息数量。ROS 2提供了Keep Last和Keep All两种历史策略。Keep Last策略只保留最新的一些消息，而Keep All策略保留所有消息。</li>
+<li>遗愿（Liveliness Will）：遗愿是一种可选的QoS策略，用于在节点失去活动性时通知其他节点。当节点无法发布预定周期内的活动消息时，遗愿将被激活，并通知其他节点该节点已经失去活动性。</li>
+<li>持续性（Persistence）：持续性是针对订阅者在启动后是否接收历史消息的策略。ROS 2提供了两种持续性策略：Transient和Keep Last。Transient策略只发送最新的消息，而Keep Last策略发送自节点启动后的所有消息。</li>
+<li>时间同步（Time Synchronization）：ROS 2允许节点之间进行时间同步以提供精确的时间戳。通过使用时间同步策略，可以确保节点之间的时间同步，从而实现更精确的数据同步和协调。</li>
+<li>消息尺寸（Message Size）：ROS 2还提供了用于限制消息尺寸的QoS策略。通过设置最大消息尺寸，可以确保消息在通信过程中不会超过指定的大小限制，从而避免通信开销和性能问题。</li>
+<li>分区（Partition）：分区策略允许将通信实体划分为不同的逻辑分区，以实现数据的隔离和过滤。每个分区可以定义自己的发布者和订阅者，以限制消息的传递范围。这对于构建复杂的分布式系统或多租户环境非常有用。</li>
+<li>优先级（Priority）：优先级策略用于确定消息在发送和接收时的优先级顺序。高优先级的消息将在低优先级的消息之前被处理。这对于处理紧急事件或实时反馈非常重要。</li>
+<li>静态和动态配置：ROS 2允许QoS策略的静态和动态配置。静态配置指的是在编译或运行时将QoS策略设置为固定值，而动态配置允许在运行时根据系统状态和需求动态调整QoS参数。</li>
+<li>限流（Flow Control）：限流策略用于控制消息发布的速率，以确保接收者能够跟上消息的处理。通过设置限流参数，可以避免消息过载和资源消耗过多的情况。</li>
+<li>增量式（Incremental）：增量式策略允许消息的增量传输，只传输自上次发送以来发生变化的部分。这种策略可以减少带宽占用和通信延迟，特别适用于传输大量数据的情况。</li>
+<li>容错性（Fault Tolerance）：容错性策略是ROS 2的一个重要特性，用于处理通信中的错误和故障情况。ROS 2提供了可配置的容错机制，例如重试机制和错误处理策略，以确保系统在不稳定的网络环境下能够保持可靠的通信。</li>
+<li>同步和异步通信：ROS 2支持同步和异步两种通信模式。同步通信模式要求发送者等待接收者的响应，而异步通信模式允许发送者继续执行其他任务而不必等待响应。这使得开发者能够根据应用需求选择适当的通信模式。</li>
+<li>QoS组合和优先级：ROS 2允许将多个QoS策略组合在一起，并为每个通信实体（例如节点、主题或服务）分配优先级。这种灵活性使开发者能够在不同的层级上定制化QoS策略，并根据重要性和需求对其进行优先级排序。</li>
+<li>广播（Broadcast）：广播策略允许消息在系统中的多个订阅者之间进行广播，以实现发布-订阅模式的多对多通信。广播策略可以在ROS 2的通信中实现数据的分发和共享，从而满足多个节点之间的信息交流需求。</li>
+<li>透明性（Transparency）：透明性策略允许开发者在ROS 2中配置通信的透明性需求。透明性指的是消息传输时是否需要进行加密、解密或数据压缩等操作，以确保数据的安全性和通信效率。</li>
+<li>过滤（Filtering）：过滤策略允许开发者根据特定的条件对消息进行过滤和选择性接收。通过设置过滤器，可以根据消息的内容、属性或源地址等信息来选择性地接收感兴趣的消息，从而减少不必要的通信和数据处理。</li>
+<li>跨域（Cross-Domain）：ROS 2支持跨域通信，即在不同的网络域或安全域之间进行通信。通过配置跨域策略，可以实现不同安全级别或隔离环境中的节点间的可靠通信。</li>
+<li>故障恢复（Fault Recovery）：ROS 2的QoS策略还包括故障恢复机制，用于处理通信中的错误和故障情况。故障恢复策略可以自动检测和修复通信故障，从而提高系统的可靠性和稳定性。</li>
+</ol>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>当涉及到ROS 2的服务质量（QoS）策略的C++示例，以下是几个常见的用法示例：</p>
+<ol>
+<li>设置消息发布者的可靠性和持久性：</li>
+</ol>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;rclcpp/rclcpp.hpp&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;std_msgs/msg/string.hpp&quot;</span></span><br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> **argv)</span></span><br><span class="hljs-function"></span>&#123;<br>  rclcpp::<span class="hljs-built_in">init</span>(argc, argv);<br>  <span class="hljs-keyword">auto</span> node = rclcpp::Node::<span class="hljs-built_in">make_shared</span>(<span class="hljs-string">&quot;publisher_node&quot;</span>);<br><br>  <span class="hljs-function">rclcpp::QoS <span class="hljs-title">qos</span><span class="hljs-params">(rclcpp::KeepLast(<span class="hljs-number">10</span>))</span></span>; <span class="hljs-comment">// 设置消息历史策略，保留最新的10个消息</span><br>  qos.<span class="hljs-built_in">reliable</span>(); <span class="hljs-comment">// 设置消息发布者为可靠性级别</span><br><br>  <span class="hljs-keyword">auto</span> publisher = node-&gt;<span class="hljs-built_in">create_publisher</span>&lt;std_msgs::msg::<span class="hljs-type">String</span>&gt;(<span class="hljs-string">&quot;topic_name&quot;</span>, qos);<br><br>  <span class="hljs-comment">// 发布消息</span><br>  <span class="hljs-keyword">auto</span> message = std::<span class="hljs-built_in">make_shared</span>&lt;std_msgs::msg::<span class="hljs-type">String</span>&gt;();<br>  message-&gt;data = <span class="hljs-string">&quot;Hello, ROS 2!&quot;</span>;<br>  publisher-&gt;<span class="hljs-built_in">publish</span>(message);<br><br>  rclcpp::<span class="hljs-built_in">spin</span>(node);<br>  rclcpp::<span class="hljs-built_in">shutdown</span>();<br><br>  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<ol>
+<li>设置消息订阅者的可靠性和延迟：</li>
+</ol>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;rclcpp/rclcpp.hpp&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;std_msgs/msg/string.hpp&quot;</span></span><br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">messageCallback</span><span class="hljs-params">(<span class="hljs-type">const</span> std_msgs::msg::<span class="hljs-type">String</span>::SharedPtr msg)</span></span><br><span class="hljs-function"></span>&#123;<br>  <span class="hljs-built_in">RCLCPP_INFO</span>(rclcpp::<span class="hljs-built_in">get_logger</span>(<span class="hljs-string">&quot;subscriber_node&quot;</span>), <span class="hljs-string">&quot;Received message: %s&quot;</span>, msg-&gt;data.<span class="hljs-built_in">c_str</span>());<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> **argv)</span></span><br><span class="hljs-function"></span>&#123;<br>  rclcpp::<span class="hljs-built_in">init</span>(argc, argv);<br>  <span class="hljs-keyword">auto</span> node = rclcpp::Node::<span class="hljs-built_in">make_shared</span>(<span class="hljs-string">&quot;subscriber_node&quot;</span>);<br><br>  <span class="hljs-function">rclcpp::QoS <span class="hljs-title">qos</span><span class="hljs-params">(rclcpp::KeepLast(<span class="hljs-number">10</span>))</span></span>; <span class="hljs-comment">// 设置消息历史策略，保留最新的10个消息</span><br>  qos.<span class="hljs-built_in">best_effort</span>(); <span class="hljs-comment">// 设置消息订阅者为最佳尽力级别</span><br><br>  <span class="hljs-keyword">auto</span> subscriber = node-&gt;<span class="hljs-built_in">create_subscription</span>&lt;std_msgs::msg::<span class="hljs-type">String</span>&gt;(<br>    <span class="hljs-string">&quot;topic_name&quot;</span>, qos, messageCallback);<br><br>  rclcpp::<span class="hljs-built_in">spin</span>(node);<br>  rclcpp::<span class="hljs-built_in">shutdown</span>();<br><br>  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<ol>
+<li>设置消息发布者的延迟和历史记录：</li>
+</ol>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;rclcpp/rclcpp.hpp&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;std_msgs/msg/string.hpp&quot;</span></span><br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> **argv)</span></span><br><span class="hljs-function"></span>&#123;<br>  rclcpp::<span class="hljs-built_in">init</span>(argc, argv);<br>  <span class="hljs-keyword">auto</span> node = rclcpp::Node::<span class="hljs-built_in">make_shared</span>(<span class="hljs-string">&quot;publisher_node&quot;</span>);<br><br>  <span class="hljs-function">rclcpp::QoS <span class="hljs-title">qos</span><span class="hljs-params">(rclcpp::KeepLast(<span class="hljs-number">5</span>))</span></span>; <span class="hljs-comment">// 设置消息历史策略，保留最新的5个消息</span><br>  qos.<span class="hljs-built_in">deadline</span>(rclcpp::<span class="hljs-built_in">Duration</span>(<span class="hljs-number">1000</span>)); <span class="hljs-comment">// 设置消息的处理时间限制为1秒</span><br><br>  <span class="hljs-keyword">auto</span> publisher = node-&gt;<span class="hljs-built_in">create_publisher</span>&lt;std_msgs::msg::<span class="hljs-type">String</span>&gt;(<span class="hljs-string">&quot;topic_name&quot;</span>, qos);<br><br>  <span class="hljs-comment">// 发布消息</span><br>  <span class="hljs-keyword">auto</span> message = std::<span class="hljs-built_in">make_shared</span>&lt;std_msgs::msg::<span class="hljs-type">String</span>&gt;();<br>  message-&gt;data = <span class="hljs-string">&quot;Hello, ROS 2!&quot;</span>;<br>  publisher-&gt;<span class="hljs-built_in">publish</span>(message);<br><br>  rclcpp::<span class="hljs-built_in">spin</span>(node);<br>  rclcpp::<span class="hljs-built_in">shutdown</span>();<br><br>  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<ol>
+<li>设置消息订阅者的带宽和容忍度：</li>
+</ol>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;rclcpp/rclcpp.hpp&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;std_msgs/msg/string.hpp&quot;</span></span><br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">messageCallback</span><span class="hljs-params">(<span class="hljs-type">const</span> std_msgs::msg::<span class="hljs-type">String</span>::SharedPtr msg)</span></span><br><span class="hljs-function"></span>&#123;<br>  <span class="hljs-built_in">RCLCPP_INFO</span>(rclcpp::<span class="hljs-built_in">get_logger</span>(<span class="hljs-string">&quot;subscriber_node&quot;</span>), <span class="hljs-string">&quot;Received message: %s&quot;</span>, msg-&gt;data.<span class="hljs-built_in">c_str</span>());<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> **argv)</span></span><br><span class="hljs-function"></span>&#123;<br>  rclcpp::<span class="hljs-built_in">init</span>(argc, argv);<br>  <span class="hljs-keyword">auto</span> node = rclcpp::Node::<span class="hljs-built_in">make_shared</span>(<span class="hljs-string">&quot;subscriber_node&quot;</span>);<br><br>  <span class="hljs-function">rclcpp::QoS <span class="hljs-title">qos</span><span class="hljs-params">(<span class="hljs-number">10</span>)</span></span>; <span class="hljs-comment">// 设置消息历史策略，保留最近的10个消息</span><br>  qos.<span class="hljs-built_in">bandwidth</span>(<span class="hljs-number">1000</span>); <span class="hljs-comment">// 设置消息的最大发送速率为1000字节/秒</span><br>  qos.<span class="hljs-built_in">durability</span>(rclcpp::DurabilityPolicy::TransientLocal); <span class="hljs-comment">// 设置消息的持久性为Transient Local</span><br><br>  <span class="hljs-keyword">auto</span> subscriber = node-&gt;<span class="hljs-built_in">create_subscription</span>&lt;std_msgs::msg::<span class="hljs-type">String</span>&gt;(<br>    <span class="hljs-string">&quot;topic_name&quot;</span>, qos, messageCallback);<br><br>  rclcpp::<span class="hljs-built_in">spin</span>(node);<br>  rclcpp::<span class="hljs-built_in">shutdown</span>();<br><br>  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<ol>
+<li>设置消息发布者和订阅者的生命周期：</li>
+</ol>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs rust">#include <span class="hljs-string">&quot;rclcpp/rclcpp.hpp&quot;</span><br>#include <span class="hljs-string">&quot;std_msgs/msg/string.hpp&quot;</span><br><br>void <span class="hljs-title function_ invoke__">messageCallback</span>(<span class="hljs-keyword">const</span> std_msgs::msg::<span class="hljs-type">String</span>::SharedPtr msg)<br>&#123;<br>  <span class="hljs-title function_ invoke__">RCLCPP_INFO</span>(rclcpp::<span class="hljs-title function_ invoke__">get_logger</span>(<span class="hljs-string">&quot;subscriber_node&quot;</span>), <span class="hljs-string">&quot;Received message: %s&quot;</span>, msg<span class="hljs-punctuation">-&gt;</span>data.<span class="hljs-title function_ invoke__">c_str</span>());<br>&#125;<br><br>int <span class="hljs-title function_ invoke__">main</span>(int argc, <span class="hljs-type">char</span> **argv)<br>&#123;<br>  rclcpp::<span class="hljs-title function_ invoke__">init</span>(argc, argv);<br>  auto node = rclcpp::Node::<span class="hljs-title function_ invoke__">make_shared</span>(<span class="hljs-string">&quot;node_name&quot;</span>);<br><br>  rclcpp::QoS <span class="hljs-title function_ invoke__">publisher_qos</span>(<span class="hljs-number">10</span>);<br>  publisher_qos.<span class="hljs-title function_ invoke__">keep_all</span>(); <span class="hljs-comment">// 设置消息发布者的历史策略为保留所有消息</span><br>  publisher_qos.<span class="hljs-title function_ invoke__">liveliness</span>(rclcpp::LivelinessPolicyKind::AUTOMATIC); <span class="hljs-comment">// 设置消息发布者的生命周期策略为自动管理</span><br><br>  auto publisher = node<span class="hljs-punctuation">-&gt;</span>create_publisher&lt;std_msgs::msg::<span class="hljs-type">String</span>&gt;(<span class="hljs-string">&quot;topic_name&quot;</span>, publisher_qos);<br><br>  rclcpp::QoS <span class="hljs-title function_ invoke__">subscriber_qos</span>(<span class="hljs-number">10</span>);<br>  subscriber_qos.<span class="hljs-title function_ invoke__">keep_all</span>(); <span class="hljs-comment">// 设置消息订阅者的历史策略为保留所有消息</span><br>  subscriber_qos.<span class="hljs-title function_ invoke__">liveliness</span>(rclcpp::LivelinessPolicyKind::MANUAL_BY_TOPIC); <span class="hljs-comment">// 设置消息订阅者的生命周期策略为手动管理</span><br><br>  auto subscriber = node<span class="hljs-punctuation">-&gt;</span>create_subscription&lt;std_msgs::msg::<span class="hljs-type">String</span>&gt;(<br>    <span class="hljs-string">&quot;topic_name&quot;</span>, subscriber_qos, messageCallback);<br><br>  rclcpp::<span class="hljs-title function_ invoke__">spin</span>(node);<br>  rclcpp::<span class="hljs-title function_ invoke__">shutdown</span>();<br><br>  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<ol>
+<li>设置消息订阅者的优先级和时间同步：</li>
+</ol>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;rclcpp/rclcpp.hpp&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;std_msgs/msg/string.hpp&quot;</span></span><br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">messageCallback</span><span class="hljs-params">(<span class="hljs-type">const</span> std_msgs::msg::<span class="hljs-type">String</span>::SharedPtr msg)</span></span><br><span class="hljs-function"></span>&#123;<br>  <span class="hljs-built_in">RCLCPP_INFO</span>(rclcpp::<span class="hljs-built_in">get_logger</span>(<span class="hljs-string">&quot;subscriber_node&quot;</span>), <span class="hljs-string">&quot;Received message: %s&quot;</span>, msg-&gt;data.<span class="hljs-built_in">c_str</span>());<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> **argv)</span></span><br><span class="hljs-function"></span>&#123;<br>  rclcpp::<span class="hljs-built_in">init</span>(argc, argv);<br>  <span class="hljs-keyword">auto</span> node = rclcpp::Node::<span class="hljs-built_in">make_shared</span>(<span class="hljs-string">&quot;node_name&quot;</span>);<br><br>  <span class="hljs-function">rclcpp::QoS <span class="hljs-title">qos</span><span class="hljs-params">(<span class="hljs-number">10</span>)</span></span>;<br>  qos.<span class="hljs-built_in">best_effort</span>(); <span class="hljs-comment">// 设置消息订阅者的可靠性级别为最佳尽力级别</span><br>  qos.<span class="hljs-built_in">priority</span>(<span class="hljs-number">1</span>); <span class="hljs-comment">// 设置消息订阅者的优先级为1</span><br>  qos.<span class="hljs-built_in">avoid_ros_namespace_conventions</span>(<span class="hljs-literal">true</span>); <span class="hljs-comment">// 设置消息订阅者避免ROS命名空间约定</span><br><br>  <span class="hljs-keyword">auto</span> subscriber = node-&gt;<span class="hljs-built_in">create_subscription</span>&lt;std_msgs::msg::<span class="hljs-type">String</span>&gt;(<br>    <span class="hljs-string">&quot;topic_name&quot;</span>, qos, messageCallback);<br><br>  rclcpp::<span class="hljs-built_in">spin</span>(node);<br>  rclcpp::<span class="hljs-built_in">shutdown</span>();<br><br>  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<ol>
+<li>设置服务端和客户端的QoS策略：</li>
+</ol>
+<figure class="highlight zephir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs zephir">#include <span class="hljs-string">&quot;rclcpp/rclcpp.hpp&quot;</span><br>#include <span class="hljs-string">&quot;example_interfaces/srv/add_two_ints.hpp&quot;</span><br><br>void serviceCallback(<br>  <span class="hljs-keyword">const</span> std::shared_ptr&lt;rmw_request_id_t&gt; request_header,<br>  <span class="hljs-keyword">const</span> std::shared_ptr&lt;example_interfaces::srv::AddTwoInts::Request&gt; request,<br>  std::shared_ptr&lt;example_interfaces::srv::AddTwoInts::Response&gt; response)<br>&#123;<br>  response-&gt;sum = request-&gt;a + request-&gt;b;<br>  RCLCPP_INFO(rclcpp::get_logger(<span class="hljs-string">&quot;service_node&quot;</span>), <span class="hljs-string">&quot;Received request: %d + %d&quot;</span>, request-&gt;a, request-&gt;b);<br>&#125;<br><br><span class="hljs-keyword">int</span> main(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)<br>&#123;<br>  rclcpp::init(argc, argv);<br>  auto node = rclcpp::Node::make_shared(<span class="hljs-string">&quot;service_node&quot;</span>);<br><br>  rclcpp::QoS qos(<span class="hljs-number">10</span>);<br>  qos.best_effort(); <span class="hljs-comment">// 设置服务端和客户端的可靠性级别为最佳尽力级别</span><br><br>  auto service = node-&gt;create_service&lt;example_interfaces::srv::AddTwoInts&gt;(<br>    <span class="hljs-string">&quot;add_two_ints&quot;</span>, serviceCallback, qos);<br><br>  rclcpp::spin(node);<br>  rclcpp::shutdown();<br><br>  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<ol>
+<li>设置参数读取器的QoS策略：</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;rclcpp/rclcpp.hpp&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;rclcpp/parameter.hpp&quot;</span></span><br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> **argv)</span></span><br><span class="hljs-function"></span>&#123;<br>  rclcpp::<span class="hljs-built_in">init</span>(argc, argv);<br>  <span class="hljs-keyword">auto</span> node = rclcpp::Node::<span class="hljs-built_in">make_shared</span>(<span class="hljs-string">&quot;parameter_node&quot;</span>);<br><br>  <span class="hljs-function">rclcpp::QoS <span class="hljs-title">qos</span><span class="hljs-params">(<span class="hljs-number">10</span>)</span></span>;<br>  qos.<span class="hljs-built_in">best_effort</span>(); <span class="hljs-comment">// 设置参数读取器的可靠性级别为最佳尽力级别</span><br><br>  <span class="hljs-keyword">auto</span> parameter_client = std::<span class="hljs-built_in">make_shared</span>&lt;rclcpp::AsyncParametersClient&gt;(node, <span class="hljs-string">&quot;parameter_node&quot;</span>, qos);<br><br>  <span class="hljs-keyword">auto</span> parameters = parameter_client-&gt;<span class="hljs-built_in">get_parameters</span>(&#123;<span class="hljs-string">&quot;param1&quot;</span>, <span class="hljs-string">&quot;param2&quot;</span>, <span class="hljs-string">&quot;param3&quot;</span>&#125;);<br>  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> param : parameters)<br>  &#123;<br>    <span class="hljs-built_in">RCLCPP_INFO</span>(rclcpp::<span class="hljs-built_in">get_logger</span>(<span class="hljs-string">&quot;parameter_node&quot;</span>), <span class="hljs-string">&quot;Parameter name: %s, value: %s&quot;</span>, param.<span class="hljs-built_in">get_name</span>().<span class="hljs-built_in">c_str</span>(), param.<span class="hljs-built_in">value_to_string</span>().<span class="hljs-built_in">c_str</span>());<br>  &#125;<br><br>  rclcpp::<span class="hljs-built_in">spin</span>(node);<br>  rclcpp::<span class="hljs-built_in">shutdown</span>();<br><br>  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<ol>
+<li>设置时间同步器的QoS策略：</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;rclcpp/rclcpp.hpp&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;rclcpp/clock.hpp&quot;</span></span><br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> **argv)</span></span><br><span class="hljs-function"></span>&#123;<br>  rclcpp::<span class="hljs-built_in">init</span>(argc, argv);<br>  <span class="hljs-keyword">auto</span> node = rclcpp::Node::<span class="hljs-built_in">make_shared</span>(<span class="hljs-string">&quot;time_sync_node&quot;</span>);<br><br>  <span class="hljs-function">rclcpp::QoS <span class="hljs-title">qos</span><span class="hljs-params">(<span class="hljs-number">10</span>)</span></span>;<br>  qos.<span class="hljs-built_in">best_effort</span>(); <span class="hljs-comment">// 设置时间同步器的可靠性级别为最佳尽力级别</span><br><br>  <span class="hljs-keyword">auto</span> time_source = std::<span class="hljs-built_in">make_shared</span>&lt;rclcpp::Clock&gt;(RCL_ROS_TIME); <span class="hljs-comment">// 使用ROS时间源</span><br>  <span class="hljs-keyword">auto</span> time_sync_sub = std::<span class="hljs-built_in">make_shared</span>&lt;rclcpp::TimeSyncSubscription&gt;(node, time_source, qos);<br><br>  rclcpp::<span class="hljs-built_in">spin</span>(node);<br>  rclcpp::<span class="hljs-built_in">shutdown</span>();<br><br>  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<ol>
+<li>设置日志记录器的QoS策略：</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;rclcpp/rclcpp.hpp&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;rclcpp/logging.hpp&quot;</span></span><br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> **argv)</span></span><br><span class="hljs-function"></span>&#123;<br>  rclcpp::<span class="hljs-built_in">init</span>(argc, argv);<br>  <span class="hljs-keyword">auto</span> node = rclcpp::Node::<span class="hljs-built_in">make_shared</span>(<span class="hljs-string">&quot;logger_node&quot;</span>);<br><br>  <span class="hljs-function">rclcpp::QoS <span class="hljs-title">qos</span><span class="hljs-params">(<span class="hljs-number">10</span>)</span></span>;<br>  qos.<span class="hljs-built_in">best_effort</span>(); <span class="hljs-comment">// 设置日志记录器的可靠性级别为最佳尽力级别</span><br><br>  rclcpp::logging::<span class="hljs-built_in">initialize</span>();<br>  rclcpp::logging::<span class="hljs-built_in">set_logger_level</span>(node-&gt;<span class="hljs-built_in">get_logger</span>().<span class="hljs-built_in">get_name</span>(), rclcpp::logging::LogLevel::INFO);<br>  rclcpp::logging::<span class="hljs-built_in">set_logger_qos</span>(qos);<br><br>  <span class="hljs-built_in">RCLCPP_INFO</span>(node-&gt;<span class="hljs-built_in">get_logger</span>(), <span class="hljs-string">&quot;This is a log message.&quot;</span>);<br><br>  rclcpp::<span class="hljs-built_in">spin</span>(node);<br>  rclcpp::<span class="hljs-built_in">shutdown</span>();<br><br>  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<ol>
+<li>设置事件发布器的QoS策略：</li>
+</ol>
+<figure class="highlight zephir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs zephir">#include <span class="hljs-string">&quot;rclcpp/rclcpp.hpp&quot;</span><br>#include <span class="hljs-string">&quot;rclcpp/event.hpp&quot;</span><br><br>void eventCallback(<span class="hljs-keyword">const</span> rclcpp::event::Event::SharedPtr event)<br>&#123;<br>  <span class="hljs-keyword">if</span> (event-&gt;get_event_type() == rclcpp::event::EventType::TIMER_SCHEDULED)<br>  &#123;<br>    RCLCPP_INFO(rclcpp::get_logger(<span class="hljs-string">&quot;event_node&quot;</span>), <span class="hljs-string">&quot;Timer scheduled event triggered.&quot;</span>);<br>  &#125;<br>&#125;<br><br><span class="hljs-keyword">int</span> main(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)<br>&#123;<br>  rclcpp::init(argc, argv);<br>  auto node = rclcpp::Node::make_shared(<span class="hljs-string">&quot;event_node&quot;</span>);<br><br>  rclcpp::QoS qos(<span class="hljs-number">10</span>);<br>  qos.best_effort(); <span class="hljs-comment">// 设置事件发布器的可靠性级别为最佳尽力级别</span><br><br>  auto event_publisher = node-&gt;create_publisher&lt;rclcpp::event::Event&gt;(<br>    <span class="hljs-string">&quot;/events&quot;</span>, qos);<br><br>  auto event_timer = node-&gt;create_wall_timer(std::chrono::seconds(<span class="hljs-number">1</span>), [&amp;]() &#123;<br>    auto event = std::make_shared&lt;rclcpp::event::Event&gt;();<br>    event-&gt;set_event_type(rclcpp::event::EventType::TIMER_SCHEDULED);<br>    event_publisher-&gt;publish(event);<br>  &#125;);<br><br>  auto event_subscription = node-&gt;create_subscription&lt;rclcpp::event::Event&gt;(<br>    <span class="hljs-string">&quot;/events&quot;</span>, qos, eventCallback);<br><br>  rclcpp::spin(node);<br>  rclcpp::shutdown();<br><br>  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<ol>
+<li>设置TF广播器的QoS策略：</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;rclcpp/rclcpp.hpp&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;tf2_ros/transform_broadcaster.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;geometry_msgs/msg/transform_stamped.hpp&quot;</span></span><br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> **argv)</span></span><br><span class="hljs-function"></span>&#123;<br>  rclcpp::<span class="hljs-built_in">init</span>(argc, argv);<br>  <span class="hljs-keyword">auto</span> node = rclcpp::Node::<span class="hljs-built_in">make_shared</span>(<span class="hljs-string">&quot;tf_node&quot;</span>);<br><br>  <span class="hljs-function">rclcpp::QoS <span class="hljs-title">qos</span><span class="hljs-params">(<span class="hljs-number">10</span>)</span></span>;<br>  qos.<span class="hljs-built_in">best_effort</span>(); <span class="hljs-comment">// 设置TF广播器的可靠性级别为最佳尽力级别</span><br><br>  <span class="hljs-function">tf2_ros::TransformBroadcaster <span class="hljs-title">tf_broadcaster</span><span class="hljs-params">(node)</span></span>;<br><br>  geometry_msgs::msg::TransformStamped transform;<br>  transform.header.frame_id = <span class="hljs-string">&quot;parent_frame&quot;</span>;<br>  transform.child_frame_id = <span class="hljs-string">&quot;child_frame&quot;</span>;<br>  transform.transform.translation.x = <span class="hljs-number">1.0</span>;<br>  transform.transform.rotation.w = <span class="hljs-number">1.0</span>;<br><br>  <span class="hljs-function">rclcpp::Rate <span class="hljs-title">rate</span><span class="hljs-params">(<span class="hljs-number">1</span>)</span></span>; <span class="hljs-comment">// 广播频率为1Hz</span><br>  <span class="hljs-keyword">while</span> (rclcpp::<span class="hljs-built_in">ok</span>())<br>  &#123;<br>    transform.header.stamp = node-&gt;<span class="hljs-built_in">now</span>();<br>    tf_broadcaster.<span class="hljs-built_in">sendTransform</span>(transform);<br>    rate.<span class="hljs-built_in">sleep</span>();<br>  &#125;<br><br>  rclcpp::<span class="hljs-built_in">shutdown</span>();<br><br>  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/ROS2/" class="category-chain-item">ROS2</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%8E%9F%E5%88%9B/">#原创</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>介绍ROS 2 的服务质量 (QoS) 策略</div>
+      <div>https://qiangsun89.github.io/2023/05/15/介绍ROS-2-的服务质量-QoS-策略/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Qiang Sun</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年5月15日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/05/11/%E5%9C%B0%E5%9B%BE%E5%88%86%E5%89%B2%E7%AE%97%E6%B3%95/" title="地图分割算法">
+                        <span class="hidden-mobile">地图分割算法</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"LEYjQzDk7jo8uqlOQoAEF5qm-gzGzoHsz","appKey":"7bBCyINnLw0akaPjI39pESMN","path":"window.location.pathname","placeholder":"留言","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
