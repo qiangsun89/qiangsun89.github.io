@@ -1,0 +1,808 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Qiang Sun">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="详细介绍ROS2的节点ROS2（Robot Operating System 2）是一个开源的机器人操作系统，主要用于协调机器人的硬件和软件资源。它包括一套工具、库和规则，用来简化创建复杂和健壮的机器人行为。 在ROS2中，节点（Node）是一个可执行的程序，它可以进行计算和处理数据。节点可以发布消息到话题（Topic），订阅话题来接收消息，提供服务（Service），或者调用其他节点的服务。 以">
+<meta property="og:type" content="article">
+<meta property="og:title" content="详细介绍ROS2的节点">
+<meta property="og:url" content="https://qiangsun89.github.io/2023/05/15/%E8%AF%A6%E7%BB%86%E4%BB%8B%E7%BB%8DROS2%E7%9A%84%E8%8A%82%E7%82%B9/index.html">
+<meta property="og:site_name" content="知识的搬运工">
+<meta property="og:description" content="详细介绍ROS2的节点ROS2（Robot Operating System 2）是一个开源的机器人操作系统，主要用于协调机器人的硬件和软件资源。它包括一套工具、库和规则，用来简化创建复杂和健壮的机器人行为。 在ROS2中，节点（Node）是一个可执行的程序，它可以进行计算和处理数据。节点可以发布消息到话题（Topic），订阅话题来接收消息，提供服务（Service），或者调用其他节点的服务。 以">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-05-15T03:15:45.000Z">
+<meta property="article:modified_time" content="2023-05-15T03:29:19.858Z">
+<meta property="article:author" content="Qiang Sun">
+<meta property="article:tag" content="原创">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>详细介绍ROS2的节点 - 知识的搬运工</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"qiangsun89.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"LEYjQzDk7jo8uqlOQoAEF5qm-gzGzoHsz","app_key":"7bBCyINnLw0akaPjI39pESMN","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>知识的搬运工</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="详细介绍ROS2的节点"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-05-15 11:15" pubdate>
+          2023年5月15日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          16k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          134 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">详细介绍ROS2的节点</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="详细介绍ROS2的节点"><a href="#详细介绍ROS2的节点" class="headerlink" title="详细介绍ROS2的节点"></a>详细介绍ROS2的节点</h1><p>ROS2（Robot Operating System 2）是一个开源的机器人操作系统，主要用于协调机器人的硬件和软件资源。它包括一套工具、库和规则，用来简化创建复杂和健壮的机器人行为。</p>
+<p>在ROS2中，节点（Node）是一个可执行的程序，它可以进行计算和处理数据。节点可以发布消息到话题（Topic），订阅话题来接收消息，提供服务（Service），或者调用其他节点的服务。</p>
+<p>以下是ROS2节点的一些关键概念：</p>
+<ol>
+<li><p>节点命名和命名空间：每个节点在ROS2中都有一个唯一的名字，这样其他的节点可以找到并与它进行通信。节点也可以有一个命名空间，这使得在大型系统中组织节点变得更加简单。</p>
+</li>
+<li><p>发布者和订阅者：节点可以作为发布者（Publisher）发布消息到一个话题，或者作为订阅者（Subscriber）从话题接收消息。这种发布-订阅模型使得节点可以在不了解其他节点的情况下进行通信，这有助于创建模块化和可复用的代码。</p>
+</li>
+<li><p>服务和客户端：节点还可以提供服务，这是一种在节点之间进行同步通信的方式。一个节点（服务提供者）提供服务，其他的节点（服务客户端）可以发送请求并等待回复。</p>
+</li>
+<li><p>参数：节点可以有参数，这是一种让用户或其他节点在运行时配置节点行为的方式。</p>
+</li>
+<li><p>生命周期：一些特殊的节点，称为生命周期节点（Lifecycle Node），有预定义的状态和转换。这使得更复杂的行为可以在节点中编码，例如初始化和关闭过程。</p>
+</li>
+</ol>
+<p>ROS2通过使用这些和其他工具，使得机器人的开发变得更加简单和灵活。</p>
+<p>关于ROS2节点的更多信息，我将详细介绍一下每个部分。</p>
+<ol>
+<li>节点命名和命名空间</li>
+</ol>
+<p>每个节点在ROS2中都有一个唯一的名称，这使得其他节点可以找到并与它通信。此外，节点也可以有一个命名空间，使得在大型系统中组织节点更加容易。例如，如果你有一个机器人系统，可以将移动相关的节点放在”移动”命名空间中，将视觉相关的节点放在”视觉”命名空间中。</p>
+<ol>
+<li>发布者和订阅者</li>
+</ol>
+<p>在ROS2中，节点可以发布消息到话题，或者从话题中接收消息。发布者节点将数据发布到一个特定的话题，而订阅者节点订阅这个话题以接收数据。这种发布-订阅模型使得节点之间的通信可以在不了解其他节点的具体实现的情况下进行，从而有助于创建模块化和可复用的代码。</p>
+<ol>
+<li>服务和客户端</li>
+</ol>
+<p>除了发布和订阅消息，节点还可以提供或使用服务。服务是一种同步通信的形式，允许一个节点（服务提供者）接收请求，处理请求并返回响应。服务客户端是一个发送服务请求并等待响应的节点。</p>
+<ol>
+<li>参数</li>
+</ol>
+<p>参数是ROS2节点的一种配置方式，它允许在运行时改变节点的行为。参数可以是各种类型，包括整数、浮点数、字符串、布尔值、数组等。参数可以在启动节点时设置，也可以在节点运行时动态改变。</p>
+<ol>
+<li>生命周期节点</li>
+</ol>
+<p>生命周期节点是ROS2中的一个特殊类型的节点，它具有预定义的状态和转换。这些状态包括未配置、已配置、激活、未激活和关闭。生命周期节点的目的是为了提供更细粒度的控制节点的运行状态，特别是对于需要进行初始化和关闭过程的节点。</p>
+<h2 id="话题"><a href="#话题" class="headerlink" title="话题"></a>话题</h2><p>有关ROS2节点的更深入的讨论可以涉及到如何在实际中创建和使用节点。以下是一个简单的ROS2 C++节点的创建过程：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;rclcpp/rclcpp.hpp&quot;</span></span><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyNode</span> : <span class="hljs-keyword">public</span> rclcpp::Node<br>&#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">MyNode</span>() : <span class="hljs-built_in">Node</span>(<span class="hljs-string">&quot;my_node&quot;</span>)<br>    &#123;<br>    &#125;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> **argv)</span></span><br><span class="hljs-function"></span>&#123;<br>    rclcpp::<span class="hljs-built_in">init</span>(argc, argv);<br><br>    <span class="hljs-keyword">auto</span> node = std::<span class="hljs-built_in">make_shared</span>&lt;MyNode&gt;();<br><br>    rclcpp::<span class="hljs-built_in">spin</span>(node);<br><br>    rclcpp::<span class="hljs-built_in">shutdown</span>();<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure><br>在这个例子中，我们首先包含了rclcpp/rclcpp.hpp，这是ROS2的C++客户端库。然后我们定义了一个名为MyNode的类，它继承自rclcpp::Node类。在MyNode的构造函数中，我们调用了父类的构造函数，并传入了节点的名字。</p>
+<p>在main函数中，我们首先初始化了ROS2，然后创建了一个MyNode实例。rclcpp::spin(node)使得节点开始运行，等待并处理来自其他节点的消息。当节点不再需要时，我们关闭ROS2。</p>
+<p>在以上的基本节点创建之后，你可能会想要这个节点实际上做一些事情，例如发布或接收消息。下面是一个ROS2 C++节点的例子，它创建了一个发布者：<br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;rclcpp/rclcpp.hpp&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;std_msgs/msg/string.hpp&quot;</span></span><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyPublisherNode</span> : <span class="hljs-keyword">public</span> rclcpp::Node<br>&#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">MyPublisherNode</span>()<br>        : <span class="hljs-built_in">Node</span>(<span class="hljs-string">&quot;my_publisher_node&quot;</span>), <span class="hljs-built_in">count_</span>(<span class="hljs-number">0</span>)<br>    &#123;<br>        publisher_ = <span class="hljs-keyword">this</span>-&gt;<span class="hljs-built_in">create_publisher</span>&lt;std_msgs::msg::<span class="hljs-type">String</span>&gt;(<span class="hljs-string">&quot;topic&quot;</span>, <span class="hljs-number">10</span>);<br>        timer_ = <span class="hljs-keyword">this</span>-&gt;<span class="hljs-built_in">create_wall_timer</span>(<br>            <span class="hljs-number">500</span>ms, std::<span class="hljs-built_in">bind</span>(&amp;MyPublisherNode::publish_message, <span class="hljs-keyword">this</span>));<br>    &#125;<br><br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">publish_message</span><span class="hljs-params">()</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-keyword">auto</span> message = std_msgs::msg::<span class="hljs-built_in">String</span>();<br>        message.data = <span class="hljs-string">&quot;Hello, ROS2! &quot;</span> + std::<span class="hljs-built_in">to_string</span>(count_++);<br>        <span class="hljs-built_in">RCLCPP_INFO</span>(<span class="hljs-keyword">this</span>-&gt;<span class="hljs-built_in">get_logger</span>(), <span class="hljs-string">&quot;Publishing: &#x27;%s&#x27;&quot;</span>, message.data.<span class="hljs-built_in">c_str</span>());<br>        publisher_-&gt;<span class="hljs-built_in">publish</span>(message);<br>    &#125;<br><br>    rclcpp::Publisher&lt;std_msgs::msg::<span class="hljs-type">String</span>&gt;::SharedPtr publisher_;<br>    rclcpp::TimerBase::SharedPtr timer_;<br>    <span class="hljs-type">size_t</span> count_;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> **argv)</span></span><br><span class="hljs-function"></span>&#123;<br>    rclcpp::<span class="hljs-built_in">init</span>(argc, argv);<br><br>    <span class="hljs-keyword">auto</span> node = std::<span class="hljs-built_in">make_shared</span>&lt;MyPublisherNode&gt;();<br><br>    rclcpp::<span class="hljs-built_in">spin</span>(node);<br><br>    rclcpp::<span class="hljs-built_in">shutdown</span>();<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure><br>在这个例子中，我们创建了一个MyPublisherNode类，它继承自rclcpp::Node类。在这个类的构造函数中，我们创建了一个发布者和一个定时器。发布者将发布std_msgs::msg::String类型的消息到”topic”话题，而定时器每500毫秒就会调用publish_message函数。</p>
+<p>publish_message函数创建了一个新的std_msgs::msg::String消息，设置了它的数据，然后使用发布者将它发布到话题。</p>
+<p>这个例子展示了如何在ROS2节点中创建发布者和定时器，以及如何发布消息。这是一个基本的例子，但你可以根据你的需要进行修改，例如你可以发布不同类型的消息，或者发布到不同的话题。</p>
+<p>当然，发布消息只是ROS2节点的一部分功能，节点也可以订阅消息。下面是一个ROS2 C++节点的例子，它创建了一个订阅者：<br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;rclcpp/rclcpp.hpp&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;std_msgs/msg/string.hpp&quot;</span></span><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">MySubscriberNode</span> : <span class="hljs-keyword">public</span> rclcpp::Node<br>&#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">MySubscriberNode</span>()<br>        : <span class="hljs-built_in">Node</span>(<span class="hljs-string">&quot;my_subscriber_node&quot;</span>)<br>    &#123;<br>        subscription_ = <span class="hljs-keyword">this</span>-&gt;<span class="hljs-built_in">create_subscription</span>&lt;std_msgs::msg::<span class="hljs-type">String</span>&gt;(<br>            <span class="hljs-string">&quot;topic&quot;</span>, <span class="hljs-number">10</span>, std::<span class="hljs-built_in">bind</span>(&amp;MySubscriberNode::topic_callback, <span class="hljs-keyword">this</span>, std::placeholders::_1));<br>    &#125;<br><br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">topic_callback</span><span class="hljs-params">(<span class="hljs-type">const</span> std_msgs::msg::<span class="hljs-type">String</span>::SharedPtr msg)</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-built_in">RCLCPP_INFO</span>(<span class="hljs-keyword">this</span>-&gt;<span class="hljs-built_in">get_logger</span>(), <span class="hljs-string">&quot;I heard: &#x27;%s&#x27;&quot;</span>, msg-&gt;data.<span class="hljs-built_in">c_str</span>());<br>    &#125;<br><br>    rclcpp::Subscription&lt;std_msgs::msg::<span class="hljs-type">String</span>&gt;::SharedPtr subscription_;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> **argv)</span></span><br><span class="hljs-function"></span>&#123;<br>    rclcpp::<span class="hljs-built_in">init</span>(argc, argv);<br><br>    <span class="hljs-keyword">auto</span> node = std::<span class="hljs-built_in">make_shared</span>&lt;MySubscriberNode&gt;();<br><br>    rclcpp::<span class="hljs-built_in">spin</span>(node);<br><br>    rclcpp::<span class="hljs-built_in">shutdown</span>();<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure></p>
+<p>在这个例子中，我们创建了一个MySubscriberNode类，它继承自rclcpp::Node类。在这个类的构造函数中，我们创建了一个订阅者，它将订阅”topic”话题的std_msgs::msg::String类型的消息。</p>
+<p>当订阅者接收到消息时，它将调用topic_callback函数。这个函数将打印出接收到的消息的数据。</p>
+<p>这个例子展示了如何在ROS2节点中创建订阅者，以及如何接收并处理消息。同样，这是一个基本的例子，你可以根据你的需要进行修改，例如你可以订阅不同类型的消息，或者订阅不同的话题。</p>
+<h2 id="服务"><a href="#服务" class="headerlink" title="服务"></a>服务</h2><p>在ROS2中，除了发布者和订阅者，节点还可以提供服务或者作为客户端调用服务。以下是一个提供服务的ROS2 C++节点的例子：<br><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs rust">#include <span class="hljs-string">&quot;rclcpp/rclcpp.hpp&quot;</span><br>#include <span class="hljs-string">&quot;example_interfaces/srv/add_two_ints.hpp&quot;</span><br><br>class MyServiceNode : public rclcpp::Node<br>&#123;<br>public:<br>    <span class="hljs-title function_ invoke__">MyServiceNode</span>()<br>        : <span class="hljs-title function_ invoke__">Node</span>(<span class="hljs-string">&quot;my_service_node&quot;</span>)<br>    &#123;<br>        service_ = this<span class="hljs-punctuation">-&gt;</span>create_service&lt;example_interfaces::srv::AddTwoInts&gt;(<br>            <span class="hljs-string">&quot;add_two_ints&quot;</span>, std::<span class="hljs-title function_ invoke__">bind</span>(&amp;MyServiceNode::handle_service, this, std::placeholders::_1, std::placeholders::_2));<br>    &#125;<br><br>private:<br>    void <span class="hljs-title function_ invoke__">handle_service</span>(<br>        <span class="hljs-keyword">const</span> std::shared_ptr&lt;example_interfaces::srv::AddTwoInts::Request&gt; request,<br>        std::shared_ptr&lt;example_interfaces::srv::AddTwoInts::Response&gt; response)<br>    &#123;<br>        response<span class="hljs-punctuation">-&gt;</span>sum = request<span class="hljs-punctuation">-&gt;</span>a + request<span class="hljs-punctuation">-&gt;</span>b;<br>        <span class="hljs-title function_ invoke__">RCLCPP_INFO</span>(this<span class="hljs-punctuation">-&gt;</span><span class="hljs-title function_ invoke__">get_logger</span>(), <span class="hljs-string">&quot;Incoming request\na: %ld&quot;</span> <span class="hljs-string">&quot; b: %ld&quot;</span>, request<span class="hljs-punctuation">-&gt;</span>a, request<span class="hljs-punctuation">-&gt;</span>b);<br>        <span class="hljs-title function_ invoke__">RCLCPP_INFO</span>(this<span class="hljs-punctuation">-&gt;</span><span class="hljs-title function_ invoke__">get_logger</span>(), <span class="hljs-string">&quot;sending back response: [%ld]&quot;</span>, (long int)response<span class="hljs-punctuation">-&gt;</span>sum);<br>    &#125;<br><br>    rclcpp::Service&lt;example_interfaces::srv::AddTwoInts&gt;::SharedPtr service_;<br>&#125;;<br><br>int <span class="hljs-title function_ invoke__">main</span>(int argc, <span class="hljs-type">char</span> **argv)<br>&#123;<br>    rclcpp::<span class="hljs-title function_ invoke__">init</span>(argc, argv);<br><br>    auto node = std::make_shared&lt;MyServiceNode&gt;();<br><br>    rclcpp::<span class="hljs-title function_ invoke__">spin</span>(node);<br><br>    rclcpp::<span class="hljs-title function_ invoke__">shutdown</span>();<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure></p>
+<p>在这个例子中，我们创建了一个MyServiceNode类，它继承自rclcpp::Node类。在这个类的构造函数中，我们创建了一个服务，它将提供example_interfaces::srv::AddTwoInts类型的服务。</p>
+<p>当服务收到请求时，它将调用handle_service函数。这个函数接收一个请求对象和一个响应对象。它将请求对象中的两个整数相加，然后将结果设置为响应对象的sum字段。</p>
+<p>这个例子展示了如何在ROS2节点中创建服务，以及如何处理服务请求。和之前的例子一样，这只是一个基本的例子，你可以根据你的需要进行修改，例如你可以提供不同类型的服务。</p>
+<p>在上述服务提供者的例子中，我们创建了一个可以接受两个整数并返回它们之和的服务。但是，要使这个服务有用，我们还需要一个服务客户端来调用这个服务。以下是一个ROS2 C++服务客户端节点的例子：<br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;rclcpp/rclcpp.hpp&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;example_interfaces/srv/add_two_ints.hpp&quot;</span></span><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyClientNode</span> : <span class="hljs-keyword">public</span> rclcpp::Node<br>&#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">MyClientNode</span>()<br>        : <span class="hljs-built_in">Node</span>(<span class="hljs-string">&quot;my_client_node&quot;</span>)<br>    &#123;<br>        client_ = <span class="hljs-keyword">this</span>-&gt;<span class="hljs-built_in">create_client</span>&lt;example_interfaces::srv::AddTwoInts&gt;(<span class="hljs-string">&quot;add_two_ints&quot;</span>);<br>        timer_ = <span class="hljs-keyword">this</span>-&gt;<span class="hljs-built_in">create_wall_timer</span>(<br>            <span class="hljs-number">1000</span>ms, std::<span class="hljs-built_in">bind</span>(&amp;MyClientNode::send_request, <span class="hljs-keyword">this</span>));<br>    &#125;<br><br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">send_request</span><span class="hljs-params">()</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-keyword">auto</span> request = std::<span class="hljs-built_in">make_shared</span>&lt;example_interfaces::srv::AddTwoInts::Request&gt;();<br>        request-&gt;a = <span class="hljs-number">1</span>;<br>        request-&gt;b = <span class="hljs-number">2</span>;<br><br>        <span class="hljs-keyword">auto</span> result = client_-&gt;<span class="hljs-built_in">async_send_request</span>(request);<br>        <span class="hljs-comment">// Handle the response in a callback</span><br>        result.<span class="hljs-built_in">wait_for</span>(std::chrono::<span class="hljs-built_in">seconds</span>(<span class="hljs-number">1</span>));<br>        <span class="hljs-keyword">if</span> (result.<span class="hljs-built_in">valid</span>())<br>        &#123;<br>            <span class="hljs-built_in">RCLCPP_INFO</span>(<span class="hljs-keyword">this</span>-&gt;<span class="hljs-built_in">get_logger</span>(), <span class="hljs-string">&quot;Sum: %ld&quot;</span>, result.<span class="hljs-built_in">get</span>()-&gt;sum);<br>        &#125;<br>    &#125;<br><br>    rclcpp::<span class="hljs-built_in">Client</span>&lt;example_interfaces::srv::AddTwoInts&gt;::SharedPtr client_;<br>    rclcpp::TimerBase::SharedPtr timer_;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> **argv)</span></span><br><span class="hljs-function"></span>&#123;<br>    rclcpp::<span class="hljs-built_in">init</span>(argc, argv);<br><br>    <span class="hljs-keyword">auto</span> node = std::<span class="hljs-built_in">make_shared</span>&lt;MyClientNode&gt;();<br><br>    rclcpp::<span class="hljs-built_in">spin</span>(node);<br><br>    rclcpp::<span class="hljs-built_in">shutdown</span>();<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure></p>
+<p>在这个例子中，我们创建了一个MyClientNode类，它继承自rclcpp::Node类。在这个类的构造函数中，我们创建了一个客户端，它将调用example_interfaces::srv::AddTwoInts类型的服务。我们也创建了一个定时器，它每1000毫秒就会调用send_request函数。</p>
+<p>send_request函数创建了一个新的请求对象，设置了它的a和b字段，然后使用客户端发送了这个请求。我们使用async_send_request函数发送请求，并获取一个future对象，这样我们可以在稍后获取响应。</p>
+<p>这个例子展示了如何在ROS2节点中创建服务客户端，以及如何发送服务请求并处理响应。这只是一个基本的例子，你可以根据你的需要进行修改，例如你可以调用不同类型的服务，或者发送不同的请求。</p>
+<h2 id="节点参数化配置"><a href="#节点参数化配置" class="headerlink" title="节点参数化配置"></a>节点参数化配置</h2><p>此外，ROS2节点还可以与其他节点进行参数化配置，这样可以在运行时动态更改节点的行为。在ROS2中，参数是键值对，键是参数的名称，值是参数的值。下面是一个ROS2 C++节点的例子，它使用了参数：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;rclcpp/rclcpp.hpp&quot;</span></span><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyParameterNode</span> : <span class="hljs-keyword">public</span> rclcpp::Node<br>&#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">MyParameterNode</span>()<br>        : <span class="hljs-built_in">Node</span>(<span class="hljs-string">&quot;my_parameter_node&quot;</span>)<br>    &#123;<br>        <span class="hljs-keyword">this</span>-&gt;<span class="hljs-built_in">declare_parameter</span>&lt;<span class="hljs-type">int</span>&gt;(<span class="hljs-string">&quot;my_parameter&quot;</span>, <span class="hljs-number">42</span>);<br>        timer_ = <span class="hljs-keyword">this</span>-&gt;<span class="hljs-built_in">create_wall_timer</span>(<br>            <span class="hljs-number">1000</span>ms, std::<span class="hljs-built_in">bind</span>(&amp;MyParameterNode::print_parameter, <span class="hljs-keyword">this</span>));<br>    &#125;<br><br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">print_parameter</span><span class="hljs-params">()</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-type">int</span> my_parameter;<br>        <span class="hljs-keyword">this</span>-&gt;<span class="hljs-built_in">get_parameter</span>(<span class="hljs-string">&quot;my_parameter&quot;</span>, my_parameter);<br>        <span class="hljs-built_in">RCLCPP_INFO</span>(<span class="hljs-keyword">this</span>-&gt;<span class="hljs-built_in">get_logger</span>(), <span class="hljs-string">&quot;My parameter is: %d&quot;</span>, my_parameter);<br>    &#125;<br><br>    rclcpp::TimerBase::SharedPtr timer_;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> **argv)</span></span><br><span class="hljs-function"></span>&#123;<br>    rclcpp::<span class="hljs-built_in">init</span>(argc, argv);<br><br>    <span class="hljs-keyword">auto</span> node = std::<span class="hljs-built_in">make_shared</span>&lt;MyParameterNode&gt;();<br><br>    rclcpp::<span class="hljs-built_in">spin</span>(node);<br><br>    rclcpp::<span class="hljs-built_in">shutdown</span>();<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure></p>
+<p>在这个例子中，我们创建了一个MyParameterNode类，它继承自rclcpp::Node类。在这个类的构造函数中，我们声明了一个参数my_parameter，并给它设置了默认值42。我们也创建了一个定时器，它每1000毫秒就会调用print_parameter函数。</p>
+<p>print_parameter函数获取my_parameter参数的值，然后打印出这个值。</p>
+<p>这个例子展示了如何在ROS2节点中声明和获取参数。这只是一个基本的例子，你可以根据你的需要进行修改，例如你可以声明不同类型的参数，或者处理参数的更改。</p>
+<h2 id="动作"><a href="#动作" class="headerlink" title="动作"></a>动作</h2><p>在ROS 2中，Action是一种用于执行长时间运行任务的通信机制。它提供了对任务的目标设置、状态反馈和结果返回的功能。Action的设计目的是支持需要长时间运行的任务，如路径规划、图像处理等。</p>
+<p>Action由三个主要组件组成：action接口定义、action服务器和action客户端。</p>
+<p>Action接口定义：<br>Action接口定义是定义Action消息类型的ROS 2接口。它包括三个主要消息类型：Goal（目标），Feedback（反馈）和Result（结果）。这些消息类型是使用ROS 2的接口描述语言（IDL）编写的，并在编译时生成相应的代码。以下是一个示例的Action接口定义文件（Fibonacci.action）：</p>
+<figure class="highlight nim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs nim"><span class="hljs-comment"># Example action definition for Fibonacci sequence</span><br><br><span class="hljs-comment"># The goal message specifies the order of the Fibonacci sequence to compute</span><br><span class="hljs-type">int32</span> order<br><br><span class="hljs-comment"># The feedback message provides feedback about the computed sequence</span><br><span class="hljs-type">int32</span>[] partial_sequence<br><br><span class="hljs-comment"># The result message contains the computed Fibonacci sequence</span><br><span class="hljs-type">int32</span>[] sequence<br><br></code></pre></td></tr></table></figure>
+<p>Action服务器：<br>Action服务器是执行Action任务的节点。它接收来自Action客户端的目标请求，并执行相应的任务。在执行任务的过程中，服务器可以提供反馈给客户端，并最终返回结果。以下是一个简单的Action服务器的C++示例：<br><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><code class="hljs rust">#include <span class="hljs-string">&quot;rclcpp/rclcpp.hpp&quot;</span><br>#include <span class="hljs-string">&quot;example_interfaces/action/fibonacci.hpp&quot;</span><br><br>class MyActionServerNode : public rclcpp::Node<br>&#123;<br>public:<br>    <span class="hljs-title function_ invoke__">MyActionServerNode</span>()<br>        : <span class="hljs-title function_ invoke__">Node</span>(<span class="hljs-string">&quot;my_action_server_node&quot;</span>)<br>    &#123;<br>        using namespace std::placeholders;<br><br>        this<span class="hljs-punctuation">-&gt;</span>action_server_ = rclcpp_action::create_server&lt;example_interfaces::action::Fibonacci&gt;(<br>            this,<br>            <span class="hljs-string">&quot;fibonacci&quot;</span>,<br>            std::<span class="hljs-title function_ invoke__">bind</span>(&amp;MyActionServerNode::handle_goal, this, _1, _2),<br>            std::<span class="hljs-title function_ invoke__">bind</span>(&amp;MyActionServerNode::handle_cancel, this, _1),<br>            std::<span class="hljs-title function_ invoke__">bind</span>(&amp;MyActionServerNode::handle_accepted, this, _1));<br>    &#125;<br><br>private:<br>    rclcpp_action::Server&lt;example_interfaces::action::Fibonacci&gt;::SharedPtr action_server_;<br><br>    rclcpp_action::GoalResponse <span class="hljs-title function_ invoke__">handle_goal</span>(<br>        <span class="hljs-keyword">const</span> rclcpp_action::GoalUUID &amp;uuid,<br>        std::shared_ptr&lt;<span class="hljs-keyword">const</span> example_interfaces::action::Fibonacci::Goal&gt; goal)<br>    &#123;<br>        <span class="hljs-title function_ invoke__">RCLCPP_INFO</span>(this<span class="hljs-punctuation">-&gt;</span><span class="hljs-title function_ invoke__">get_logger</span>(), <span class="hljs-string">&quot;Received goal request with order %d&quot;</span>, goal<span class="hljs-punctuation">-&gt;</span>order);<br>        (void)uuid;<br>        <span class="hljs-comment">// Let&#x27;s accept the goal</span><br>        <span class="hljs-keyword">return</span> rclcpp_action::GoalResponse::ACCEPT_AND_EXECUTE;<br>    &#125;<br><br>    rclcpp_action::CancelResponse <span class="hljs-title function_ invoke__">handle_cancel</span>(<br>        <span class="hljs-keyword">const</span> std::shared_ptr&lt;rclcpp_action::ServerGoalHandle&lt;example_interfaces::action::Fibonacci&gt;&gt; goal_handle)<br>    &#123;<br>        (void)goal_handle;<br>        <span class="hljs-comment">// Accept the cancel request</span><br>        <span class="hljs-keyword">return</span> rclcpp_action::CancelResponse::ACCEPT;<br>    &#125;<br><br>    void <span class="hljs-title function_ invoke__">handle_accepted</span>(<span class="hljs-keyword">const</span> std::shared_ptr&lt;rclcpp_action::ServerGoalHandle&lt;example_interfaces::action::Fibonacci&gt;&gt; goal_handle)<br>    &#123;<br>        using namespace std::placeholders;<br><br>        std::function&lt;<span class="hljs-title function_ invoke__">void</span>()&gt; execute_callback = std::<span class="hljs-title function_ invoke__">bind</span>(&amp;MyActionServerNode::execute, this, _1);<br>        this<span class="hljs-punctuation">-&gt;</span><span class="hljs-title function_ invoke__">execute</span>(goal_handle);<br>    &#125;<br><br>    void <span class="hljs-title function_ invoke__">execute</span>(<span class="hljs-keyword">const</span> std::shared_ptr&lt;rclcpp_action::ServerGoalHandle&lt;example_interfaces::action::Fibonacci&gt;&gt; gh)<br>&#123;<br><span class="hljs-comment">// Execute the action</span><br>rclcpp::Rate <span class="hljs-title function_ invoke__">loop_rate</span>(<span class="hljs-number">1</span>);<br><span class="hljs-keyword">const</span> auto goal = gh<span class="hljs-punctuation">-&gt;</span><span class="hljs-title function_ invoke__">get_goal</span>();<br>auto feedback = std::make_shared&lt;example_interfaces::action::Fibonacci::Feedback&gt;();<br>auto &amp;sequence = feedback<span class="hljs-punctuation">-&gt;</span>sequence;<br>sequence.<span class="hljs-title function_ invoke__">push_back</span>(<span class="hljs-number">0</span>);<br>sequence.<span class="hljs-title function_ invoke__">push_back</span>(<span class="hljs-number">1</span>);<br>auto result = std::make_shared&lt;example_interfaces::action::Fibonacci::<span class="hljs-type">Result</span>&gt;();<br>    <span class="hljs-title function_ invoke__">for</span> (int i = <span class="hljs-number">1</span>; (i &lt; goal<span class="hljs-punctuation">-&gt;</span>order) &amp;&amp; rclcpp::<span class="hljs-title function_ invoke__">ok</span>(); ++i)<br>    &#123;<br>        <span class="hljs-comment">// Check if there is a cancel request</span><br>        <span class="hljs-title function_ invoke__">if</span> (gh<span class="hljs-punctuation">-&gt;</span><span class="hljs-title function_ invoke__">is_canceling</span>())<br>        &#123;<br>            result<span class="hljs-punctuation">-&gt;</span>sequence = sequence;<br>            gh<span class="hljs-punctuation">-&gt;</span><span class="hljs-title function_ invoke__">canceled</span>(result);<br>            <span class="hljs-title function_ invoke__">RCLCPP_INFO</span>(this<span class="hljs-punctuation">-&gt;</span><span class="hljs-title function_ invoke__">get_logger</span>(), <span class="hljs-string">&quot;Goal Canceled&quot;</span>);<br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br>        <span class="hljs-comment">// Update sequence</span><br>        sequence.<span class="hljs-title function_ invoke__">push_back</span>(sequence[i] + sequence[i - <span class="hljs-number">1</span>]);<br>        <span class="hljs-comment">// Provide feedback</span><br>        gh<span class="hljs-punctuation">-&gt;</span><span class="hljs-title function_ invoke__">publish_feedback</span>(feedback);<br>        <span class="hljs-title function_ invoke__">RCLCPP_INFO</span>(this<span class="hljs-punctuation">-&gt;</span><span class="hljs-title function_ invoke__">get_logger</span>(), <span class="hljs-string">&quot;Publish Feedback&quot;</span>);<br><br>        loop_rate.<span class="hljs-title function_ invoke__">sleep</span>();<br>    &#125;<br><br>    <span class="hljs-comment">// Check if goal is done</span><br>    <span class="hljs-title function_ invoke__">if</span> (rclcpp::<span class="hljs-title function_ invoke__">ok</span>())<br>    &#123;<br>        result<span class="hljs-punctuation">-&gt;</span>sequence = sequence;<br>        gh<span class="hljs-punctuation">-&gt;</span><span class="hljs-title function_ invoke__">succeed</span>(result);<br>        <span class="hljs-title function_ invoke__">RCLCPP_INFO</span>(this<span class="hljs-punctuation">-&gt;</span><span class="hljs-title function_ invoke__">get_logger</span>(), <span class="hljs-string">&quot;Goal Succeeded&quot;</span>);<br>    &#125;<br>&#125;<br>&#125;;<br><br>int <span class="hljs-title function_ invoke__">main</span>(int argc, <span class="hljs-type">char</span> **argv)<br>&#123;<br>rclcpp::<span class="hljs-title function_ invoke__">init</span>(argc, argv);<br>auto node = std::make_shared&lt;MyActionServerNode&gt;();<br>rclcpp::<span class="hljs-title function_ invoke__">spin</span>(node);<br>rclcpp::<span class="hljs-title function_ invoke__">shutdown</span>();<br><span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure></p>
+<p>在这个示例中，我们创建了一个名为<code>MyActionServerNode</code>的自定义节点，它继承自<code>rclcpp::Node</code>。在构造函数中，我们使用<code>rclcpp_action::create_server</code>函数创建了一个Action服务器。我们提供了一些回调函数来处理目标请求、取消请求和目标接受的事件。在<code>handle_goal</code>回调中，我们接受并执行目标，然后在<code>handle_accepted</code>回调中执行任务。在<code>execute</code>函数中，我们执行了一个简单的Fibonacci序列计算任务，并在每次迭代时提供反馈。如果接收到取消请求，我们通过调用<code>canceled</code>函数取消任务。当任务完成时，我们通过调用<code>succeed</code>函数将结果发送给客户端。</p>
+<p>Action客户端：<br>Action客户端是发送Action目标请求的节点。它与Action服务器进行通信，并接收来自服务器的反馈和结果。以下是一个简单的Action客户端的C++示例：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;rclcpp/rclcpp.hpp&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;example_interfaces/action/fibonacci.hpp&quot;</span></span><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyActionClientNode</span> : <span class="hljs-keyword">public</span> rclcpp::Node<br>&#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">MyActionClientNode</span>()<br>        : <span class="hljs-built_in">Node</span>(<span class="hljs-string">&quot;my_action_client_node&quot;</span>)<br>    &#123;<br>        <span class="hljs-keyword">this</span>-&gt;action_client_ = rclcpp_action::<span class="hljs-built_in">create_client</span>&lt;example_interfaces::action::Fibonacci&gt;(<br>            <span class="hljs-keyword">this</span>,<br>            <span class="hljs-string">&quot;fibonacci&quot;</span>);<br><br>        <span class="hljs-keyword">this</span>-&gt;<span class="hljs-built_in">send_goal</span>();<br>    &#125;<br><br><span class="hljs-keyword">private</span>:<br>    rclcpp_action::<span class="hljs-built_in">Client</span>&lt;example_interfaces::action::Fibonacci&gt;::SharedPtr action_client_;<br><br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">send_goal</span><span class="hljs-params">()</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std::placeholders;<br><br>        <span class="hljs-built_in">RCLCPP_INFO</span>(<span class="hljs-keyword">this</span>-&gt;<span class="hljs-built_in">get_logger</span>(), <span class="hljs-string">&quot;Sending goal&quot;</span>);<br><br>        <span class="hljs-keyword">auto</span> send_goal_options = rclcpp_action::<span class="hljs-built_in">Client</span>&lt;example_interfaces.action::Fibonacci&gt;::<span class="hljs-built_in">SendGoalOptions</span>();<br>send_goal_options.goal_response_callback =<br>std::<span class="hljs-built_in">bind</span>(&amp;MyActionClientNode::goal_response_callback, <span class="hljs-keyword">this</span>, _1);<br>send_goal_options.feedback_callback =<br>std::<span class="hljs-built_in">bind</span>(&amp;MyActionClientNode::feedback_callback, <span class="hljs-keyword">this</span>, _1, _2);<br>send_goal_options.result_callback =<br>std::<span class="hljs-built_in">bind</span>(&amp;MyActionClientNode::result_callback, <span class="hljs-keyword">this</span>, _1);<br>    <span class="hljs-keyword">auto</span> goal_msg = std::<span class="hljs-built_in">make_shared</span>&lt;example_interfaces::action::Fibonacci::Goal&gt;();<br>    goal_msg-&gt;order = <span class="hljs-number">10</span>; <span class="hljs-comment">// Set the order of the Fibonacci sequence</span><br><br>    <span class="hljs-comment">// Send the goal to the server</span><br>    <span class="hljs-keyword">this</span>-&gt;action_client_-&gt;<span class="hljs-built_in">async_send_goal</span>(goal_msg, send_goal_options);<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">goal_response_callback</span><span class="hljs-params">(std::shared_future&lt;rclcpp_action::ClientGoalHandle&lt;example_interfaces::action::Fibonacci&gt;::SharedPtr&gt; future)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">auto</span> goal_handle = future.<span class="hljs-built_in">get</span>();<br>    <span class="hljs-keyword">if</span> (!goal_handle)<br>    &#123;<br>        <span class="hljs-built_in">RCLCPP_ERROR</span>(<span class="hljs-keyword">this</span>-&gt;<span class="hljs-built_in">get_logger</span>(), <span class="hljs-string">&quot;Goal was rejected by server&quot;</span>);<br>    &#125;<br>    <span class="hljs-keyword">else</span><br>    &#123;<br>        <span class="hljs-built_in">RCLCPP_INFO</span>(<span class="hljs-keyword">this</span>-&gt;<span class="hljs-built_in">get_logger</span>(), <span class="hljs-string">&quot;Goal accepted by server, waiting for result&quot;</span>);<br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">feedback_callback</span><span class="hljs-params">(</span></span><br><span class="hljs-params"><span class="hljs-function">    rclcpp_action::ClientGoalHandle&lt;example_interfaces::action::Fibonacci&gt;::SharedPtr,</span></span><br><span class="hljs-params"><span class="hljs-function">    <span class="hljs-type">const</span> std::shared_ptr&lt;<span class="hljs-type">const</span> example_interfaces::action::Fibonacci::Feedback&gt; feedback)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">RCLCPP_INFO</span>(<span class="hljs-keyword">this</span>-&gt;<span class="hljs-built_in">get_logger</span>(), <span class="hljs-string">&quot;Received feedback&quot;</span>);<br>    <span class="hljs-comment">// Process the feedback received from the server</span><br>    <span class="hljs-comment">// ...</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">result_callback</span><span class="hljs-params">(<span class="hljs-type">const</span> rclcpp_action::ClientGoalHandle&lt;example_interfaces::action::Fibonacci&gt;::WrappedResult &amp;result)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">switch</span> (result.code)<br>    &#123;<br>        <span class="hljs-keyword">case</span> rclcpp_action::ResultCode::SUCCEEDED:<br>            <span class="hljs-built_in">RCLCPP_INFO</span>(<span class="hljs-keyword">this</span>-&gt;<span class="hljs-built_in">get_logger</span>(), <span class="hljs-string">&quot;Goal succeeded&quot;</span>);<br>            <span class="hljs-comment">// Process the result received from the server</span><br>            <span class="hljs-comment">// ...</span><br>            <span class="hljs-keyword">break</span>;<br>        <span class="hljs-keyword">case</span> rclcpp_action::ResultCode::ABORTED:<br>            <span class="hljs-built_in">RCLCPP_ERROR</span>(<span class="hljs-keyword">this</span>-&gt;<span class="hljs-built_in">get_logger</span>(), <span class="hljs-string">&quot;Goal was aborted&quot;</span>);<br>            <span class="hljs-keyword">break</span>;<br>        <span class="hljs-keyword">case</span> rclcpp_action::ResultCode::CANCELED:<br>            <span class="hljs-built_in">RCLCPP_ERROR</span>(<span class="hljs-keyword">this</span>-&gt;<span class="hljs-built_in">get_logger</span>(), <span class="hljs-string">&quot;Goal was canceled&quot;</span>);<br>            <span class="hljs-keyword">break</span>;<br>        <span class="hljs-keyword">default</span>:<br>            <span class="hljs-built_in">RCLCPP_ERROR</span>(<span class="hljs-keyword">this</span>-&gt;<span class="hljs-built_in">get_logger</span>(), <span class="hljs-string">&quot;Unknown result code&quot;</span>);<br>            <span class="hljs-keyword">break</span>;<br>    &#125;<br>    rclcpp::<span class="hljs-built_in">shutdown</span>();<br>&#125;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> **argv)</span></span><br><span class="hljs-function"></span>&#123;<br>rclcpp::<span class="hljs-built_in">init</span>(argc, argv);<br><span class="hljs-keyword">auto</span> node = std::<span class="hljs-built_in">make_shared</span>&lt;MyActionClientNode&gt;();<br>rclcpp::<span class="hljs-built_in">spin</span>(node);<br>rclcpp::<span class="hljs-built_in">shutdown</span>();<br><span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>在这个示例中，我们创建了一个名为<code>MyActionClientNode</code>的自定义节点，它继承自<code>rclcpp::Node</code>。在构造函数中，我们创建了一个Action客户端并调用了<code>send_goal</code>函数来发送目标请求。在<code>send_goal</code>函数中，我们设置了一些回调函数来处理目标响应、反馈和结果。我们创建了一个目标消息并设置了要计算的Fibonacci序列的顺序。然后，我们使用<code>async_send_goal</code>函数将目标发送给服务器。在回调函数中，我们处理目标响应、反馈和结果。当目标成功完成时，我们打印出”Goal succeeded”，并调用<code>rclcpp::shutdown</code>函数来关闭节点。</p>
+<p>这是一个简单的示例，展示了了解Action在ROS 2中的基本概念和用法。你可以根据自己的需求进行进一步的扩展和定制。</p>
+<p>需要注意的是，上述示例代码是一个简化的示例，用于说明Action的基本使用方式。实际应用中，可能还需要处理更多的边界情况、错误处理和状态管理等。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/ROS2/" class="category-chain-item">ROS2</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%8E%9F%E5%88%9B/">#原创</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>详细介绍ROS2的节点</div>
+      <div>https://qiangsun89.github.io/2023/05/15/详细介绍ROS2的节点/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Qiang Sun</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年5月15日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/05/15/%E4%BB%8B%E7%BB%8DROS-2-%E7%9A%84%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F-QoS-%E7%AD%96%E7%95%A5/" title="介绍ROS 2 的服务质量 (QoS) 策略">
+                        <span class="hidden-mobile">介绍ROS 2 的服务质量 (QoS) 策略</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"LEYjQzDk7jo8uqlOQoAEF5qm-gzGzoHsz","appKey":"7bBCyINnLw0akaPjI39pESMN","path":"window.location.pathname","placeholder":"留言","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
