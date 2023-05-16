@@ -16,22 +16,22 @@
   <meta name="author" content="Qiang Sun">
   <meta name="keywords" content="">
   
-    <meta name="description" content="详细介绍ROS2的DDSROS 2（Robot Operating System 2）是一个用于构建机器人系统的开源软件平台，而DDS（Data Distribution Service）是ROS 2中的通信中间件。DDS是一种分布式系统中用于数据交换的标准协议，它提供了可靠、实时的数据通信，适用于各种实时系统，包括机器人控制、物联网设备、工业自动化等。 下面是对ROS 2的DDS的详细介绍：">
+    <meta name="description" content="详细介绍ROS的插件机制ROS（Robot Operating System）是一种为机器人研究和开发提供框架的软件。ROS的设计使得它可以方便地编写和运行用于控制复杂和强大机器人系统的软件。尽管ROS被称为一个”操作系统”，但它更像是一种为机器人提供服务的中间件或者库，这些服务包括硬件抽象、底层设备控制、常用功能的实现，以及消息传递等。 ROS插件（plugin）机制是一种实现模块化、可插拔化的">
 <meta property="og:type" content="article">
-<meta property="og:title" content="详细介绍ROS2的DDS">
-<meta property="og:url" content="https://qiangsun89.github.io/2023/05/15/%E8%AF%A6%E7%BB%86%E4%BB%8B%E7%BB%8DROS2%E7%9A%84DDS/index.html">
+<meta property="og:title" content="详细介绍ROS的插件机制">
+<meta property="og:url" content="https://qiangsun89.github.io/2023/05/16/%E8%AF%A6%E7%BB%86%E4%BB%8B%E7%BB%8DROS%E7%9A%84%E6%8F%92%E4%BB%B6%E6%9C%BA%E5%88%B6/index.html">
 <meta property="og:site_name" content="知识的搬运工">
-<meta property="og:description" content="详细介绍ROS2的DDSROS 2（Robot Operating System 2）是一个用于构建机器人系统的开源软件平台，而DDS（Data Distribution Service）是ROS 2中的通信中间件。DDS是一种分布式系统中用于数据交换的标准协议，它提供了可靠、实时的数据通信，适用于各种实时系统，包括机器人控制、物联网设备、工业自动化等。 下面是对ROS 2的DDS的详细介绍：">
+<meta property="og:description" content="详细介绍ROS的插件机制ROS（Robot Operating System）是一种为机器人研究和开发提供框架的软件。ROS的设计使得它可以方便地编写和运行用于控制复杂和强大机器人系统的软件。尽管ROS被称为一个”操作系统”，但它更像是一种为机器人提供服务的中间件或者库，这些服务包括硬件抽象、底层设备控制、常用功能的实现，以及消息传递等。 ROS插件（plugin）机制是一种实现模块化、可插拔化的">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-05-15T05:54:01.000Z">
-<meta property="article:modified_time" content="2023-05-15T05:57:40.994Z">
+<meta property="article:published_time" content="2023-05-16T09:22:21.000Z">
+<meta property="article:modified_time" content="2023-05-16T09:33:40.058Z">
 <meta property="article:author" content="Qiang Sun">
 <meta property="article:tag" content="原创">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>详细介绍ROS2的DDS - 知识的搬运工</title>
+  <title>详细介绍ROS的插件机制 - 知识的搬运工</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -214,7 +214,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="详细介绍ROS2的DDS"></span>
+            <span id="subtitle" data-typed-text="详细介绍ROS的插件机制"></span>
           
         </div>
 
@@ -225,8 +225,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-05-15 13:54" pubdate>
-          2023年5月15日 下午
+        <time datetime="2023-05-16 17:22" pubdate>
+          2023年5月16日 下午
         </time>
       </span>
     
@@ -237,7 +237,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.8k 字
+          3.4k 字
         
       </span>
     
@@ -248,7 +248,7 @@
         
         
         
-          15 分钟
+          29 分钟
         
       </span>
     
@@ -294,36 +294,46 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">详细介绍ROS2的DDS</h1>
+            <h1 style="display: none">详细介绍ROS的插件机制</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="详细介绍ROS2的DDS"><a href="#详细介绍ROS2的DDS" class="headerlink" title="详细介绍ROS2的DDS"></a>详细介绍ROS2的DDS</h1><p>ROS 2（Robot Operating System 2）是一个用于构建机器人系统的开源软件平台，而DDS（Data Distribution Service）是ROS 2中的通信中间件。DDS是一种分布式系统中用于数据交换的标准协议，它提供了可靠、实时的数据通信，适用于各种实时系统，包括机器人控制、物联网设备、工业自动化等。</p>
-<p>下面是对ROS 2的DDS的详细介绍：</p>
+                <h1 id="详细介绍ROS的插件机制"><a href="#详细介绍ROS的插件机制" class="headerlink" title="详细介绍ROS的插件机制"></a>详细介绍ROS的插件机制</h1><p>ROS（Robot Operating System）是一种为机器人研究和开发提供框架的软件。ROS的设计使得它可以方便地编写和运行用于控制复杂和强大机器人系统的软件。尽管ROS被称为一个”操作系统”，但它更像是一种为机器人提供服务的中间件或者库，这些服务包括硬件抽象、底层设备控制、常用功能的实现，以及消息传递等。</p>
+<p>ROS插件（plugin）机制是一种实现模块化、可插拔化的方式，它允许在不修改现有代码的情况下，扩展现有的功能或添加新的功能。这个机制主要基于C++的插件机制，允许用户在运行时选择和加载不同的插件。</p>
+<p>ROS的插件机制主要通过pluginlib库来实现。pluginlib是一个ROS的工具，用来创建和管理插件，它是ROS插件机制的核心。通过使用pluginlib，用户可以在运行时加载和卸载插件，并可以在不修改现有代码的情况下添加新的功能。</p>
+<p>插件的创建和使用主要分为以下几个步骤：</p>
 <ol>
-<li><p>数据发布与订阅：DDS使用发布-订阅模型来进行数据交换。数据发布者将数据发布到DDS中的主题（Topic），而数据订阅者可以通过订阅相应的主题来接收数据。这种模型支持一对多的通信方式，使得多个模块或节点之间可以方便地进行数据共享。</p>
+<li><p>定义插件接口：首先，需要定义一个插件的接口，这个接口定义了插件需要实现的功能。</p>
 </li>
-<li><p>数据类型支持：DDS支持多种数据类型，包括基本类型（如整数、浮点数等）、复杂类型（如结构体、数组等）以及用户自定义类型。这使得开发者可以根据实际需求定义和传输各种类型的数据。</p>
+<li><p>实现插件：然后，需要实现这个插件，这个插件需要继承自定义的接口，并实现接口中的功能。</p>
 </li>
-<li><p>实时性：DDS提供了实时数据通信的能力，支持严格的时间约束和低延迟。数据可以以实时的方式进行发布和订阅，保证了数据的及时性和准确性。</p>
+<li><p>注册插件：注册插件是通过一个XML文件完成的，这个XML文件描述了插件的类型、插件实现的类的名字，以及插件所在的库等信息。</p>
 </li>
-<li>可靠性：DDS提供了可靠的数据交换机制，确保数据的传输不会丢失或损坏。它使用数据包的确认机制、重传机制和故障恢复机制来保证数据的可靠传输。</li>
-<li>QoS（Quality of Service）支持：DDS通过QoS机制允许开发者根据具体需求来配置数据传输的质量和性能参数。QoS参数包括数据可靠性、带宽限制、优先级、持久性等，这使得开发者可以根据应用的需求进行细粒度的配置和调整。</li>
-<li>多语言支持：DDS支持多种编程语言，包括C++、Python、Java等，这使得开发者可以使用自己熟悉的编程语言进行开发，并在不同语言间进行数据交换和通信。</li>
-<li>扩展性：DDS提供了可扩展的架构，允许开发者根据需要扩展和定制系统。它支持分布式部署，可以在多个计算节点上运行，并且可以与其他通信协议和系统集成。</li>
-<li>数据发现和路由：DDS提供了高效的数据发现和路由机制。节点可以通过DDS进行自动发现，无需手动配置IP地址或端口信息。DDS还支持多种数据路由策略，可以根据数据的属性和需求进行智能路由，确保数据按照最优路径传输。</li>
-<li>安全性：DDS提供了安全性机制，保护数据的机密性和完整性。它支持数据的加密和认证，可以防止数据被非法访问或篡改。这对于机器人系统中涉及敏感信息和安全需求的应用非常重要。</li>
-<li>可视化工具：DDS提供了一些可视化工具，帮助开发者监控和调试数据通信。这些工具可以展示节点之间的通信拓扑、数据流量和性能指标，帮助开发者分析和优化系统的通信性能。</li>
-<li>兼容性：DDS与ROS 2紧密集成，可以方便地与ROS 2的其他组件和功能进行集成。它可以作为ROS 2的一部分使用，提供强大的通信能力，支持ROS 2中的分布式计算和数据交换。</li>
-<li>分布式系统支持：DDS是为分布式系统设计的通信中间件，适用于跨多个计算节点的通信。它支持节点之间的远程通信，可以在网络上的不同计算机上运行，实现分布式计算和协作。</li>
-<li>多样化的通信模式：DDS支持多种通信模式，包括点对点通信、多对多通信和发布-订阅模式。这使得开发者可以根据应用场景和需求选择最合适的通信模式，灵活地进行数据交换。</li>
-<li>低延迟和高吞吐量：DDS使用高效的数据传输协议和优化的通信机制，实现低延迟和高吞吐量的数据交换。这对于实时控制和感知应用非常重要，确保数据的及时性和准确性。</li>
-<li>面向多种平台：DDS是一个跨平台的通信中间件，可以在各种操作系统上运行，包括Linux、Windows、macOS等。这使得开发者可以在不同的硬件平台和操作系统上构建兼容的机器人系统。</li>
-<li>故障恢复和可靠性：DDS具有强大的故障恢复机制，可以在节点故障或网络中断后自动恢复通信。它提供了可靠的数据传输，确保数据不会丢失或损坏，从而提高了系统的可靠性和稳定性。</li>
-<li>标准化和互操作性：DDS是一种标准化的通信协议，具有良好的互操作性。它采用了开放的标准和接口，使得不同厂商和系统之间可以进行数据交换和通信，促进了系统的集成和扩展。</li>
+<li><p>加载和使用插件：最后，可以使用pluginlib库来加载和使用插件。加载插件是通过插件的类型和名字来完成的，加载完成后，就可以调用插件实现的功能了。</p>
+</li>
 </ol>
-<p>总的来说，ROS 2的DDS是一种功能强大的通信中间件，为ROS 2机器人系统提供了可靠、实时的数据交换和通信能力。它支持分布式系统、多样化的通信模式和多种平台，具有低延迟、高吞吐量、故障恢复和可靠性等特性。DDS的标准化和互操作性使得不同系统之间可以无缝集成，为机器人开发提供了更大的灵活性和扩展性。</p>
+<p>总的来说，ROS的插件机制使得ROS的功能可以方便地扩展和修改，它大大提高了ROS的灵活性和可用性，使得ROS能更好地适应不同的机器人系统和应用。</p>
+<p>我们先澄清一下，这里的“插件”在ROS的语境中，是指一种特定的设计模式，即我们可以在运行时动态地加载和卸载功能模块，而无需对现有的代码做任何修改。在ROS中，这种插件通常被实现为C++的类。</p>
+<p>以下是一个具体的例子来详细说明如何在ROS中创建和使用插件：</p>
+<ol>
+<li>定义插件接口：插件接口是一个C++的抽象类，这个类定义了所有插件必须实现的方法。例如，假设我们有一个机器人，我们希望定义一个插件接口，使得任何实现这个接口的插件都可以控制机器人的行动。这个接口可能如下：<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">RobotController</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>  <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-type">void</span> <span class="hljs-title">moveRobot</span><span class="hljs-params">(<span class="hljs-type">double</span> velocity, <span class="hljs-type">double</span> direction)</span> </span>= <span class="hljs-number">0</span>;<br>&#125;;<br><br></code></pre></td></tr></table></figure></li>
+<li>实现插件：接下来，我们需要创建一个插件来实现这个接口。例如，我们可能会创建一个SimpleRobotController的插件，这个插件使得机器人按照一个固定的速度和方向移动：</li>
+</ol>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs angelscript"><span class="hljs-keyword">class</span> <span class="hljs-symbol">SimpleRobotController</span> : <span class="hljs-symbol">public</span> <span class="hljs-symbol">RobotController</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>  <span class="hljs-built_in">void</span> moveRobot(<span class="hljs-built_in">double</span> velocity, <span class="hljs-built_in">double</span> direction)<br>  &#123;<br>    <span class="hljs-comment">// 实现移动机器人的代码</span><br>  &#125;<br>&#125;;<br><br></code></pre></td></tr></table></figure>
+<ol>
+<li>注册插件：然后，我们需要在一个XML文件中注册这个插件。这个XML文件需要包含插件的类型、实现插件的类的名字，以及插件所在的库的名字。例如，这个XML文件可能如下：</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">library</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;libsimple_robot_controller&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">class</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;SimpleRobotController&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;SimpleRobotController&quot;</span> <span class="hljs-attr">base_class_type</span>=<span class="hljs-string">&quot;RobotController&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">description</span>&gt;</span>This is a simple robot controller.<span class="hljs-tag">&lt;/<span class="hljs-name">description</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">class</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">library</span>&gt;</span><br><br></code></pre></td></tr></table></figure>
+<ol>
+<li>加载和使用插件：最后，我们可以使用pluginlib库来加载和使用插件。例如，我们可以创建一个RobotController的对象，然后使用pluginlib来加载SimpleRobotController插件，并通过这个对象来调用插件的方法：</li>
+</ol>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">pluginlib</span>::ClassLoader&lt;RobotController&gt; pl(<span class="hljs-string">&quot;my_robot_package&quot;</span>, <span class="hljs-string">&quot;RobotController&quot;</span>);<br><span class="hljs-attribute">boost</span>::shared_ptr&lt;RobotController&gt; controller = pl.createInstance(<span class="hljs-string">&quot;SimpleRobotController&quot;</span>);<br><span class="hljs-attribute">controller</span>-&gt;moveRobot(<span class="hljs-number">1</span>.<span class="hljs-number">0</span>, <span class="hljs-number">0</span>.<span class="hljs-number">0</span>);<br><br></code></pre></td></tr></table></figure>
+<p>下面是一个CMakeLists.txt的示例：<br><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs scss"><span class="hljs-built_in">cmake_minimum_required</span>(VERSION <span class="hljs-number">2.8</span>.<span class="hljs-number">3</span>)<br><span class="hljs-built_in">project</span>(my_plugin)<br><br><span class="hljs-built_in">find_package</span>(catkin REQUIRED COMPONENTS<br>  roscpp<br>  pluginlib<br>)<br><br><span class="hljs-built_in">catkin_package</span>(<br>  INCLUDE_DIRS include<br>  LIBRARIES my_plugin<br>)<br><br><span class="hljs-built_in">include_directories</span>(<br>  include<br>  $&#123;catkin_INCLUDE_DIRS&#125;<br>)<br><br><span class="hljs-built_in">add_library</span>(my_plugin<br>  src/my_plugin.cpp<br>)<br><br><span class="hljs-built_in">target_link_libraries</span>(my_plugin<br>  $&#123;catkin_LIBRARIES&#125;<br>)<br><br><span class="hljs-built_in">install</span>(TARGETS my_plugin<br>  LIBRARY DESTINATION $&#123;CATKIN_PACKAGE_LIB_DESTINATION&#125;<br>)<br><br></code></pre></td></tr></table></figure><br>在这个示例中，我们首先声明了对roscpp和pluginlib的依赖。然后，我们定义了my_plugin库，并将其链接到ROS和所需的依赖项。</p>
+<p>接下来，让我们来看一个对应的package.xml示例：<br><figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs dust"><span class="language-xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span>?&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">package</span> <span class="hljs-attr">format</span>=<span class="hljs-string">&quot;2&quot;</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;<span class="hljs-name">name</span>&gt;</span>my_plugin<span class="hljs-tag">&lt;/<span class="hljs-name">name</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>0.0.1<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;<span class="hljs-name">description</span>&gt;</span>A plugin example<span class="hljs-tag">&lt;/<span class="hljs-name">description</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml">  <span class="hljs-tag">&lt;<span class="hljs-name">maintainer</span> <span class="hljs-attr">email</span>=<span class="hljs-string">&quot;user@todo.todo&quot;</span>&gt;</span>user<span class="hljs-tag">&lt;/<span class="hljs-name">maintainer</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;<span class="hljs-name">license</span>&gt;</span>TODO<span class="hljs-tag">&lt;/<span class="hljs-name">license</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml">  <span class="hljs-tag">&lt;<span class="hljs-name">buildtool_depend</span>&gt;</span>catkin<span class="hljs-tag">&lt;/<span class="hljs-name">buildtool_depend</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;<span class="hljs-name">build_depend</span>&gt;</span>roscpp<span class="hljs-tag">&lt;/<span class="hljs-name">build_depend</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;<span class="hljs-name">build_depend</span>&gt;</span>pluginlib<span class="hljs-tag">&lt;/<span class="hljs-name">build_depend</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml">  <span class="hljs-tag">&lt;<span class="hljs-name">export</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">pluginlib</span> <span class="hljs-attr">plugin</span>=<span class="hljs-string">&quot;$</span></span></span><span class="hljs-template-variable">&#123;prefix&#125;</span><span class="language-xml"><span class="hljs-tag"><span class="hljs-string">/my_plugin.xml&quot;</span>/&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">export</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">package</span>&gt;</span></span><br><span class="language-xml"></span><br></code></pre></td></tr></table></figure><br>在这个示例中，我们指定了对roscpp和pluginlib的构建依赖项。</p>
+<p>注意，在<export>部分，我们指定了插件的描述文件my_plugin.xml。这个文件将用于描述插件的类型和名称等信息。插件的描述文件通常与package.xml和CMakeLists.txt文件位于同一个目录下。</p>
+<p>最后，在CMakeLists.txt中，确保将插件的描述文件和库文件安装到正确的位置，以便其他包可以找到并使用插件。</p>
+<p>这样，你就可以在ROS中创建和使用插件了。你可以根据你的具体需求和插件实现的功能来扩展和修改这些示例。</p>
 
                 
               </div>
@@ -342,8 +352,15 @@
     
       <span class="category-chain">
         
-  <a href="/categories/ROS2/" class="category-chain-item">ROS2</a>
+  <a href="/categories/slam/" class="category-chain-item">slam</a>
   
+  
+    <span>></span>
+    
+  <a href="/categories/slam/ROS/" class="category-chain-item">ROS</a>
+  
+  
+
   
 
       </span>
@@ -369,8 +386,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>详细介绍ROS2的DDS</div>
-      <div>https://qiangsun89.github.io/2023/05/15/详细介绍ROS2的DDS/</div>
+      <div>详细介绍ROS的插件机制</div>
+      <div>https://qiangsun89.github.io/2023/05/16/详细介绍ROS的插件机制/</div>
     </div>
     <div class="license-meta">
       
@@ -382,7 +399,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年5月15日</div>
+          <div>2023年5月16日</div>
         </div>
       
       
@@ -414,18 +431,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/05/16/%E8%AF%A6%E7%BB%86%E4%BB%8B%E7%BB%8DROS%E7%9A%84%E6%8F%92%E4%BB%B6%E6%9C%BA%E5%88%B6/" title="详细介绍ROS的插件机制">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">详细介绍ROS的插件机制</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/05/15/%E8%AF%A6%E7%BB%86%E4%BB%8B%E7%BB%8DROS2%E7%9A%84%E8%8A%82%E7%82%B9/" title="详细介绍ROS2的节点">
-                        <span class="hidden-mobile">详细介绍ROS2的节点</span>
+                      <a href="/2023/05/15/%E8%AF%A6%E7%BB%86%E4%BB%8B%E7%BB%8DROS2%E7%9A%84DDS/" title="详细介绍ROS2的DDS">
+                        <span class="hidden-mobile">详细介绍ROS2的DDS</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
