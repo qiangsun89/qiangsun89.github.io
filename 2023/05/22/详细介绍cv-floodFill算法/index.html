@@ -16,22 +16,22 @@
   <meta name="author" content="Qiang Sun">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Linux一行代码统计项目代码行数1find . -name &quot;*.cpp&quot; -or -name &quot;*.cc&quot; -or -name &quot;*.h&quot; -or -name &quot;*.hpp&quot; |xargs cat|wc -l">
+    <meta name="description" content="详细介绍cv::floodFill算法OpenCV库中的cv::floodFill函数实现了Flood Fill算法，这是一种常用于计算机图形学的算法。这个算法的目标是确定一个连通区域的像素点，并且可以将这个区域涂成特定的颜色。这个算法从一个种子点开始，寻找所有和种子点颜色（或者在指定的颜色差范围内）相同并且连通的像素点。 cv::floodFill函数的基本形式如下：12345678int cv">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux使用find统计代码行数">
-<meta property="og:url" content="https://qiangsun89.github.io/2023/02/17/Linux%E4%BD%BF%E7%94%A8find%E7%BB%9F%E8%AE%A1%E4%BB%A3%E7%A0%81%E8%A1%8C%E6%95%B0/index.html">
+<meta property="og:title" content="详细介绍cv::floodFill算法">
+<meta property="og:url" content="https://qiangsun89.github.io/2023/05/22/%E8%AF%A6%E7%BB%86%E4%BB%8B%E7%BB%8Dcv-floodFill%E7%AE%97%E6%B3%95/index.html">
 <meta property="og:site_name" content="知识的搬运工">
-<meta property="og:description" content="Linux一行代码统计项目代码行数1find . -name &quot;*.cpp&quot; -or -name &quot;*.cc&quot; -or -name &quot;*.h&quot; -or -name &quot;*.hpp&quot; |xargs cat|wc -l">
+<meta property="og:description" content="详细介绍cv::floodFill算法OpenCV库中的cv::floodFill函数实现了Flood Fill算法，这是一种常用于计算机图形学的算法。这个算法的目标是确定一个连通区域的像素点，并且可以将这个区域涂成特定的颜色。这个算法从一个种子点开始，寻找所有和种子点颜色（或者在指定的颜色差范围内）相同并且连通的像素点。 cv::floodFill函数的基本形式如下：12345678int cv">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-02-17T06:34:18.000Z">
-<meta property="article:modified_time" content="2023-02-17T06:41:02.000Z">
+<meta property="article:published_time" content="2023-05-22T05:59:18.000Z">
+<meta property="article:modified_time" content="2023-05-22T06:03:07.577Z">
 <meta property="article:author" content="Qiang Sun">
 <meta property="article:tag" content="原创">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>Linux使用find统计代码行数 - 知识的搬运工</title>
+  <title>详细介绍cv::floodFill算法 - 知识的搬运工</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -214,7 +214,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Linux使用find统计代码行数"></span>
+            <span id="subtitle" data-typed-text="详细介绍cv::floodFill算法"></span>
           
         </div>
 
@@ -225,8 +225,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-02-17 14:34" pubdate>
-          2023年2月17日 下午
+        <time datetime="2023-05-22 13:59" pubdate>
+          2023年5月22日 下午
         </time>
       </span>
     
@@ -237,7 +237,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          131 字
+          2.2k 字
         
       </span>
     
@@ -248,7 +248,7 @@
         
         
         
-          2 分钟
+          19 分钟
         
       </span>
     
@@ -294,12 +294,32 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Linux使用find统计代码行数</h1>
+            <h1 style="display: none">详细介绍cv::floodFill算法</h1>
             
             
               <div class="markdown-body">
                 
-                <p>Linux一行代码统计项目代码行数<br><figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sqf"><span class="hljs-built_in">find</span> . -<span class="hljs-built_in">name</span> <span class="hljs-string">&quot;*.cpp&quot;</span> -<span class="hljs-built_in">or</span> -<span class="hljs-built_in">name</span> <span class="hljs-string">&quot;*.cc&quot;</span> -<span class="hljs-built_in">or</span> -<span class="hljs-built_in">name</span> <span class="hljs-string">&quot;*.h&quot;</span> -<span class="hljs-built_in">or</span> -<span class="hljs-built_in">name</span> <span class="hljs-string">&quot;*.hpp&quot;</span> |xargs cat|wc -l<br></code></pre></td></tr></table></figure></p>
+                <h1 id="详细介绍cv-floodFill算法"><a href="#详细介绍cv-floodFill算法" class="headerlink" title="详细介绍cv::floodFill算法"></a>详细介绍cv::floodFill算法</h1><p>OpenCV库中的cv::floodFill函数实现了Flood Fill算法，这是一种常用于计算机图形学的算法。这个算法的目标是确定一个连通区域的像素点，并且可以将这个区域涂成特定的颜色。这个算法从一个种子点开始，寻找所有和种子点颜色（或者在指定的颜色差范围内）相同并且连通的像素点。</p>
+<p>cv::floodFill函数的基本形式如下：<br><figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs gams">int cv::floodFill(InputOutputArray image,<br>                  Point seedPoint,<br>                  <span class="hljs-keyword">Scalar</span> newVal,<br>                  Rect* rect <span class="hljs-comment">= 0,</span><br>                  <span class="hljs-keyword">Scalar</span> <span class="hljs-comment">loDiff = Scalar(),</span><br>                  <span class="hljs-keyword">Scalar</span> <span class="hljs-comment">upDiff = Scalar(),</span><br>                  int <span class="hljs-comment">flags = 4 )</span>;<br><br></code></pre></td></tr></table></figure><br>其中的参数解释如下：</p>
+<ul>
+<li>image：输入图像，同时也是输出的图像，因此该函数会改变输入图像。</li>
+<li>seedPoint：算法开始的种子点。</li>
+<li>newVal：算法完成后连通区域应有的新值。</li>
+<li>rect（可选）：可选输出参数，设定了最小的边界矩形区域包含整个填充区域。</li>
+<li>loDiff（可选）：最大的低色差，用于确定连通区域。</li>
+<li>upDiff（可选）：最大的高色差，用于确定连通区域。</li>
+<li>flags（可选）：操作标记，可以用来设定连接性、颜色模式等。</li>
+</ul>
+<p>在计算机视觉中，Flood Fill算法有很多应用，例如图像分割、对象识别和追踪等。例如，你可以在二值图像中用Flood Fill算法来确定和标记连接的前景区域。</p>
+<h2 id="利用floodFill算法在图像上寻找最大的自由空间"><a href="#利用floodFill算法在图像上寻找最大的自由空间" class="headerlink" title="利用floodFill算法在图像上寻找最大的自由空间"></a>利用floodFill算法在图像上寻找最大的自由空间</h2><p>在这个问题中，”最大的自由空间”可能被定义为图像中最大的连续像素区域，其中所有像素都属于同一种颜色（比如说，全部是白色）。Flood Fill算法可以用来找出图像中所有的这样的连续像素区域。</p>
+<p>以下是一个大致的步骤描述，展示如何使用Flood Fill算法来找出图像中的最大自由空间：</p>
+<ol>
+<li>遍历整个图像的每一个像素。</li>
+<li>对于每一个未被访问过并且颜色为目标颜色（例如白色）的像素，将它作为种子点，使用Flood Fill算法对其进行填充。同时，使用一个特殊的颜色（不是白色，也不是其他任何可能的颜色）来填充这个区域，并记录下这个区域的像素数量。</li>
+<li>保留像素数量最大的区域作为”最大自由空间”，并将其它的区域还原为原来的颜色。</li>
+</ol>
+<p>对于这个算法，你可能需要对OpenCV的cv::floodFill函数进行一些修改，以便可以在函数结束时获取填充区域的像素数量。</p>
+<p>以下是一个使用OpenCV的cv::floodFill函数来寻找图像中最大自由空间的C++示例：<br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;opencv2/opencv.hpp&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-comment">// 读入图像，这里以黑白图像为例</span><br>    cv::Mat image = cv::<span class="hljs-built_in">imread</span>(<span class="hljs-string">&quot;input_image.jpg&quot;</span>, cv::IMREAD_GRAYSCALE);<br>    <span class="hljs-keyword">if</span> (image.<span class="hljs-built_in">empty</span>())<br>    &#123;<br>        std::cout &lt;&lt; <span class="hljs-string">&quot;Could not open or find the image&quot;</span> &lt;&lt; std::endl;<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>    &#125;<br><br>    <span class="hljs-type">int</span> maxArea = <span class="hljs-number">0</span>;<br>    cv::Point maxPt;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> y = <span class="hljs-number">0</span>; y &lt; image.rows; y++)<br>    &#123;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> x = <span class="hljs-number">0</span>; x &lt; image.cols; x++)<br>        &#123;<br>            <span class="hljs-keyword">if</span> (image.<span class="hljs-built_in">at</span>&lt;uchar&gt;(y, x) == <span class="hljs-number">255</span>) <span class="hljs-comment">// 若像素点为白色</span><br>            &#123;<br>                <span class="hljs-type">int</span> area = cv::<span class="hljs-built_in">floodFill</span>(image, cv::<span class="hljs-built_in">Point</span>(x, y), <span class="hljs-built_in">CV_RGB</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">64</span>)); <span class="hljs-comment">// 使用暗色替换</span><br>                <span class="hljs-keyword">if</span> (area &gt; maxArea)<br>                &#123;<br>                    maxArea = area;<br>                    maxPt = cv::<span class="hljs-built_in">Point</span>(x, y);<br>                &#125;<br>            &#125;<br>        &#125;<br>    &#125;<br><br>    cv::<span class="hljs-built_in">floodFill</span>(image, maxPt, <span class="hljs-built_in">CV_RGB</span>(<span class="hljs-number">255</span>, <span class="hljs-number">255</span>, <span class="hljs-number">255</span>)); <span class="hljs-comment">// 用白色填充最大区域</span><br><br>    <span class="hljs-comment">// 将其他区域重新涂回黑色</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> y = <span class="hljs-number">0</span>; y &lt; image.rows; y++)<br>    &#123;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> x = <span class="hljs-number">0</span>; x &lt; image.cols; x++)<br>        &#123;<br>            <span class="hljs-keyword">if</span> (image.<span class="hljs-built_in">at</span>&lt;uchar&gt;(y, x) == <span class="hljs-number">64</span>)<br>            &#123;<br>                cv::<span class="hljs-built_in">floodFill</span>(image, cv::<span class="hljs-built_in">Point</span>(x, y), <span class="hljs-built_in">CV_RGB</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>));<br>            &#125;<br>        &#125;<br>    &#125;<br><br>    cv::<span class="hljs-built_in">imwrite</span>(<span class="hljs-string">&quot;output_image.jpg&quot;</span>, image);<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure><br>这个程序首先打开一个图像，然后遍历图像的每个像素。对于每个白色（255）的像素，我们使用cv::floodFill函数来找到与它连接的所有像素，并将这些像素的颜色改为暗色（64）。我们记录下每个区域的面积，并在完成后，将最大区域的颜色改回为白色，其他区域改回为黑色。</p>
 
                 
               </div>
@@ -318,7 +338,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Linux/" class="category-chain-item">Linux</a>
+  <a href="/categories/opencv/" class="category-chain-item">opencv</a>
   
   
 
@@ -345,8 +365,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Linux使用find统计代码行数</div>
-      <div>https://qiangsun89.github.io/2023/02/17/Linux使用find统计代码行数/</div>
+      <div>详细介绍cv::floodFill算法</div>
+      <div>https://qiangsun89.github.io/2023/05/22/详细介绍cv-floodFill算法/</div>
     </div>
     <div class="license-meta">
       
@@ -358,7 +378,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年2月17日</div>
+          <div>2023年5月22日</div>
         </div>
       
       
@@ -390,18 +410,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/02/18/%E7%BA%BF%E9%80%9F%E5%BA%A6%E4%B8%8E%E8%A7%92%E9%80%9F%E5%BA%A6%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB/" title="线速度与角速度之间的关系">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">线速度与角速度之间的关系</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/02/17/ubuntu18-04%E4%B8%ADROS%E7%89%88%E6%9C%AC%E4%B8%BAmelodic%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85cartographer/" title="ubuntu18.04中ROS版本为melodic环境安装cartographer">
-                        <span class="hidden-mobile">ubuntu18.04中ROS版本为melodic环境安装cartographer</span>
+                      <a href="/2023/05/22/%E5%88%9B%E5%BB%BA%E5%9B%BE%E5%83%8F%E6%97%B6CV-8UC1%EF%BC%8CCV-32FC3%EF%BC%8CCV-32S%E7%AD%89%E5%8F%82%E6%95%B0%E7%9A%84%E5%90%AB%E4%B9%89/" title="创建图像时CV_8UC1，CV_32FC3，CV_32S等参数的含义">
+                        <span class="hidden-mobile">创建图像时CV_8UC1，CV_32FC3，CV_32S等参数的含义</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
