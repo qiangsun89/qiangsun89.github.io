@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>创建图像时CV_8UC1，CV_32FC3，CV_32S等参数的含义</title>
+    <link href="/2023/05/22/%E5%88%9B%E5%BB%BA%E5%9B%BE%E5%83%8F%E6%97%B6CV-8UC1%EF%BC%8CCV-32FC3%EF%BC%8CCV-32S%E7%AD%89%E5%8F%82%E6%95%B0%E7%9A%84%E5%90%AB%E4%B9%89/"/>
+    <url>/2023/05/22/%E5%88%9B%E5%BB%BA%E5%9B%BE%E5%83%8F%E6%97%B6CV-8UC1%EF%BC%8CCV-32FC3%EF%BC%8CCV-32S%E7%AD%89%E5%8F%82%E6%95%B0%E7%9A%84%E5%90%AB%E4%B9%89/</url>
+    
+    <content type="html"><![CDATA[<h1 id="创建图像时CV-8UC1，CV-32FC3，CV-32S等参数的含义"><a href="#创建图像时CV-8UC1，CV-32FC3，CV-32S等参数的含义" class="headerlink" title="创建图像时CV_8UC1，CV_32FC3，CV_32S等参数的含义"></a>创建图像时CV_8UC1，CV_32FC3，CV_32S等参数的含义</h1><p>OpenCV库用于图像处理和计算机视觉，它用一种特定的方式来描述图像数据的类型。在OpenCV中，CV_<bit-depth>{U|S|F}C<number_of_channels>是用来描述图像数据的类型的。</p><p>这种描述方式可以拆解为几个部分来理解：</p><ul><li>CV_：这是所有类型的前缀，代表”Computer Vision”。</li><li><bit-depth>：这是一个数字，代表每一个通道的位深度。例如，8代表8位，32代表32位等。</li><li>{U|S|F}：这是一个字符，表示数据的类型。U代表无符号整型（unsigned），S代表有符号整型（signed），F代表浮点型（float）。</li><li>C<number_of_channels>：这表示图像的通道数。例如，C1表示单通道（例如灰度图），C3表示三通道（通常是BGR颜色图像）。</li></ul><p>举几个例子：</p><ul><li>CV_8UC1：这是8位无符号单通道图像，通常用于灰度图像。</li><li>CV_32FC3：这是32位浮点三通道图像，通常用于彩色图像。</li><li>CV_32S：这是32位有符号的图像，通道数没有明确指定，可能会根据上下文来决定。</li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>opencv</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>三种智能指针的使用场景shared_ptr、unique_ptr和weak_ptr</title>
     <link href="/2023/05/22/%E4%B8%89%E7%A7%8D%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%E7%9A%84%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AFshared-ptr%E3%80%81unique-ptr%E5%92%8Cweak-ptr/"/>
     <url>/2023/05/22/%E4%B8%89%E7%A7%8D%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%E7%9A%84%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AFshared-ptr%E3%80%81unique-ptr%E5%92%8Cweak-ptr/</url>
