@@ -24,7 +24,7 @@
 <meta property="og:description" content="创建图像时CV_8UC1，CV_32FC3，CV_32S等参数的含义OpenCV库用于图像处理和计算机视觉，它用一种特定的方式来描述图像数据的类型。在OpenCV中，CV_{U|S|F}C是用来描述图像数据的类型的。 这种描述方式可以拆解为几个部分来理解：  CV_：这是所有类型的前缀，代表”Computer Vision”。 ：这是一个数字，代表每一个通道的位深度。例如，8代表8位，32代表32">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-05-22T05:54:59.000Z">
-<meta property="article:modified_time" content="2023-05-22T05:57:05.156Z">
+<meta property="article:modified_time" content="2023-05-22T06:06:55.331Z">
 <meta property="article:author" content="Qiang Sun">
 <meta property="article:tag" content="原创">
 <meta name="twitter:card" content="summary_large_image">
@@ -237,7 +237,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          429 字
+          707 字
         
       </span>
     
@@ -248,7 +248,7 @@
         
         
         
-          4 分钟
+          6 分钟
         
       </span>
     
@@ -312,6 +312,16 @@
 <li>CV_8UC1：这是8位无符号单通道图像，通常用于灰度图像。</li>
 <li>CV_32FC3：这是32位浮点三通道图像，通常用于彩色图像。</li>
 <li>CV_32S：这是32位有符号的图像，通道数没有明确指定，可能会根据上下文来决定。</li>
+</ul>
+<p>imshow函数在显示图像时，会将各种类型的数据都映射到[0, 255]。</p>
+<p>如下：</p>
+<ul>
+<li><p>如果载入的图像是8位无符号类型（8-bit unsigned），就显示图像本来的样子。</p>
+</li>
+<li><p>如果图像是16位无符号类型（16-bit unsigned）或32位整型（32-bit integer，有符号位），便用像素值除以256。也就是说，值的范围是 [0,255 x 256]映射到[0,255]。</p>
+</li>
+<li><p>如果图像是32位或64位浮点型（32-bit floating-point or 64-bit floating-point），像素值便要乘以255。也就是说，该值的范围是 [0,1]映射到[0,255]。 </p>
+</li>
 </ul>
 
                 
