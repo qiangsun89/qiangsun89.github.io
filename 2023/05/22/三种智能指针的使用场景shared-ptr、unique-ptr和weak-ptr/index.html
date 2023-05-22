@@ -16,22 +16,22 @@
   <meta name="author" content="Qiang Sun">
   <meta name="keywords" content="">
   
-    <meta name="description" content="根据设计模式原理实现map_segmentation算法C++架构下面是一个使用设计模式原理实现地图分割算法的C++架构示例，其中有一个基类MapSegmentation和两个子类DistanceSegmentation和MorphologicalSegmentation，分别实现了不同的分割方法。 如果DistanceSegmentation子类有成员变量double room_upper_li">
+    <meta name="description" content="三种智能指针的使用场景shared_ptr、unique_ptr和weak_ptrC++11引入了三种智能指针：shared_ptr，unique_ptr和weak_ptr，它们用于解决原生指针可能导致的内存泄露和非法引用问题。下面我们分别看一下这三种智能指针的使用场景：  shared_ptr：shared_ptr是一种引用计数的智能指针，当你需要在多个地方共享同一个资源时，可以使用它。它会跟踪">
 <meta property="og:type" content="article">
-<meta property="og:title" content="根据设计模式原理实现map_segmentation算法C++架构">
-<meta property="og:url" content="https://qiangsun89.github.io/2023/05/19/%E6%A0%B9%E6%8D%AE%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%8E%9F%E7%90%86%E5%AE%9E%E7%8E%B0map-segmentation%E7%AE%97%E6%B3%95C-%E6%9E%B6%E6%9E%84/index.html">
+<meta property="og:title" content="三种智能指针的使用场景shared_ptr、unique_ptr和weak_ptr">
+<meta property="og:url" content="https://qiangsun89.github.io/2023/05/22/%E4%B8%89%E7%A7%8D%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%E7%9A%84%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AFshared-ptr%E3%80%81unique-ptr%E5%92%8Cweak-ptr/index.html">
 <meta property="og:site_name" content="知识的搬运工">
-<meta property="og:description" content="根据设计模式原理实现map_segmentation算法C++架构下面是一个使用设计模式原理实现地图分割算法的C++架构示例，其中有一个基类MapSegmentation和两个子类DistanceSegmentation和MorphologicalSegmentation，分别实现了不同的分割方法。 如果DistanceSegmentation子类有成员变量double room_upper_li">
+<meta property="og:description" content="三种智能指针的使用场景shared_ptr、unique_ptr和weak_ptrC++11引入了三种智能指针：shared_ptr，unique_ptr和weak_ptr，它们用于解决原生指针可能导致的内存泄露和非法引用问题。下面我们分别看一下这三种智能指针的使用场景：  shared_ptr：shared_ptr是一种引用计数的智能指针，当你需要在多个地方共享同一个资源时，可以使用它。它会跟踪">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-05-19T03:18:36.000Z">
-<meta property="article:modified_time" content="2023-05-19T03:22:11.424Z">
+<meta property="article:published_time" content="2023-05-22T01:48:47.000Z">
+<meta property="article:modified_time" content="2023-05-22T01:55:20.101Z">
 <meta property="article:author" content="Qiang Sun">
 <meta property="article:tag" content="原创">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>根据设计模式原理实现map_segmentation算法C++架构 - 知识的搬运工</title>
+  <title>三种智能指针的使用场景shared_ptr、unique_ptr和weak_ptr - 知识的搬运工</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -214,7 +214,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="根据设计模式原理实现map_segmentation算法C++架构"></span>
+            <span id="subtitle" data-typed-text="三种智能指针的使用场景shared_ptr、unique_ptr和weak_ptr"></span>
           
         </div>
 
@@ -225,8 +225,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-05-19 11:18" pubdate>
-          2023年5月19日 上午
+        <time datetime="2023-05-22 09:48" pubdate>
+          2023年5月22日 上午
         </time>
       </span>
     
@@ -237,7 +237,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.9k 字
+          3.8k 字
         
       </span>
     
@@ -248,7 +248,7 @@
         
         
         
-          33 分钟
+          32 分钟
         
       </span>
     
@@ -294,17 +294,32 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">根据设计模式原理实现map_segmentation算法C++架构</h1>
+            <h1 style="display: none">三种智能指针的使用场景shared_ptr、unique_ptr和weak_ptr</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="根据设计模式原理实现map-segmentation算法C-架构"><a href="#根据设计模式原理实现map-segmentation算法C-架构" class="headerlink" title="根据设计模式原理实现map_segmentation算法C++架构"></a>根据设计模式原理实现map_segmentation算法C++架构</h1><p>下面是一个使用设计模式原理实现地图分割算法的C++架构示例，其中有一个基类MapSegmentation和两个子类DistanceSegmentation和MorphologicalSegmentation，分别实现了不同的分割方法。</p>
-<p>如果DistanceSegmentation子类有成员变量double room_upper_limit_morphological_和double room_lower_limit_morphological_，而MorphologicalSegmentation子类有成员变量double room_upper_limit_distance_和double room_lower_limit_distance_，那么你可以在各自的子类中添加这些成员变量，并在构造函数中进行初始化。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;memory&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;opencv2/core/core.hpp&gt;</span></span><br><br><span class="hljs-keyword">enum class</span> <span class="hljs-title class_">SegmentationMethod</span> &#123;<br>    Distance,<br>    Morphological<br>&#125;;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">MapSegmentation</span> &#123;<br><span class="hljs-keyword">protected</span>:<br>    <span class="hljs-type">const</span> cv::Mat&amp; map_seg;<br>    <span class="hljs-type">const</span> <span class="hljs-type">double</span> resolution;<br>    <span class="hljs-type">const</span> <span class="hljs-type">double</span> robot_radius;<br><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">MapSegmentation</span>(<span class="hljs-type">const</span> cv::Mat&amp; map_seg, <span class="hljs-type">double</span> resolution, <span class="hljs-type">double</span> robot_radius)<br>        : <span class="hljs-built_in">map_seg</span>(map_seg), <span class="hljs-built_in">resolution</span>(resolution), <span class="hljs-built_in">robot_radius</span>(robot_radius) &#123;&#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-type">void</span> <span class="hljs-title">segmentMap</span><span class="hljs-params">()</span> </span>= <span class="hljs-number">0</span>;<br>    <span class="hljs-comment">// 其他公共接口和成员函数</span><br>&#125;;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">DistanceSegmentation</span> : <span class="hljs-keyword">public</span> MapSegmentation &#123;<br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-type">double</span> room_upper_limit_morphological_;<br>    <span class="hljs-type">double</span> room_lower_limit_morphological_;<br><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">DistanceSegmentation</span>(<span class="hljs-type">const</span> cv::Mat&amp; map_seg, <span class="hljs-type">double</span> resolution, <span class="hljs-type">double</span> robot_radius,<br>                         <span class="hljs-type">double</span> room_upper_limit_morphological, <span class="hljs-type">double</span> room_lower_limit_morphological)<br>        : <span class="hljs-built_in">MapSegmentation</span>(map_seg, resolution, robot_radius),<br>          <span class="hljs-built_in">room_upper_limit_morphological_</span>(room_upper_limit_morphological),<br>          <span class="hljs-built_in">room_lower_limit_morphological_</span>(room_lower_limit_morphological) &#123;&#125;<br><br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">segmentMap</span><span class="hljs-params">()</span> <span class="hljs-keyword">override</span> </span>&#123;<br>        <span class="hljs-comment">// 使用 map_seg、resolution、robot_radius、room_upper_limit_morphological_ 和 room_lower_limit_morphological_ 进行 distance_segmentation 分割方法</span><br>        std::cout &lt;&lt; <span class="hljs-string">&quot;Performing distance-based map segmentation...&quot;</span> &lt;&lt; std::endl;<br>        <span class="hljs-comment">// 具体的实现逻辑</span><br>    &#125;<br>    <span class="hljs-comment">// 其他特定于 distance_segmentation 的接口和成员函数</span><br>&#125;;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">MorphologicalSegmentation</span> : <span class="hljs-keyword">public</span> MapSegmentation &#123;<br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-type">double</span> room_upper_limit_distance_;<br>    <span class="hljs-type">double</span> room_lower_limit_distance_;<br><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">MorphologicalSegmentation</span>(<span class="hljs-type">const</span> cv::Mat&amp; map_seg, <span class="hljs-type">double</span> resolution, <span class="hljs-type">double</span> robot_radius,<br>                              <span class="hljs-type">double</span> room_upper_limit_distance, <span class="hljs-type">double</span> room_lower_limit_distance)<br>        : <span class="hljs-built_in">MapSegmentation</span>(map_seg, resolution, robot_radius),<br>          <span class="hljs-built_in">room_upper_limit_distance_</span>(room_upper_limit_distance),<br>          <span class="hljs-built_in">room_lower_limit_distance_</span>(room_lower_limit_distance) &#123;&#125;<br><br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">segmentMap</span><span class="hljs-params">()</span> <span class="hljs-keyword">override</span> </span>&#123;<br>        <span class="hljs-comment">// 使用 map_seg、resolution、robot_radius、room_upper_limit_distance_ 和 room_lower_limit_distance_ 进行 morphological_segmentation 分割方法</span><br>        std::cout &lt;&lt; <span class="hljs-string">&quot;Performing morphological-based map segmentation...&quot;</span> &lt;&lt; std::endl;<br>        <span class="hljs-comment">// 具体的实现逻辑</span><br>    &#125;<br>    <span class="hljs-comment">// 其他特定于 morphological_segmentation 的接口和成员函数</span><br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    cv::Mat map_seg;  <span class="hljs-comment">// 定义地图</span><br>    <span class="hljs-type">double</span> resolution = <span class="hljs-number">0.1</span>;  <span class="hljs-comment">// 分辨率</span><br>    <span class="hljs-type">double</span> robot_radius = <span class="hljs-number">0.5</span>;  <span class="hljs-comment">// 机器人半径</span><br>    <span class="hljs-type">double</span> room_upper_limit_distance = <span class="hljs-number">1.0</span>;  <span class="hljs-comment">// distance_segmentation 子类的成员变量</span><br>    <span class="hljs-type">double</span> room_lower_limit_distance = <span class="hljs-number">0.5</span>;  <span class="hljs-comment">// distance_segmentation 子类的成员变量</span><br>    <span class="hljs-type">double</span> room_upper_limit_morphological = <span class="hljs-number">3.0</span>;  <span class="hljs-comment">// morphological_segmentation 子类的成员变量</span><br>    <span class="hljs-type">double</span> room_lower_limit_morphological = <span class="hljs-number">2.0</span>; <span class="hljs-comment">// morphological_segmentation 子类的成员变量</span><br>    SegmentationMethod method = SegmentationMethod::Distance;  <span class="hljs-comment">// 选择分割方法</span><br><br>    std::unique_ptr&lt;MapSegmentation&gt; segmentationMethod;<br><br>    <span class="hljs-keyword">if</span> (method == SegmentationMethod::Distance) &#123;<br>        segmentationMethod = std::<span class="hljs-built_in">make_unique</span>&lt;DistanceSegmentation&gt;(map_seg, resolution, robot_radius,<br>                                                                    room_upper_limit_morphological,<br>                                                                    room_lower_limit_morphological);<br>    &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (method == SegmentationMethod::Morphological) &#123;<br>        segmentationMethod = std::<span class="hljs-built_in">make_unique</span>&lt;MorphologicalSegmentation&gt;(map_seg, resolution, robot_radius,<br>                                                                        room_upper_limit_distance,<br>                                                                        room_lower_limit_distance);<br>    &#125;<br><br>    <span class="hljs-keyword">if</span> (segmentationMethod) &#123;<br>        segmentationMethod-&gt;<span class="hljs-built_in">segmentMap</span>();<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
-<p>在main()函数中，我们定义了double room_upper_limit_distance、double room_lower_limit_distance、double room_upper_limit_morphological和double room_lower_limit_morphological作为各自子类的成员变量。然后根据所选的SegmentationMethod，我们使用条件语句创建相应的子类实例，并传递这些成员变量进行初始化。最后，我们检查指针是否有效，并调用segmentMap()函数进行地图分割。</p>
-<p>请根据实际需要调整成员变量的命名和值。</p>
-
+                <h1 id="三种智能指针的使用场景shared-ptr、unique-ptr和weak-ptr"><a href="#三种智能指针的使用场景shared-ptr、unique-ptr和weak-ptr" class="headerlink" title="三种智能指针的使用场景shared_ptr、unique_ptr和weak_ptr"></a>三种智能指针的使用场景shared_ptr、unique_ptr和weak_ptr</h1><p>C++11引入了三种智能指针：shared_ptr，unique_ptr和weak_ptr，它们用于解决原生指针可能导致的内存泄露和非法引用问题。下面我们分别看一下这三种智能指针的使用场景：</p>
+<ol>
+<li>shared_ptr：shared_ptr是一种引用计数的智能指针，当你需要在多个地方共享同一个资源时，可以使用它。它会跟踪引用到某个对象的shared_ptr数量。当最后一个shared_ptr离开其作用范围或者被赋予新的值时，它所指向的对象就会被自动删除。在循环引用的情况下，需要配合使用weak_ptr避免内存泄露。</li>
+<li>unique_ptr：unique_ptr是一种具有严格所有权语义的智能指针，它不允许多个指针指向同一对象。因此，unique_ptr适合在作用域内拥有对象的独占所有权，并且在作用域结束时需要自动释放该对象。例如，它可以用于防止资源泄漏（如打开的文件或分配的内存）。</li>
+<li>weak_ptr：weak_ptr是为了配合shared_ptr而存在的，它可以从一个shared_ptr或者另一个weak_ptr对象构造，其目的是提供对管理对象的访问，但是它并不改变引用计数。你可以把weak_ptr看作是shared_ptr的一个安全版本，用于解决shared_ptr可能存在的循环引用问题。当其所指向的对象被释放后，尝试通过weak_ptr访问对象将抛出一个std::bad_weak_ptr异常。</li>
+</ol>
+<p>在使用智能指针时，应尽量优先选择unique_ptr，如果你确实需要多个所有者，那么应选择shared_ptr。在处理shared_ptr可能产生的循环引用问题时，应使用weak_ptr。</p>
+<p>在深入探讨这些智能指针的使用场景之前，我们需要理解它们的设计原则以及如何正确地使用它们。</p>
+<h2 id="unique-ptr"><a href="#unique-ptr" class="headerlink" title="unique_ptr"></a>unique_ptr</h2><p>unique_ptr的主要用途是管理一个对象的生命周期。当unique_ptr被销毁时，它会自动销毁（或释放）其所有权的对象。这可以确保在任何情况下，包括异常，都可以正确释放资源。</p>
+<p>例如，你可能会在一个函数中创建一个动态数组，并希望这个数组在函数返回或出现异常时被正确地删除。在这种情况下，你可以使用unique_ptr来管理这个数组。</p>
+<h3 id="unique-ptr示例"><a href="#unique-ptr示例" class="headerlink" title="unique_ptr示例"></a>unique_ptr示例</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;memory&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">process</span><span class="hljs-params">(std::unique_ptr&lt;<span class="hljs-type">int</span>&gt; p)</span></span><br><span class="hljs-function"></span>&#123;<br>    std::cout &lt;&lt; <span class="hljs-string">&quot;Inside function: &quot;</span> &lt;&lt; *p &lt;&lt; std::endl;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-function">std::unique_ptr&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">p1</span><span class="hljs-params">(<span class="hljs-keyword">new</span> <span class="hljs-type">int</span>(<span class="hljs-number">10</span>))</span></span>;<br>    <span class="hljs-built_in">process</span>(std::<span class="hljs-built_in">move</span>(p1)); <span class="hljs-comment">// 移动unique_ptr，现在p1不再拥有内存</span><br><br>    <span class="hljs-keyword">if</span> (p1)<br>    &#123;<br>        std::cout &lt;&lt; <span class="hljs-string">&quot;p1 owns the memory\n&quot;</span>;<br>    &#125;<br>    <span class="hljs-keyword">else</span><br>    &#123;<br>        std::cout &lt;&lt; <span class="hljs-string">&quot;p1 doesn&#x27;t own the memory\n&quot;</span>;<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<h2 id="shared-ptr"><a href="#shared-ptr" class="headerlink" title="shared_ptr"></a>shared_ptr</h2><p>shared_ptr的主要用途是在多个对象之间共享所有权。shared_ptr使用引用计数来跟踪有多少个shared_ptr对象共享同一个资源。当最后一个shared_ptr被销毁时，其管理的资源也会被自动释放。</p>
+<p>例如，如果你有一个需要在多个线程之间共享的大对象，并且你希望当最后一个需要它的线程完成时删除这个对象，你就可以使用shared_ptr。</p>
+<h3 id="shared-ptr示例"><a href="#shared-ptr示例" class="headerlink" title="shared_ptr示例"></a>shared_ptr示例</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;memory&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-function">std::shared_ptr&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">p1</span><span class="hljs-params">(<span class="hljs-keyword">new</span> <span class="hljs-type">int</span>(<span class="hljs-number">10</span>))</span></span>;<br>    std::cout &lt;&lt; <span class="hljs-string">&quot;p1 Reference Count: &quot;</span> &lt;&lt; p1.<span class="hljs-built_in">use_count</span>() &lt;&lt; std::endl;<br><br>    std::shared_ptr&lt;<span class="hljs-type">int</span>&gt; p2 = p1; <span class="hljs-comment">// 这里拷贝了 shared_ptr，计数增加</span><br>    std::cout &lt;&lt; <span class="hljs-string">&quot;p2 Reference Count: &quot;</span> &lt;&lt; p2.<span class="hljs-built_in">use_count</span>() &lt;&lt; std::endl;<br>    std::cout &lt;&lt; <span class="hljs-string">&quot;p1 Reference Count: &quot;</span> &lt;&lt; p1.<span class="hljs-built_in">use_count</span>() &lt;&lt; std::endl;<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<ul>
+<li>如何理解shared_ptr是在多个对象之间共享所有权</li>
+</ul>
+<p>shared_ptr是一种智能指针，它允许多个指针引用同一个对象。这是通过引用计数实现的，即每个shared_ptr都会跟踪有多少个shared_ptr实例引用同一个对象。当一个shared_ptr实例被销毁或者重新指向其他对象时，原来对象的引用计数减1，当引用计数减为0时，对象将被自动删除。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;memory&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-function">std::shared_ptr&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">sp1</span><span class="hljs-params">(<span class="hljs-keyword">new</span> <span class="hljs-type">int</span>(<span class="hljs-number">10</span>))</span></span>;<br>    std::cout &lt;&lt; <span class="hljs-string">&quot;sp1&#x27;s value: &quot;</span> &lt;&lt; *sp1 &lt;&lt; std::endl;<br>    std::cout &lt;&lt; <span class="hljs-string">&quot;Use count: &quot;</span> &lt;&lt; sp1.<span class="hljs-built_in">use_count</span>() &lt;&lt; std::endl;<br><br>    std::shared_ptr&lt;<span class="hljs-type">int</span>&gt; sp2 = sp1; <span class="hljs-comment">// 复制shared_ptr，sp1和sp2现在指向同一个对象，引用计数增加</span><br>    std::cout &lt;&lt; <span class="hljs-string">&quot;sp2&#x27;s value: &quot;</span> &lt;&lt; *sp2 &lt;&lt; std::endl;<br>    std::cout &lt;&lt; <span class="hljs-string">&quot;Use count: &quot;</span> &lt;&lt; sp2.<span class="hljs-built_in">use_count</span>() &lt;&lt; std::endl; <span class="hljs-comment">// use_count现在应为2，因为有两个shared_ptr指向同一个对象</span><br><br>    sp1.<span class="hljs-built_in">reset</span>(); <span class="hljs-comment">// sp1不再指向对象，引用计数减1</span><br>    std::cout &lt;&lt; <span class="hljs-string">&quot;After resetting sp1, use count: &quot;</span> &lt;&lt; sp2.<span class="hljs-built_in">use_count</span>() &lt;&lt; std::endl; <span class="hljs-comment">// use_count现在应为1</span><br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure><br>在这个示例中，我们创建了两个shared_ptr，sp1和sp2，它们共享同一个动态分配的int对象。通过调用use_count()函数，我们可以看到每个shared_ptr实例销毁或者重新指向其他对象时引用计数的变化。</p>
+<h2 id="weak-ptr"><a href="#weak-ptr" class="headerlink" title="weak_ptr"></a>weak_ptr</h2><p>weak_ptr的主要用途是避免shared_ptr可能产生的循环引用问题。循环引用问题是指两个或更多的shared_ptr对象互相引用，形成一个循环。这会导致对象无法被正确释放。</p>
+<p>例如，如果你有一个类A和一个类B，并且A有一个指向B的shared_ptr，B也有一个指向A的shared_ptr，这就会产生一个循环引用。解决这个问题的方法就是将其中一个shared_ptr改为weak_ptr。这样，当一方不再需要时，可以被正确地释放。</p>
+<h3 id="weak-ptr示例"><a href="#weak-ptr示例" class="headerlink" title="weak_ptr示例"></a>weak_ptr示例</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;memory&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-function">std::shared_ptr&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">p1</span><span class="hljs-params">(<span class="hljs-keyword">new</span> <span class="hljs-type">int</span>(<span class="hljs-number">10</span>))</span></span>;<br>    std::cout &lt;&lt; <span class="hljs-string">&quot;p1 Reference Count: &quot;</span> &lt;&lt; p1.<span class="hljs-built_in">use_count</span>() &lt;&lt; std::endl;<br><br>    std::weak_ptr&lt;<span class="hljs-type">int</span>&gt; p2 = p1; <span class="hljs-comment">// 这里创建了weak_ptr，引用计数并没有增加</span><br>    std::cout &lt;&lt; <span class="hljs-string">&quot;p1 Reference Count: &quot;</span> &lt;&lt; p1.<span class="hljs-built_in">use_count</span>() &lt;&lt; std::endl;<br><br>    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">auto</span> p3 = p2.<span class="hljs-built_in">lock</span>()) <span class="hljs-comment">// 从 weak_ptr 创建 shared_ptr</span><br>    &#123;<br>        std::cout &lt;&lt; <span class="hljs-string">&quot;p1 Reference Count: &quot;</span> &lt;&lt; p1.<span class="hljs-built_in">use_count</span>() &lt;&lt; std::endl;<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
                 
               </div>
             
@@ -322,15 +337,8 @@
     
       <span class="category-chain">
         
-  <a href="/categories/slam/" class="category-chain-item">slam</a>
+  <a href="/categories/C/" class="category-chain-item">C++</a>
   
-  
-    <span>></span>
-    
-  <a href="/categories/slam/map-segmentation/" class="category-chain-item">map segmentation</a>
-  
-  
-
   
 
       </span>
@@ -356,8 +364,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>根据设计模式原理实现map_segmentation算法C++架构</div>
-      <div>https://qiangsun89.github.io/2023/05/19/根据设计模式原理实现map-segmentation算法C-架构/</div>
+      <div>三种智能指针的使用场景shared_ptr、unique_ptr和weak_ptr</div>
+      <div>https://qiangsun89.github.io/2023/05/22/三种智能指针的使用场景shared-ptr、unique-ptr和weak-ptr/</div>
     </div>
     <div class="license-meta">
       
@@ -369,7 +377,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年5月19日</div>
+          <div>2023年5月22日</div>
         </div>
       
       
@@ -401,18 +409,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/05/22/%E4%B8%89%E7%A7%8D%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%E7%9A%84%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AFshared-ptr%E3%80%81unique-ptr%E5%92%8Cweak-ptr/" title="三种智能指针的使用场景shared_ptr、unique_ptr和weak_ptr">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">三种智能指针的使用场景shared_ptr、unique_ptr和weak_ptr</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/05/19/%E8%AF%A6%E7%BB%86%E4%BB%8B%E7%BB%8DROS%E4%B8%ADgeometry-msgs-Polygon/" title="详细介绍ROS中geometry_msgs/Polygon">
-                        <span class="hidden-mobile">详细介绍ROS中geometry_msgs/Polygon</span>
+                      <a href="/2023/05/19/%E6%A0%B9%E6%8D%AE%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%8E%9F%E7%90%86%E5%AE%9E%E7%8E%B0map-segmentation%E7%AE%97%E6%B3%95C-%E6%9E%B6%E6%9E%84/" title="根据设计模式原理实现map_segmentation算法C++架构">
+                        <span class="hidden-mobile">根据设计模式原理实现map_segmentation算法C++架构</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
