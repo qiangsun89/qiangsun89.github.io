@@ -32,8 +32,10 @@
 <meta property="og:image" content="https://qiangsun89.github.io/2023/05/30/%E6%9C%BA%E5%99%A8%E4%BA%BA%E7%B3%BB%E7%BB%9FROS%E5%AF%BC%E8%88%AA%E8%B0%83%E4%BC%98%E6%8C%87%E5%8D%97/figure17.png">
 <meta property="og:image" content="https://qiangsun89.github.io/2023/05/30/%E6%9C%BA%E5%99%A8%E4%BA%BA%E7%B3%BB%E7%BB%9FROS%E5%AF%BC%E8%88%AA%E8%B0%83%E4%BC%98%E6%8C%87%E5%8D%97/figure18.png">
 <meta property="og:image" content="https://qiangsun89.github.io/2023/05/30/%E6%9C%BA%E5%99%A8%E4%BA%BA%E7%B3%BB%E7%BB%9FROS%E5%AF%BC%E8%88%AA%E8%B0%83%E4%BC%98%E6%8C%87%E5%8D%97/figure21_22.png">
+<meta property="og:image" content="https://qiangsun89.github.io/2023/05/30/%E6%9C%BA%E5%99%A8%E4%BA%BA%E7%B3%BB%E7%BB%9FROS%E5%AF%BC%E8%88%AA%E8%B0%83%E4%BC%98%E6%8C%87%E5%8D%97/figure23_24.png">
+<meta property="og:image" content="https://qiangsun89.github.io/2023/05/30/%E6%9C%BA%E5%99%A8%E4%BA%BA%E7%B3%BB%E7%BB%9FROS%E5%AF%BC%E8%88%AA%E8%B0%83%E4%BC%98%E6%8C%87%E5%8D%97/figure25.png">
 <meta property="article:published_time" content="2023-05-30T02:42:09.000Z">
-<meta property="article:modified_time" content="2023-05-30T10:13:54.615Z">
+<meta property="article:modified_time" content="2023-05-31T01:29:59.695Z">
 <meta property="article:author" content="Qiang Sun">
 <meta property="article:tag" content="原创">
 <meta name="twitter:card" content="summary_large_image">
@@ -247,7 +249,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          10k 字
+          14k 字
         
       </span>
     
@@ -258,7 +260,7 @@
         
         
         
-          86 分钟
+          116 分钟
         
       </span>
     
@@ -413,7 +415,87 @@
 <li>range_min（float32）最小范围值[m]</li>
 <li>range_max（float32）最大范围值[m]</li>
 </ul>
-<p>我们观察到，在搭载的激光扫描仪产品上，如果这些值未正确设置，则将影响定位的质量（请参见图21和22）。我们已经使用了两个激光扫描仪产品，分别是SICK LMS 200和SICK LMS 291。我们在下面提供参数。</p>
+<p>我们观察到，在搭载的激光扫描仪产品上，如果这些值未正确设置，则将影响定位的质量（请参见图21和22）。我们已经使用了两个激光扫描仪产品，分别是SICK LMS 200和SICK LMS 291。我们在下面提供参数。参见：<a target="_blank" rel="noopener" href="http://docs.ros.org/melodic/api/sensor_msgs/html/msg/LaserScan.html\n\n对于LMS">http://docs.ros.org/melodic/api/sensor_msgs/html/msg/LaserScan.html\n\n对于LMS</a> 200，感谢这个Github的问题（<a target="_blank" rel="noopener" href="https://github.com/smichaud/lidar-snowfall/issues/1）。">https://github.com/smichaud/lidar-snowfall/issues/1）。</a></p>
+<p>SICK LMS 200:<br>{</p>
+<ul>
+<li>“range_min”: 0.0,</li>
+<li>“range_max”: 81.0,</li>
+<li>“angle_min”: -1.57079637051,</li>
+<li>“angle_max”: 1.57079637051,</li>
+<li>“angle_increment”: 0.0174532923847,</li>
+<li>“time_increment”: 3.70370362361e-05,</li>
+<li>“scan_time”: 0.0133333336562<br>}</li>
+</ul>
+<p>SICK LMS 291:<br>{</p>
+<ul>
+<li>“range_min”: 0.0,</li>
+<li>“range_max”: 81.0,</li>
+<li>“angle_min”: -1.57079637051,</li>
+<li>“angle_max”: 1.57079637051,</li>
+<li>“angle_increment”: 0.00872664619235,</li>
+<li>“time_increment”: 7.40740724722e-05,</li>
+<li>“scan_time”: 0.0133333336562<br>}</li>
+</ul>
+<h3 id="5-2-测量和运动模型的参数"><a href="#5-2-测量和运动模型的参数" class="headerlink" title="5.2 测量和运动模型的参数"></a>5.2 测量和运动模型的参数</h3><p>在amcl程序包中有一些关于调整激光扫描仪模型（测量）和里程计模型（运动）的参数。请参考程序包页面获取完整列表及其定义。详细讨论需要对[MCL算法（Thrun等人，2005）]有很好的理解，本文不再赘述。我们提供了一个微调这些参数并质量化描述其结果的示例。实际使用的参数应该取决于您的激光扫描仪和机器人。</p>
+<p>对于激光扫描仪模型，默认参数为：<br>{</p>
+<ul>
+<li>“laser_z_hit”: 0.5,</li>
+<li>“laser_sigma_hit”: 0.2,</li>
+<li>“laser_z_rand” :0.5,</li>
+<li>“laser_likelihood_max_dist”: 2.0<br>}</li>
+</ul>
+<p>为了改善我们机器人的定位效果，我们增加了laser_z_hit and和laser_sigma_hit的值，以包含更高的测量噪声。给出的结果参数为：</p>
+<img src="/2023/05/30/%E6%9C%BA%E5%99%A8%E4%BA%BA%E7%B3%BB%E7%BB%9FROS%E5%AF%BC%E8%88%AA%E8%B0%83%E4%BC%98%E6%8C%87%E5%8D%97/figure23_24.png" srcset="/img/loading.gif" lazyload class="">
+<p>图23：默认测量模型参数<br>图24：调整测量模型参数后（增加噪声）</p>
+<p>{</p>
+<ul>
+<li>“laser_z_hit”：0.9，</li>
+<li>“laser_sigma_hit”：0.1，</li>
+<li>“laser_z_rand”：0.5，</li>
+<li>“laser_likelihood_max_dist”：4.0<br>}</li>
+</ul>
+<p>如图23和24所示，很明显，在我们的情况下，将噪声加入到测量模型中有助于定位。对于里程计模型，我们发现里程计在稳定性方面非常可靠。因此，我们调整了参数，使算法假设里程计的噪声很低：</p>
+<p>{</p>
+<ul>
+<li>“kld_err”：0.01，</li>
+<li>“kld_z”：0.99，</li>
+<li>“odom_alpha1”：0.005，</li>
+<li>“odom_alpha2”：0.005，</li>
+<li>“odom_alpha3”：0.005，</li>
+<li>“odom_alpha4”：0.005<br>}</li>
+</ul>
+<p>为了验证上述运动模型参数是否有效，我们还尝试了一组建议使用噪声里程计模型的参数：</p>
+<ol>
+<li>“kld_err”: 0.10</li>
+<li>“kld_z”: 0.5</li>
+<li>“odom_alpha1”: 0.008</li>
+<li>“odom_alpha2”: 0.040</li>
+<li>“odom_alpha3”: 0.004</li>
+<li>“odom_alpha4”: 0.025</li>
+</ol>
+<p>我们观察到当里程计模型嘈杂程度较低时，粒子更加聚集。相反，当嘈杂程度较高时，粒子会更加分散。</p>
+<h3 id="5-3-激光雷达扫描的转换"><a href="#5-3-激光雷达扫描的转换" class="headerlink" title="5.3 激光雷达扫描的转换"></a>5.3 激光雷达扫描的转换</h3><p>有一个 tf 变换，用于将laser_link转换到base_footprint或base_link坐标系中，以指示激光雷达相对于机器人底盘的位置。如果此转换不正确，定位行为很可能会出现奇怪的行为。在这种情况下，我们观察到从环境的墙壁上读取的激光数据不断偏移，以及定位的突然剧烈变化。确保转换正确非常简单；这通常在机器人的 URDF 和 SRDF 规范中处理。但是，如果您使用 rosbag 文件，则可能需要自己发布转换。</p>
+<h2 id="6-恢复行为"><a href="#6-恢复行为" class="headerlink" title="6. 恢复行为"></a>6. 恢复行为</h2><p>机器人导航的一个令人烦恼的问题是机器人可能会被卡住。很幸运的是，导航栈内置了恢复行为。即便如此，有时机器人也会用尽所有可用的恢复行为而不动。因此，我们可能需要找到更为强大的解决方案。ROS导航有两种恢复行为，它们分别是清除代价地图恢复和旋转恢复。清除代价地图恢复基本上是将本地代价地图还原为与全局代价地图相同的状态。旋转恢复是通过原地旋转360度进行恢复。解除机器人的堵塞有时旋转恢复由于旋转失败而无法执行。此时，机器人可能会放弃，因为它已经尝试了所有的恢复行为-清除代价地图和旋转。在大多数实验中，我们观察到当机器人放弃时，实际上有许多方法可以解决机器人的堵塞问题。为了避免放弃，我们使用SMACH不断尝试不同的恢复行为。除常规恢复行为外，还有一些额外的方法可以提高机器人的耐用性并将其从先前无望的狭窄空间中解救出来，例如设置一个距离机器人非常近的临时目标，并返回到先前访问的姿势（即后退）。图25：SMACH中的简单恢复状态。</p>
+<img src="/2023/05/30/%E6%9C%BA%E5%99%A8%E4%BA%BA%E7%B3%BB%E7%BB%9FROS%E5%AF%BC%E8%88%AA%E8%B0%83%E4%BC%98%E6%8C%87%E5%8D%97/figure25.png" srcset="/img/loading.gif" lazyload class="">
+<p>参数<br>通常情况下，ROS恢复行为的参数可以保持默认值。对于清晰的代价地图恢复，如果你的模拟时间（sim_time）相对较高，即路径比较长，你可能需要考虑增加重置距离参数，这样可以移除更大区域的本地代价地图，并且有更好的机会让本地规划器找到一条路径。</p>
+<h2 id="7-动态重构"><a href="#7-动态重构" class="headerlink" title="7 动态重构"></a>7 动态重构</h2><p>ROS导航中最灵活的方面之一就是动态重构，因为不同的参数设置可能对某些情况更有帮助。这里有一个我在移动机器人导航上的视频演示：<a target="_blank" rel="noopener" href="https://youtu.be/1-7GNtR6gVk">https://youtu.be/1-7GNtR6gVk</a>, 当机器人靠近目标时，通常不需要进行过多的动态重新配置。在我们的实验中观察到的一种情况是，即使机器人不需要或者不应该这么做，它也有很大可能会偏离全局路径。因此，我们增加了路径距离的偏差。由于较高的路径距离偏差会让机器人坚持全局路径，但由于误差造成的偏离并不能实际上导致最终目标的达成，因此我们需要一种方法，让机器人在靠近目标时能够毫不犹豫地到达目标。我们选择动态减少路径距离偏差，以强调目标距离偏差。总之，进行更多的实验是找出问题并找到解决方案的最终途径。</p>
+<h2 id="8-问题"><a href="#8-问题" class="headerlink" title="8 问题"></a>8 问题</h2><ol>
+<li><p>卡住了<br>这是我们在使用 ROS 导航时经常遇到的问题。在模拟和实际情况下，机器人会卡住并放弃目标。</p>
+</li>
+<li><p>不同方向的速度不同<br>我们观察到导航栈的一些奇怪行为。当目标相对于 TF 原点设置在负 x 方向时，局部规划器会规划得不够稳定（局部规划轨迹会跳动），机器人移动速度非常慢。但是,当目标设置在+x方向时，dwa本地规划器更加稳定，机器人可以移动得更快。我在Github上报告了这个问题，链接为：<a target="_blank" rel="noopener" href="https://github.com/ros-planning/navigation/issues/503">https://github.com/ros-planning/navigation/issues/503</a> 。目前还没有人尝试解决它。</p>
+</li>
+<li><p>现实与模拟</p>
+</li>
+</ol>
+<p>现实与模拟存在差异。在现实中，存在更多具有各种形状的障碍物。例如，在实验室里有一根竖直的棍子，用于撑门。由于它太细，机器人有时无法检测到它并撞上了它。现实中还存在更复杂的人类活动。</p>
+<ol>
+<li>不一致性</li>
+</ol>
+<p>使用ROS导航堆栈的机器人可能表现出不一致的行为，例如进入门时，本地代价地图会一遍又一遍地生成，每次略有不同，这可能会影响路径规划，特别是当分辨率较低时。此外，机器人没有记忆。它不记得上次是如何从门进入房间的。因此需要重新进行规划。每次尝试进入门时，机器人都会重新开始。因此，如果它以不同的角度进入门，它可能会卡住并放弃尝试。</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[Brock and Khatib, 1999] Brock, O. and Khatib, O.(1999).High-speed navigation using the global dynamic window approach.In Proceedings 1999 IEEE International Conference on Robotics and Automation (Cat.No.99CH36288C) , volume 1, pages 341-346.IEEE.</p>
+<p>[Fox et al., 1997] Fox, D., Burgard, W., and Thrun, S. (1997).The dynamic window approach to collision avoidance.IEEE Robotics &amp; Automation Magazine , 4(1):23-33.</p>
+<p>[Furrer et al., 2016] Furrer, F., Burri, M., Achtelik, M., , and Siegwart, R. (2016).Robot operating system (ros): The complete reference (volume 1) .by A. Koubaa.Cham: Springer International Publishing.</p>
+<p>[Thrun et al., 2005] Thrun, S., Burgard, W., and Fox, D. (2005).Probabilistic robotics .MIT press.</p>
 
                 
               </div>
