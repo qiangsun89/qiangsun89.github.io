@@ -33,7 +33,7 @@
 <meta property="og:image" content="https://qiangsun89.github.io/2023/05/31/%E5%9F%BA%E4%BA%8E%E6%B3%A2%E7%BA%B9%E7%9A%84%E5%9C%B0%E5%9B%BE%E5%88%86%E5%89%B2MAORIS/fig10.png">
 <meta property="og:image" content="https://qiangsun89.github.io/2023/05/31/%E5%9F%BA%E4%BA%8E%E6%B3%A2%E7%BA%B9%E7%9A%84%E5%9C%B0%E5%9B%BE%E5%88%86%E5%89%B2MAORIS/fig11.png">
 <meta property="article:published_time" content="2023-05-31T07:25:46.000Z">
-<meta property="article:modified_time" content="2023-05-31T10:21:59.147Z">
+<meta property="article:modified_time" content="2023-06-01T01:34:04.967Z">
 <meta property="article:author" content="Qiang Sun">
 <meta property="article:tag" content="原创">
 <meta name="twitter:card" content="summary_large_image">
@@ -247,7 +247,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          8.3k 字
+          11k 字
         
       </span>
     
@@ -258,7 +258,7 @@
         
         
         
-          70 分钟
+          89 分钟
         
       </span>
     
@@ -379,6 +379,18 @@
 <p>考虑到我们的数据集中的草图地图没有门，值得注意的是，MAORIS的MCC为0.56，不依赖于区域之间的门进行分割，这与先前的工作[5]不同。图11展示了三种算法在我们的草图数据集上的分割示例。</p>
 <h2 id="第五部分-限制与未来工作"><a href="#第五部分-限制与未来工作" class="headerlink" title="第五部分 限制与未来工作"></a>第五部分 限制与未来工作</h2><p>MAORIS的速度取决于图像的大小。由于该方法是基于像素的，图像中的像素越多，方法的速度就越慢。这个缺点可以通过降低大型图像的分辨率来轻松克服。在Bormann等人的数据集上，当在Intel i7-4712HQ 2.30GHz、16GB RAM的计算机上运行时，MAORIS的平均处理时间为43秒。然而，大部分处理时间来自于2张大型地图。如果去除这两张地图，平均处理时间为8.8秒。在Bormann的数据集上，使用Intel Core i7 2.70GHz的CPU，DuDe方法在1秒内处理了95%的地图[3]，而Voronoi分割则大约需要13秒[2]。在草图数据集上，MAORIS的平均处理时间为6秒。开发一种增量式的MAORIS分割方法将提高处理速度，这将留待未来的工作。</p>
 <p>另一种改进MAORIS的方式是能够处理地图中的杂物。在未来，我们计划研究在分割之前自动去除地图中的杂物的方法，从而使我们能够对杂乱的地图进行分割。我们还计划利用MAORIS分割方法提供的区域来在不同模态的地图之间进行匹配。</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[1] M. Skubic, D. Anderson, S. Blisard, D. Perzanowski, and A. Schultz, “Using a hand-drawn sketch to control a teamof robots,” Autonomous Robots , vol.22, no.4, pp.399–410,Mar.20, 2007, ISSN : 0929-5593, 1573-7527.DOI : 10.1007/s10514-007-9023-1.</p>
+<p>[2] R. Bormann, F. Jordan, W. Li, J. Hampp, and M. H ¨agele, “Room segmentation: Survey, implementation, and analysis,” in IEEE International Conference on Robotics and Automation (ICRA) , IEEE, 2016, pp.1019–1026.</p>
+<p>[3] L. Fermin-Leon, J. Neira, and J.A. Castellanos, “Incremental contour-based topological segmentation for robot exploration,” in IEEE International Conference on Robotics and Automation (ICRA) , May 2017, pp.2554–2561.DOI :10.1109/ICRA.2017.7989297.</p>
+<p>[4] G. Liu, Z. Xi, and J.-M. Lien, “Dual-space decomposition of 2d complex shapes,” in Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition , 2014,pp.4154–4161.</p>
+<p>[5] E. Fabrizi and A. Safﬁotti, “Extracting topology-based maps from gridmaps,” in IEEE International Conference on Robotics and Automation (ICRA) , vol.3, IEEE, 2000,pp.2972–2978.</p>
+<p>[6] J.Park, A. J. Sinclair, R. E. Sherrill, E. A. Doucette, and J. W. Curtis, “Map merging of rotated, corrupted, and different scale maps using rectangular features,” in 2016 IEEE/ION Position, Location and Navigation Symposium (PLANS) , Apr.2016, pp.535–543.DOI : 10.1109/PLANS.2016.7479743.</p>
+<p>[7] S. Ahmed, M. Liwicki, M. Weber, and A. Dengel, “Automatic room detection and room labeling from architectural ﬂoor plans,” in Document Analysis Systems (DAS), 2012 10th IAPR International Workshop on , IEEE, 2012, pp.339–343.</p>
+<p>[8] L.-P .de las Heras, S. Ahmed, M. Liwicki, E. V alveny, and G. S ´anchez, “Statistical segmentation and structural recognition for ﬂoor plan interpretation: Notation invariant structural element recognition,” International Journal on Document Analysis and Recognition (IJDAR) , vol.17, no.3, pp.221–237, Sep. 2014, ISSN : 1433-2833, 1433-2825.DOI : 10.1007/s10032-013-0215-2.</p>
+<p>[9] A. Diosi, G. Taylor, and L. Kleeman, “Interactive SLAM using laser and advanced sonar,” in IEEE International Conference on Robotics and Automation (ICRA) , IEEE, 2005,pp.1103–1108.</p>
+<p>[10] M. Mielle, M. Magnusson, and A. J. Lilienthal, Sketch maps<br>dataset , Sep. 2017.DOI : 10.5281/zenodo.892062.</p>
+<p>[11] O. Wulf, K. O. Arras, H. I. Christensen, and B. Wagner, “2d mapping of cluttered indoor environments by means of 3d perception,” in IEEE International Conference on Robotics and Automation (ICRA) , IEEE, vol.4, 2004, pp.4204–4209.</p>
+<p>[12] D. M. Powers, “Evaluation: From precision, recall and fmeasure to ROC, informedness, markedness and correlation,” Tech.Rep., 2011.</p>
 
                 
               </div>
@@ -806,5 +818,21 @@
   <noscript>
     <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
   </noscript>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
