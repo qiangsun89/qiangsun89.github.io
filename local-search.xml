@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>创建ros2 package并编译</title>
+    <link href="/2023/06/07/%E5%88%9B%E5%BB%BAros2-package%E5%B9%B6%E7%BC%96%E8%AF%91/"/>
+    <url>/2023/06/07/%E5%88%9B%E5%BB%BAros2-package%E5%B9%B6%E7%BC%96%E8%AF%91/</url>
+    
+    <content type="html"><![CDATA[<h1 id="创建ros2-package并编译"><a href="#创建ros2-package并编译" class="headerlink" title="创建ros2 package并编译"></a>创建ros2 package并编译</h1><p>要创建ROS 2包并进行编译，您可以按照以下步骤进行操作：</p><ol><li>设置ROS 2工作空间：</li></ol><p>在您选择的目录中创建一个新的ROS 2工作空间。假设您将其命名为ros2_ws，请执行以下命令：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">mkdir</span> -p ~/ros2_ws/src<br><span class="hljs-built_in">cd</span> ~/ros2_ws<br><br></code></pre></td></tr></table></figure></p><ol><li>初始化工作空间：</li></ol><p>执行以下命令初始化ROS 2工作空间：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">colcon build<br><span class="hljs-built_in">source</span> install/local_setup.bash<br><br></code></pre></td></tr></table></figure></p><ol><li>创建包：</li></ol><p>在src目录下创建一个新的ROS 2包。假设您将其命名为my_package，请执行以下命令：<br><figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs n1ql">cd src<br>ros2 pkg <span class="hljs-keyword">create</span> --<span class="hljs-keyword">build</span>-<span class="hljs-built_in">type</span> ament_cmake my_package<br><br></code></pre></td></tr></table></figure></p><ol><li>编写代码：</li></ol><p>进入新创建的包目录并在其中编写您的ROS 2节点代码。例如，使用文本编辑器打开my_package目录中的my_package.cpp文件：<br><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">cd my<span class="hljs-emphasis">_package</span><br><span class="hljs-emphasis">gedit my_</span>package.cpp<br><br></code></pre></td></tr></table></figure><br>在打开的文件中编写ROS 2节点的代码。这可能涉及创建节点、订阅和发布主题等。</p><ol><li>编辑CMakeLists.txt文件：</li></ol><p>在my_package目录中，编辑CMakeLists.txt文件以确保添加正确的依赖关系和编译指令。</p><ol><li>构建包：</li></ol><p>返回到ROS 2工作空间的根目录，并执行以下命令来构建您的包：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> ~/ros2_ws<br>colcon build<br><br></code></pre></td></tr></table></figure></p><ol><li>运行节点：</li></ol><p>在ROS 2工作空间根目录下，执行以下命令以运行您的ROS 2节点：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">source</span> install/local_setup.bash<br>ros2 run my_package my_node<br><br></code></pre></td></tr></table></figure></p><p>这将执行名为my_node的节点。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>ROS2</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>介绍ROS2节点启动的launch文件</title>
     <link href="/2023/06/06/%E4%BB%8B%E7%BB%8DROS2%E8%8A%82%E7%82%B9%E5%90%AF%E5%8A%A8%E7%9A%84launch%E6%96%87%E4%BB%B6/"/>
     <url>/2023/06/06/%E4%BB%8B%E7%BB%8DROS2%E8%8A%82%E7%82%B9%E5%90%AF%E5%8A%A8%E7%9A%84launch%E6%96%87%E4%BB%B6/</url>
