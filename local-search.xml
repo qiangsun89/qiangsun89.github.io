@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>在VSCode上调试ROS2 C++节点</title>
+    <link href="/2023/06/15/%E5%9C%A8VSCode%E4%B8%8A%E8%B0%83%E8%AF%95ROS2-C-%E8%8A%82%E7%82%B9/"/>
+    <url>/2023/06/15/%E5%9C%A8VSCode%E4%B8%8A%E8%B0%83%E8%AF%95ROS2-C-%E8%8A%82%E7%82%B9/</url>
+    
+    <content type="html"><![CDATA[<h1 id="在VSCode上调试ROS2-C-节点"><a href="#在VSCode上调试ROS2-C-节点" class="headerlink" title="在VSCode上调试ROS2 C++节点"></a>在VSCode上调试ROS2 C++节点</h1><h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>这是一个关于如何使用VSCode调试ROS2 C++节点的小教程。</p><h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>本实现使用了以下工具：</p><ul><li>ROS2 Foxy</li><li>Ubuntu 20.04</li><li>Visual Code 1.79.1</li><li>C/C++ VSCode extension</li></ul><h2 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h2><p>一旦你的C++代码正确实现（至少可以编译），首先要做的是编译软件包并导出符号（允许你在需要停止代码的地方设置断点）：<br><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-bullet">- </span>cd ros<span class="hljs-emphasis">_ws</span><br><span class="hljs-emphasis">- colcon build --symlink-install --cmake-args -DCMAKE_BUILD_</span>TYPE=RelWithDebInfo<br><span class="hljs-bullet">- </span>source install/setup.bash<br></code></pre></td></tr></table></figure><br>第二，我们需要启动GDB服务器以调试CPP代码。在这里，我们将使用localhost:port来创建服务器。您可以选择任何您想要的空闲端口。<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">ros2 <span class="hljs-built_in">run</span> --prefix <span class="hljs-string">&#x27;gdbserver localhost:3000&#x27;</span> package_name executable_name<br></code></pre></td></tr></table></figure><br>第三，我们需要在VSCode上创建一个launch.json文件。换句话说，我们将创建一个自定义的调试配置。在我们的情况下，创建一个GDB客户端并连接到服务器。</p><p>1) Open VSCode on your workspace.<br>2) Go to your side bar, ‘Run and Debug’ section.<br>3) Add a new configuration (Select C++ enviroment or any other)<br>4) On your launch.json file, put the following information</p><p>Launch.json file:<br><figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs prolog">&#123;<br>    <span class="hljs-string">&quot;version&quot;</span>: <span class="hljs-string">&quot;0.2.0&quot;</span>,<br>    <span class="hljs-string">&quot;configurations&quot;</span>: [<br>        &#123;<br>            <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;C++ Debugger&quot;</span>,<br>            <span class="hljs-string">&quot;request&quot;</span>: <span class="hljs-string">&quot;launch&quot;</span>,<br>            <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;cppdbg&quot;</span>,<br>            <span class="hljs-string">&quot;miDebuggerServerAddress&quot;</span>: <span class="hljs-string">&quot;localhost:3000&quot;</span>,<br>            <span class="hljs-string">&quot;cwd&quot;</span>: <span class="hljs-string">&quot;/&quot;</span>,<br>            <span class="hljs-string">&quot;program&quot;</span>: <span class="hljs-string">&quot;[build-path-executable]&quot;</span><br>        &#125;<br>    ]<br>&#125;<br></code></pre></td></tr></table></figure></p><ul><li>name - 您的调试器配置的自定义名称</li><li>request - 在这种情况下我们希望启动客户端</li><li>type - 用于C++调试的cppdbg</li><li>miDebuggerServerAddress - 服务器路径:端口</li><li>cwd - 在哪里找到所有需要的文件。我们使用根目录，因为ROS、软件包和其他需要的文件分布在整个电脑上。</li><li>program - 将[build-path-executable]替换为你的可执行构建文件。你可以在启动服务器时在控制台上找到这个路径。</li></ul><p>最后，正确地使用VSCode的按钮(F5)和面板选项来调试你的代码。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>ROS2</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>利用适应性建议和选择性重采样提高基于栅格的Rao-Blackwellized粒子滤波</title>
     <link href="/2023/06/13/%E5%88%A9%E7%94%A8%E9%80%82%E5%BA%94%E6%80%A7%E5%BB%BA%E8%AE%AE%E5%92%8C%E9%80%89%E6%8B%A9%E6%80%A7%E9%87%8D%E9%87%87%E6%A0%B7%E6%8F%90%E9%AB%98%E5%9F%BA%E4%BA%8E%E6%A0%85%E6%A0%BC%E7%9A%84Rao-Blackwellized%E7%B2%92%E5%AD%90%E6%BB%A4%E6%B3%A2/"/>
     <url>/2023/06/13/%E5%88%A9%E7%94%A8%E9%80%82%E5%BA%94%E6%80%A7%E5%BB%BA%E8%AE%AE%E5%92%8C%E9%80%89%E6%8B%A9%E6%80%A7%E9%87%8D%E9%87%87%E6%A0%B7%E6%8F%90%E9%AB%98%E5%9F%BA%E4%BA%8E%E6%A0%85%E6%A0%BC%E7%9A%84Rao-Blackwellized%E7%B2%92%E5%AD%90%E6%BB%A4%E6%B3%A2/</url>
