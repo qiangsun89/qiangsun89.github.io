@@ -18,15 +18,21 @@
   
     <meta name="description" content="MathJax.Hub.Config({             tex2jax: {             skipTags: [&#39;script&#39;, &#39;noscript&#39;, &#39;style&#39;, &#39;textarea&#39;, &#39;pre&#39;],             inlineMath: [[&#39;$&#39;,&#39;$&#39;]]             }         });">
 <meta property="og:type" content="article">
-<meta property="og:title" content="利用适应性建议和选择性重采样提高基于栅格的Rao-Blackwellized粒子滤波">
+<meta property="og:title" content="利用适应性建议分布和选择性重采样提高基于栅格的Rao-Blackwellized粒子滤波">
 <meta property="og:url" content="https://qiangsun89.github.io/2023/06/13/%E5%88%A9%E7%94%A8%E9%80%82%E5%BA%94%E6%80%A7%E5%BB%BA%E8%AE%AE%E5%92%8C%E9%80%89%E6%8B%A9%E6%80%A7%E9%87%8D%E9%87%87%E6%A0%B7%E6%8F%90%E9%AB%98%E5%9F%BA%E4%BA%8E%E6%A0%85%E6%A0%BC%E7%9A%84Rao-Blackwellized%E7%B2%92%E5%AD%90%E6%BB%A4%E6%B3%A2/index.html">
 <meta property="og:site_name" content="知识的搬运工">
 <meta property="og:description" content="MathJax.Hub.Config({             tex2jax: {             skipTags: [&#39;script&#39;, &#39;noscript&#39;, &#39;style&#39;, &#39;textarea&#39;, &#39;pre&#39;],             inlineMath: [[&#39;$&#39;,&#39;$&#39;]]             }         });">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://qiangsun89.github.io/2023/06/13/%E5%88%A9%E7%94%A8%E9%80%82%E5%BA%94%E6%80%A7%E5%BB%BA%E8%AE%AE%E5%92%8C%E9%80%89%E6%8B%A9%E6%80%A7%E9%87%8D%E9%87%87%E6%A0%B7%E6%8F%90%E9%AB%98%E5%9F%BA%E4%BA%8E%E6%A0%85%E6%A0%BC%E7%9A%84Rao-Blackwellized%E7%B2%92%E5%AD%90%E6%BB%A4%E6%B3%A2/fig1.png">
 <meta property="og:image" content="https://qiangsun89.github.io/2023/06/13/%E5%88%A9%E7%94%A8%E9%80%82%E5%BA%94%E6%80%A7%E5%BB%BA%E8%AE%AE%E5%92%8C%E9%80%89%E6%8B%A9%E6%80%A7%E9%87%8D%E9%87%87%E6%A0%B7%E6%8F%90%E9%AB%98%E5%9F%BA%E4%BA%8E%E6%A0%85%E6%A0%BC%E7%9A%84Rao-Blackwellized%E7%B2%92%E5%AD%90%E6%BB%A4%E6%B3%A2/fig2.png">
+<meta property="og:image" content="https://qiangsun89.github.io/2023/06/13/%E5%88%A9%E7%94%A8%E9%80%82%E5%BA%94%E6%80%A7%E5%BB%BA%E8%AE%AE%E5%92%8C%E9%80%89%E6%8B%A9%E6%80%A7%E9%87%8D%E9%87%87%E6%A0%B7%E6%8F%90%E9%AB%98%E5%9F%BA%E4%BA%8E%E6%A0%85%E6%A0%BC%E7%9A%84Rao-Blackwellized%E7%B2%92%E5%AD%90%E6%BB%A4%E6%B3%A2/fig3.png">
+<meta property="og:image" content="https://qiangsun89.github.io/2023/06/13/%E5%88%A9%E7%94%A8%E9%80%82%E5%BA%94%E6%80%A7%E5%BB%BA%E8%AE%AE%E5%92%8C%E9%80%89%E6%8B%A9%E6%80%A7%E9%87%8D%E9%87%87%E6%A0%B7%E6%8F%90%E9%AB%98%E5%9F%BA%E4%BA%8E%E6%A0%85%E6%A0%BC%E7%9A%84Rao-Blackwellized%E7%B2%92%E5%AD%90%E6%BB%A4%E6%B3%A2/fig4.png">
+<meta property="og:image" content="https://qiangsun89.github.io/2023/06/13/%E5%88%A9%E7%94%A8%E9%80%82%E5%BA%94%E6%80%A7%E5%BB%BA%E8%AE%AE%E5%92%8C%E9%80%89%E6%8B%A9%E6%80%A7%E9%87%8D%E9%87%87%E6%A0%B7%E6%8F%90%E9%AB%98%E5%9F%BA%E4%BA%8E%E6%A0%85%E6%A0%BC%E7%9A%84Rao-Blackwellized%E7%B2%92%E5%AD%90%E6%BB%A4%E6%B3%A2/fig5.png">
+<meta property="og:image" content="https://qiangsun89.github.io/2023/06/13/%E5%88%A9%E7%94%A8%E9%80%82%E5%BA%94%E6%80%A7%E5%BB%BA%E8%AE%AE%E5%92%8C%E9%80%89%E6%8B%A9%E6%80%A7%E9%87%8D%E9%87%87%E6%A0%B7%E6%8F%90%E9%AB%98%E5%9F%BA%E4%BA%8E%E6%A0%85%E6%A0%BC%E7%9A%84Rao-Blackwellized%E7%B2%92%E5%AD%90%E6%BB%A4%E6%B3%A2/fig7.png">
+<meta property="og:image" content="https://qiangsun89.github.io/2023/06/13/%E5%88%A9%E7%94%A8%E9%80%82%E5%BA%94%E6%80%A7%E5%BB%BA%E8%AE%AE%E5%92%8C%E9%80%89%E6%8B%A9%E6%80%A7%E9%87%8D%E9%87%87%E6%A0%B7%E6%8F%90%E9%AB%98%E5%9F%BA%E4%BA%8E%E6%A0%85%E6%A0%BC%E7%9A%84Rao-Blackwellized%E7%B2%92%E5%AD%90%E6%BB%A4%E6%B3%A2/fig6.png">
+<meta property="og:image" content="https://qiangsun89.github.io/2023/06/13/%E5%88%A9%E7%94%A8%E9%80%82%E5%BA%94%E6%80%A7%E5%BB%BA%E8%AE%AE%E5%92%8C%E9%80%89%E6%8B%A9%E6%80%A7%E9%87%8D%E9%87%87%E6%A0%B7%E6%8F%90%E9%AB%98%E5%9F%BA%E4%BA%8E%E6%A0%85%E6%A0%BC%E7%9A%84Rao-Blackwellized%E7%B2%92%E5%AD%90%E6%BB%A4%E6%B3%A2/fig8.png">
 <meta property="article:published_time" content="2023-06-13T08:38:40.000Z">
-<meta property="article:modified_time" content="2023-06-14T04:11:47.338Z">
+<meta property="article:modified_time" content="2023-06-19T04:38:26.060Z">
 <meta property="article:author" content="Qiang Sun">
 <meta property="article:tag" content="原创">
 <meta name="twitter:card" content="summary_large_image">
@@ -34,7 +40,7 @@
   
   
   
-  <title>利用适应性建议和选择性重采样提高基于栅格的Rao-Blackwellized粒子滤波 - 知识的搬运工</title>
+  <title>利用适应性建议分布和选择性重采样提高基于栅格的Rao-Blackwellized粒子滤波 - 知识的搬运工</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -217,7 +223,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="利用适应性建议和选择性重采样提高基于栅格的Rao-Blackwellized粒子滤波"></span>
+            <span id="subtitle" data-typed-text="利用适应性建议分布和选择性重采样提高基于栅格的Rao-Blackwellized粒子滤波"></span>
           
         </div>
 
@@ -240,7 +246,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          6.4k 字
+          11k 字
         
       </span>
     
@@ -251,7 +257,7 @@
         
         
         
-          54 分钟
+          94 分钟
         
       </span>
     
@@ -297,7 +303,7 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">利用适应性建议和选择性重采样提高基于栅格的Rao-Blackwellized粒子滤波</h1>
+            <h1 style="display: none">利用适应性建议分布和选择性重采样提高基于栅格的Rao-Blackwellized粒子滤波</h1>
             
             
               <div class="markdown-body">
@@ -314,7 +320,7 @@
     </script>
 </head>
 
-<h1 id="利用适应性建议和选择性重采样提高基于栅格的Rao-Blackwellized粒子滤波"><a href="#利用适应性建议和选择性重采样提高基于栅格的Rao-Blackwellized粒子滤波" class="headerlink" title="利用适应性建议和选择性重采样提高基于栅格的Rao-Blackwellized粒子滤波"></a>利用适应性建议和选择性重采样提高基于栅格的Rao-Blackwellized粒子滤波</h1><h2 id="摘要："><a href="#摘要：" class="headerlink" title="摘要："></a>摘要：</h2><p>最近，Rao-Blackwellized粒子滤波已被引入作为有效的同时定位和地图创建（SLAM）问题的解决方法。该方法使用粒子滤波器，其中每个粒子携带一个环境的地图。因此，关键问题是如何减少粒子数量。在本文中，我们提出了适应性技术以减少Rao-Blackwellized粒子滤波器中的粒子数量来学习栅格地图。我们提出了一种方法来计算精确的建议分布，不仅考虑机器人的移动，还考虑最近的观察结果。这极大地减少了滤波器预测步骤中的机器人位姿的不确定性。此外，我们提出了一种选择性地执行重采样操作的方法，这显著减少了粒子消耗的问题。</p>
+<h1 id="利用适应性建议分布和选择性重采样提高基于栅格的Rao-Blackwellized粒子滤波"><a href="#利用适应性建议分布和选择性重采样提高基于栅格的Rao-Blackwellized粒子滤波" class="headerlink" title="利用适应性建议分布和选择性重采样提高基于栅格的Rao-Blackwellized粒子滤波"></a>利用适应性建议分布和选择性重采样提高基于栅格的Rao-Blackwellized粒子滤波</h1><h2 id="摘要："><a href="#摘要：" class="headerlink" title="摘要："></a>摘要：</h2><p>最近，Rao-Blackwellized粒子滤波已被引入作为有效的同时定位和地图创建（SLAM）问题的解决方法。该方法使用粒子滤波器，其中每个粒子携带一个环境的地图。因此，关键问题是如何减少粒子数量。在本文中，我们提出了适应性技术以减少Rao-Blackwellized粒子滤波器中的粒子数量来学习栅格地图。我们提出了一种方法来计算精确的建议分布，不仅考虑机器人的移动，还考虑最近的观察结果。这极大地减少了滤波器预测步骤中的机器人位姿的不确定性。此外，我们提出了一种选择性地执行重采样操作的方法，这显著减少了粒子消耗的问题。</p>
 <h2 id="I-引言"><a href="#I-引言" class="headerlink" title="I. 引言"></a>I. 引言</h2><p>建立地图是移动机器人的基本任务之一。过去，有许多研究人员都专注于这个问题。在文献中，移动机器人制图问题通常被称为同时定位和建图（SLAM）问题 [2,4,5,7,8,12,14,16,18]。它被视为一个复杂的问题，因为机器人在定位时需要一个一致的地图，而在获取地图时，机器人需要对其位置有一个良好的估计。位姿和地图估计之间的相互依赖使得SLAM问题变得困难，需要在高维空间中寻找解决方案。</p>
 <p>最近，Murphy，Doucet和他们的同事们 [16,4]引入了Rao-Blackwellized粒子滤波器，作为解决同时定位和建图（SLAM）问题的有效方法。Rao-Blackwellized方法的主要问题在于它们的复杂性，以建立准确地图所需的粒子数量来衡量。因此，减少这个数量是这类算法的主要挑战之一。此外，重采样步骤可能会消除正确的粒子。这个效应也被称为粒子耗尽问题 [19]。</p>
 <p>在这项工作中，我们提出了两种方法来极大地提高应用于带网格地图的SLAM的Rao-Blackwellized粒子滤波器的性能：</p>
@@ -357,6 +363,39 @@
 <h3 id="B-选择性重采样"><a href="#B-选择性重采样" class="headerlink" title="B. 选择性重采样"></a>B. 选择性重采样</h3><p>对于粒子滤波器的性能影响很大的另一个方面是重采样步骤。在重采样过程中，通常会用具有较高权重的样本替换具有较低权重的粒子。一方面，重采样是必要的，因为只使用了有限数量的粒子。另一方面，重采样步骤可能会从样本集中删除好的样本，导致粒子耗尽[19]。因此，找到何时进行重采样的标准非常重要。</p>
 <p>Liu[11]引入了所谓的有效粒子数 $N_{eff}$ 来估计当前粒子集合对真实后验的表示程度。该数量的计算方式如下：</p>
 <script type="math/tex; mode=display">N_{eff} = \frac{1}{\sum^N_{i=1}(w^{(i)})^2}\tag{10}</script><p>$N_{eff}$ 的背后的直觉是：如果样本是从真实后验中抽取的，样本的重要性权重将相互相等。近似程度越差，重要性权重的方差越高。由于 $N_{eff}$ 可以被视为重要性权重的离散度量，它是评估粒子集合对真实后验的逼近程度的有用指标。我们的方法遵循Doucet[3]提出的方法来确定是否应该进行重采样。每当 $N_{eff}$ 降至给定阈值 $N/2$ 以下时，我们进行重采样，其中 $N$ 是粒子的数量。在我们的实验中，我们发现这种方法极大地降低了替换好粒子的风险，因为重采样操作的数量减少了，且只有在需要时才进行重采样操作。</p>
+<h2 id="V-实验"><a href="#V-实验" class="headerlink" title="V. 实验"></a>V. 实验</h2><p>上述方法已在真实的机器人数据上进行了实现和测试。在线实现使用了一台装备有Sick PLS测距仪的Pioneer2 AT机器人。在各种环境中进行的实验表明我们的方法在室内和室外环境中都非常有效。地图的质量非常好，有时候可以生成1cm分辨率的地图，而且几乎没有明显的不一致性。即使在面积为250*250米的环境中，我们也从未使用超过100个粒子。我们的算法可以在Pentium IV-2.8GHz上以50个粒子的实时方式运行，机器人的移动速度为0.5m/s。在下一节中，我们将讨论该滤波器在三个真实世界数据集中的行为。我们的方法生成的更多地图可以在网络上找到。此外，我们对所提出方法的性能进行了定量分析。</p>
+<img src="/2023/06/13/%E5%88%A9%E7%94%A8%E9%80%82%E5%BA%94%E6%80%A7%E5%BB%BA%E8%AE%AE%E5%92%8C%E9%80%89%E6%8B%A9%E6%80%A7%E9%87%8D%E9%87%87%E6%A0%B7%E6%8F%90%E9%AB%98%E5%9F%BA%E4%BA%8E%E6%A0%85%E6%A0%BC%E7%9A%84Rao-Blackwellized%E7%B2%92%E5%AD%90%E6%BB%A4%E6%B3%A2/fig3.png" srcset="/img/loading.gif" lazyload class="">
+<h3 id="A-地图结果"><a href="#A-地图结果" class="headerlink" title="A. 地图结果"></a>A. 地图结果</h3><p>这里讨论的数据集是在西雅图Intel研究实验室、MIT的Killian Court和弗莱堡大学校园录制的。这些环境的地图如图3、4和5所示。</p>
+<img src="/2023/06/13/%E5%88%A9%E7%94%A8%E9%80%82%E5%BA%94%E6%80%A7%E5%BB%BA%E8%AE%AE%E5%92%8C%E9%80%89%E6%8B%A9%E6%80%A7%E9%87%8D%E9%87%87%E6%A0%B7%E6%8F%90%E9%AB%98%E5%9F%BA%E4%BA%8E%E6%A0%85%E6%A0%BC%E7%9A%84Rao-Blackwellized%E7%B2%92%E5%AD%90%E6%BB%A4%E6%B3%A2/fig4.png" srcset="/img/loading.gif" lazyload class="">
+<img src="/2023/06/13/%E5%88%A9%E7%94%A8%E9%80%82%E5%BA%94%E6%80%A7%E5%BB%BA%E8%AE%AE%E5%92%8C%E9%80%89%E6%8B%A9%E6%80%A7%E9%87%8D%E9%87%87%E6%A0%B7%E6%8F%90%E9%AB%98%E5%9F%BA%E4%BA%8E%E6%A0%85%E6%A0%BC%E7%9A%84Rao-Blackwellized%E7%B2%92%E5%AD%90%E6%BB%A4%E6%B3%A2/fig5.png" srcset="/img/loading.gif" lazyload class="">
+<p>a) Intel实验室：Intel实验室的大小为28*28米。该数据集是使用装备有SICK传感器的Pioneer II机器人录制的。我们的算法只需要15个粒子来处理这个数据集。从图3中可以看出，最终地图的质量非常高，即使将地图放大到1cm的分辨率，也没有明显的可观察到的错误。</p>
+<p>b) 弗莱堡大学校园：第二个数据集是在弗莱堡大学校园的室外录制的。我们的方法只需要30个粒子就能生成一个高质量的地图，如图4所示。请注意，这个环境在某种程度上违反了环境是平面的假设。此外，还有草地、灌木丛以及汽车和人等移动物体。尽管存在一些噪声测量，但我们的算法能够生成准确的地图。</p>
+<p>c) MIT Killian Court: 第三个实验是在MIT Killian Court的数据集上进行的（见图5）。对于Rao-Blackwellized mapper来说，这个数据集非常具有挑战性，因为存在几个嵌套的循环，这可能会导致粒子耗尽而使算法失败。在这个数据集中，我们的选择性重采样过程非常有用，因为它保持了关于潜在轨迹的假设。可以使用60个粒子生成一张一致且拓扑正确的地图。然而，生成的地图有时会显示出人工的双重墙壁。通过使用80个粒子，可以获得高质量的地图。</p>
+<h3 id="B-定量结果"><a href="#B-定量结果" class="headerlink" title="B. 定量结果"></a>B. 定量结果</h3><p>为了衡量粒子数量方面的改进，我们比较了我们的知情提议分布和[8]中使用的无信息提议的性能。下表总结了RBPF在我们算法的所有应用中至少提供拓扑正确地图所需的粒子数量。</p>
+<img src="/2023/06/13/%E5%88%A9%E7%94%A8%E9%80%82%E5%BA%94%E6%80%A7%E5%BB%BA%E8%AE%AE%E5%92%8C%E9%80%89%E6%8B%A9%E6%80%A7%E9%87%8D%E9%87%87%E6%A0%B7%E6%8F%90%E9%AB%98%E5%9F%BA%E4%BA%8E%E6%A0%85%E6%A0%BC%E7%9A%84Rao-Blackwellized%E7%B2%92%E5%AD%90%E6%BB%A4%E6%B3%A2/fig7.png" srcset="/img/loading.gif" lazyload class="">
+<img src="/2023/06/13/%E5%88%A9%E7%94%A8%E9%80%82%E5%BA%94%E6%80%A7%E5%BB%BA%E8%AE%AE%E5%92%8C%E9%80%89%E6%8B%A9%E6%80%A7%E9%87%8D%E9%87%87%E6%A0%B7%E6%8F%90%E9%AB%98%E5%9F%BA%E4%BA%8E%E6%A0%85%E6%A0%BC%E7%9A%84Rao-Blackwellized%E7%B2%92%E5%AD%90%E6%BB%A4%E6%B3%A2/fig6.png" srcset="/img/loading.gif" lazyload class="">
+<p>结果显示，在所有情况下，我们的方法所需的粒子数量约为其他方法所需数量的一个数量级。此外，由于我们改进的采样过程考虑了最后一次读数，生成的地图质量更好。图6总结了我们算法在所考虑环境中的成功率结果。图中显示了根据使用的粒子数量的正确生成地图的百分比。地图的质量通过视觉检查进行评估。作为成功的衡量标准，我们使用了拓扑正确性。</p>
+<h3 id="C-改进提议分布和自适应重采样的效果"><a href="#C-改进提议分布和自适应重采样的效果" class="headerlink" title="C. 改进提议分布和自适应重采样的效果"></a>C. 改进提议分布和自适应重采样的效果</h3><p>我们方法的性能提升是由两个因素相互作用导致的，即改进的提议分布和通过监测$N_{eff}$控制的自适应重采样。对于不考虑整个输入历史的提议，已经证明$N_{eff}$只能随着时间的推移（随机地）下降[3]。只有在采样操作之后，$N_{eff}$才能恢复到最大值。值得注意的是，$N_{eff}$的行为严格依赖于提议分布：提议越差，$N_{eff}$下降越快。在我们的实验中，我们发现根据机器人传感器获取的信息，我们的提议分布下$N_{eff}$表现出三种不同的行为。当机器人穿越未知地形时，$N_{eff}$通常会缓慢下降。这是因为提议分布变得不那么尖峰，观测的可能性通常略有不同。第二种行为可以观察到当机器人穿越已知区域时。在这种情况下，由于改进的提议分布，每个粒子都保持在自己的地图中，权重或多或少相等，这取决于所获取的扫描和地图之间的不一致性的程度。这导致$N_{eff}$保持稳定。最后，在闭环时，一些粒子与它们的地图正确对齐，而其他一些粒子则没有。正确的粒子具有较高的权重，而错误的粒子具有较低的权重。因此，重要性权重的方差增加，$N_{eff}$显著下降。因此，我们对$N_{eff}$的阈值准则通常会在机器人闭环时进行重采样。在其他所有情况下，会避免重采样，以保持粒子集中的必要多样性。结果，粒子耗尽问题得到了严重缓解。为了分析这一点，我们进行了一个实验，将我们的算法的成功率与每步都进行重采样的粒子滤波器进行了比较。如图6所示，与具有相同数量粒子和固定重采样策略的粒子滤波器（MIT -2曲线）相比，我们的方法更常收敛于正确解（MIT曲线）的MIT数据集。</p>
+<img src="/2023/06/13/%E5%88%A9%E7%94%A8%E9%80%82%E5%BA%94%E6%80%A7%E5%BB%BA%E8%AE%AE%E5%92%8C%E9%80%89%E6%8B%A9%E6%80%A7%E9%87%8D%E9%87%87%E6%A0%B7%E6%8F%90%E9%AB%98%E5%9F%BA%E4%BA%8E%E6%A0%85%E6%A0%BC%E7%9A%84Rao-Blackwellized%E7%B2%92%E5%AD%90%E6%BB%A4%E6%B3%A2/fig8.png" srcset="/img/loading.gif" lazyload class="">
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[1]F.Dellaert, D.Fox,W.Burgard, andS.Thrun.Monte carlo localization formobile robots.In Proc.of the IEEE Int.Conf .on Robotics &amp; Automation (ICRA) ,1998.</p>
+<p>[2]G.Dissanayak e,H.Durrant-Whyte, and T.Baile y.A computationally efficient solution to the simultaneous localisation and map building (SLAM) problem.In ICRA ‘2000 Workshop onMobile Robot Navigation andMapping ,2000.</p>
+<p>[3]ADoucet.On sequential simulation-based methods for bayesian filtering. Technical report, Signal Processing Group, Departement of Engeneering, University ofCambridge, 1998.</p>
+<p>[4]A.Doucet, J.F.G.deFreitas, K.Murphy ,and S.Russel.Rao-blackwellized partcile filtering for dynamic bayesian netw orks.In Proc.of the Conf .on Uncertainty in Artificial Intelligence (UAI),2000.</p>
+<p>[5]A.Eliazar and R.Parr.DP-SLAM: Fast,robust simultainous localization and mapping without predetermined landmarks.In Proc.of the Int.Conf .on Artificial Intellig ence (IJCAI) ,2003.</p>
+<p>[6]U.Frese andG.Hirzinger .Simultaneous localization and mapping -adiscussion.In Proc.of the Int. Conf .on Artificial Intelligence (IJCAI) ,2001.</p>
+<p>[7]J.-S. Gutmann and K.Konolige.Incremental mapping of large cyclic environments.In Proc. of the International Symposium on Computational Intelligence in Robotics and Automation (CIRA) ,2000.</p>
+<p>[8]D.H¨ahnel, W.Burgard, D.Fox,and S.Thrun. An efficient FastSLAM algorithm for generating maps of large-scale cyclic environments from raw laser range measurements.<br>In Proc. of the IEEE/RSJ Int.Conf .on Intelligent Robots and Systems (IROS),2003.</p>
+<p>[9]D.H¨ahnel, W.Burgard, B.Wegbreit, and S.Thrun. Towards lazy data association in slam.In Proc. of the International Symposium of Robotics Resear ch(ISRR) ,2003.</p>
+<p>[10] D.H¨ahnel, D.Schulz, and W.Burgard. Map building with mobile robots inpopulated environments.In Proc. of the IEEE/RSJ Int. Conf .on Intelligent Robots and Systems (IROS),2002.</p>
+<p>[11] J.S.Liu.Metropolized independent sampling with comparisons to rejection sampling andimportance sampling. Statist. Comput.,6:113-119, 1996.</p>
+<p>[12] M.Montemerlo, S.Thrun D.Koller,andB.Wegbreit.FastSLAM 2.0:An improved particle filtering algorithm for simultaneous localization and mapping that provably converges.In Proc.of the Int. Conf .on Artificial Intelligence (IJCAI) ,2003.</p>
+<p>[13] M.Montemerlo andS.Thrun. Simultaneous localization and mapping with unknown data association using FastSLAM. In Proc. of the IEEE Int. Conf . on Robotics &amp;Automation (ICRA) ,2003.</p>
+<p>[14] M.Montemerlo, S.Thrun, D.Koller,and B.Wegbreit.FastSLAM: A factored solution to simultaneous localization and mapping. In Proc. of the National Conference on Artificial Intelligence (AAAI) ,2002.</p>
+<p>[15] H.P.Mora vec.Sensor fusion incertainty grids for mobile robots.AI Magazine ,pages 6174, Summer 1988.</p>
+<p>[16] K.Murphy .Bayesian map learning indynamic environments.In Neural Info. Proc. Systems (NIPS) ,1999.</p>
+<p>[17] M.K. PittandN.Shephard.Filtering via simulation: auxilary particle filters.Technical report, Department of Mathematics, Imperial College,London, 1997.</p>
+<p>[18] S.Thrun.An online mapping algorithm for teams of mobile robots. International Journal of Robotics Research,2001.</p>
+<p>[19] R.vanderMerwe, N.deFreitas, A.Doucet, and E.Wan.Theunscented particle filter.Technical Report CUED/F-INFENG/TR380,Cambridge University Engineering Department, August 2000.</p>
 
                 
               </div>
@@ -409,7 +448,7 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>利用适应性建议和选择性重采样提高基于栅格的Rao-Blackwellized粒子滤波</div>
+      <div>利用适应性建议分布和选择性重采样提高基于栅格的Rao-Blackwellized粒子滤波</div>
       <div>https://qiangsun89.github.io/2023/06/13/利用适应性建议和选择性重采样提高基于栅格的Rao-Blackwellized粒子滤波/</div>
     </div>
     <div class="license-meta">
@@ -790,5 +829,21 @@
   <noscript>
     <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
   </noscript>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
