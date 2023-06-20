@@ -16,22 +16,22 @@
   <meta name="author" content="Qiang Sun">
   <meta name="keywords" content="">
   
-    <meta name="description" content="在VSCode上调试ROS2 C++节点说明这是一个关于如何使用VSCode调试ROS2 C++节点的小教程。 需求本实现使用了以下工具：  ROS2 Foxy Ubuntu 20.04 Visual Code 1.79.1 C&#x2F;C++ VSCode extension  调试一旦你的C++代码正确实现（至少可以编译），首先要做的是编译软件包并导出符号（允许你在需要停止代码的地方设置断点）：123">
+    <meta name="description" content="MathJax.Hub.Config({             tex2jax: {             skipTags: [&#39;script&#39;, &#39;noscript&#39;, &#39;style&#39;, &#39;textarea&#39;, &#39;pre&#39;],             inlineMath: [[&#39;$&#39;,&#39;$&#39;]]             }         });">
 <meta property="og:type" content="article">
-<meta property="og:title" content="在VSCode上调试ROS2 C++节点">
-<meta property="og:url" content="https://qiangsun89.github.io/2023/06/15/%E5%9C%A8VSCode%E4%B8%8A%E8%B0%83%E8%AF%95ROS2-C-%E8%8A%82%E7%82%B9/index.html">
+<meta property="og:title" content="在机器人技术中估计不确定的空间关系">
+<meta property="og:url" content="https://qiangsun89.github.io/2023/06/20/%E5%9C%A8%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8A%80%E6%9C%AF%E4%B8%AD%E4%BC%B0%E8%AE%A1%E4%B8%8D%E7%A1%AE%E5%AE%9A%E7%9A%84%E7%A9%BA%E9%97%B4%E5%85%B3%E7%B3%BB/index.html">
 <meta property="og:site_name" content="知识的搬运工">
-<meta property="og:description" content="在VSCode上调试ROS2 C++节点说明这是一个关于如何使用VSCode调试ROS2 C++节点的小教程。 需求本实现使用了以下工具：  ROS2 Foxy Ubuntu 20.04 Visual Code 1.79.1 C&#x2F;C++ VSCode extension  调试一旦你的C++代码正确实现（至少可以编译），首先要做的是编译软件包并导出符号（允许你在需要停止代码的地方设置断点）：123">
+<meta property="og:description" content="MathJax.Hub.Config({             tex2jax: {             skipTags: [&#39;script&#39;, &#39;noscript&#39;, &#39;style&#39;, &#39;textarea&#39;, &#39;pre&#39;],             inlineMath: [[&#39;$&#39;,&#39;$&#39;]]             }         });">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-06-15T07:35:37.000Z">
-<meta property="article:modified_time" content="2023-06-15T07:43:25.597Z">
+<meta property="article:published_time" content="2023-06-20T09:37:38.000Z">
+<meta property="article:modified_time" content="2023-06-20T10:15:39.536Z">
 <meta property="article:author" content="Qiang Sun">
 <meta property="article:tag" content="原创">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>在VSCode上调试ROS2 C++节点 - 知识的搬运工</title>
+  <title>在机器人技术中估计不确定的空间关系 - 知识的搬运工</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -214,7 +214,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="在VSCode上调试ROS2 C++节点"></span>
+            <span id="subtitle" data-typed-text="在机器人技术中估计不确定的空间关系"></span>
           
         </div>
 
@@ -225,8 +225,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-06-15 15:35" pubdate>
-          2023年6月15日 下午
+        <time datetime="2023-06-20 17:37" pubdate>
+          2023年6月20日 下午
         </time>
       </span>
     
@@ -237,7 +237,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.3k 字
+          2.6k 字
         
       </span>
     
@@ -248,7 +248,7 @@
         
         
         
-          12 分钟
+          22 分钟
         
       </span>
     
@@ -294,32 +294,36 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">在VSCode上调试ROS2 C++节点</h1>
+            <h1 style="display: none">在机器人技术中估计不确定的空间关系</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="在VSCode上调试ROS2-C-节点"><a href="#在VSCode上调试ROS2-C-节点" class="headerlink" title="在VSCode上调试ROS2 C++节点"></a>在VSCode上调试ROS2 C++节点</h1><h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>这是一个关于如何使用VSCode调试ROS2 C++节点的小教程。</p>
-<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>本实现使用了以下工具：</p>
-<ul>
-<li>ROS2 Foxy</li>
-<li>Ubuntu 20.04</li>
-<li>Visual Code 1.79.1</li>
-<li>C/C++ VSCode extension</li>
-</ul>
-<h2 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h2><p>一旦你的C++代码正确实现（至少可以编译），首先要做的是编译软件包并导出符号（允许你在需要停止代码的地方设置断点）：<br><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-bullet">- </span>cd ros<span class="hljs-emphasis">_ws</span><br><span class="hljs-emphasis">- colcon build --symlink-install --cmake-args -DCMAKE_BUILD_</span>TYPE=RelWithDebInfo<br><span class="hljs-bullet">- </span>source install/setup.bash<br></code></pre></td></tr></table></figure><br>第二，我们需要启动GDB服务器以调试CPP代码。在这里，我们将使用localhost:port来创建服务器。您可以选择任何您想要的空闲端口。<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">ros2 <span class="hljs-built_in">run</span> --prefix <span class="hljs-string">&#x27;gdbserver localhost:3000&#x27;</span> package_name executable_name<br></code></pre></td></tr></table></figure><br>第三，我们需要在VSCode上创建一个launch.json文件。换句话说，我们将创建一个自定义的调试配置。在我们的情况下，创建一个GDB客户端并连接到服务器。</p>
-<p>1) Open VSCode on your workspace.<br>2) Go to your side bar, ‘Run and Debug’ section.<br>3) Add a new configuration (Select C++ enviroment or any other)<br>4) On your launch.json file, put the following information</p>
-<p>Launch.json file:<br><figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs prolog">&#123;<br>    <span class="hljs-string">&quot;version&quot;</span>: <span class="hljs-string">&quot;0.2.0&quot;</span>,<br>    <span class="hljs-string">&quot;configurations&quot;</span>: [<br>        &#123;<br>            <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;C++ Debugger&quot;</span>,<br>            <span class="hljs-string">&quot;request&quot;</span>: <span class="hljs-string">&quot;launch&quot;</span>,<br>            <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;cppdbg&quot;</span>,<br>            <span class="hljs-string">&quot;miDebuggerServerAddress&quot;</span>: <span class="hljs-string">&quot;localhost:3000&quot;</span>,<br>            <span class="hljs-string">&quot;cwd&quot;</span>: <span class="hljs-string">&quot;/&quot;</span>,<br>            <span class="hljs-string">&quot;program&quot;</span>: <span class="hljs-string">&quot;[build-path-executable]&quot;</span><br>        &#125;<br>    ]<br>&#125;<br></code></pre></td></tr></table></figure></p>
-<ul>
-<li>name - 您的调试器配置的自定义名称</li>
-<li>request - 在这种情况下我们希望启动客户端</li>
-<li>type - 用于C++调试的cppdbg</li>
-<li>miDebuggerServerAddress - 服务器路径:端口</li>
-<li>cwd - 在哪里找到所有需要的文件。我们使用根目录，因为ROS、软件包和其他需要的文件分布在整个电脑上。</li>
-<li>program - 将[build-path-executable]替换为你的可执行构建文件。你可以在启动服务器时在控制台上找到这个路径。</li>
-</ul>
-<p>最后，正确地使用VSCode的按钮(F5)和面板选项来调试你的代码。</p>
+                <head>
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+            inlineMath: [['$','$']]
+            }
+        });
+    </script>
+</head>
 
+<h1 id="在机器人技术中估计不确定的空间关系"><a href="#在机器人技术中估计不确定的空间关系" class="headerlink" title="在机器人技术中估计不确定的空间关系"></a>在机器人技术中估计不确定的空间关系</h1><p>Smith R, Self M, Cheeseman P. Estimating uncertain spatial relationships in robotics[J]. Autonomous robot vehicles, 1990: 167-193.</p>
+<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>在许多机器人应用中，对于表示和推理空间关系的需求非常重要。然而，我们对于特定空间关系的认知往往是不确定的。处理这种不确定性最常用的方法是通过预先工程化来解决问题，即通过结构化工作环境和使用特定的高精度设备。然而，在某些先进的机器人研究领域，如自动任务规划、离线机器人编程和自主车辆操作中，由于环境不断变化或对推理灵活性的需求，先前的结构化方法并不可行。空间推理的复杂性进一步增加，因为关系通常不是明确描述的，而是通过不确定的相对信息给出。当涉及到使用多个不同的参考框架时，这种不确定关系会产生一个不确定关系的网络。与将空间不确定性视为几何推理中的附带问题不同，我们认为它必须成为空间表示的固有部分。在本文中，我们介绍了一种称为随机地图的空间信息表示，并提供了构建、读取信息以及随着新信息的获得而逐步修正地图的相关过程。该地图始终包含对地图中对象之间关系的最佳估计及其不确定性。这些过程提供了一种通用解决方案，用于估计不确定的相对空间关系。这些估计具有概率性质，相对于以往非常保守的最坏情况方法而言是一种进步。最后，我们还介绍了这些过程在状态估计和滤波理论的背景下的开发，为进一步扩展提供了坚实的基础。</p>
+<h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1 引言"></a>1 引言</h2><p>在诸如工业自动化和自主车辆等机器人应用中，需要表示和推理空间不确定性。过去，通过特殊目的的方法，如精密工程、非常精确的传感器以及使用夹具和校准点来解决这个需求。虽然这些方法有时提供足够的准确性，以避免明确表示不确定性的需要，但它们通常成本高昂。另一种方法是使用多个重叠的低分辨率传感器，并将所有来源的空间信息（包括不确定性）结合起来，以获得最佳的空间估计。这种综合信息通常能够提供足够的准确性，以避免硬件工程方法的需要。除了降低硬件成本之外，明确估计不确定的空间信息还可以事先判断由于累积不确定性而导致提议的操作可能失败的情况，并确定提议的传感器信息是否足以将不确定性降低到可容忍的限制。在其他情况下，例如对于廉价移动机器人，获得足够的准确性的唯一途径是结合来自多个传感器的（不确定的）信息。</p>
+<p>将不确定的空间信息进行组合的一个困难在于，它通常以不确定的相对信息的形式出现。这在使用许多不同参考框架的情况下尤为明显，不确定的空间信息必须在这些框架之间传播。本文提出了一种通用解决方案，用于估计不确定的空间关系，不论信息是以哪个框架呈现，或者需要在哪个框架中得到答案。基本理论假设误差是“小”的，以便从一个框架到另一个框架的非线性转换近似为线性转换。</p>
+<p>早期的表示空间不确定性的方法（例如[Taylor，1976]）在典型机器人应用中数值计算了误差的最小-最大边界。Brooks将这种分析扩展到符号计算的最小-最大边界[Brooks，1982]。与本文中的概率方法相比，这种最小-最大方法非常保守，因为在组合信息时总是假设最坏情况。<br>最近，为HILARE机器人开发了一种概率表示的不确定性[Chatila，1985]，它与此处介绍的方法类似，只是它仅使用标量表示位置不确定性，而不是多变量表示。在最近的一篇论文中，Brooks基于边界圆柱体和基于这些圆柱体的相交操作，开发了一种表示空间不确定性的方法[Brooks，1985]。Smith和Cheeseman（[Smith，1984]，[Smith，1985]）在解决工业自动化任务的离线编程问题时，提出了能够将不确定关系的图（由多变量概率分布表示）减少为某个感兴趣关系的单一最佳估计的操作。本文对该工作进行了扩展，但采用了估计理论的形式设置，并未使用图形变换。</p>
+<p>总结起来，许多重要应用需要表示空间不确定性。此外，需要方法来组合不确定的空间信息，并将这些信息从一个框架转换到另一个框架。本文提出了一种矩阵表示的空间不确定性，明确表示了感兴趣世界中每个自由度的不确定性。给出了一种方法，可以组合不确定信息，无论它是在哪个框架中呈现，并允许描述一个框架相对于任何其他框架的空间不确定性。所需的过程以矩阵形式呈现，适合进行高效的实现。特别地，给出了逐步构建最佳估计“地图”及其不确定性的方法，当添加新的不确定的空间信息时。</p>
+<h2 id="2-随机地图"><a href="#2-随机地图" class="headerlink" title="2 随机地图"></a>2 随机地图</h2><p>我们对对象之间的空间关系的认知本质上是不确定的。由于制造容差，人造物体与其几何模型并不完全匹配。即使匹配，由于测量误差，传感器也无法精确测量几何特征，从而无法精确定位对象。即使能够精确测量，使用传感器的机器人也无法像预期那样精确操作对象，因为存在手部定位误差。对于某些任务，通过”预先工程化”解决方案（即结构化工作环境和使用特制的高精度设备），这些误差可以减小到可忽略的限度，但这需要付出巨大的时间和成本。</p>
+<p>然而，与其将空间不确定性视为几何推理中的次要问题，我们认为它必须作为空间表示的固有部分来处理。</p>
+<p>在本文中，不确定的空间关系将通过一种称为随机地图的表示相互关联。该地图包含空间关系的估计值、不确定性和相互依赖关系。</p>
+<p>首先，将描述地图的结构，然后介绍从地图中提取信息的方法。最后，将给出一种逐步构建地图的过程，随着获取新的空间信息。为了说明理论，我们将以移动机器人为例，通过在不同时间和不同位置进行传感器观测，获得有关其位置和环境组织的知识。</p>
+<h3 id="2-1-表示"><a href="#2-1-表示" class="headerlink" title="2.1 表示"></a>2.1 表示</h3><p>为了表达上述想法，我们将定义以下术语。空间关系将由其空间变量的向量表示，记为$\mathcal{X}$。例如，移动机器人的位置和方向可以通过其在二维笛卡尔参考框架中的坐标$x$和$y$以及绕$z$轴的旋转, $\phi$ ,来描述：</p>
+<script type="math/tex; mode=display">\mathcal{X} =\begin{bmatrix} x\\ y\\ \phi  \end{bmatrix}</script><p>而且，不确定的空间关系可以由其空间变量上的概率分布表示，即通过一个概率密度函数，该函数为空间变量$\mathcal{X}$的每个特定组合分配一个概率：</p>
+<script type="math/tex; mode=display">P(\mathcal{X}) = f(\mathcal{X})d\mathcal{X}</script>
                 
               </div>
             
@@ -337,8 +341,15 @@
     
       <span class="category-chain">
         
-  <a href="/categories/ROS2/" class="category-chain-item">ROS2</a>
+  <a href="/categories/slam/" class="category-chain-item">slam</a>
   
+  
+    <span>></span>
+    
+  <a href="/categories/slam/mapping/" class="category-chain-item">mapping</a>
+  
+  
+
   
 
       </span>
@@ -364,8 +375,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>在VSCode上调试ROS2 C++节点</div>
-      <div>https://qiangsun89.github.io/2023/06/15/在VSCode上调试ROS2-C-节点/</div>
+      <div>在机器人技术中估计不确定的空间关系</div>
+      <div>https://qiangsun89.github.io/2023/06/20/在机器人技术中估计不确定的空间关系/</div>
     </div>
     <div class="license-meta">
       
@@ -377,7 +388,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年6月15日</div>
+          <div>2023年6月20日</div>
         </div>
       
       
@@ -409,18 +420,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/06/20/%E5%9C%A8%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8A%80%E6%9C%AF%E4%B8%AD%E4%BC%B0%E8%AE%A1%E4%B8%8D%E7%A1%AE%E5%AE%9A%E7%9A%84%E7%A9%BA%E9%97%B4%E5%85%B3%E7%B3%BB/" title="在机器人技术中估计不确定的空间关系">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">在机器人技术中估计不确定的空间关系</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/06/13/%E5%88%A9%E7%94%A8%E9%80%82%E5%BA%94%E6%80%A7%E5%BB%BA%E8%AE%AE%E5%92%8C%E9%80%89%E6%8B%A9%E6%80%A7%E9%87%8D%E9%87%87%E6%A0%B7%E6%8F%90%E9%AB%98%E5%9F%BA%E4%BA%8E%E6%A0%85%E6%A0%BC%E7%9A%84Rao-Blackwellized%E7%B2%92%E5%AD%90%E6%BB%A4%E6%B3%A2/" title="利用适应性建议分布和选择性重采样提高基于栅格的Rao-Blackwellized粒子滤波">
-                        <span class="hidden-mobile">利用适应性建议分布和选择性重采样提高基于栅格的Rao-Blackwellized粒子滤波</span>
+                      <a href="/2023/06/15/%E5%9C%A8VSCode%E4%B8%8A%E8%B0%83%E8%AF%95ROS2-C-%E8%8A%82%E7%82%B9/" title="在VSCode上调试ROS2 C++节点">
+                        <span class="hidden-mobile">在VSCode上调试ROS2 C++节点</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
