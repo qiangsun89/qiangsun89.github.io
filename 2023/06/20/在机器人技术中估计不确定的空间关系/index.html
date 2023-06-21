@@ -23,11 +23,16 @@
 <meta property="og:site_name" content="知识的搬运工">
 <meta property="og:description" content="MathJax.Hub.Config({             tex2jax: {             skipTags: [&#39;script&#39;, &#39;noscript&#39;, &#39;style&#39;, &#39;textarea&#39;, &#39;pre&#39;],             inlineMath: [[&#39;$&#39;,&#39;$&#39;]]             }         });">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://qiangsun89.github.io/2023/06/20/%E5%9C%A8%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8A%80%E6%9C%AF%E4%B8%AD%E4%BC%B0%E8%AE%A1%E4%B8%8D%E7%A1%AE%E5%AE%9A%E7%9A%84%E7%A9%BA%E9%97%B4%E5%85%B3%E7%B3%BB/fig1_2.png">
+<meta property="og:image" content="https://qiangsun89.github.io/2023/06/20/%E5%9C%A8%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8A%80%E6%9C%AF%E4%B8%AD%E4%BC%B0%E8%AE%A1%E4%B8%8D%E7%A1%AE%E5%AE%9A%E7%9A%84%E7%A9%BA%E9%97%B4%E5%85%B3%E7%B3%BB/fig3.png">
+<meta property="og:image" content="https://qiangsun89.github.io/2023/06/20/%E5%9C%A8%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8A%80%E6%9C%AF%E4%B8%AD%E4%BC%B0%E8%AE%A1%E4%B8%8D%E7%A1%AE%E5%AE%9A%E7%9A%84%E7%A9%BA%E9%97%B4%E5%85%B3%E7%B3%BB/fig4.png">
+<meta property="og:image" content="https://qiangsun89.github.io/2023/06/20/%E5%9C%A8%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8A%80%E6%9C%AF%E4%B8%AD%E4%BC%B0%E8%AE%A1%E4%B8%8D%E7%A1%AE%E5%AE%9A%E7%9A%84%E7%A9%BA%E9%97%B4%E5%85%B3%E7%B3%BB/fig5.png">
 <meta property="article:published_time" content="2023-06-20T09:37:38.000Z">
-<meta property="article:modified_time" content="2023-06-21T01:46:27.158Z">
+<meta property="article:modified_time" content="2023-06-21T06:54:25.767Z">
 <meta property="article:author" content="Qiang Sun">
 <meta property="article:tag" content="原创">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://qiangsun89.github.io/2023/06/20/%E5%9C%A8%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8A%80%E6%9C%AF%E4%B8%AD%E4%BC%B0%E8%AE%A1%E4%B8%8D%E7%A1%AE%E5%AE%9A%E7%9A%84%E7%A9%BA%E9%97%B4%E5%85%B3%E7%B3%BB/fig1_2.png">
   
   
   
@@ -237,7 +242,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.6k 字
+          7.4k 字
         
       </span>
     
@@ -248,7 +253,7 @@
         
         
         
-          39 分钟
+          62 分钟
         
       </span>
     
@@ -332,7 +337,7 @@ C(\mathcal{X})    \triangleq E(\tilde{X}\tilde{X}^T)
 \end{matrix}
 \end{equation}</script><p>其中 $E$ 是期望运算符，$\tilde{X}$ 是均值的偏差。</p>
 <p>对于我们的移动机器人示例来说，这些是：</p>
-<script type="math/tex; mode=display">\hat{X} = \begin{bmatrix}
+<script type="math/tex; mode=display">\hat{\mathcal{X}} = \begin{bmatrix}
     \hat{x} \\ \hat{y}\\ \hat{\phi}
 \end{bmatrix} ,C(\mathcal{X})= \begin{bmatrix}
     \sigma^2_x& \sigma_{xy} & \sigma_{x\phi} \\ 
@@ -354,6 +359,51 @@ C(\mathcal{X})    \triangleq E(\tilde{X}\tilde{X}^T)
 
 \end{equation}</script><p>在这里，$\mathcal{X}_i$ 是各个不确定空间关系的空间变量向量，$C(\mathcal{X}_i)$ 是相关的协方差矩阵，就像我们之前讨论的那样。</p>
 <p>$C(\mathcal{X}_i,\mathcal{X}_j)$ 是不确定空间关系之间的交叉协方差矩阵，它允许不同空间关系的不确定性之间存在依赖关系。这些非对角矩阵提供了将新添加到地图中的信息反向传播的机制，以改进之前的空间估计，这比以前的方法更为精细。</p>
+<p>在我们的示例中，每个不确定的空间关系都具有相同的形式，因此 $\mathcal{X}$ 具有 $m = 3n$ 个元素，我们可以写为：</p>
+<script type="math/tex; mode=display">\mathcal{X}_i = \begin{bmatrix}
+    x_i\\ y_i\\ \phi_i
+\end{bmatrix}, \hat{\mathcal{X}}_i = \begin{bmatrix}
+    \hat{x}_i\\ \hat{y}_i\\ \hat{\phi}_i
+\end{bmatrix},</script><script type="math/tex; mode=display">C(\mathcal{X}_i,\mathcal{X}_j) = \begin{bmatrix}
+    \sigma_{x_i x_j}& \sigma_{x_i y_j}& \sigma_{x_i \phi_j}\\
+    \sigma_{x_i y_j}& \sigma_{y_i y_j}& \sigma_{y_i \phi_j}\\
+    \sigma_{x_i \phi_j}& \sigma_{y_i \phi_j}& \sigma_{\phi_i \phi_j}
+\end{bmatrix}</script><p>我们的”地图”由当前对系统状态向量均值的估计组成，它给出了地图中物体相对于世界参考框架的名义位置，以及相关的系统协方差矩阵，该矩阵给出了地图中每个点的不确定性以及这些不确定性之间的相互依赖关系。</p>
+<h3 id="2-2-解释"><a href="#2-2-解释" class="headerlink" title="2.2 解释"></a>2.2 解释</h3><p>对于基于不确定空间关系的某些决策，我们必须假设一个适合估计矩的特定分布。<br>例如，机器人可能需要能够计算某个物体出现在其视野中的概率，或者成功通过门的概率。仅给定多元概率分布的均值$\mathcal{X}$和协方差矩阵$C(\mathcal{X})$，最大熵原理表明，假设信息最少的分布是正态分布。<br>此外，如果空间关系是通过结合许多独立观测的证据计算得出的，中心极限定理表明，得到的分布将趋向于正态分布。</p>
+<script type="math/tex; mode=display">\begin{equation}
+    P(\mathcal{X}) = \frac{exp[-\frac{1}{2}(\mathcal{X}-\hat{\mathcal{X}})^TC^{-1}(\mathcal{X})(\mathcal{X}-\hat{\mathcal{X}})]}{\sqrt{(2\pi)^m |C(\mathcal{X})|}}d\mathcal{X}
+\end{equation}</script><p>我们将通过绘制具有给定均值和协方差信息的正态分布的等概率轮廓来表示不确定的空间关系。这些轮廓实际上是同心椭圆体（对于二维是椭圆），其参数可以从协方差矩阵$C(\mathcal{X}_i)$中计算出来[Nahi, 1976]。重要的是要强调，我们并不假设不确定的空间关系由正态分布描述。我们估计其分布的均值和方差，并仅在需要计算特定概率轮廓时使用正态分布。</p>
+<p>在本文的图中，绘制的点显示了物体的实际位置，这些位置只有模拟器知道，并且为了我们的利益而显示出来。机器人的信息通过椭圆来展示，这些椭圆以关系的估计均值为中心绘制，并且使其包围一个99.9%的置信区域（大约四个标准差）的关系。</p>
+<h3 id="2-3-示例"><a href="#2-3-示例" class="headerlink" title="2.3 示例"></a>2.3 示例</h3><p>在本文中，我们将参考一个涉及移动机器人三个自由度导航的二维示例。在这个示例中，机器人执行以下操作序列：</p>
+<ul>
+<li>机器人感知物体＃1</li>
+<li>机器人移动。</li>
+<li>机器人感知一个物体（物体＃2），它确定不是物体＃1。</li>
+<li>再次尝试，机器人成功地感知到物体＃1，从而有助于定位自身、物体＃1和物体＃2。</li>
+</ul>
+<img src="/2023/06/20/%E5%9C%A8%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8A%80%E6%9C%AF%E4%B8%AD%E4%BC%B0%E8%AE%A1%E4%B8%8D%E7%A1%AE%E5%AE%9A%E7%9A%84%E7%A9%BA%E9%97%B4%E5%85%B3%E7%B3%BB/fig1_2.png" srcset="/img/loading.gif" lazyload class="">
+<p>图1显示了不确定的空间关系的两个示例——物体＃1的感知位置和机器人预定运动的终点。机器人最初位于标记为’O’的位置。在我们的随机地图中，有足够的信息供机器人决定在进行运动时与物体发生碰撞的可能性有多大。在这种情况下，概率非常小。</p>
+<p>图2展示了这种空间知识如何在机器人运动后从其新的参考框架中呈现出来。正如预期的那样，物体＃1位置的不确定性在与机器人运动的不确定性相结合时变得更大。</p>
+<img src="/2023/06/20/%E5%9C%A8%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8A%80%E6%9C%AF%E4%B8%AD%E4%BC%B0%E8%AE%A1%E4%B8%8D%E7%A1%AE%E5%AE%9A%E7%9A%84%E7%A9%BA%E9%97%B4%E5%85%B3%E7%B3%BB/fig3.png" srcset="/img/loading.gif" lazyload class="">
+<p>从这个新位置，机器人感知到物体＃2（图3）。机器人能够根据其随机地图中的信息确定这是一个新的物体，并且不是它之前观察到的物体＃1。</p>
+<img src="/2023/06/20/%E5%9C%A8%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8A%80%E6%9C%AF%E4%B8%AD%E4%BC%B0%E8%AE%A1%E4%B8%8D%E7%A1%AE%E5%AE%9A%E7%9A%84%E7%A9%BA%E9%97%B4%E5%85%B3%E7%B3%BB/fig4.png" srcset="/img/loading.gif" lazyload class="">
+<p>在图4中，机器人再次感知到物体＃1。这个新的闭环传感器测量作为约束条件被纳入地图中，减少了机器人、物体＃1和物体＃2位置的不确定性（图5）。</p>
+<img src="/2023/06/20/%E5%9C%A8%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8A%80%E6%9C%AF%E4%B8%AD%E4%BC%B0%E8%AE%A1%E4%B8%8D%E7%A1%AE%E5%AE%9A%E7%9A%84%E7%A9%BA%E9%97%B4%E5%85%B3%E7%B3%BB/fig5.png" srcset="/img/loading.gif" lazyload class="">
+<h2 id="3-阅读地图"><a href="#3-阅读地图" class="headerlink" title="3 阅读地图"></a>3 阅读地图</h2><h3 id="3-1-不确定关系"><a href="#3-1-不确定关系" class="headerlink" title="3.1 不确定关系"></a>3.1 不确定关系</h3><p>在了解了我们如何通过系统状态向量的均值和协方差的估计来表示不确定的空间关系之后，现在我们讨论估计未知多元概率分布的前两个矩的方法。详细的理论基础可以参考[Papoulia, 1965]。</p>
+<h4 id="3-1-1-线性关系"><a href="#3-1-1-线性关系" class="headerlink" title="3.1.1 线性关系"></a>3.1.1 线性关系</h4><p>最简单的情况涉及在随机变量中是线性关系的关系，例如：</p>
+<script type="math/tex; mode=display">\mathbf{y}=\mathbf{M}\mathbf{X}+\mathbf{b}</script><p>其中，$\mathbf{X}(n \times 1)$ 是一个随机向量，$\mathbf{M}(r \times n)$ 是非随机系数矩阵，$\mathbf{b}(r \times 1)$ 是一个常向量，$\mathbf{y}(r \times 1)$ 是结果随机向量。利用公式（1）的定义和期望运算符$E$的线性性，可以很容易地验证关系$\hat{\mathbf{y}}$的均值为：</p>
+<script type="math/tex; mode=display">\begin{equation}
+    \hat{\mathbf{y}} = \mathbf{M}\hat{\mathbf{X}} + \mathbf{b}
+\end{equation}</script><p>协方差矩阵$C(\mathbf{y})$ 为：</p>
+<script type="math/tex; mode=display">\begin{equation}
+    C(\mathbf{y}) = \mathbf{M} C(\mathbf{X}) \mathbf{M}^T
+\end{equation}</script><p>我们还需要能够计算关系$\mathbf{y}$和另一个关系$\mathbf{Z}$之间的协方差，给定了关系$\mathbf{X}$和$\mathbf{Z}$之间的协方差：</p>
+<script type="math/tex; mode=display">\begin{equation}
+    \begin{matrix} C(\mathbf{y},\mathbf{Z}) = \mathbf{M} C(\mathbf{X},\mathbf{Z}),\\ 
+    C(\mathbf{Z},\mathbf{y}) = C(\mathbf{Z},\mathbf{X})\mathbf{M}^T \end{matrix}
+\end{equation}</script><p>在给定$\mathbf{X}$的正确矩的情况下，可以精确计算$\mathbf{y}$的多元分布的前两个矩。此外，如果$\mathbf{X}$服从正态分布，则$\mathbf{y}$也服从正态分布。</p>
+<h4 id="3-1-2-非线性关系"><a href="#3-1-2-非线性关系" class="headerlink" title="3.1.2 非线性关系"></a>3.1.2 非线性关系</h4><p>通过下面的公式计算非线性关系在随机变量上的前两个矩将是真实值的一阶估计。<br>要计算实际值，需要了解空间变量的完整概率密度函数，但在我们的应用中通常不会提供这样的信息。通常的方法是近似非线性函数。</p>
+<script type="math/tex; mode=display">\mathbf{y} = f(\mathbf{X})</script><p>通过围绕估计均值$\hat{\mathbf{X}}$展开的泰勒级数近似非线性函数，得到如下公式：</p>
 
                 
               </div>
