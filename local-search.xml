@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>ros-foxy安装cartographer</title>
+    <link href="/2023/07/18/ros-foxy%E5%AE%89%E8%A3%85cartographer/"/>
+    <url>/2023/07/18/ros-foxy%E5%AE%89%E8%A3%85cartographer/</url>
+    
+    <content type="html"><![CDATA[<h1 id="ros-foxy安装cartographer"><a href="#ros-foxy安装cartographer" class="headerlink" title="ros-foxy安装cartographer"></a>ros-foxy安装cartographer</h1><h2 id="apt安装"><a href="#apt安装" class="headerlink" title="apt安装"></a>apt安装</h2><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cmake">sudo apt <span class="hljs-keyword">install</span> ros-<span class="hljs-variable">$&#123;ROS_DISTRO&#125;</span>-cartographer<br>sudo apt <span class="hljs-keyword">install</span> ros-<span class="hljs-variable">$&#123;ROS_DISTRO&#125;</span>-cartographer-ros<br></code></pre></td></tr></table></figure><h2 id="源码安装"><a href="#源码安装" class="headerlink" title="源码安装"></a>源码安装</h2><h3 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h3><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-comment"># wstool related</span><br>sudo apt-<span class="hljs-built_in">get</span> install -y python3-wstool python3-rosdep ninja-build stow<br> <br><span class="hljs-comment"># ceres related</span><br>sudo apt-<span class="hljs-built_in">get</span> install cmake<br>sudo apt-<span class="hljs-built_in">get</span> install libgoogle-glog-dev libgflags-dev<br>sudo apt-<span class="hljs-built_in">get</span> install libatlas-base-dev<br>sudo apt-<span class="hljs-built_in">get</span> install libeigen3-dev<br>sudo apt-<span class="hljs-built_in">get</span> install libsuitesparse-dev<br> <br><span class="hljs-comment"># cartographer related</span><br>sudo apt install lua5.2 liblua5.2-dev libluabind-dev<br>sudo apt install libprotobuf-dev protobuf-compiler<br>sudo apt install libcairo2-dev<br></code></pre></td></tr></table></figure><h3 id="编译源码"><a href="#编译源码" class="headerlink" title="编译源码"></a>编译源码</h3><p>foxy可以使用dashing的代码<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># clone ros2 source</span><br><span class="hljs-built_in">mkdir</span> -p ~/cartographer_ws2/src<br><span class="hljs-built_in">cd</span> ~/cartographer_ws2/src<br>git <span class="hljs-built_in">clone</span> -b ros2 --single-branch https://github.com/ros2/cartographer_ros.git<br><span class="hljs-built_in">cd</span> ~/cartographer_ws2<br>wstool init src<br>wstool merge -t src src/cartographer_ros/cartographer_ros.rosinstall<br>wstool update -t src<br>colcon build<br></code></pre></td></tr></table></figure></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>ROS2</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>解决ros-foxy打包package为deb安装包问题</title>
     <link href="/2023/07/14/%E8%A7%A3%E5%86%B3ros-foxy%E6%89%93%E5%8C%85package%E4%B8%BAdeb%E5%AE%89%E8%A3%85%E5%8C%85%E9%97%AE%E9%A2%98/"/>
     <url>/2023/07/14/%E8%A7%A3%E5%86%B3ros-foxy%E6%89%93%E5%8C%85package%E4%B8%BAdeb%E5%AE%89%E8%A3%85%E5%8C%85%E9%97%AE%E9%A2%98/</url>
