@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>移动构造函数</title>
+    <link href="/2023/08/24/%E7%A7%BB%E5%8A%A8%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/"/>
+    <url>/2023/08/24/%E7%A7%BB%E5%8A%A8%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/</url>
+    
+    <content type="html"><![CDATA[<h1 id="移动构造函数"><a href="#移动构造函数" class="headerlink" title="移动构造函数"></a>移动构造函数</h1><p>移动构造函数是一种特殊的构造函数，它使用右值引用（使用 &amp;&amp; 符号）来接受一个临时对象，然后从该临时对象中“移动”资源，而不是进行深拷贝。这可以大大提高性能，因为资源的所有权可以在不复制数据的情况下从一个对象转移到另一个对象。</p><p>移动构造函数的主要目的是避免不必要的数据拷贝，特别是在需要在不同对象之间传递资源（例如堆分配的内存或文件句柄）时。这对于提高性能和减少资源开销非常有用。</p><p>以下是一个简单的C++示例，说明了移动构造函数的用法：<br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Resource</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">Resource</span>() &#123;<br>        std::cout &lt;&lt; <span class="hljs-string">&quot;Resource default constructor&quot;</span> &lt;&lt; std::endl;<br>        data = <span class="hljs-keyword">new</span> <span class="hljs-type">int</span>[<span class="hljs-number">1000000</span>]; <span class="hljs-comment">// 模拟占用大量内存的资源</span><br>    &#125;<br><br>    ~<span class="hljs-built_in">Resource</span>() &#123;<br>        std::cout &lt;&lt; <span class="hljs-string">&quot;Resource destructor&quot;</span> &lt;&lt; std::endl;<br>        <span class="hljs-keyword">delete</span>[] data;<br>    &#125;<br><br>    <span class="hljs-comment">// 移动构造函数</span><br>    <span class="hljs-built_in">Resource</span>(Resource&amp;&amp; other) <span class="hljs-keyword">noexcept</span> &#123;<br>        std::cout &lt;&lt; <span class="hljs-string">&quot;Resource move constructor&quot;</span> &lt;&lt; std::endl;<br>        data = other.data;<br>        other.data = <span class="hljs-literal">nullptr</span>; <span class="hljs-comment">// 将原来的资源指针置为空，避免误删除</span><br>    &#125;<br><br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-type">int</span>* data;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    Resource originalResource; <span class="hljs-comment">// 创建一个资源对象</span><br><br>    <span class="hljs-comment">// 使用移动构造函数将资源从originalResource移动到newResource</span><br>    <span class="hljs-function">Resource <span class="hljs-title">newResource</span><span class="hljs-params">(std::move(originalResource))</span></span>;<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure><br>在这个示例中，Resource 类模拟了一个占用大量内存的资源。移动构造函数在资源对象之间移动资源指针，而不进行数据的实际拷贝。</p><p>std::move() 函数用于将一个对象转换为右值引用，以便在移动构造函数中使用。移动构造函数将资源从 originalResource 移动到 newResource，在此过程中不会复制实际的资源数据。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>C++</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>拷贝构造函数</title>
     <link href="/2023/08/24/%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/"/>
     <url>/2023/08/24/%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/</url>
