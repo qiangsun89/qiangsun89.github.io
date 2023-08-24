@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>转换构造函数</title>
+    <link href="/2023/08/24/%E8%BD%AC%E6%8D%A2%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/"/>
+    <url>/2023/08/24/%E8%BD%AC%E6%8D%A2%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/</url>
+    
+    <content type="html"><![CDATA[<h1 id="转换构造函数"><a href="#转换构造函数" class="headerlink" title="转换构造函数"></a>转换构造函数</h1><p>转换构造函数是一种特殊类型的构造函数，它可以使用一个参数来创建新对象。这允许我们使用一个表达式将一个类型隐式转换为另一个类型。它通常用于定义从一个类型到类类型的转换。</p><p>当我们有一个需要类类型的表达式时，而我们提供的是另一种类型（例如，基本类型或另一个类类型），编译器将查找一个只接受该类型作为参数的构造函数，并使用它来执行转换。</p><p>以下是一个C++示例，说明了转换构造函数的用法：</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Fraction</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-comment">// 转换构造函数: 从整数到Fraction的转换</span><br>    <span class="hljs-built_in">Fraction</span>(<span class="hljs-type">int</span> num) : <span class="hljs-built_in">numerator</span>(num), <span class="hljs-built_in">denominator</span>(<span class="hljs-number">1</span>) &#123;<br>        std::cout &lt;&lt; <span class="hljs-string">&quot;转换构造函数调用\n&quot;</span>;<br>    &#125;<br><br>    <span class="hljs-comment">// 常规构造函数</span><br>    <span class="hljs-built_in">Fraction</span>(<span class="hljs-type">int</span> num, <span class="hljs-type">int</span> denom) : <span class="hljs-built_in">numerator</span>(num), <span class="hljs-built_in">denominator</span>(denom) &#123;&#125;<br><br>    <span class="hljs-comment">// 用于打印分数的函数</span><br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">print</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>&#123;<br>        std::cout &lt;&lt; numerator &lt;&lt; <span class="hljs-string">&#x27;/&#x27;</span> &lt;&lt; denominator &lt;&lt; <span class="hljs-string">&#x27;\n&#x27;</span>;<br>    &#125;<br><br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-type">int</span> numerator;<br>    <span class="hljs-type">int</span> denominator;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    Fraction f1 = <span class="hljs-number">5</span>; <span class="hljs-comment">// 调用转换构造函数</span><br>    f1.<span class="hljs-built_in">print</span>(); <span class="hljs-comment">// 输出 5/1</span><br><br>    Fraction f2 = <span class="hljs-built_in">Fraction</span>(<span class="hljs-number">5</span>); <span class="hljs-comment">// 显式调用转换构造函数</span><br>    f2.<span class="hljs-built_in">print</span>(); <span class="hljs-comment">// 输出 5/1</span><br><br>    <span class="hljs-function">Fraction <span class="hljs-title">f3</span><span class="hljs-params">(<span class="hljs-number">3</span>, <span class="hljs-number">4</span>)</span></span>; <span class="hljs-comment">// 使用常规构造函数</span><br>    f3.<span class="hljs-built_in">print</span>(); <span class="hljs-comment">// 输出 3/4</span><br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure><p>此示例中的Fraction类具有一个接受整数作为参数的构造函数。当我们尝试将整数赋值给Fraction类型的对象时，此构造函数被调用，并执行所需的转换。</p><p>注意，转换构造函数可以非常方便，但也可能导致一些意外行为。如果不希望构造函数被用作隐式转换，可以通过在构造函数声明前添加explicit关键字来防止这种情况：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">explicit</span> <span class="hljs-title">Fraction</span><span class="hljs-params">(<span class="hljs-type">int</span> num)</span> : numerator(num), denominator(<span class="hljs-number">1</span>) &#123;</span>&#125;<br><br></code></pre></td></tr></table></figure><br>添加explicit后，构造函数不会用于隐式转换，只能显式调用</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>C++</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>ros-foxy安装cartographer</title>
     <link href="/2023/07/18/ros-foxy%E5%AE%89%E8%A3%85cartographer/"/>
     <url>/2023/07/18/ros-foxy%E5%AE%89%E8%A3%85cartographer/</url>
