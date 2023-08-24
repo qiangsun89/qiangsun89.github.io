@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>拷贝构造函数</title>
+    <link href="/2023/08/24/%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/"/>
+    <url>/2023/08/24/%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/</url>
+    
+    <content type="html"><![CDATA[<h1 id="拷贝构造函数"><a href="#拷贝构造函数" class="headerlink" title="拷贝构造函数"></a>拷贝构造函数</h1><p>拷贝构造函数是一种特殊的构造函数，用于创建一个类的对象，并通过复制另一个相同类型的对象来初始化新对象。当以下几种情况发生时，会调用拷贝构造函数：</p><ul><li>通过使用另一个同类型的对象显式初始化新对象。</li><li>将对象作为值参数传递给函数。</li><li>从函数返回对象。<br>拷贝构造函数通常接受一个对同类型对象的常量引用作为参数。</li></ul><p>以下是一个C++示例，说明了拷贝构造函数的用法：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Person</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-comment">// 普通构造函数</span><br>    <span class="hljs-built_in">Person</span>(<span class="hljs-type">const</span> std::string &amp;name, <span class="hljs-type">int</span> age) : <span class="hljs-built_in">name</span>(name), <span class="hljs-built_in">age</span>(age) &#123;&#125;<br><br>    <span class="hljs-comment">// 拷贝构造函数</span><br>    <span class="hljs-built_in">Person</span>(<span class="hljs-type">const</span> Person &amp;other) : <span class="hljs-built_in">name</span>(other.name), <span class="hljs-built_in">age</span>(other.age) &#123;<br>        std::cout &lt;&lt; <span class="hljs-string">&quot;拷贝构造函数调用\n&quot;</span>;<br>    &#125;<br><br>    <span class="hljs-comment">// 输出Person信息的函数</span><br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">print</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>&#123;<br>        std::cout &lt;&lt; <span class="hljs-string">&quot;姓名: &quot;</span> &lt;&lt; name &lt;&lt; <span class="hljs-string">&quot;, 年龄: &quot;</span> &lt;&lt; age &lt;&lt; <span class="hljs-string">&#x27;\n&#x27;</span>;<br>    &#125;<br><br><span class="hljs-keyword">private</span>:<br>    std::string name;<br>    <span class="hljs-type">int</span> age;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">displayPerson</span><span class="hljs-params">(Person person)</span> </span>&#123; <span class="hljs-comment">// 通过值传递，会调用拷贝构造函数</span><br>    person.<span class="hljs-built_in">print</span>();<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-function">Person <span class="hljs-title">person1</span><span class="hljs-params">(<span class="hljs-string">&quot;张三&quot;</span>, <span class="hljs-number">25</span>)</span></span>;<br>    Person person2 = person1; <span class="hljs-comment">// 调用拷贝构造函数</span><br>    person2.<span class="hljs-built_in">print</span>(); <span class="hljs-comment">// 输出 张三, 25</span><br><br>    <span class="hljs-built_in">displayPerson</span>(person1); <span class="hljs-comment">// 通过值传递，会调用拷贝构造函数</span><br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure><br>在这个示例中，Person类具有一个拷贝构造函数，它接受另一个Person对象的引用，并通过复制其属性来初始化新对象。</p><p>请注意，在某些情况下，编译器可能会优化掉拷贝构造函数的调用（称为返回值优化或复制消除）。此外，如果未明确提供拷贝构造函数，编译器通常会生成一个默认的拷贝构造函数，该构造函数会执行成员逐一的拷贝。</p><p>如果你不想允许对象的拷贝操作，可以通过将拷贝构造函数声明为delete来禁用它：<br><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-constructor">Person(<span class="hljs-params">const</span> Person &amp;<span class="hljs-params">other</span>)</span> = delete;<br><br></code></pre></td></tr></table></figure><br>这样会禁止编译器生成默认的拷贝构造函数，从而确保对象不能被复制。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>C++</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>转换构造函数</title>
     <link href="/2023/08/24/%E8%BD%AC%E6%8D%A2%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/"/>
     <url>/2023/08/24/%E8%BD%AC%E6%8D%A2%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/</url>
