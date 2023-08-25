@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>两阶段查找</title>
+    <link href="/2023/08/25/%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%9F%A5%E6%89%BE/"/>
+    <url>/2023/08/25/%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%9F%A5%E6%89%BE/</url>
+    
+    <content type="html"><![CDATA[<h1 id="两阶段查找"><a href="#两阶段查找" class="headerlink" title="两阶段查找"></a>两阶段查找</h1><p>两阶段查找（Two-phase lookup）是C++模板中名称查找的一个特点。了解这个概念对于理解和解决一些模板相关的编译错误特别有帮助。</p><p>两阶段查找的基本思想是，模板定义时和实例化时，编译器都会对模板代码进行名称查找，但查找的内容和上下文可能有所不同。</p><ol><li><p>第一阶段：这一阶段发生在模板定义的时候，编译器会对非依赖名称（non-dependent names）进行查找。所谓非依赖名称，指的是与模板参数无关的名称。此时，编译器并不知道模板的具体实例化类型，只是对模板代码做一个基本的语法和语义检查。</p></li><li><p>第二阶段：这一阶段发生在模板实例化的时候，也就是编译器知道了模板参数的具体类型时。这时，编译器会对依赖名称（dependent names）进行查找。所谓依赖名称，指的是与模板参数有关的名称。</p></li></ol><p>两阶段查找的主要好处是在模板定义时进行一次查找可以捕获到很多错误，而不必等待模板实例化。但同时，它也导致了一些不直观的错误和行为。</p><p>以下是一个简单的示例来解释两阶段查找：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">func</span><span class="hljs-params">()</span> </span>&#123;<br>    x = <span class="hljs-number">0</span>;    <span class="hljs-comment">// 非依赖名称</span><br>    T y = <span class="hljs-number">0</span>;  <span class="hljs-comment">// 依赖名称</span><br>&#125;<br><br><span class="hljs-type">int</span> x;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-built_in">func</span>&lt;<span class="hljs-type">int</span>&gt;();<br>&#125;<br><br></code></pre></td></tr></table></figure><br>在上述代码中：</p><ul><li>x = 0; 这里的x是一个非依赖名称，因为它与模板参数T无关。因此，在模板func被定义的时候，编译器会尝试查找x。如果int x;定义在func之前，则编译是成功的。但如果int x;定义在func之后，则会产生一个编译错误，因为x在模板定义时还没有被定义。</li><li>T y = 0; 这里的y是一个依赖名称，因为它的类型取决于模板参数T。所以，其查找和验证会被延迟到模板实例化的时候。<br>了解两阶段查找是很重要的，因为它可以帮助我们解释和解决一些关于模板的复杂编译错误。</li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>C++</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>移动构造函数</title>
     <link href="/2023/08/24/%E7%A7%BB%E5%8A%A8%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/"/>
     <url>/2023/08/24/%E7%A7%BB%E5%8A%A8%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/</url>
