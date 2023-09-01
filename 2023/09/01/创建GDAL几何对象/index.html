@@ -1,0 +1,805 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Qiang Sun">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="创建GDAL几何对象GDAL (Geospatial Data Abstraction Library) 是一个开源的用于读取和写入矢量和栅格地理空间数据格式的库。OGR是GDAL库的一个部分，专门用于处理矢量数据 createFromWktOGRGeometryFactory是OGR库中的一个类，用于创建OGRGeometry对象。OGRGeometry是一个表示地理空间几何对象（如点、线、多边">
+<meta property="og:type" content="article">
+<meta property="og:title" content="创建GDAL几何对象">
+<meta property="og:url" content="https://qiangsun89.github.io/2023/09/01/%E5%88%9B%E5%BB%BAGDAL%E5%87%A0%E4%BD%95%E5%AF%B9%E8%B1%A1/index.html">
+<meta property="og:site_name" content="知识的搬运工">
+<meta property="og:description" content="创建GDAL几何对象GDAL (Geospatial Data Abstraction Library) 是一个开源的用于读取和写入矢量和栅格地理空间数据格式的库。OGR是GDAL库的一个部分，专门用于处理矢量数据 createFromWktOGRGeometryFactory是OGR库中的一个类，用于创建OGRGeometry对象。OGRGeometry是一个表示地理空间几何对象（如点、线、多边">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-09-01T03:10:03.000Z">
+<meta property="article:modified_time" content="2023-09-01T03:26:05.867Z">
+<meta property="article:author" content="Qiang Sun">
+<meta property="article:tag" content="原创">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>创建GDAL几何对象 - 知识的搬运工</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"qiangsun89.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"LEYjQzDk7jo8uqlOQoAEF5qm-gzGzoHsz","app_key":"7bBCyINnLw0akaPjI39pESMN","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>知识的搬运工</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="创建GDAL几何对象"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-09-01 11:10" pubdate>
+          2023年9月1日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          47 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">创建GDAL几何对象</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="创建GDAL几何对象"><a href="#创建GDAL几何对象" class="headerlink" title="创建GDAL几何对象"></a>创建GDAL几何对象</h1><p>GDAL (Geospatial Data Abstraction Library) 是一个开源的用于读取和写入矢量和栅格地理空间数据格式的库。OGR是GDAL库的一个部分，专门用于处理矢量数据</p>
+<h2 id="createFromWkt"><a href="#createFromWkt" class="headerlink" title="createFromWkt"></a>createFromWkt</h2><p>OGRGeometryFactory是OGR库中的一个类，用于创建OGRGeometry对象。OGRGeometry是一个表示地理空间几何对象（如点、线、多边形等）的抽象基类。</p>
+<p>OGRGeometryFactory::createFromWkt是OGRGeometryFactory类的一个静态方法，用于从WKT (Well-Known Text) 字符串创建一个OGRGeometry对象。</p>
+<p>函数原型：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function">OGRErr <span class="hljs-title">OGRGeometryFactory::createFromWkt</span><span class="hljs-params">(<span class="hljs-type">char</span> ** ppszInput, </span></span><br><span class="hljs-params"><span class="hljs-function">                                         OGRSpatialReference * poSR, </span></span><br><span class="hljs-params"><span class="hljs-function">                                         OGRGeometry ** ppoReturn )</span></span>;<br><br></code></pre></td></tr></table></figure><br>参数：</p>
+<ul>
+<li><p>ppszInput：输入参数，指向一个指针，该指针指向WKT字符串。该函数会修改该指针，使其指向WKT字符串中未处理的下一个字符。</p>
+</li>
+<li><p>poSR：输入参数，指向一个OGRSpatialReference对象，该对象定义了要创建的几何对象的空间参考系。如果输入为NULL，则假定WKT字符串中包含了空间参考系信息。</p>
+</li>
+<li><p>ppoReturn：输出参数，指向一个OGRGeometry对象的指针。如果函数成功，该指针将指向一个新创建的OGRGeometry对象。该对象应当由调用者负责删除。</p>
+</li>
+</ul>
+<p>返回值：</p>
+<ul>
+<li><p>OGRERR_NONE：操作成功。</p>
+</li>
+<li><p>OGRERR_NOT_ENOUGH_DATA：WKT字符串中的数据不足以创建一个几何对象。</p>
+</li>
+<li><p>OGRERR_UNSUPPORTED_GEOMETRY_TYPE：WKT字符串中的几何类型不受支持。</p>
+</li>
+<li><p>OGRERR_CORRUPT_DATA：WKT字符串包含错误的数据。</p>
+</li>
+</ul>
+<p>用法示例：<br><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-built_in">char</span>* wkt = <span class="hljs-string">&quot;POINT (30 10)&quot;</span>;<br>OGRGeometry *poGeometry;<br><span class="hljs-built_in">char</span> *pszWKT = wkt;<br>OGRSpatialReference* poSRS = NULL;<br>OGRErr eErr = OGRGeometryFactory::create<span class="hljs-constructor">FromWkt(&amp;<span class="hljs-params">pszWKT</span>, <span class="hljs-params">poSRS</span>, &amp;<span class="hljs-params">poGeometry</span>)</span>;<br><span class="hljs-keyword">if</span> (eErr != OGRERR_NONE) &#123;<br>    <span class="hljs-comment">// Handle error</span><br>&#125;<br><br></code></pre></td></tr></table></figure><br>这个例子创建了一个表示点(30, 10)的OGRGeometry对象。注意，createFromWkt函数会修改pszWKT指针。如果需要保留原始的WKT字符串，应当先将其复制到另一个字符串，然后传递复制的字符串的地址给createFromWkt函数。</p>
+<h2 id="createFromWkb"><a href="#createFromWkb" class="headerlink" title="createFromWkb"></a>createFromWkb</h2><p>在GDAL（Geospatial Data Abstraction Library）的OGR部分中，OGRGeometryFactory::createFromWkb 函数用于从WKB（Well-Known Binary）格式的二进制数据创建一个 OGRGeometry 对象。WKB是一种用于序列化地理空间几何对象的标准格式。</p>
+<p>函数原型通常如下<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function">OGRErr <span class="hljs-title">OGRGeometryFactory::createFromWkb</span><span class="hljs-params">( <span class="hljs-type">unsigned</span> <span class="hljs-type">char</span> * pabyData,</span></span><br><span class="hljs-params"><span class="hljs-function">                                          OGRSpatialReference * poSR,</span></span><br><span class="hljs-params"><span class="hljs-function">                                          OGRGeometry ** ppoReturn,</span></span><br><span class="hljs-params"><span class="hljs-function">                                          <span class="hljs-type">int</span> nSize )</span></span>;<br><br></code></pre></td></tr></table></figure><br>参数：</p>
+<ul>
+<li><p>pabyData：输入参数，指向包含WKB数据的无符号字符数组。</p>
+</li>
+<li><p>poSR：输入参数，指向一个 OGRSpatialReference 对象，该对象定义了几何对象的空间参考系。如果为 NULL，则假定WKB数据中包含了空间参考系信息。</p>
+</li>
+<li><p>ppoReturn：输出参数，指向一个 OGRGeometry 对象的指针。如果函数成功，则这个指针会指向一个新创建的 OGRGeometry 对象。</p>
+</li>
+<li><p>nSize：输入参数，定义了 pabyData 数组的大小。这是为了防止数组越界。</p>
+</li>
+</ul>
+<p>返回值：</p>
+<ul>
+<li><p>OGRERR_NONE：操作成功。</p>
+</li>
+<li><p>OGRERR_NOT_ENOUGH_DATA：WKB数据不足以创建一个几何对象。</p>
+</li>
+<li><p>OGRERR_UNSUPPORTED_GEOMETRY_TYPE：WKB数据中的几何类型不受支持。</p>
+</li>
+<li><p>OGRERR_CORRUPT_DATA：WKB数据包含错误或损坏的数据。</p>
+</li>
+</ul>
+<p>用法示例：<br><figure class="highlight nim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs nim">unsigned <span class="hljs-type">char</span> wkb[] = <span class="hljs-meta">&#123;...&#125;</span>; // 一些<span class="hljs-type">WKB</span>格式的二进制数据<br><span class="hljs-type">int</span> nSize = sizeof(wkb);<br><span class="hljs-type">OGRSpatialReference</span>* poSRS = <span class="hljs-type">NULL</span>;<br><span class="hljs-type">OGRGeometry</span> *poGeometry;<br><br><span class="hljs-type">OGRErr</span> eErr = <span class="hljs-type">OGRGeometryFactory</span>::createFromWkb(wkb, poSRS, &amp;poGeometry, nSize);<br><span class="hljs-keyword">if</span> (eErr != <span class="hljs-type">OGRERR_NONE</span>) &#123;<br>    // 错误处理<br>&#125;<br><br></code></pre></td></tr></table></figure><br>这个例子创建了一个由WKB数据表示的 OGRGeometry 对象。请注意，成功创建几何对象后，你需要负责最终删除该对象以释放内存。</p>
+<p>这个函数非常有用，当你需要从二进制流或者文件中读取地理信息，并将其转换为可以用于进一步处理或转换的 OGRGeometry 对象时。它是一个与 createFromWkt 函数（用于从WKT格式字符串创建 OGRGeometry 对象）相对应的函数。</p>
+<h2 id="createFromGeoJson"><a href="#createFromGeoJson" class="headerlink" title="createFromGeoJson"></a>createFromGeoJson</h2><p>在GDAL的OGR库中，OGRGeometryFactory 类提供了一组方法用于创建 OGRGeometry 对象。OGRGeometry 是一个表示地理空间几何对象（如点、线、多边形等）的抽象基类。</p>
+<p>OGRGeometryFactory::createFromGeoJson 方法用于从GeoJSON格式的字符串创建一个 OGRGeometry 对象。</p>
+<p>GeoJSON是一种基于JSON格式的地理空间数据交换格式。它可以用于表示几何对象、特征和特征集合。</p>
+<p>函数原型：<br><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">OGRGeometry* OGRGeometryFactory::create<span class="hljs-constructor">FromGeoJson(<span class="hljs-params">const</span> <span class="hljs-params">char</span><span class="hljs-operator">*</span> <span class="hljs-params">pszJson</span>)</span>;<br><br></code></pre></td></tr></table></figure><br>参数：</p>
+<ul>
+<li><p>pszJson：输入参数，指向一个包含GeoJSON格式数据的字符串。<br>返回值：</p>
+</li>
+<li><p>如果操作成功，则返回一个新创建的 OGRGeometry 对象的指针。该对象应由调用者负责删除。</p>
+</li>
+<li><p>如果操作失败，则返回NULL。</p>
+</li>
+</ul>
+<p>用法示例：<br><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">const <span class="hljs-type">char</span>* geoJson = &quot;&#123;\&quot;<span class="hljs-keyword">type</span>\&quot;:\&quot;<span class="hljs-type">Point</span>\&quot;,\&quot;coordinates\&quot;:[30,10]&#125;&quot;;<br>OGRGeometry *poGeometry = OGRGeometryFactory::createFromGeoJson(geoJson);<br><span class="hljs-keyword">if</span> (poGeometry == <span class="hljs-keyword">NULL</span>) &#123;<br>    // Handle error<br>&#125;<br><br></code></pre></td></tr></table></figure><br>这个例子创建了一个表示点(30, 10)的 OGRGeometry 对象。</p>
+<p>注意：</p>
+<ol>
+<li><p>该方法可以处理GeoJSON字符串中的任何几何对象类型，例如 Point, LineString, Polygon, MultiPoint, MultiLineString, MultiPolygon, 和 GeometryCollection。</p>
+</li>
+<li><p>GeoJSON格式的字符串必须是UTF-8编码的。</p>
+</li>
+<li><p>由于该方法返回一个新创建的 OGRGeometry 对象的指针，因此调用者需要负责删除该对象以释放内存。</p>
+</li>
+</ol>
+<h2 id="创建Polygon"><a href="#创建Polygon" class="headerlink" title="创建Polygon"></a>创建Polygon</h2><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">const <span class="hljs-type">char</span>* geoJson = &quot;&#123;\&quot;<span class="hljs-keyword">type</span>\&quot;:\&quot;<span class="hljs-type">Polygon</span>\&quot;,\&quot;coordinates\&quot;:[[[30,10],[40,40],[20,40],[10,20],[30,10]]]&#125;&quot;;<br>OGRGeometry *poGeometry = OGRGeometryFactory::createFromGeoJson(geoJson);<br><span class="hljs-keyword">if</span> (poGeometry == <span class="hljs-keyword">NULL</span>) &#123;<br>    // Handle error<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<h2 id="ROS的Polygonstamped转化成GDAL需要的geoJson"><a href="#ROS的Polygonstamped转化成GDAL需要的geoJson" class="headerlink" title="ROS的Polygonstamped转化成GDAL需要的geoJson"></a>ROS的Polygonstamped转化成GDAL需要的geoJson</h2><p>在ROS（Robot Operating System）和GDAL（Geospatial Data Abstraction Library）之间进行数据转换时，可以手动构建一个GeoJSON字符串来表示ROS的PolygonStamped消息。</p>
+<p>以下是一些步骤和代码示例，以展示如何从ROS的PolygonStamped消息转换到一个GDAL所需的GeoJSON字符串。</p>
+<ol>
+<li>首先，确保安装了ROS和GDAL的相关包，并在代码中包含它们。<figure class="highlight stan"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs stan"><span class="hljs-meta">#include &lt;<span class="hljs-string">ros</span>/<span class="hljs-string">ros.h</span>&gt;</span><br><span class="hljs-meta">#include &lt;<span class="hljs-string">geometry_msgs</span>/P<span class="hljs-string">olygon</span>S<span class="hljs-string">tamped.h</span>&gt;</span><br><span class="hljs-meta">#include &lt;<span class="hljs-string">json</span>/<span class="hljs-string">json.h</span>&gt;  <span class="hljs-comment">// 或者使用其他JSON库</span></span><br><br></code></pre></td></tr></table></figure></li>
+<li><p>订阅PolygonStamped消息或者从某个已知的PolygonStamped对象开始。</p>
+</li>
+<li><p>手动构建一个GeoJSON字符串。</p>
+</li>
+</ol>
+<p>代码示例：<br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;ros/ros.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;geometry_msgs/PolygonStamped.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;json/json.h&gt;</span>  <span class="hljs-comment">// 使用JsonCpp库</span></span><br><br><span class="hljs-function">std::string <span class="hljs-title">convertPolygonStampedToGeoJson</span><span class="hljs-params">(<span class="hljs-type">const</span> geometry_msgs::PolygonStamped&amp; polygonStamped)</span> </span>&#123;<br>    Json::Value root;<br>    root[<span class="hljs-string">&quot;type&quot;</span>] = <span class="hljs-string">&quot;Polygon&quot;</span>;<br><br>    <span class="hljs-function">Json::Value <span class="hljs-title">coordinates</span><span class="hljs-params">(Json::arrayValue)</span></span>;<br>    <span class="hljs-function">Json::Value <span class="hljs-title">ring</span><span class="hljs-params">(Json::arrayValue)</span></span>;<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">const</span> <span class="hljs-keyword">auto</span>&amp; point : polygonStamped.polygon.points) &#123;<br>        <span class="hljs-function">Json::Value <span class="hljs-title">vertex</span><span class="hljs-params">(Json::arrayValue)</span></span>;<br>        vertex.<span class="hljs-built_in">append</span>(point.x);<br>        vertex.<span class="hljs-built_in">append</span>(point.y);<br>        ring.<span class="hljs-built_in">append</span>(vertex);<br>    &#125;<br><br>    <span class="hljs-comment">// 确保首尾点相同以满足GeoJSON格式的要求</span><br>    <span class="hljs-keyword">if</span> (!(polygonStamped.polygon.points.<span class="hljs-built_in">front</span>().x == polygonStamped.polygon.points.<span class="hljs-built_in">back</span>().x &amp;&amp;<br>          polygonStamped.polygon.points.<span class="hljs-built_in">front</span>().y == polygonStamped.polygon.points.<span class="hljs-built_in">back</span>().y)) &#123;<br>        <span class="hljs-function">Json::Value <span class="hljs-title">vertex</span><span class="hljs-params">(Json::arrayValue)</span></span>;<br>        vertex.<span class="hljs-built_in">append</span>(polygonStamped.polygon.points.<span class="hljs-built_in">front</span>().x);<br>        vertex.<span class="hljs-built_in">append</span>(polygonStamped.polygon.points.<span class="hljs-built_in">front</span>().y);<br>        ring.<span class="hljs-built_in">append</span>(vertex);<br>    &#125;<br><br>    coordinates.<span class="hljs-built_in">append</span>(ring);<br>    root[<span class="hljs-string">&quot;coordinates&quot;</span>] = coordinates;<br><br>    Json::StreamWriterBuilder writer;<br>    std::string geoJsonString = Json::<span class="hljs-built_in">writeString</span>(writer, root);<br><br>    <span class="hljs-keyword">return</span> geoJsonString;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span>** argv)</span> </span>&#123;<br>    ros::<span class="hljs-built_in">init</span>(argc, argv, <span class="hljs-string">&quot;polygon_to_geojson_converter&quot;</span>);<br>    ros::NodeHandle nh;<br><br>    <span class="hljs-comment">// 以某种方式获取PolygonStamped对象，例如通过订阅</span><br>    geometry_msgs::PolygonStamped polygonStamped;<br><br>    <span class="hljs-comment">// 填充polygonStamped对象...</span><br><br>    <span class="hljs-comment">// 转换到GeoJSON</span><br>    std::string geoJsonString = <span class="hljs-built_in">convertPolygonStampedToGeoJson</span>(polygonStamped);<br><br>    <span class="hljs-comment">// 现在，你可以使用geoJsonString进行GDAL相关操作</span><br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure><br>在这个例子中，我使用了JsonCpp库来创建GeoJSON字符串，但你也可以使用任何其他JSON处理库或直接手动构建这个字符串。然后，你可以将生成的GeoJSON字符串用于GDAL的OGRGeometryFactory::createFromGeoJson函数。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/GDAL/" class="category-chain-item">GDAL</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%8E%9F%E5%88%9B/">#原创</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>创建GDAL几何对象</div>
+      <div>https://qiangsun89.github.io/2023/09/01/创建GDAL几何对象/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Qiang Sun</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年9月1日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/08/25/%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%9F%A5%E6%89%BE/" title="两阶段查找">
+                        <span class="hidden-mobile">两阶段查找</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"LEYjQzDk7jo8uqlOQoAEF5qm-gzGzoHsz","appKey":"7bBCyINnLw0akaPjI39pESMN","path":"window.location.pathname","placeholder":"留言","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
