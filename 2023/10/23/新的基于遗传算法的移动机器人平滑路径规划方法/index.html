@@ -1,0 +1,808 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Qiang Sun">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="MathJax.Hub.Config({             tex2jax: {             skipTags: [&#39;script&#39;, &#39;noscript&#39;, &#39;style&#39;, &#39;textarea&#39;, &#39;pre&#39;],             inlineMath: [[&#39;$&#39;,&#39;$&#39;]]             }         });">
+<meta property="og:type" content="article">
+<meta property="og:title" content="新的基于遗传算法的移动机器人平滑路径规划方法">
+<meta property="og:url" content="https://qiangsun89.github.io/2023/10/23/%E6%96%B0%E7%9A%84%E5%9F%BA%E4%BA%8E%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%E7%9A%84%E7%A7%BB%E5%8A%A8%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%B9%B3%E6%BB%91%E8%B7%AF%E5%BE%84%E8%A7%84%E5%88%92%E6%96%B9%E6%B3%95/index.html">
+<meta property="og:site_name" content="知识的搬运工">
+<meta property="og:description" content="MathJax.Hub.Config({             tex2jax: {             skipTags: [&#39;script&#39;, &#39;noscript&#39;, &#39;style&#39;, &#39;textarea&#39;, &#39;pre&#39;],             inlineMath: [[&#39;$&#39;,&#39;$&#39;]]             }         });">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://qiangsun89.github.io/2023/10/23/%E6%96%B0%E7%9A%84%E5%9F%BA%E4%BA%8E%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%E7%9A%84%E7%A7%BB%E5%8A%A8%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%B9%B3%E6%BB%91%E8%B7%AF%E5%BE%84%E8%A7%84%E5%88%92%E6%96%B9%E6%B3%95/f1.png">
+<meta property="og:image" content="https://qiangsun89.github.io/2023/10/23/%E6%96%B0%E7%9A%84%E5%9F%BA%E4%BA%8E%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%E7%9A%84%E7%A7%BB%E5%8A%A8%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%B9%B3%E6%BB%91%E8%B7%AF%E5%BE%84%E8%A7%84%E5%88%92%E6%96%B9%E6%B3%95/f2.png">
+<meta property="og:image" content="https://qiangsun89.github.io/2023/10/23/%E6%96%B0%E7%9A%84%E5%9F%BA%E4%BA%8E%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%E7%9A%84%E7%A7%BB%E5%8A%A8%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%B9%B3%E6%BB%91%E8%B7%AF%E5%BE%84%E8%A7%84%E5%88%92%E6%96%B9%E6%B3%95/f3.png">
+<meta property="og:image" content="https://qiangsun89.github.io/2023/10/23/%E6%96%B0%E7%9A%84%E5%9F%BA%E4%BA%8E%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%E7%9A%84%E7%A7%BB%E5%8A%A8%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%B9%B3%E6%BB%91%E8%B7%AF%E5%BE%84%E8%A7%84%E5%88%92%E6%96%B9%E6%B3%95/f4.png">
+<meta property="og:image" content="https://qiangsun89.github.io/2023/10/23/%E6%96%B0%E7%9A%84%E5%9F%BA%E4%BA%8E%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%E7%9A%84%E7%A7%BB%E5%8A%A8%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%B9%B3%E6%BB%91%E8%B7%AF%E5%BE%84%E8%A7%84%E5%88%92%E6%96%B9%E6%B3%95/f5.png">
+<meta property="article:published_time" content="2023-10-23T01:44:10.000Z">
+<meta property="article:modified_time" content="2023-10-23T03:17:00.231Z">
+<meta property="article:author" content="Qiang Sun">
+<meta property="article:tag" content="原创">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://qiangsun89.github.io/2023/10/23/%E6%96%B0%E7%9A%84%E5%9F%BA%E4%BA%8E%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%E7%9A%84%E7%A7%BB%E5%8A%A8%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%B9%B3%E6%BB%91%E8%B7%AF%E5%BE%84%E8%A7%84%E5%88%92%E6%96%B9%E6%B3%95/f1.png">
+  
+  
+  
+  <title>新的基于遗传算法的移动机器人平滑路径规划方法 - 知识的搬运工</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"qiangsun89.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"LEYjQzDk7jo8uqlOQoAEF5qm-gzGzoHsz","app_key":"7bBCyINnLw0akaPjI39pESMN","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>知识的搬运工</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="新的基于遗传算法的移动机器人平滑路径规划方法"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-10-23 09:44" pubdate>
+          2023年10月23日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          7.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          65 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">新的基于遗传算法的移动机器人平滑路径规划方法</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <head>
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+            inlineMath: [['$','$']]
+            }
+        });
+    </script>
+</head>
+
+<h1 id="新的基于遗传算法的移动机器人平滑路径规划方法"><a href="#新的基于遗传算法的移动机器人平滑路径规划方法" class="headerlink" title="新的基于遗传算法的移动机器人平滑路径规划方法"></a>新的基于遗传算法的移动机器人平滑路径规划方法</h1><p>Song, B., Wang, Z. and Sheng, L. (2016), “A new genetic algorithm approach to smooth path planning for mobile robots”, Assembly Automation, Vol. 36 No. 2, pp. 138-145. <a target="_blank" rel="noopener" href="https://doi.org/10.1108/AA-11-2015-094">https://doi.org/10.1108/AA-11-2015-094</a></p>
+<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>本文考虑了基于遗传算法和贝塞尔曲线的移动机器人的平滑路径规划问题。移动机器人的工作空间是通过一个新的基于网格的表示法（2n×2n网格）来描述的，该表示法便于所采用的遗传算法的操作。遗传算法的染色体由一系列二进制编号的网格组成（即贝塞尔曲线的控制点）。普通的遗传操作符，包括交叉和突变，用于搜索最优染色体，其中优化标准是由控制点确定的分段无碰撞贝塞尔曲线路径的长度。通过数值实验，展示了所提出的移动机器人平滑路径规划方法的有效性。</p>
+<h2 id="I-引言"><a href="#I-引言" class="headerlink" title="I.引言"></a>I.引言</h2><p>随着现代工业的快速发展，移动机器人已被广泛应用于诸如制造、组装、物流和运输等多个领域。路径规划是移动机器人学中最重要的主题之一，其目的是找到一个从起始位置到目标位置的可行和最优路径。如果移动机器人沿着它移动可以避免与障碍物碰撞并满足某些最优标准，那么该路径被认为是“可行的”和“最优的”。换句话说，路径规划可以被视为在某些约束（例如无碰撞路线）下对某些指标（例如最短距离）的优化问题。如[18]所示，移动机器人的路径规划问题是一个NP-hard的优化问题，只能通过启发式算法如进化计算技术来解决。在能够处理NP-hard问题的各种算法中，遗传算法（GA）已被证明是简单而有效的一种，在工业中特别是在移动机器人学中被频繁使用[18]。近年来，已经开发了各种基于GA的方法来解决移动机器人路径规划问题[22]。在[12]中提出了一个问题特定的GA，用于移动机器人的路径规划，它将领域知识融入到其专用操作符中。在[28]中为GA提出了一个新的变异操作符，并应用于动态环境中移动机器人的路径规划问题。除了普通的交叉操作，在[19]中还开发了一个新的变异操作符，作为变异的一个子集，以便操作个体。在[21]中提出了一个振动GA，以减少早熟收敛的可能性，从而帮助候选解达到全局最优。在[27]中提出了一个并行精英GA，以及一个迁移操作符，以保持更好的种群多样性，避免早熟收敛，并与传统的GA保持并行。</p>
+<p>在上述几乎所有的文献中，基于遗传算法的路径规划方法都关注于规划一个具有某种简单最优准则（例如路径的最小长度）的可行路径问题。实际上，无碰撞的最短路径对于移动机器人的计划移动往往是不够的。例如，传统的路径规划算法常常产生一条包含一些多边形线或甚至尖锐转弯的路径。当沿着这些多边形线移动时，移动机器人经常需要在不同的模式（例如停止、旋转和重新启动）之间切换，这样的切换过程既耗时又耗能。当运动的平滑性是某些服务任务的要求时，这种不希望的切换甚至是不允许的[32]。因此，除了距离外，还应该包括一些其他的优化准则，如路径的平滑性、能量评估、时间消耗和机器人的速度，更多详情请参见[17]、[29]、[31]。请注意，除了路径的长度外，路径的平滑性也被认为是另一个重要的准则，因为平滑性与其他优化准则密切相关[2]。</p>
+<p>近年来，贝塞尔曲线在平滑路径规划问题中的应用越来越多[1]、[20]、[26]。例如，在[13]中为多智能体机器人足球系统中的移动机器人路径规划提出了一种基于贝塞尔曲线的方法，该方法与速度和加速度限制相兼容。在[11]中提出了一种无碰撞的、受曲率限制的平滑路径规划技术，其思路是将分段线性路径上的节点划分为控制点子序列，从而在曲率约束下生成无碰撞的复合贝塞尔曲线。在[24]中为基于Bernstein-Bezier曲线的多个和非完整约束的机器人开发了一种新的合作碰撞避免方法，并使用了模型预测轨迹跟踪算法来驱动机器人沿获得的参考路径移动。为了基于路径点形成平滑路径，贝塞尔曲线和其他参数曲线通常是由Voronoi图、Dijkstra算法、A算法和D算法等产生的。</p>
+<p>到目前为止，已经在文献中提供了一些关于移动机器人或多智能体系统的平滑路径规划问题的零散结果，这些结果通过结合启发式智能优化算法（例如GA）和路径平滑方法（例如贝塞尔曲线）得到。例如，在[30]中，已经为移动机器人的障碍物避免问题开发了基于GA的贝塞尔曲线的路径规划算法，但是最优路径规划问题的一般数学描述以及工作空间的表示问题尚未得到深入讨论，这使得在实践中实施GA变得不便。在[23]中，为多UAV系统生成了基于并行遗传算法的贝塞尔曲线的可飞行轨迹，其中贝塞尔曲线用于平滑所得路径，因此，很难保证最终规划路径的最优性。本文的目的是通过以下三个独特的贡献来改进现有的结果：1）提出了路径规划优化问题的严格数学公式；2）提出了一个通用的网格表示（2n×2n网格）来描述移动机器人的工作空间，以方便实施GA，其中n根据精度和计算负担之间的权衡来选择；3）贝塞尔曲线的控制点直接与优化准则相链接，从而保证生成的路径是最优的，而无需事后进行平滑。</p>
+<p>在本文中，提出了一种新的方法来解决基于遗传算法和贝塞尔曲线的移动机器人的平滑路径规划问题。本文提出了一种新的工作空间的网格表示方法，简化了现有文献（例如[28]）中的种群初始化、染色体编码和遗传算子。移动机器人的工作空间被划分为几个有序编号的正方形网格，网格的中心被定义为贝塞尔曲线的候选控制点。一系列代表控制点的二进制数字，即基因，代表了遗传算法的染色体，使用常规的遗传算子来搜索最优染色体。遗传算法的优化准则是由控制点确定的所有分段无碰撞贝塞尔曲线的长度。数值实验结果验证了所提平滑路径规划方法的有效性。</p>
+<h2 id="II-贝塞尔曲线基础"><a href="#II-贝塞尔曲线基础" class="headerlink" title="II. 贝塞尔曲线基础"></a>II. 贝塞尔曲线基础</h2><p>贝塞尔曲线位于一系列控制点的凸包内。在这种情况下，贝塞尔曲线与传统的基于插值的曲线（如多项式和三次样条）不同。定义贝塞尔曲线的控制点不在曲线上，除了起点和终点。贝塞尔曲线的高阶导数连续性可以保证曲线在起点和终点之间的平滑变化。给定一组控制点向量$P_0,P_1,\cdots,P_n$，相应的贝塞尔曲线定义为：</p>
+<script type="math/tex; mode=display">P(t)=\sum^n_{i=0}B^i_n(t)P_i,0\leq t\leq1\tag{1}</script><p>其中$t$是标准化的时间变量，$B^i_n(t)$是伯恩斯坦多项式，$P_i = (x_i, y_i)^T$ 表示第$i$个控制点的坐标向量，$x_i$和$y_i$分别是对应于X和Y坐标的分量。伯恩斯坦多项式是贝塞尔曲线表达式中的基本函数，它的定义如下：</p>
+<script type="math/tex; mode=display">B^i_n(t)=\binom{n}{i}t^i(1-t)^{n-i},i=0,1,\cdots,n\tag{2}</script><p>贝塞尔曲线的导数也可以由控制点确定。贝塞尔曲线的一阶导数表示为：</p>
+<script type="math/tex; mode=display">\dot P(t)=\frac{dP(t)}{dt}=n\sum^{n-1}_{i=0}B^{n-1}_i(t)(P_{i+1}-P_i)\tag{3}</script><p>贝塞尔曲线的高阶导数可以通过反复使用之前提到的一阶导数公式 (3) 来获得。例如，贝塞尔曲线的二阶导数可以表示为：</p>
+<script type="math/tex; mode=display">\ddot P(t)=n(n-1)\sum^{n-2}_{i=0}B^{n-2}_i(t)(\dot P_{i+2}-2\dot P_{i+1}+\dot P_i)\tag{4}</script><p>相应地，在二维平面上，关于参数$t$的贝塞尔曲线的曲率可以表示为：</p>
+<script type="math/tex; mode=display">\kappa(t)=\frac{1}{R(t)}=\frac{\dot P_x(t)\ddot P_y(t)-\dot P_y(t)\ddot P_x(t)}{(\dot P^2_x(t)+\dot P^2_y(t))^{3/2}}\tag{5}</script><p>在上述公式中，$R(t)$是曲率半径，$\dot P_x(t)、\dot P_y(t)、\ddot P_x(t)$和$\ddot P_y(t)$ 分别是贝塞尔曲线$P(t)$的一阶和二阶导数在$X$和$Y$坐标上的分量。</p>
+<p>在这篇论文中，分段贝塞尔曲线连接在一起以形成移动机器人的平滑路径，其中考虑了二阶及以下连续性以确保路径的平滑性。零阶连续性（即位置连续性）由连接的贝塞尔曲线的末端和起始点重合来保持。一阶连续性由两个曲线连接处的等价切向量保证，而二阶连续性则由等价曲率保证。为了简化问题，通常将连接的两个贝塞尔曲线处的曲率设置为零，即连接的贝塞尔曲线的一些相邻点在同一直线上。因此，在大多数情况下，很容易满足连续性要求。</p>
+<h2 id="III-基于遗传算法的平滑路径规划"><a href="#III-基于遗传算法的平滑路径规划" class="headerlink" title="III. 基于遗传算法的平滑路径规划"></a>III. 基于遗传算法的平滑路径规划</h2><p>在本文中，将遗传算法与贝塞尔曲线结合，用于移动机器人的平滑路径规划。遗传算法被应用于搜索用于定义平滑贝塞尔曲线的最优控制点。对于移动机器人的平滑路径规划问题，可行且最短的贝塞尔曲线路径是最优解。本节将介绍该方法的若干关键阶段如下：</p>
+<h4 id="A-问题描述"><a href="#A-问题描述" class="headerlink" title="A. 问题描述"></a>A. 问题描述</h4><p>在本文中，假定移动机器人的工作环境是一个二维工作空间。基于遗传算法的平滑路径规划被用来寻找一个移动机器人的可行且最优的贝塞尔曲线路径，这包括三个条件，即首先路径应该是无碰撞的，其次应该考虑移动机器人的平滑运动，通过满足路径的二阶连续性来实现，最后路径应该是在上述两个约束下从起点到目标点的最短距离。上述条件的正式表达如下：</p>
+<script type="math/tex; mode=display">min ||P(t)||,0\leq t\leq 1,\\ s.t. P(t)\in C^2,\\ P(t) \in P_{free},\tag{6}</script><p>其中，$t$是标准化时间变量，$∥P(t)∥$表示贝塞尔曲线路径的长度，$C^2$是二阶可微函数的集合，$P_{free}$表示无碰撞路径的集合。由于贝塞尔曲线由其控制点定义，因此上述优化问题是找到一系列控制点，这些控制点在约束条件下确定了贝塞尔曲线路径的问题。</p>
+<h4 id="B-工作空间的表示"><a href="#B-工作空间的表示" class="headerlink" title="B. 工作空间的表示"></a>B. 工作空间的表示</h4><p>工作空间是移动机器人和障碍物都存在的环境。在移动机器人路径规划中，通常使用基于网格的模型来表示工作空间，因为这样可以方便地计算距离并表示障碍物。障碍物的边界是由它们的实际边界加上考虑到移动机器人大小的最小安全距离形成的，以便将移动机器人视为工作空间中的一个点[12]。整个工作空间由有序编号的网格表示，网格的大小决定了有多少个编号。对于每个网格，它被定义为为空（即工作空间中的白色方格网格）或占用（即工作空间中的黑色方格网格），这取决于障碍物的边界是否在网格内。在本文中，整个工作空间被划分为$M\times N$个网格，其中$M$和$N$都是正的2的整数次方。实际上，$M$可以等于$N$，也可以不等于$N$，因为一个具有$M\times N$个网格的工作空间可以被视为一个具有$M×M$个网格的工作空间，并且其中一些网格被占用。图1(a)和图1(b)分别显示了具有$M×M$网格$（M=16，N=16）$和$M×N$网格$（M=15，N=16）$的工作空间示例。这种表示方法简化了遗传算法的染色体编码和种群初始化。例如，如果工作空间被划分为$10×10$个网格，那么网格的编号将从0到99。本文中使用了二进制编码来表示染色体，这意味着需要一个7位的二进制数来表示一个网格。然而，其中一些数字（例如，从100到127）超出了工作空间中的所有网格编号，因此必须添加额外的处理步骤来检查随机生成的染色体（在下一节中定义）是否合理。</p>
+<img src="/2023/10/23/%E6%96%B0%E7%9A%84%E5%9F%BA%E4%BA%8E%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%E7%9A%84%E7%A7%BB%E5%8A%A8%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%B9%B3%E6%BB%91%E8%B7%AF%E5%BE%84%E8%A7%84%E5%88%92%E6%96%B9%E6%B3%95/f1.png" srcset="/img/loading.gif" lazyload class="">
+<h4 id="C-染色体编码和种群初始化"><a href="#C-染色体编码和种群初始化" class="headerlink" title="C. 染色体编码和种群初始化"></a>C. 染色体编码和种群初始化</h4><img src="/2023/10/23/%E6%96%B0%E7%9A%84%E5%9F%BA%E4%BA%8E%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%E7%9A%84%E7%A7%BB%E5%8A%A8%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%B9%B3%E6%BB%91%E8%B7%AF%E5%BE%84%E8%A7%84%E5%88%92%E6%96%B9%E6%B3%95/f2.png" srcset="/img/loading.gif" lazyload class="">
+<p>在本文中，使用一系列网格编号来表示遗传算法的染色体，并且染色体是用二进制数编码的，以便进行更容易的位操作。以下将以图2中的$160×160$个单位的工作空间为例，该工作空间划分为$16×16$个网格（即每个网格是一个$10×10$单位的正方形）。在接下来的描述中，每个网格被分配一个介于0和255之间的编号，可以用一个8位二进制数表示。所有的二进制数按顺序连接起来形成一个染色体。这种染色体编码适用于$M×M$和$M×N$网格。此外，使用这种方法，遗传算子不会通过交叉和突变操作使染色体变得不合理，因为交叉和突变操作都会保持染色体中的网格编号在0到255之间。这是上面提到的工作空间表示方法的另一个优点。所有的控制点都被定义在工作空间中网格的中心。从网格编号到坐标值的转换表达为：</p>
+<script type="math/tex; mode=display">P_x(t)=(Number \%  16)\times 10+5,\\ P_y(t)=\llcorner Number/16\lrcorner \times 10 +5,\tag{7}</script><p>其中，% 表示求余数，⌊ ⌋ 表示向下取整，$P_x(t)$ 和 $P_y(t)$ 分别是网格中心的$X$和$Y$坐标分量。另一方面，从路径上任意点的坐标分量到包含该点的网格编号的转换表达为：</p>
+<script type="math/tex; mode=display">Number = \llcorner P_x(t)/10 \lrcorner + \llcorner P_y(t)/10 \lrcorner \times 16 \tag{8}</script><p>考虑到工作空间的表示和染色体编码方法，实现遗传算法的种群初始化非常容易。例如，如果一个染色体包含$n$个网格编号，那么初始化的种群就是一组$8×n$位的二进制数</p>
+<h3 id="D-适应度函数和选择方法"><a href="#D-适应度函数和选择方法" class="headerlink" title="D. 适应度函数和选择方法"></a>D. 适应度函数和选择方法</h3><p>本文基于遗传算法的平滑路径规划的目的是在约束条件（6）下找到一条最优路径。适应度函数定义如下：</p>
+<script type="math/tex; mode=display">f=\begin{cases}
+    \frac{1}{\sum^n_{i=1}||P_i(t)||},&if &feasible&path \\
+\frac{1}{\sum^n_{i=1}||P_i(t)||+penalty},&if&infeasible&path
+\end{cases}\tag{9}</script><p>其中，$P_i(t)$是由 个段组成的分段贝塞尔曲线中的第$n$段，当贝塞尔曲线穿过占用的网格时会加上惩罚。较短的路径将具有较大的适应度值，最优路径是一条最短的可行贝塞尔曲线路径。</p>
+<p>在遗传算法的选择方法中采用了比例选择策略，即所选染色体的概率与其适应度值成比例。假设第$i$个染色体的适应度值为$f_i$，种群大小为$S_p$，第$i$个染色体的选择概率可以表示为：</p>
+<script type="math/tex; mode=display">p_i=\frac{f_i}{\sum^{S_p}_{i=1}f_i}\tag{10}</script><p>其中，$p_i$是选择概率，之后使用轮盘赌选择方法进行选择操作。这样，适应度值较高的染色体具有更大的概率被选择，以便进入下一代的繁殖。这种选择策略有助于保留较优秀的染色体并促使遗传算法逐代收敛到更优的路径。</p>
+<h4 id="E-遗传算子"><a href="#E-遗传算子" class="headerlink" title="E. 遗传算子"></a>E. 遗传算子</h4><p>遗传算法中的两个核心遗传算子是交叉和突变。交叉操作是将两个父染色体的特征组合以产生两个子染色体的操作。交叉概率是随机生成的，用于确定是否对两个父染色体实施交叉操作。本文中使用了单点交叉操作，即在随机生成的交叉点之后，两个染色体的基因被交换。突变操作在种群中随机选择的染色体上实施，通常在交叉操作之后。突变操作会在染色体上随机生成的突变点上执行二进制取反操作。通过使用本文第三部分提出的方法，上述遗传算子不会使基因（即网格编号）超出工作空间范围。</p>
+<p>备注1：基于网格的工作空间表示在移动机器人路径规划的文献中很常见。然而，本文提出了一种通用的基于网格的表示方法。整个工作空间被划分为2n×2n个网格，无论工作空间是否是正方形（如果不是正方形，则可以将工作空间视为具有一些占用网格的正方形）。这种方法有助于在初始化、交叉和突变过程中实施遗传算法。</p>
+<p>备注2：在本文中，贝塞尔曲线的控制点与优化标准直接关联，这与大多数基于贝塞尔曲线的路径规划方法不同，这些方法通常使用贝塞尔曲线来平滑由某些路径规划方法生成的路径。虽然在[30]中已经开发了基于遗传算法的采用贝塞尔曲线的路径规划，但对实现的细节没有进行详细讨论。</p>
+<h2 id="IV-数值实验和性能评估"><a href="#IV-数值实验和性能评估" class="headerlink" title="IV. 数值实验和性能评估"></a>IV. 数值实验和性能评估</h2><p>在本节中，将应用基于遗传算法的平滑路径规划到图2中的工作空间，以展示所提出方法的有效性。遗传算法的参数如下：种群大小取为200，最大代数取为100，交叉概率取为0.5，突变概率取为0.1，对于贝塞尔曲线路径的每个不可行点，取惩罚值为10。</p>
+<img src="/2023/10/23/%E6%96%B0%E7%9A%84%E5%9F%BA%E4%BA%8E%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%E7%9A%84%E7%A7%BB%E5%8A%A8%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%B9%B3%E6%BB%91%E8%B7%AF%E5%BE%84%E8%A7%84%E5%88%92%E6%96%B9%E6%B3%95/f3.png" srcset="/img/loading.gif" lazyload class="">
+<p>图3(a)和图3(b)显示了在工作空间中具有不同起始位置和目标位置的数值实验结果，其中蓝色圆圈表示贝塞尔曲线路径的控制点，蓝色实线组成了凸包，红色实线是最优平滑路径。本文中为贝塞尔曲线路径使用了八个控制点（即每个染色体的八个网格编号）。尽管在这两种情况下都存在一定的难度，但所提出的方法可以成功完成平滑路径规划任务。</p>
+<img src="/2023/10/23/%E6%96%B0%E7%9A%84%E5%9F%BA%E4%BA%8E%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%E7%9A%84%E7%A7%BB%E5%8A%A8%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%B9%B3%E6%BB%91%E8%B7%AF%E5%BE%84%E8%A7%84%E5%88%92%E6%96%B9%E6%B3%95/f4.png" srcset="/img/loading.gif" lazyload class="">
+<p>将目标函数定义为适应度函数（式9）的倒数。图4显示了每一代中最优染色体的目标函数值，表明遗传算法在这个问题中快速收敛。</p>
+<img src="/2023/10/23/%E6%96%B0%E7%9A%84%E5%9F%BA%E4%BA%8E%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%E7%9A%84%E7%A7%BB%E5%8A%A8%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%B9%B3%E6%BB%91%E8%B7%AF%E5%BE%84%E8%A7%84%E5%88%92%E6%96%B9%E6%B3%95/f5.png" srcset="/img/loading.gif" lazyload class="">
+<p>图5显示了贝塞尔曲线路径上每个点的曲率，显然，根据工作空间的坐标，最大曲率低于0.1。低曲率值反映了所得路径的平滑性。表I列出了基于遗传算法的平滑路径规划和非平滑路径规划的一些比较结果。不同起始位置和目标位置的实验结果表明，通过使用所提出的平滑路径规划方法，我们可以得到与非平滑路径规划相似长度的最优路径。此外，平滑路径规划和非平滑路径规划之间的最小收敛代数差异很小。</p>
+<p>备注3：在实际应用中选择控制点向量非常重要。一般来说，如果工作空间更复杂（例如，有更多障碍物），则需要更多的控制点向量。在实践中，可以使用不同数量的控制点向量实施遗传算法。值得一提的是，在过程结束时，多余的控制点（与其他控制点重合的控制点）将被拒绝（例如，在图3(a)中使用了八个控制点进行遗传算法，最终保留了七个控制点）。</p>
+<p>备注4：与其他平滑路径规划方法[1]，[20]，[26]相比，所提出方法的一个优点是通用的基于网格的工作空间表示，有助于遗传算法的实施。更有意义的优点是，该方法是一种“真正”的平滑路径规划方法，将启发式智能优化算法（例如本文中的遗传算法）与路径平滑方法（例如本文中的贝塞尔曲线）结合起来。在本文中，贝塞尔曲线的控制点与遗传算法的优化标准直接相关，因此生成的路径保证是最优的，而不是在一些路径规划过程之后再平滑路径。</p>
+<p>备注5：在(9)中，当贝塞尔曲线穿过占用的网格时添加了惩罚。在一些特殊情况下，路径的适应度值会更高，即使其控制点位于占用网格中并且在适应度函数中添加了惩罚项。例如，如图3(b)所示，最优控制点可以在占用的网格中。此外，如何选择惩罚项以提高算法性能仍然是需要进一步讨论的开放问题。</p>
+<h2 id="V-结论与未来工作"><a href="#V-结论与未来工作" class="headerlink" title="V. 结论与未来工作"></a>V. 结论与未来工作</h2><p>本文提出了一种基于遗传算法和贝塞尔曲线的移动机器人平滑路径规划方法。提出了一种新的基于网格的工作空间表示方法，使得在遗传算法中执行操作更加方便。遗传算法被用来搜索确定基于贝塞尔曲线的平滑路径的最优控制点。通过数值实验验证了所提方法的有效性，并分析了所得方法的一些性能。然而，仍然存在许多有趣的问题，例如：1）如何使用遗传算法解决具体的平滑路径规划问题；2）如何在更多网格情况下提高计算效率；3）如何选择控制点的数量和“惩罚”的值；4）如何将所开发的算法应用于更复杂的情况（例如，在网络化环境中的移动导航）。这些问题值得进一步研究。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/slam/" class="category-chain-item">slam</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/slam/path-planning/" class="category-chain-item">path_planning</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%8E%9F%E5%88%9B/">#原创</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>新的基于遗传算法的移动机器人平滑路径规划方法</div>
+      <div>https://qiangsun89.github.io/2023/10/23/新的基于遗传算法的移动机器人平滑路径规划方法/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Qiang Sun</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年10月23日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/10/20/%E5%9F%BA%E4%BA%8E%E6%B7%B7%E5%90%88%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%E7%9A%84%E7%A7%BB%E5%8A%A8%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%B9%B3%E6%BB%91%E5%85%A8%E5%B1%80%E8%B7%AF%E5%BE%84%E8%A7%84%E5%88%92/" title="基于混合遗传算法的移动机器人平滑全局路径规划">
+                        <span class="hidden-mobile">基于混合遗传算法的移动机器人平滑全局路径规划</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"LEYjQzDk7jo8uqlOQoAEF5qm-gzGzoHsz","appKey":"7bBCyINnLw0akaPjI39pESMN","path":"window.location.pathname","placeholder":"留言","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
