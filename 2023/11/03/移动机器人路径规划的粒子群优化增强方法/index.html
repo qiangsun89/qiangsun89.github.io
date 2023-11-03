@@ -25,8 +25,9 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://qiangsun89.github.io/2023/11/03/%E7%A7%BB%E5%8A%A8%E6%9C%BA%E5%99%A8%E4%BA%BA%E8%B7%AF%E5%BE%84%E8%A7%84%E5%88%92%E7%9A%84%E7%B2%92%E5%AD%90%E7%BE%A4%E4%BC%98%E5%8C%96%E5%A2%9E%E5%BC%BA%E6%96%B9%E6%B3%95/f1.png">
 <meta property="og:image" content="https://qiangsun89.github.io/2023/11/03/%E7%A7%BB%E5%8A%A8%E6%9C%BA%E5%99%A8%E4%BA%BA%E8%B7%AF%E5%BE%84%E8%A7%84%E5%88%92%E7%9A%84%E7%B2%92%E5%AD%90%E7%BE%A4%E4%BC%98%E5%8C%96%E5%A2%9E%E5%BC%BA%E6%96%B9%E6%B3%95/f2.png">
+<meta property="og:image" content="https://qiangsun89.github.io/2023/11/03/%E7%A7%BB%E5%8A%A8%E6%9C%BA%E5%99%A8%E4%BA%BA%E8%B7%AF%E5%BE%84%E8%A7%84%E5%88%92%E7%9A%84%E7%B2%92%E5%AD%90%E7%BE%A4%E4%BC%98%E5%8C%96%E5%A2%9E%E5%BC%BA%E6%96%B9%E6%B3%95/f3.png">
 <meta property="article:published_time" content="2023-11-03T01:12:24.000Z">
-<meta property="article:modified_time" content="2023-11-03T02:53:20.041Z">
+<meta property="article:modified_time" content="2023-11-03T03:15:24.059Z">
 <meta property="article:author" content="Qiang Sun">
 <meta property="article:tag" content="原创">
 <meta name="twitter:card" content="summary_large_image">
@@ -331,6 +332,7 @@
 <img src="/2023/11/03/%E7%A7%BB%E5%8A%A8%E6%9C%BA%E5%99%A8%E4%BA%BA%E8%B7%AF%E5%BE%84%E8%A7%84%E5%88%92%E7%9A%84%E7%B2%92%E5%AD%90%E7%BE%A4%E4%BC%98%E5%8C%96%E5%A2%9E%E5%BC%BA%E6%96%B9%E6%B3%95/f2.png" srcset="/img/loading.gif" lazyload class="">
 <p>终止条件是PSO达到了最大迭代次数，或者机器人已经到达目的地，或者没有可能的路径。整个过程的流程图在图2中给出，它详细阐述了整个过程。现在，让我们讨论在实际环境中移动机器人的路径规划。图3描绘了在环境中存在障碍物的情况下，移动机器人从任意起始位置到目标/目的地位置的路径规划的示意图。设$S(S_x,S_y)$和$G(G_x,G_y)$是移动机器人的起始位置和目标/目的地位置。设机器人从位置$S(S_x,S_y)$开始移动到当前位置$R(R_x,R_y)$。假设在当前位置，机器人在环境中没有感知到障碍物。因此，它将遵循最短长度路径，即从初始位置到最终位置的直线路径。相反，如果当前位置机器人感知到最近的障碍物$O(O_x,O_y)$的存在。一旦感知到障碍物，移动机器人必须从直线路径偏离，沿$RP_i$路径以角度$θ=∠GRP_i$转向位置$P_i(P_{ix},P_{iy})$，这个角度称为偏转角。偏转角是机器人在当前路径中存在障碍物时转向的角度。$p_i$是通过PSO算法获得的全局最佳第$P_i$粒子。偏转角$θ=∠GRP_i$越小，移动机器人的路径就越平滑。因此，我们的路径规划方法旨在通过使用PSO来最小化偏转角$θ$，以实现更平滑且无碰撞的路径。方程(3)提供了我们提出工作的目标函数。</p>
 <script type="math/tex; mode=display">\theta_{min}=argmin \{\theta = ∠GRP_i\}\\ \theta \tag{3}</script><p>为了使用粒子群优化（PSO）解决路径规划问题，首先通过定义适当的适应度函数将路径规划问题转换为优化问题。设定好适应度函数后，使用PSO来检测全局最优粒子$p_i$。全局最优粒子是基于最优（最小）适应度值来选择的。下面的小节讨论了我们优化过程中要包含的适应度函数。</p>
+<img src="/2023/11/03/%E7%A7%BB%E5%8A%A8%E6%9C%BA%E5%99%A8%E4%BA%BA%E8%B7%AF%E5%BE%84%E8%A7%84%E5%88%92%E7%9A%84%E7%B2%92%E5%AD%90%E7%BE%A4%E4%BC%98%E5%8C%96%E5%A2%9E%E5%BC%BA%E6%96%B9%E6%B3%95/f3.png" srcset="/img/loading.gif" lazyload class="">
 <h2 id="A-适应度函数的构建："><a href="#A-适应度函数的构建：" class="headerlink" title="A. 适应度函数的构建："></a>A. 适应度函数的构建：</h2><p>在我们的提议工作中，我们设计了适应度函数作为三个独立适应度函数的加权线性组合，用 $F_{final}(.)$ 表示。方程（4）描述了优化过程中 $F_{final}(.)$ 的构建。</p>
 <script type="math/tex; mode=display">F_{final}(.)=\omega_1*F_1(.)+\omega_2*F_2(.)+\omega_3*F_3(.)\tag{4}</script><p>其中，$F_1(.)$、$F_2(.)$ 和 $F_3(.)$ 是独立的适应度函数。$\omega_1$、$\omega_2$ 和 $\omega_3$ 是与各个适应度函数相关联的权重。</p>
 <p>优化方程（3）中描述的目标函数，通过利用建议的适应度函数 $F_{final}(.)$可以实现三个主要方面：（i）路径中的障碍物避让（ii）更短的路径长度以及（iii）路径的平滑追踪。</p>
