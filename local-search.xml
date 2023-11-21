@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>二次规划求解器osqp安装</title>
+    <link href="/2023/11/21/%E4%BA%8C%E6%AC%A1%E8%A7%84%E5%88%92%E6%B1%82%E8%A7%A3%E5%99%A8osqp%E5%AE%89%E8%A3%85/"/>
+    <url>/2023/11/21/%E4%BA%8C%E6%AC%A1%E8%A7%84%E5%88%92%E6%B1%82%E8%A7%A3%E5%99%A8osqp%E5%AE%89%E8%A3%85/</url>
+    
+    <content type="html"><![CDATA[<h1 id="二次规划求解器osqp安装"><a href="#二次规划求解器osqp安装" class="headerlink" title="二次规划求解器osqp安装"></a>二次规划求解器osqp安装</h1><h2 id="1-首先安装依赖osqp和Eigen3"><a href="#1-首先安装依赖osqp和Eigen3" class="headerlink" title="1.首先安装依赖osqp和Eigen3"></a>1.首先安装依赖osqp和Eigen3</h2><h2 id="2-安装osqp"><a href="#2-安装osqp" class="headerlink" title="2.安装osqp"></a>2.安装osqp</h2><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs vim">git clone git@github.<span class="hljs-keyword">com</span>:osqp/osqp.git<br><span class="hljs-keyword">cd</span> osqp<br><span class="hljs-built_in">mkdir</span> build<br><span class="hljs-keyword">cd</span> build<br>cmake .. -DBUILD_SHARED_LIBS=ON<br><span class="hljs-keyword">make</span> -j6<br>sudo <span class="hljs-keyword">make</span> install<br></code></pre></td></tr></table></figure><h2 id="3-安装osqp-eigen"><a href="#3-安装osqp-eigen" class="headerlink" title="3.安装osqp-eigen"></a>3.安装osqp-eigen</h2><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs vim">git clone git@github.<span class="hljs-keyword">com</span>:robotology/osqp-eigen.git<br><span class="hljs-keyword">cd</span> osqp-eigen<br><span class="hljs-built_in">mkdir</span> build &amp;&amp; <span class="hljs-keyword">cd</span> build<br>cmake ..<br><span class="hljs-keyword">make</span><br>sudo <span class="hljs-keyword">make</span> install<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>slam</category>
+      
+      <category>path_planning</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>梯形分解原理</title>
     <link href="/2023/11/20/%E6%A2%AF%E5%BD%A2%E5%88%86%E8%A7%A3%E5%8E%9F%E7%90%86/"/>
     <url>/2023/11/20/%E6%A2%AF%E5%BD%A2%E5%88%86%E8%A7%A3%E5%8E%9F%E7%90%86/</url>
