@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>LP问题中为什么把等式约束转化成两个不等式约束</title>
+    <link href="/2023/11/30/LP%E9%97%AE%E9%A2%98%E4%B8%AD%E4%B8%BA%E4%BB%80%E4%B9%88%E6%8A%8A%E7%AD%89%E5%BC%8F%E7%BA%A6%E6%9D%9F%E8%BD%AC%E5%8C%96%E6%88%90%E4%B8%A4%E4%B8%AA%E4%B8%8D%E7%AD%89%E5%BC%8F%E7%BA%A6%E6%9D%9F/"/>
+    <url>/2023/11/30/LP%E9%97%AE%E9%A2%98%E4%B8%AD%E4%B8%BA%E4%BB%80%E4%B9%88%E6%8A%8A%E7%AD%89%E5%BC%8F%E7%BA%A6%E6%9D%9F%E8%BD%AC%E5%8C%96%E6%88%90%E4%B8%A4%E4%B8%AA%E4%B8%8D%E7%AD%89%E5%BC%8F%E7%BA%A6%E6%9D%9F/</url>
+    
+    <content type="html"><![CDATA[<head>    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>    <script type="text/x-mathjax-config">        MathJax.Hub.Config({            tex2jax: {            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],            inlineMath: [['$','$']]            }        });    </script></head><h1 id="LP问题中为什么把等式约束转化成两个不等式约束"><a href="#LP问题中为什么把等式约束转化成两个不等式约束" class="headerlink" title="LP问题中为什么把等式约束转化成两个不等式约束"></a>LP问题中为什么把等式约束转化成两个不等式约束</h1><p>在运筹学中，特别是在线性规划（Linear Programming, LP）问题中，将等式约束转换为不等式约束的原因主要与解决问题的算法和方便性有关。这样的转换使得问题更容易用标准的优化算法来求解。以下是一些关键原因：<br>单纯形方法的便利性：单纯形方法是解决LP问题的一种常用技术。它更适合处理不等式约束而不是等式约束。在单纯形方法中，不等式约束可以用来定义一个可行区域的边界，这样算法就可以在这个边界上“行走”寻找最优解。</p><ol><li><p>增加灵活性：通过将等式约束分解为两个不等式约束，可以增加问题的灵活性。在某些情况下，这种分解可以使问题的可行解集合更容易描述和操作。</p></li><li><p>统一格式：将所有约束转换为不等式形式可以统一问题的格式，使问题的结构更加一致。这对于使用通用线性规划求解器来说是有益的，因为这些求解器通常针对处理一种类型的约束进行了优化。</p></li><li><p>避免奇异性和数值问题：在数值优化中，处理等式约束可能会导致数值稳定性问题。将等式约束转换为不等式约束可以在某种程度上缓解这些问题。</p></li></ol><p>例如，等式约束$Ax=b$可以被分解为两个不等式约束$Ax\leq b$和$Ax \geq b$。这样做之后，问题可以用标准的线性规划方法来求解，而这些方法一般都是针对不等式约束设计的。</p><p>总之，将等式约束转换为不等式约束的做法在实践中更加通用，它简化了问题的求解过程，使得标准的线性规划算法可以更有效地应用。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>OR</category>
+      
+      <category>LP</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>二次规划求解器osqp安装</title>
     <link href="/2023/11/21/%E4%BA%8C%E6%AC%A1%E8%A7%84%E5%88%92%E6%B1%82%E8%A7%A3%E5%99%A8osqp%E5%AE%89%E8%A3%85/"/>
     <url>/2023/11/21/%E4%BA%8C%E6%AC%A1%E8%A7%84%E5%88%92%E6%B1%82%E8%A7%A3%E5%99%A8osqp%E5%AE%89%E8%A3%85/</url>
